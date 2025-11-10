@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{3E6FE898-7BD4-4B19-9243-FE36F3B311D7}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="frontDCC\frontDCC.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="frontMSS\frontMSS.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="frontDCC">
+        <MSBuild Projects="frontDCC\frontDCC.dproj"/>
+    </Target>
+    <Target Name="frontDCC:Clean">
+        <MSBuild Projects="frontDCC\frontDCC.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="frontDCC:Make">
+        <MSBuild Projects="frontDCC\frontDCC.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="frontMSS">
+        <MSBuild Projects="frontMSS\frontMSS.dproj"/>
+    </Target>
+    <Target Name="frontMSS:Clean">
+        <MSBuild Projects="frontMSS\frontMSS.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="frontMSS:Make">
+        <MSBuild Projects="frontMSS\frontMSS.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="frontDCC;frontMSS"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="frontDCC:Clean;frontMSS:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="frontDCC:Make;frontMSS:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
