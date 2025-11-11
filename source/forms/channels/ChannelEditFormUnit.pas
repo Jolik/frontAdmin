@@ -8,7 +8,7 @@ uses
   uniGUIClasses, uniGUIForm, ParentEditFormUnit, uniEdit, uniLabel, uniButton,
   uniGUIBaseClasses, uniPanel,
   LoggingUnit,
-  EntityUnit, ChannelUnit;
+  EntityUnit, ChannelUnit, uniTimer;
 
 type
   TChannelEditForm = class(TParentEditForm)
