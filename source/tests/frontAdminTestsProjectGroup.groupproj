@@ -1,0 +1,36 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{7790E507-39DC-4620-A244-941E38A76BCC}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="BrokerTestProj\BrokerTestProj.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="BrokerTestProj">
+        <MSBuild Projects="BrokerTestProj\BrokerTestProj.dproj"/>
+    </Target>
+    <Target Name="BrokerTestProj:Clean">
+        <MSBuild Projects="BrokerTestProj\BrokerTestProj.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BrokerTestProj:Make">
+        <MSBuild Projects="BrokerTestProj\BrokerTestProj.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="BrokerTestProj"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="BrokerTestProj:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="BrokerTestProj:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

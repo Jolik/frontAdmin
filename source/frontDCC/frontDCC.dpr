@@ -35,7 +35,7 @@ uses
   LinksRestBrokerUnit in '..\services\datacomm\brokers\LinksRestBrokerUnit.pas',
   ConnectionSettingsUnit in '..\services\datacomm\entities\ConnectionSettingsUnit.pas',
   DirSettingsUnit in '..\services\datacomm\entities\DirSettingsUnit.pas',
-  DownLinkSettingsUnit in '..\services\datacomm\entities\DownLinkSettingsUnit.pas',
+  LinkSettingsUnit in '..\services\datacomm\entities\LinkSettingsUnit.pas',
   LinkUnit in '..\services\datacomm\entities\LinkUnit.pas',
   S3SettingsUnit in '..\services\datacomm\entities\S3SettingsUnit.pas',
   ScheduleSettingsUnit in '..\services\datacomm\entities\ScheduleSettingsUnit.pas',
@@ -58,12 +58,9 @@ uses
   SharedFrameConnections in '..\forms\links\LinksFrames\SharedFrameConnections.pas' {FrameConnections: TUniFrame},
   SharedFrameSchedule in '..\forms\links\LinksFrames\SharedFrameSchedule.pas' {FrameSchedule: TUniFrame},
   SharedFrameS3 in '..\forms\links\LinksFrames\SharedFrameS3.pas' {FrameS3: TUniFrame},
-  DirDownSettingEditFrameUnit in '..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas' {DirDownSettingEditFrame: TUniFrame},
-  FTPServerDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas' {FTPServerDownLinkSettingEditFrame: TUniFrame},
   HTTPCliDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\HTTPCliDownLinkSettingEditFrameUnit.pas' {HTTPCliDownLinkSettingEditFrame: TUniFrame},
   SebaCSDLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SebaCSDLinkSettingEditFrameUnit.pas' {SebaCSDLinkSettingEditFrame: TUniFrame},
   SebaSGSLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SebaSGSLinkSettingEditFrameUnit.pas' {SebaSGSLinkSettingEditFrame: TUniFrame},
-  SMTPSrvDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas' {SMTPSrvDownLinkSettingEditFrame: TUniFrame},
   SourcesFormUnit in '..\forms\sources\SourcesFormUnit.pas' {SourcesForm: TUniForm},
   SourceEditFormUnit in '..\forms\sources\SourceEditFormUnit.pas' {SourceEditForm: TUniForm},
   IntefraceEditFormUnit in '..\forms\sources\IntefraceEditFormUnit.pas' {InterfaceModalForm: TUniForm},
@@ -114,7 +111,10 @@ uses
   SummaryTasksRestBrokerUnit in '..\services\summary\brokers\SummaryTasksRestBrokerUnit.pas',
   TaskSourceHttpRequests in '..\services\tasks\brokers\TaskSourceHttpRequests.pas',
   SummaryTasksHttpRequests in '..\services\summary\brokers\SummaryTasksHttpRequests.pas',
-  StringUnit in '..\services\common\entities\StringUnit.pas';
+  StringUnit in '..\services\common\entities\StringUnit.pas',
+  DirDownSettingEditFrameUnit in '..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas' {DirDownSettingEditFrame: TUniFrame},
+  FTPServerDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas' {FTPServerDownLinkSettingEditFrame: TUniFrame},
+  SMTPSrvDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas' {SMTPSrvDownLinkSettingEditFrame: TUniFrame};
 
 {$R *.res}
 

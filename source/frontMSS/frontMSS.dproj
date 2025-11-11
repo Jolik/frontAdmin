@@ -5,10 +5,11 @@
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Linux64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>129</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>frontMSS.dpr</MainSource>
+        <ProjectName Condition="'$(ProjectName)'==''">frontMSS</ProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -31,6 +32,12 @@
     <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_1)'!=''">
         <Cfg_1>true</Cfg_1>
         <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Linux64' and '$(Cfg_1)'=='true') or '$(Cfg_1_Linux64)'!=''">
+        <Cfg_1_Linux64>true</Cfg_1_Linux64>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
@@ -62,6 +69,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <SanitizedProjectName>frontMSS</SanitizedProjectName>
+        <DCC_Define>FRONT_MSS;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Linux64)'!=''">
         <DCC_UsePackage>DataSnapServer;fmx;emshosting;DbxCommonDriver;bindengine;FireDACCommonODBC;emsclient;FireDACCommonDriver;IndyProtocols;dbxcds;emsedge;bindcompfmx;inetdb;FireDACSqliteDriver;DbxClientDriver;FireDACASADriver;soapmidas;fmxFireDAC;dbexpress;FireDACInfxDriver;inet;DataSnapCommon;dbrtl;FireDACOracleDriver;CustomIPTransport;FireDACMSSQLDriver;DataSnapIndy10ServerTransport;DataSnapConnectors;FireDACMongoDBDriver;IndySystem;FireDACTDataDriver;bindcomp;FireDACCommon;DataSnapServerMidas;FireDACODBCDriver;emsserverresource;inetstn;IndyCore;RESTBackendComponents;rtl;FireDACMySQLDriver;FireDACADSDriver;RESTComponents;dsnapxml;DataSnapClient;DataSnapFireDAC;emsclientfiredac;FireDACPgDriver;FireDAC;xmlrtl;dsnap;CloudService;FireDACDb2Driver;DataSnapNativeClient;DatasnapConnectorsFreePascal;soaprtl;soapserver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
@@ -87,6 +95,11 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
         <DCC_IntegerOverflowCheck>true</DCC_IntegerOverflowCheck>
         <DCC_RangeChecking>true</DCC_RangeChecking>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Linux64)'!=''">
+        <Debugger_Launcher>/usr/bin/gnome-terminal -- &quot;%debuggee%&quot;</Debugger_Launcher>
+        <Manifest_File>(None)</Manifest_File>
+        <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
@@ -120,6 +133,275 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\services\acl\entities\CompanyUnit.pas"/>
+        <DCCReference Include="..\services\acl\entities\DepartmentUnit.pas"/>
+        <DCCReference Include="..\services\common\entities\EntityUnit.pas"/>
+        <DCCReference Include="..\common\FuncUnit.pas"/>
+        <DCCReference Include="..\logging\LoggingUnit.pas"/>
+        <DCCReference Include="..\common\GUIDListUnit.pas"/>
+        <DCCReference Include="..\common\StringListUnit.pas"/>
+        <DCCReference Include="..\services\common\entities\StringUnit.pas"/>
+        <DCCReference Include="..\services\acl\brokers\CompaniesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\acl\brokers\CompanyHttpRequests.pas"/>
+        <DCCReference Include="..\services\acl\brokers\DepartmentHttpRequests.pas"/>
+        <DCCReference Include="..\services\acl\brokers\DepartmentsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\APIConst.pas"/>
+        <DCCReference Include="..\services\common\brokers\BaseRequests.pas"/>
+        <DCCReference Include="..\services\common\brokers\BaseResponses.pas"/>
+        <DCCReference Include="..\services\common\brokers\HttpClientUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\RestBrokerBaseUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\RestEntityBrokerUnit.pas"/>
+        <DCCReference Include="..\forms\common\ParentFormUnit.pas">
+            <Form>ParentForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\common\ParentEditFormUnit.pas">
+            <Form>ParentEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\common\ListParentFormUnit.pas">
+            <Form>ListParentForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\common\ConstsUnit.pas"/>
+        <DCCReference Include="..\forms\channels\ChannelEditFormUnit.pas">
+            <Form>ChannelEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\channels\ChannelsFormUnit.pas">
+            <Form>ChannelsForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\router\entities\AbonentUnit.pas"/>
+        <DCCReference Include="..\services\router\entities\AliasUnit.pas"/>
+        <DCCReference Include="..\services\router\entities\ChannelUnit.pas"/>
+        <DCCReference Include="..\services\router\entities\HandlerUnit.pas"/>
+        <DCCReference Include="..\services\router\entities\QueueUnit.pas"/>
+        <DCCReference Include="..\services\router\entities\RouterSourceUnit.pas"/>
+        <DCCReference Include="..\forms\links\LinkEditFormUnit.pas">
+            <Form>LinkEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinkSettingsFormUnit.pas">
+            <Form>LinkSettingsForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFormUnit.pas">
+            <Form>LinksForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\ParentLinkSettingEditFrameUnit.pas">
+            <Form>ParentLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\ProfilesFrameUnit.pas">
+            <Form>ProfilesFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\ProfileFrameUnit.pas">
+            <Form>ProfileFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SharedFrameBoolInput.pas">
+            <Form>FrameBoolInput</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SharedFrameCombobox.pas">
+            <Form>FrameCombobox</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SharedFrameTextInput.pas">
+            <Form>FrameTextInput</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\common\KeyValUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\entities\LinkUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\entities\LinkSettingsUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\entities\ConnectionSettingsUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\entities\DirSettingsUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\entities\S3SettingsUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\entities\ScheduleSettingsUnit.pas"/>
+        <DCCReference Include="..\services\common\entities\ConditionUnit.pas"/>
+        <DCCReference Include="..\services\common\entities\FilterUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\entities\ProfileRuleUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\entities\ProfileUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\brokers\LinksHttpRequests.pas"/>
+        <DCCReference Include="..\services\datacomm\brokers\LinksRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\brokers\ProfileHttpRequests.pas"/>
+        <DCCReference Include="..\services\datacomm\brokers\ProfilesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\forms\links\LinksFrames\LinkFrameUtils.pas"/>
+        <DCCReference Include="..\forms\links\LinksFrames\SharedFrameConnections.pas">
+            <Form>FrameConnections</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SharedFrameRuleConditionUnit.pas">
+            <Form>FrameRuleCondition</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SharedFrameS3.pas">
+            <Form>FrameS3</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SharedFrameSchedule.pas">
+            <Form>FrameSchedule</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\common\common.pas"/>
+        <DCCReference Include="..\forms\links\LinksFrames\SharedFrameQueue.pas">
+            <Form>FrameQueue</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas">
+            <Form>DirDownSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\DirUpSettingEditFrameUnit.pas">
+            <Form>DirUpSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\FTPCliDownLinkSettingEditFrameUnit.pas">
+            <Form>FtpCliDownLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\FTPCliUpLinkSettingEditFrameUnit.pas">
+            <Form>FTPCliUpLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas">
+            <Form>FTPServerDownLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\FTPSrvUpLinkSettingEditFrameUnit.pas">
+            <Form>FTPSrvUpLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\OpenMCEPSettingEditFrameUnit.pas">
+            <Form>OpenMCEPSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\Pop3CliDownLinkSettingEditFrameUnit.pas">
+            <Form>Pop3CliDownLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SMTPClieUpLinkSettingEditFrameUnit.pas">
+            <Form>SMTPClieUpLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas">
+            <Form>SMTPSrvDownLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SocketSpecialSettingEditFrameUnit.pas">
+            <Form>SocketSpecialSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\datacomm\entities\QueueSettingsUnit.pas"/>
+        <DCCReference Include="..\forms\queues\QueueEditFormUnit.pas">
+            <Form>QueueEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\queues\QueuesFormUnit.pas">
+            <Form>QueuesForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\abonents\AbonentEditFormUnit.pas">
+            <Form>AbonentEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\abonents\AbonentsFormUnit.pas">
+            <Form>AbonentsForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\aliases\AliasEditFormUnit.pas">
+            <Form>AliasEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\aliases\AliasesFormUnit.pas">
+            <Form>AliasesForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\routerSources\RouterSourceEditFormUnit.pas">
+            <Form>RouterSourceEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\routerSources\RouterSourcesFormUnit.pas">
+            <Form>RouterSourcesForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\rules\RuleEditFormUnit.pas">
+            <Form>RuleEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\rules\RulesFormUnit.pas">
+            <Form>RulesForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\handlers\HandlerEditFormUnit.pas">
+            <Form>HandlerEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\handlers\HandlersFormUnit.pas">
+            <Form>HandlersForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\router\brokers\AbonentHttpRequests.pas"/>
+        <DCCReference Include="..\services\router\brokers\AbonentsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\router\brokers\AliasesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\router\brokers\AliasHttpRequests.pas"/>
+        <DCCReference Include="..\services\router\brokers\ChannelHttpRequests.pas"/>
+        <DCCReference Include="..\services\router\brokers\ChannelsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\router\brokers\QueueHttpRequests.pas"/>
+        <DCCReference Include="..\services\router\brokers\QueuesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\router\brokers\RouterSourceHttpRequests.pas"/>
+        <DCCReference Include="..\services\router\brokers\RouterSourcesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\router\brokers\HandlerHttpRequests.pas"/>
+        <DCCReference Include="..\services\router\brokers\HandlersRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\router\brokers\RuleHttpRequests.pas"/>
+        <DCCReference Include="..\services\router\brokers\RulesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\router\entities\RuleUnit.pas"/>
+        <DCCReference Include="..\services\router\entities\SmallRuleUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -140,8 +422,18 @@
                 <Source>
                     <Source Name="MainSource">frontMSS.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k370.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="5">
+                <DeployFile LocalName="Linux64\Debug\frontMSS" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Linux64">
+                        <RemoteName>frontMSS</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>frontMSS.exe</RemoteName>

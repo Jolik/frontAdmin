@@ -1,4 +1,4 @@
-unit ServerModule;
+﻿unit ServerModule;
 
 interface
 
@@ -28,10 +28,12 @@ uses
 function UniServerModule: TUniServerModule;
 begin
   Result := TUniServerModule(UniGUIServerInstance);
+  Result.SetTcpPort(8080);
 end;
 
 procedure TUniServerModule.FirstInit;
 begin
+  Self.Title := 'ЦСДН коммутация';
   InitServerModule(Self);
 end;
 

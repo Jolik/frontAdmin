@@ -1,20 +1,16 @@
-inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
+﻿inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
   Height = 515
   ExplicitHeight = 515
   inherited SettingsPanel: TUniPanel
     Height = 515
-    ExplicitHeight = 515
     inherited SettingsGroupBox: TUniGroupBox
       Height = 513
-      ExplicitHeight = 513
       inherited UniPanel3: TUniPanel
         Top = 441
-        ExplicitTop = 441
       end
       inherited SettingsParentPanel: TUniPanel
         Height = 426
-        ExplicitHeight = 426
-        ScrollHeight = 341
+        ScrollHeight = 514
         ScrollWidth = 427
         inline FrameSchedule1: TFrameSchedule
           AlignWithMargins = True
@@ -32,34 +28,27 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
           Background.Picture.Data = {00}
           ExplicitLeft = 61
           ExplicitTop = 96
-          ExplicitWidth = 386
           inherited UniGroupBox1: TUniGroupBox
             Width = 386
-            ExplicitWidth = 386
             ExplicitHeight = 208
             inherited UniPanel1: TUniPanel
               Width = 382
               ExplicitTop = 45
-              ExplicitWidth = 382
               inherited FrameScheduleCron: TFrameTextInput
                 Width = 382
                 ExplicitLeft = 0
                 ExplicitTop = 30
-                ExplicitWidth = 382
                 inherited Edit: TUniEdit
                   Width = 211
-                  ExplicitWidth = 211
                 end
                 inherited PanelUnits: TUniPanel
                   Left = 356
-                  ExplicitLeft = 356
                 end
               end
               inherited FrameSchedulePeriod: TFrameTextInput
                 Width = 382
                 ExplicitLeft = 0
                 ExplicitTop = 60
-                ExplicitWidth = 382
                 inherited Edit: TUniEdit
                   Width = 211
                   ExplicitLeft = 135
@@ -67,7 +56,6 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
                 end
                 inherited PanelUnits: TUniPanel
                   Left = 356
-                  ExplicitLeft = 356
                 end
               end
               inherited FrameScheduleEnabled: TFrameBoolInput
@@ -80,21 +68,25 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
                 end
                 inherited CheckBox: TUniCheckBox
                   Width = 244
+                  ExplicitWidth = 203
                 end
               end
               inherited FrameScheduleRetry: TFrameTextInput
                 Width = 382
                 ExplicitLeft = 0
                 ExplicitTop = 90
+                ExplicitWidth = 341
                 inherited PanelText: TUniPanel
                   ExplicitLeft = 0
                   ExplicitTop = 0
                 end
                 inherited Edit: TUniEdit
                   Width = 211
+                  ExplicitWidth = 170
                 end
                 inherited PanelUnits: TUniPanel
                   Left = 356
+                  ExplicitLeft = 315
                 end
               end
               inherited FrameScheduleDelay: TFrameTextInput
@@ -109,7 +101,6 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
                 inherited Edit: TUniEdit
                   Width = 211
                   ExplicitLeft = 135
-                  ExplicitWidth = 211
                 end
                 inherited PanelUnits: TUniPanel
                   Left = 356
@@ -119,7 +110,6 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
             end
             inherited UniPanel3: TUniPanel
               Width = 382
-              ExplicitWidth = 382
               inherited btnRemoveJob: TUniBitBtn
                 ExplicitLeft = 261
               end
@@ -143,7 +133,6 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
           Constraints.MinHeight = 30
           TabOrder = 2
           Background.Picture.Data = {00}
-          ExplicitTop = 30
           ExplicitWidth = 427
           inherited PanelText: TUniPanel
             Caption = #1043#1083#1091#1073#1080#1085#1072
@@ -152,12 +141,10 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
             Width = 235
             Text = 'number'
             InputType = 'number'
-            ExplicitWidth = 235
           end
           inherited PanelUnits: TUniPanel
             Left = 380
             Caption = ''
-            ExplicitLeft = 380
           end
         end
         inline FrameDir: TFrameTextInput
@@ -199,13 +186,11 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
           Background.Picture.Data = {00}
           ExplicitLeft = 72
           ExplicitTop = 328
-          ExplicitWidth = 406
           inherited PanelText: TUniPanel
             Caption = #1052#1077#1090#1072' '#1092#1072#1081#1083#1099
           end
           inherited CheckBox: TUniCheckBox
             Width = 268
-            ExplicitWidth = 268
           end
         end
         inline FrameS3: TFrameS3
@@ -224,7 +209,6 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
           Background.Picture.Data = {00}
           ExplicitLeft = 64
           ExplicitTop = 194
-          ExplicitWidth = 386
           inherited UniGroupBox1: TUniGroupBox
             Width = 386
             ExplicitLeft = 0
@@ -235,59 +219,55 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
               Width = 382
               ExplicitLeft = 2
               ExplicitTop = 15
+              ExplicitWidth = 294
               inherited CheckBox: TUniCheckBox
                 Width = 244
+                ExplicitWidth = 156
               end
             end
             inherited FrameS3AccessKey: TFrameTextInput
               Width = 382
               ExplicitLeft = 2
               ExplicitTop = 75
+              ExplicitWidth = 294
               inherited Edit: TUniEdit
                 Width = 211
+                ExplicitWidth = 123
               end
               inherited PanelUnits: TUniPanel
                 Left = 356
+                ExplicitLeft = 268
               end
             end
             inherited FrameS3Endpoint: TFrameTextInput
               Width = 382
               ExplicitLeft = 2
               ExplicitTop = 45
-              ExplicitWidth = 382
               inherited Edit: TUniEdit
                 Width = 211
-                ExplicitWidth = 211
               end
               inherited PanelUnits: TUniPanel
                 Left = 356
-                ExplicitLeft = 356
               end
             end
             inherited FrameS3Secret: TFrameTextInput
               Width = 382
               ExplicitTop = 105
-              ExplicitWidth = 382
               inherited Edit: TUniEdit
                 Width = 211
-                ExplicitWidth = 211
               end
               inherited PanelUnits: TUniPanel
                 Left = 356
-                ExplicitLeft = 356
               end
             end
             inherited FrameS3Bucket: TFrameTextInput
               Width = 382
               ExplicitTop = 135
-              ExplicitWidth = 382
               inherited Edit: TUniEdit
                 Width = 211
-                ExplicitWidth = 211
               end
               inherited PanelUnits: TUniPanel
                 Left = 356
-                ExplicitLeft = 356
               end
             end
           end
@@ -297,16 +277,13 @@ inherited DirDownSettingEditFrame: TDirDownSettingEditFrame
   end
   inherited ProfilesGroupBox: TUniGroupBox
     Height = 515
-    ExplicitHeight = 515
     inherited ProfilesPanel: TUniPanel
       Height = 498
-      ExplicitHeight = 498
-      ScrollHeight = 413
-      ScrollWidth = 410
+      ScrollHeight = 498
+      ScrollWidth = 323
     end
   end
   inherited UniSplitter1: TUniSplitter
     Height = 515
-    ExplicitHeight = 515
   end
 end

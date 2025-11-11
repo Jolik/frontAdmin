@@ -9,39 +9,47 @@ uses LinkUnit, ParentLinkSettingEditFrameUnit;
 implementation
 uses
   MainModule, uniGUIApplication,
-//  OpenMCEPSettingEditFrameUnit,
-//  SocketSpecialSettingEditFrameUnit,
-  DirDownSettingEditFrameUnit,
-//  DirUpSettingEditFrameUnit,
-//  FTPCliDownLinkSettingEditFrameUnit,
-//  FTPCliUpLinkSettingEditFrameUnit,
-//  Pop3CliDownLinkSettingEditFrameUnit,
-//  SMTPClieUpLinkSettingEditFrameUnit,
-  FTPServerDownLinkSettingEditFrameUnit,
-//  FTPSrvUpLinkSettingEditFrameUnit,
-  SMTPSrvDownLinkSettingEditFrameUnit,
+{$ifdef FRONT_DCC}
   HTTPCliDownLinkSettingEditFrameUnit,
   SebaSGSLinkSettingEditFrameUnit,
-  SebaCSDLinkSettingEditFrameUnit;
+  SebaCSDLinkSettingEditFrameUnit,
+{$endif}
+{$ifdef FRONT_MSS}
+  OpenMCEPSettingEditFrameUnit,
+  SocketSpecialSettingEditFrameUnit,
+  DirUpSettingEditFrameUnit,
+  FTPCliDownLinkSettingEditFrameUnit,
+  FTPCliUpLinkSettingEditFrameUnit,
+  FTPSrvUpLinkSettingEditFrameUnit,
+  Pop3CliDownLinkSettingEditFrameUnit,
+  SMTPClieUpLinkSettingEditFrameUnit,
+{$endif}
+  DirDownSettingEditFrameUnit,
+  FTPServerDownLinkSettingEditFrameUnit,
+  SMTPSrvDownLinkSettingEditFrameUnit;
 
 function LinkFrameByType(lt: TLinkType): TParentLinkSettingEditFrameClass;
 begin
   result := nil;
   case lt of
     ltDirDown: result := TDirDownSettingEditFrame;
-//    ltDirUp: result := TDirUpSettingEditFrame;
-//    ltFtpClientDown: result := TFtpCliDownLinkSettingEditFrame;
-//    ltFtpClientUp: result := TFTPCliUpLinkSettingEditFrame;
     ltFtpServerDown: result := TFTPServerDownLinkSettingEditFrame;
-//    ltFtpServerUp: result := TFTPSrvUpLinkSettingEditFrame;
-//    ltOpenMCEP: result := TOpenMCEPSettingEditFrame;
-//    ltPop3ClientDown: result := TPop3CliDownLinkSettingEditFrame;
-//    ltSmtpCliUp: result := TSMTPClieUpLinkSettingEditFrame;
     ltSmtpSrvDown: result := TSMTPSrvDownLinkSettingEditFrame;
-//    ltSocketSpecial: result := TSocketSpecialSettingEditFrame;
+{$ifdef FRONT_DCC}
     ltHttpClientDown: result := THTTPCliDownLinkSettingEditFrame;
     ltSebaSgsClientDown: result := TSebaSGSLinkSettingEditFrame;
     ltSebaUsrCsdClientDown: result := TSebaCSDLinkSettingEditFrame;
+{$endif}
+{$ifdef FRONT_MSS}
+    ltDirUp: result := TDirUpSettingEditFrame;
+    ltFtpClientDown: result := TFtpCliDownLinkSettingEditFrame;
+    ltFtpClientUp: result := TFTPCliUpLinkSettingEditFrame;
+    ltFtpServerUp: result := TFTPSrvUpLinkSettingEditFrame;
+    ltSocketSpecial: result := TSocketSpecialSettingEditFrame;
+    ltOpenMCEP: result := TOpenMCEPSettingEditFrame;
+    ltPop3ClientDown: result := TPop3CliDownLinkSettingEditFrame;
+    ltSmtpCliUp: result := TSMTPClieUpLinkSettingEditFrame;
+{$endif}
     else exit;
   end;
 end;

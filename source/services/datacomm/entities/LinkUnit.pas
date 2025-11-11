@@ -8,7 +8,7 @@ uses
   EntityUnit,
   FuncUnit,
   KeyValUnit,
-  DownLinkSettingsUnit;
+  LinkSettingsUnit;
 
 type
 
@@ -279,19 +279,23 @@ begin
   ///  в зависимости от типа устанавливаем различные настройки
   case Value of
     ltDirDown: FDataSettings := TDirDownDataSettings.Create();
-//    ltDirUp: FDataSettings := TDirUpDataSettings.Create();
-//    ltOpenMCEP: FDataSettings := TOpenMCEPDataSettings.Create();
-//    ltSocketSpecial: FDataSettings := TSocketSpecialDataSettings.Create();
     ltFtpClientDown: FDataSettings := TFtpCliDownDataSettings.Create();
-//    ltFtpClientUp: FDataSettings := TFtpCliUpDataSettings.Create();
+{$ifdef FRONT_MSS}
+    ltDirUp: FDataSettings := TDirUpDataSettings.Create();
+    ltOpenMCEP: FDataSettings := TOpenMCEPDataSettings.Create();
+    ltSocketSpecial: FDataSettings := TSocketSpecialDataSettings.Create();
+    ltFtpClientUp: FDataSettings := TFtpCliUpDataSettings.Create();
+    ltFtpServerUp: FDataSettings := TFtpSrvUpDataSettings.Create();
+    ltSmtpCliUp: FDataSettings := TSmtpCliUpDataSettings.Create();
+{$endif}
     ltFtpServerDown: FDataSettings := TFtpSrvDownDataSettings.Create();
-//    ltFtpServerUp: FDataSettings := TFtpSrvUpDataSettings.Create();
     ltPop3ClientDown: FDataSettings := TPop3CliDownDataSettings.Create();
-//    ltSmtpCliUp: FDataSettings := TSmtpCliUpDataSettings.Create();
     ltSmtpSrvDown: FDataSettings := TSmtpSrvDownDataSettings.Create();
     ltHttpClientDown: FDataSettings := THttpCliDownDataSettings.Create();
+{$ifdef FRONT_DCC}
     ltSebaSgsClientDown:  FDataSettings := TSebaSgsCliDownDataSettings.Create();
     ltSebaUsrCsdClientDown: FDataSettings := TSebaUsrCsdCliDownDataSettings.Create();
+{$endif}
     else FLinkType :=  ltUnknown;
   end;
 end;

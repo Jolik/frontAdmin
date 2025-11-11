@@ -9,9 +9,6 @@
         <Projects Include="frontMSS\frontMSS.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="tests\BrokerTestProj\BrokerTestProj.dproj">
-            <Dependencies/>
-        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -38,23 +35,14 @@
     <Target Name="frontMSS:Make">
         <MSBuild Projects="frontMSS\frontMSS.dproj" Targets="Make"/>
     </Target>
-    <Target Name="BrokerTestProj">
-        <MSBuild Projects="tests\BrokerTestProj\BrokerTestProj.dproj"/>
-    </Target>
-    <Target Name="BrokerTestProj:Clean">
-        <MSBuild Projects="tests\BrokerTestProj\BrokerTestProj.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="BrokerTestProj:Make">
-        <MSBuild Projects="tests\BrokerTestProj\BrokerTestProj.dproj" Targets="Make"/>
-    </Target>
     <Target Name="Build">
-        <CallTarget Targets="frontDCC;frontMSS;BrokerTestProj"/>
+        <CallTarget Targets="frontDCC;frontMSS"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="frontDCC:Clean;frontMSS:Clean;BrokerTestProj:Clean"/>
+        <CallTarget Targets="frontDCC:Clean;frontMSS:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="frontDCC:Make;frontMSS:Make;BrokerTestProj:Make"/>
+        <CallTarget Targets="frontDCC:Make;frontMSS:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

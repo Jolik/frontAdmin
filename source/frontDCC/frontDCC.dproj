@@ -63,6 +63,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <SanitizedProjectName>frontDCC</SanitizedProjectName>
+        <DCC_Define>FRONT_DCC;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Linux64)'!=''">
         <DCC_UsePackage>DataSnapServer;fmx;emshosting;DbxCommonDriver;bindengine;FireDACCommonODBC;emsclient;FireDACCommonDriver;IndyProtocols;dbxcds;emsedge;bindcompfmx;inetdb;FireDACSqliteDriver;DbxClientDriver;FireDACASADriver;soapmidas;fmxFireDAC;dbexpress;FireDACInfxDriver;inet;DataSnapCommon;dbrtl;FireDACOracleDriver;CustomIPTransport;FireDACMSSQLDriver;DataSnapIndy10ServerTransport;DataSnapConnectors;FireDACMongoDBDriver;IndySystem;FireDACTDataDriver;bindcomp;FireDACCommon;DataSnapServerMidas;FireDACODBCDriver;emsserverresource;inetstn;IndyCore;RESTBackendComponents;rtl;FireDACMySQLDriver;FireDACADSDriver;RESTComponents;dsnapxml;DataSnapClient;DataSnapFireDAC;emsclientfiredac;FireDACPgDriver;FireDAC;xmlrtl;dsnap;CloudService;FireDACDb2Driver;DataSnapNativeClient;DatasnapConnectorsFreePascal;soaprtl;soapserver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
@@ -92,6 +93,8 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -175,7 +178,7 @@
         <DCCReference Include="..\services\datacomm\brokers\LinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\datacomm\entities\ConnectionSettingsUnit.pas"/>
         <DCCReference Include="..\services\datacomm\entities\DirSettingsUnit.pas"/>
-        <DCCReference Include="..\services\datacomm\entities\DownLinkSettingsUnit.pas"/>
+        <DCCReference Include="..\services\datacomm\entities\LinkSettingsUnit.pas"/>
         <DCCReference Include="..\services\datacomm\entities\LinkUnit.pas"/>
         <DCCReference Include="..\services\datacomm\entities\S3SettingsUnit.pas"/>
         <DCCReference Include="..\services\datacomm\entities\ScheduleSettingsUnit.pas"/>
@@ -238,16 +241,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas">
-            <Form>DirDownSettingEditFrame</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas">
-            <Form>FTPServerDownLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\HTTPCliDownLinkSettingEditFrameUnit.pas">
             <Form>HTTPCliDownLinkSettingEditFrame</Form>
             <FormType>dfm</FormType>
@@ -260,11 +253,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SebaSGSLinkSettingEditFrameUnit.pas">
             <Form>SebaSGSLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniFrame</DesignClass>
-        </DCCReference>
-        <DCCReference Include="..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas">
-            <Form>SMTPSrvDownLinkSettingEditFrame</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
@@ -399,6 +387,21 @@
         <DCCReference Include="..\services\tasks\brokers\TaskSourceHttpRequests.pas"/>
         <DCCReference Include="..\services\summary\brokers\SummaryTasksHttpRequests.pas"/>
         <DCCReference Include="..\services\common\entities\StringUnit.pas"/>
+        <DCCReference Include="..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas">
+            <Form>DirDownSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas">
+            <Form>FTPServerDownLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas">
+            <Form>SMTPSrvDownLinkSettingEditFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -419,6 +422,10 @@
                 <Source>
                     <Source Name="MainSource">frontDCC.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k370.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="5">
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput">

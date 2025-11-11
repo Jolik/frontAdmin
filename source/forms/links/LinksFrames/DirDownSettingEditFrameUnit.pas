@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  SharedFrameSchedule, linkUnit, DownLinkSettingsUnit,
+  SharedFrameSchedule, linkUnit, LinkSettingsUnit,
   uniGUIClasses, uniGUIFrame, ParentLinkSettingEditFrameUnit, uniSplitter,
   SharedFrameBoolInput, SharedFrameTextInput, uniGroupBox, uniGUIBaseClasses,
   uniPanel, SharedFrameS3;

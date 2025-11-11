@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
   LinkUnit,
-  DownLinkSettingsUnit,
+  LinkSettingsUnit,
   KeyValUnit,
   uniGUIClasses, uniGUIFrame, ParentLinkSettingEditFrameUnit, uniSplitter,
   SharedFrameBoolInput, SharedFrameTextInput, uniGroupBox, uniGUIBaseClasses,
