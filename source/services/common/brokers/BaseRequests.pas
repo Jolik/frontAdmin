@@ -30,8 +30,10 @@ type
     FPage: Integer;
     FPageSize: Integer;
   protected
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
   public
     constructor Create; override;
     property Page: Integer read FPage write FPage;
@@ -49,8 +51,10 @@ type
     FCompIds: TStringArray;
   protected
     procedure UpdateRawContent;
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -66,7 +70,7 @@ type
   TReqList = class(TBaseServiceRequest)
   protected
     class function BodyClassType: TFieldSetClass; override;
-    function GetReqBodyContent: string;override;
+    function GetReqBodyContent: string; override;
   public
     constructor Create; override;
     function Body: TReqListBody;
@@ -96,7 +100,7 @@ type
     // Copies fields from an entity into the request body when possible.
     // Default implementation assigns TFieldSet contents if both sides are field sets.
     procedure ApplyBody(AEntity: TFieldSet); virtual;
-    class function NewBody:TFieldSet;
+    class function NewBody: TFieldSet;
   end;
 
   // Base update request by identifier (POST/PUT with entity body)
@@ -132,7 +136,8 @@ uses
 
 { TBaseRouterRequest }
 
-function TBaseServiceRequest.CombinePaths(const BasePath, Endpoint: string): string;
+function TBaseServiceRequest.CombinePaths(const BasePath,
+  Endpoint: string): string;
 var
   B, E: string;
 begin
@@ -184,12 +189,14 @@ begin
   FPageSize := 200;
 end;
 
-procedure TPageReqBody.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TPageReqBody.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   inherited Parse(src, APropertyNames);
 end;
 
-procedure TPageReqBody.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TPageReqBody.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   inherited Serialize(dst, APropertyNames);
   dst.AddPair('page', FPage);
@@ -216,27 +223,32 @@ begin
   inherited;
 end;
 
-procedure TReqListBody.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TReqListBody.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   inherited Parse(src, APropertyNames);
   // Keep base implementation minimal; entity-specific logic belongs in descendants
 end;
 
-procedure TReqListBody.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TReqListBody.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   Arr: TJSONArray;
   S: string;
 begin
   inherited Serialize(dst, APropertyNames);
-  if not FSearchBy.IsEmpty then dst.AddPair('searchBy', FSearchBy);
-  if not FSearchStr.IsEmpty then dst.AddPair('searchStr', FSearchStr);
+  if not FSearchBy.IsEmpty then
+    dst.AddPair('searchBy', FSearchBy);
+  if not FSearchStr.IsEmpty then
+    dst.AddPair('searchStr', FSearchStr);
   if not FOrder.IsEmpty then
   begin
     Arr := TJSONArray.Create;
     Arr.Add(FOrder);
     dst.AddPair('order', Arr);
   end;
-  if not FOrderDir.IsEmpty then dst.AddPair('orderDir', FOrderDir);
+  if not FOrderDir.IsEmpty then
+    dst.AddPair('orderDir', FOrderDir);
 
   if Assigned(FDeptIds) and (FDeptIds.Count > 0) then
   begin
@@ -346,7 +358,8 @@ var
   Normalized: string;
 begin
   Normalized := Value.Trim;
-  if FId = Normalized then Exit;
+  if FId = Normalized then
+    Exit;
   FId := Normalized;
   AddPath := BuildAddPath(FId);
 end;
@@ -375,7 +388,7 @@ end;
 
 class function TReqNew.NewBody: TFieldSet;
 begin
-  Result:= BodyClassType.Create;
+  Result := BodyClassType.Create;
 end;
 
 procedure TReqNew.ApplyBody(AEntity: TFieldSet);
@@ -405,7 +418,8 @@ var
   N: string;
 begin
   N := Value.Trim;
-  if FId = N then Exit;
+  if FId = N then
+    Exit;
   FId := N;
   if FId.IsEmpty then
     AddPath := ''
@@ -440,7 +454,8 @@ var
   N: string;
 begin
   N := Value.Trim;
-  if FId = N then Exit;
+  if FId = N then
+    Exit;
   FId := N;
   if FId.IsEmpty then
     AddPath := ''

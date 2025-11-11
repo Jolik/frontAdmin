@@ -15,8 +15,8 @@ type
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TLinkReqInfo): TLinkInfoResponse; overload;
     function Info(AReq: TReqInfo): TEntityResponse; overload; override;
-    function New(AReq: TLinkReqNew): TJSONResponse; overload;
-    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
+    function New(AReq: TLinkReqNew): TIdNewResponse; overload;
+    function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TLinkReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload; override;
     function Remove(AReq: TLinkReqRemove): TJSONResponse; overload;
@@ -49,15 +49,15 @@ begin
   Result := List(AReq as TReqList) as TLinkListResponse;
 end;
 
-function TLinksRestBroker.New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse;
+function TLinksRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
-  Result := inherited New(AReq, AResp);
+  Result := TIdNewResponse.Create('lid');
+  Result := inherited New(AReq, Result);
 end;
 
-function TLinksRestBroker.New(AReq: TLinkReqNew): TJSONResponse;
+function TLinksRestBroker.New(AReq: TLinkReqNew): TIdNewResponse;
 begin
-  Result := TJSONResponse.Create;
-  HttpClient.Request(AReq, Result);
+  result:= New(AReq as TReqNew) as TIdNewResponse
 end;
 
 function TLinksRestBroker.Remove(AReq: TReqRemove): TJSONResponse;

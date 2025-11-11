@@ -19,8 +19,8 @@ uses
     function TypesList(AReq: TTaskTypesReqList): TTaskTypesListResponse;
     function Info(AReq: TTaskReqInfo): TTaskInfoResponse; overload;
     function Info(AReq: TReqInfo): TEntityResponse; overload; override;
-    function New(AReq: TTaskReqNew): TTaskNewResponse; overload;
-    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
+    function New(AReq: TTaskReqNew): TIdNewResponse; overload;
+    function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TTaskReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload; override;
     function Remove(AReq: TTaskReqRemove): TJSONResponse; overload;
@@ -48,16 +48,15 @@ begin
   Result := List(AReq as TReqList) as TTaskListResponse;
 end;
 
-function TTasksRestBroker.New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse;
+function TTasksRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
-  Result := TTaskNewResponse.Create;
+  Result := TIdNewResponse.Create('tid');
   Result := inherited New(AReq, Result);
 end;
 
-function TTasksRestBroker.New(AReq: TTaskReqNew): TTaskNewResponse;
+function TTasksRestBroker.New(AReq: TTaskReqNew): TIdNewResponse;
 begin
-  Result := TTaskNewResponse.Create;
-  New(AReq as TReqNew, Result);
+  result:= New(AReq as TReqNew) as TIdNewResponse;
 end;
 
 function TTasksRestBroker.Remove(AReq: TReqRemove): TJSONResponse;

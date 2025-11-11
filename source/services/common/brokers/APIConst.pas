@@ -20,7 +20,6 @@ const
 const
   constURLDatacommBasePath = '/datacomm/api/v1';
 
-
 const
   constURLDrvcommBasePath = '/drvcomm/api/v1';
 

@@ -15,8 +15,8 @@ type
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TDepartmentReqInfo): TDepartmentInfoResponse; overload;
     function Info(AReq: TReqInfo): TEntityResponse; overload; override;
-    function New(AReq: TDepartmentReqNew): TJSONResponse; overload;
-    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload;
+    function New(AReq: TDepartmentReqNew): TIdNewResponse; overload;
+    function New(AReq: TReqNew): TJSONResponse; overload;
     function Update(AReq: TDepartmentReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload; override;
     function Remove(AReq: TDepartmentReqRemove): TJSONResponse; overload;
@@ -49,15 +49,15 @@ begin
   Result := List(AReq as TReqList) as TDepartmentListResponse;
 end;
 
-function TDepartmentsRestBroker.New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse;
+function TDepartmentsRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
-  Result := inherited New(AReq, AResp);
+  Result := TIdNewResponse.Create('depid');
+  Result := inherited New(AReq, Result);
 end;
 
-function TDepartmentsRestBroker.New(AReq: TDepartmentReqNew): TJSONResponse;
+function TDepartmentsRestBroker.New(AReq: TDepartmentReqNew): TIdNewResponse;
 begin
-  Result := TJSONResponse.Create;
-  HttpClient.Request(AReq, Result);
+  result:= New(AReq as TReqNew) as  TIdNewResponse;
 end;
 
 function TDepartmentsRestBroker.Remove(AReq: TReqRemove): TJSONResponse;

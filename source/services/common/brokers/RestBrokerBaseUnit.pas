@@ -17,24 +17,21 @@ type
     constructor Create(const ATicket: string = ''); virtual;
     property Ticket: string read FTicket write FTicket;
 
-      // фабрика базовых запросов (универсальные и безопасные)
+    // фабрика базовых запросов (универсальные и безопасные)
     function CreateReqList: TReqList; virtual;
-    function CreateReqInfo(id:string=''): TReqInfo; virtual;
+    function CreateReqInfo(id: string = ''): TReqInfo; virtual;
     function CreateReqNew: TReqNew; virtual;
     function CreateReqUpdate: TReqUpdate; virtual;
     function CreateReqRemove: TReqRemove; virtual;
 
-
-    function ExcuteRaw(AReq: THttpRequest; AResp: TJSONResponse): integer; virtual;
-
+    function ExcuteRaw(AReq: THttpRequest; AResp: TJSONResponse)
+      : integer; virtual;
 
     function New(AReq: TReqNew): TJSONResponse; virtual;
     function Update(AReq: TReqUpdate): TJSONResponse; virtual;
     function Remove(AReq: TReqRemove): TJSONResponse; virtual;
 
   end;
-
-  
 
 implementation
 
@@ -54,7 +51,8 @@ begin
   FTicket := ATicket;
 end;
 
-function TRestBrokerBase.ExcuteRaw(AReq: THttpRequest; AResp: TJSONResponse): integer;
+function TRestBrokerBase.ExcuteRaw(AReq: THttpRequest;
+  AResp: TJSONResponse): integer;
 begin
   ApplyTicket(AReq);
   Result := HttpClient.Request(AReq, AResp);
@@ -62,7 +60,7 @@ end;
 
 { TRestBrokerBaseBase }
 
-function TRestBrokerBase.CreateReqInfo(id:string=''): TReqInfo;
+function TRestBrokerBase.CreateReqInfo(id: string = ''): TReqInfo;
 begin
   Result := TReqInfo.CreateID(id);
 end;

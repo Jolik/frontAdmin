@@ -9,7 +9,7 @@ uses
 
 type
   /// <summary>
-  ///   Router abonent entity.
+  /// Router abonent entity.
   /// </summary>
   TAbonent = class(TEntity)
   private
@@ -22,13 +22,16 @@ type
     function GetIdKey: string; override;
   public
     constructor Create; overload; override;
-    constructor Create(src: TJSONObject; const APropertyNames: TArray<string> = nil); overload; override;
+    constructor Create(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); overload; override;
     destructor Destroy; override;
 
     function Assign(ASource: TFieldSet): boolean; override;
 
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
 
     property Abid: string read GetAbid write SetAbid;
     property Channels: TFieldSetStringList read FChannels;
@@ -36,7 +39,7 @@ type
   end;
 
   /// <summary>
-  ///   List of router abonents.
+  /// List of router abonents.
   /// </summary>
   TAbonentList = class(TEntityList)
   public
@@ -61,7 +64,7 @@ begin
   if not inherited Assign(ASource) then
     Exit;
 
-  if not (ASource is TAbonent) then
+  if not(ASource is TAbonent) then
     Exit;
 
   SourceAbonent := TAbonent(ASource);
@@ -85,7 +88,8 @@ begin
   FAttr := TFieldSetStringListObject.Create;
 end;
 
-constructor TAbonent.Create(src: TJSONObject; const APropertyNames: TArray<string>);
+constructor TAbonent.Create(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   Create;
 
@@ -110,7 +114,8 @@ begin
   inherited;
 end;
 
-procedure TAbonent.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TAbonent.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   Value: TJSONValue;
 begin
@@ -138,7 +143,8 @@ begin
     FAttr.Clear;
 end;
 
-procedure TAbonent.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TAbonent.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   ChannelsArray: TJSONArray;
   AttrObject: TJSONObject;

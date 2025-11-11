@@ -10,37 +10,46 @@ uses
   EntityUnit;
 
 type
-      // Base REST broker that operates on base request types
+  // Base REST broker that operates on base request types
   TRestEntityBroker = class(TRestBrokerBase)
     function List(AReq: TReqList): TListResponse; overload; virtual;
-    function List(AReq: TReqList; AResp: TListResponse): TListResponse; overload; virtual;
+    function List(AReq: TReqList; AResp: TListResponse): TListResponse;
+      overload; virtual;
     // выборка сущностей с указанием типа списка и ключа массива
-    function List(AReq: TReqList; AListClass: TEntityListClass; const AItemsKey: string = 'items'): TListResponse; overload; virtual;
+    function List(AReq: TReqList; AListClass: TEntityListClass;
+      const AItemsKey: string = 'items'): TListResponse; overload; virtual;
     // выборка всех страниц с учетом info (page/pagecount/pagesize/total)
     function ListAll(AReq: TReqList): TListResponse; overload; virtual;
-    function ListAll(AReq: TReqList; AListClass: TEntityListClass; const AItemsKey: string = 'items'): TListResponse; overload; virtual;
+    function ListAll(AReq: TReqList; AListClass: TEntityListClass;
+      const AItemsKey: string = 'items'): TListResponse; overload; virtual;
     // прямая, принимающая любой THttpRequest; создает подходящий ответ
-    function ListRaw2(AReq: THttpRequest; AListClass: TEntityListClass; const AItemsKey: string = 'items'): TListResponse; virtual;
+    function ListRaw2(AReq: THttpRequest; AListClass: TEntityListClass;
+      const AItemsKey: string = 'items'): TListResponse; virtual;
     // получение info: одного объекта по идентификатору
-    function Info(AReq: TReqInfo; AResp: TEntityResponse): TEntityResponse; overload; virtual;
+    function Info(AReq: TReqInfo; AResp: TEntityResponse): TEntityResponse;
+      overload; virtual;
     function Info(AReq: TReqInfo): TEntityResponse; overload; virtual;
-    function InfoEntity(AReq: TReqInfo; AEntityClass: TEntityClass; const AItemKey: string = 'item'): TEntityResponse; virtual;
-    
-    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; virtual;
+    function InfoEntity(AReq: TReqInfo; AEntityClass: TEntityClass;
+      const AItemKey: string = 'item'): TEntityResponse; virtual;
+
+    function New(AReq: TReqNew; AResp: TJSONResponse): TJSONResponse;
+      overload; virtual;
   end;
 
 implementation
 
 uses System.Math;
 
-function TRestEntityBroker.List(AReq: TReqList; AResp: TListResponse): TListResponse;
+function TRestEntityBroker.List(AReq: TReqList; AResp: TListResponse)
+  : TListResponse;
 begin
   Result := AResp;
   ApplyTicket(AReq);
   HttpClient.Request(AReq, AResp);
 end;
 
-function TRestEntityBroker.List(AReq: TReqList; AListClass: TEntityListClass; const AItemsKey: string): TListResponse;
+function TRestEntityBroker.List(AReq: TReqList; AListClass: TEntityListClass;
+  const AItemsKey: string): TListResponse;
 begin
   Result := TListResponse.Create(AListClass);
   ApplyTicket(AReq);
@@ -49,7 +58,8 @@ begin
   HttpClient.Request(AReq, Result);
 end;
 
-function TRestEntityBroker.Info(AReq: TReqInfo; AResp: TEntityResponse): TEntityResponse;
+function TRestEntityBroker.Info(AReq: TReqInfo; AResp: TEntityResponse)
+  : TEntityResponse;
 begin
   Result := AResp;
   ApplyTicket(AReq);
@@ -64,7 +74,8 @@ begin
   HttpClient.Request(AReq, Result);
 end;
 
-function TRestEntityBroker.InfoEntity(AReq: TReqInfo; AEntityClass: TEntityClass; const AItemKey: string): TEntityResponse;
+function TRestEntityBroker.InfoEntity(AReq: TReqInfo;
+  AEntityClass: TEntityClass; const AItemKey: string): TEntityResponse;
 begin
   Result := TEntityResponse.Create(AEntityClass, 'response', AItemKey);
   ApplyTicket(AReq);
@@ -78,21 +89,21 @@ begin
   HttpClient.Request(AReq, Result);
 end;
 
-function TRestEntityBroker.ListRaw2(AReq: THttpRequest; AListClass: TEntityListClass; const AItemsKey: string): TListResponse;
+function TRestEntityBroker.ListRaw2(AReq: THttpRequest;
+  AListClass: TEntityListClass; const AItemsKey: string): TListResponse;
 begin
   Result := TListResponse.Create(AListClass);
   ApplyTicket(AReq);
   HttpClient.Request(AReq, Result);
 end;
 
-function TRestEntityBroker.New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse;
+function TRestEntityBroker.New(AReq: TReqNew; AResp: TJSONResponse)
+  : TJSONResponse;
 begin
   Result := AResp;
   ApplyTicket(AReq);
   HttpClient.Request(AReq, Result as TJSONResponse);
 end;
-
-
 
 function TRestEntityBroker.ListAll(AReq: TReqList): TListResponse;
 var
@@ -113,25 +124,33 @@ begin
 
     for var i := 0 to First.EntityList.Count - 1 do
     begin
-      var Src := First.EntityList[i];
-      var ItemCls := TEntityClass(Src.ClassType);
-      var Copy := ItemCls.Create;
+      var
+      Src := First.EntityList[i];
+      var
+      ItemCls := TEntityClass(Src.ClassType);
+      var
+      Copy := ItemCls.Create;
       Copy.Assign(Src);
       Result.EntityList.Add(Copy);
     end;
 
-    if (First.PageCount <= 1) or (not Assigned(Body)) then Exit;
+    if (First.PageCount <= 1) or (not Assigned(Body)) then
+      Exit;
 
     for var P := Max(2, First.Page + 1) to First.PageCount do
     begin
       Body.Page := P;
-      var Next := List(AReq, ListCls, First.ItemsKey);
+      var
+      Next := List(AReq, ListCls, First.ItemsKey);
       try
         for var j := 0 to Next.EntityList.Count - 1 do
         begin
-          var Src2 := Next.EntityList[j];
-          var ItemCls2 := TEntityClass(Src2.ClassType);
-          var Copy2 := ItemCls2.Create;
+          var
+          Src2 := Next.EntityList[j];
+          var
+          ItemCls2 := TEntityClass(Src2.ClassType);
+          var
+          Copy2 := ItemCls2.Create;
           Copy2.Assign(Src2);
           Result.EntityList.Add(Copy2);
         end;
@@ -140,12 +159,14 @@ begin
       end;
     end;
   finally
-    if Assigned(Body) then Body.Page := OrigPage;
+    if Assigned(Body) then
+      Body.Page := OrigPage;
     First.Free;
   end;
 end;
 
-function TRestEntityBroker.ListAll(AReq: TReqList; AListClass: TEntityListClass; const AItemsKey: string): TListResponse;
+function TRestEntityBroker.ListAll(AReq: TReqList; AListClass: TEntityListClass;
+  const AItemsKey: string): TListResponse;
 var
   Body: TReqListBody;
   OrigPage: Integer;
@@ -153,7 +174,8 @@ var
 begin
   Body := AReq.Body;
   OrigPage := 0;
-  if Assigned(Body) then OrigPage := Body.Page;
+  if Assigned(Body) then
+    OrigPage := Body.Page;
 
   First := List(AReq, AListClass, AItemsKey);
   try
@@ -161,25 +183,33 @@ begin
 
     for var i := 0 to First.EntityList.Count - 1 do
     begin
-      var Src := First.EntityList[i];
-      var ItemCls := TEntityClass(Src.ClassType);
-      var Copy := ItemCls.Create;
+      var
+      Src := First.EntityList[i];
+      var
+      ItemCls := TEntityClass(Src.ClassType);
+      var
+      Copy := ItemCls.Create;
       Copy.Assign(Src);
       Result.EntityList.Add(Copy);
     end;
 
-    if (First.PageCount <= 1) or (not Assigned(Body)) then Exit;
+    if (First.PageCount <= 1) or (not Assigned(Body)) then
+      Exit;
 
     for var P := Max(2, First.Page + 1) to First.PageCount do
     begin
       Body.Page := P;
-      var Next := List(AReq, AListClass, AItemsKey);
+      var
+      Next := List(AReq, AListClass, AItemsKey);
       try
         for var j := 0 to Next.EntityList.Count - 1 do
         begin
-          var Src2 := Next.EntityList[j];
-          var ItemCls2 := TEntityClass(Src2.ClassType);
-          var Copy2 := ItemCls2.Create;
+          var
+          Src2 := Next.EntityList[j];
+          var
+          ItemCls2 := TEntityClass(Src2.ClassType);
+          var
+          Copy2 := ItemCls2.Create;
           Copy2.Assign(Src2);
           Result.EntityList.Add(Copy2);
         end;
@@ -188,7 +218,8 @@ begin
       end;
     end;
   finally
-    if Assigned(Body) then Body.Page := OrigPage;
+    if Assigned(Body) then
+      Body.Page := OrigPage;
     First.Free;
   end;
 end;

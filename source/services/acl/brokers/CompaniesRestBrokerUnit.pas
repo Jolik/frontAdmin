@@ -15,8 +15,8 @@ type
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TCompanyReqInfo): TCompanyInfoResponse; overload;
     function Info(AReq: TReqInfo): TEntityResponse; overload; override;
-    function New(AReq: TCompanyReqNew): TJSONResponse; overload;
-    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
+    function New(AReq: TCompanyReqNew): TIdNewResponse; overload;
+    function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TCompanyReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload; override;
     function Remove(AReq: TCompanyReqRemove): TJSONResponse; overload;
@@ -49,15 +49,15 @@ begin
   Result := List(AReq as TReqList) as TCompanyListResponse;
 end;
 
-function TCompaniesRestBroker.New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse;
+function TCompaniesRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
-  Result := inherited New(AReq, AResp);
+  Result:= TIdNewResponse.Create('compid');
+  Result := inherited New(AReq, Result);
 end;
 
-function TCompaniesRestBroker.New(AReq: TCompanyReqNew): TJSONResponse;
+function TCompaniesRestBroker.New(AReq: TCompanyReqNew): TIdNewResponse;
 begin
-  Result := TJSONResponse.Create;
-  HttpClient.Request(AReq, Result);
+  Result:= New(AReq as TReqNew) as TIdNewResponse;
 end;
 
 function TCompaniesRestBroker.Remove(AReq: TReqRemove): TJSONResponse;

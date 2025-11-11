@@ -18,21 +18,25 @@ type
     property Value: T read FValue;
   end;
 
-function ExtractJSONProperties(
-  const ASourceJSONObject: TJSONObject;
+function ExtractJSONProperties(const ASourceJSONObject: TJSONObject;
   const APropertyNames: TArray<string>): TJSONObject;
 
 function JSONArrayToStringList(AJSONArray: TJSONArray): TStringList;
-function JSONArrayToDictionary(AJSONArray: TJSONArray): TDictionary<string, string>;
-function GetValueInt64Def(json: TJSONValue; path: string; default: Int64): Int64;
-function GetValueFloatDef(json: TJSONValue; path: string; default: Float64): Float64;
-function GetNullableFloat(json: TJSONValue; path: string): Nullable<Double>;
-function GetValueIntDef(json: TJSONValue; path: string; default: integer): integer;
-function GetNullableInt(json: TJSONValue; path: string): Nullable<Integer>;
-function GetNullableInt64(json: TJSONValue; path: string): Nullable<Int64>;
-function GetValueStrDef(json: TJSONValue; path: string; default: string): string;
-function GetNullableStr(json: TJSONValue; path: string): Nullable<string>;
-function GetValueBool(json: TJSONValue; path: string): boolean;
+function JSONArrayToDictionary(AJSONArray: TJSONArray)
+  : TDictionary<string, string>;
+function GetValueInt64Def(JSON: TJSONValue; path: string;
+  default: Int64): Int64;
+function GetValueFloatDef(JSON: TJSONValue; path: string;
+  default: Float64): Float64;
+function GetNullableFloat(JSON: TJSONValue; path: string): Nullable<Double>;
+function GetValueIntDef(JSON: TJSONValue; path: string;
+  default: integer): integer;
+function GetNullableInt(JSON: TJSONValue; path: string): Nullable<integer>;
+function GetNullableInt64(JSON: TJSONValue; path: string): Nullable<Int64>;
+function GetValueStrDef(JSON: TJSONValue; path: string;
+  default: string): string;
+function GetNullableStr(JSON: TJSONValue; path: string): Nullable<string>;
+function GetValueBool(JSON: TJSONValue; path: string): Boolean;
 function ClassNameSafe(o: TObject): string;
 
 implementation
@@ -48,7 +52,7 @@ end;
 procedure Nullable<T>.Clear;
 begin
   FHasValue := False;
-  FValue := Default(T);
+  FValue := Default (T);
 end;
 
 function Nullable<T>.ValueOrDefault(const AValue: T): T;
@@ -59,11 +63,10 @@ begin
     Result := AValue;
 end;
 
-function ExtractJSONProperties(
-  const ASourceJSONObject: TJSONObject;
+function ExtractJSONProperties(const ASourceJSONObject: TJSONObject;
   const APropertyNames: TArray<string>): TJSONObject;
 var
-  I: Integer;
+  I: integer;
   PropName: string;
   JSONValue: TJSONValue;
 begin
@@ -83,7 +86,7 @@ end;
 
 function JSONArrayToStringList(AJSONArray: TJSONArray): TStringList;
 var
-  I: Integer;
+  I: integer;
 begin
   Result := TStringList.Create;
   try
@@ -105,9 +108,10 @@ begin
   end;
 end;
 
-function JSONArrayToDictionary(AJSONArray: TJSONArray): TDictionary<string, string>;
+function JSONArrayToDictionary(AJSONArray: TJSONArray)
+  : TDictionary<string, string>;
 var
-  I: Integer;
+  I: integer;
   JSONObject: TJSONObject;
   Key, Value: string;
 begin
@@ -125,7 +129,7 @@ begin
 
         // Предполагаем структуру: {"key": "ключ", "value": "значение"}
         if JSONObject.TryGetValue<string>('key', Key) and
-           JSONObject.TryGetValue<string>('value', Value) then
+          JSONObject.TryGetValue<string>('value', Value) then
         begin
           Result.AddOrSetValue(Key, Value);
         end;
@@ -137,25 +141,26 @@ begin
   end;
 end;
 
-function GetValueFloatDef(json: TJSONValue; path: string; default: Float64): Float64;
+function GetValueFloatDef(JSON: TJSONValue; path: string;
+  default: Float64): Float64;
 begin
   Result := default;
   try
-    json.TryGetValue<Float64>(path, Result);
+    JSON.TryGetValue<Float64>(path, Result);
   except
   end;
 end;
 
-function GetNullableFloat(json: TJSONValue; path: string): Nullable<Double>;
+function GetNullableFloat(JSON: TJSONValue; path: string): Nullable<Double>;
 var
   Value: Double;
   Node: TJSONValue;
 begin
   Result.Clear;
-  if not Assigned(json) then
+  if not Assigned(JSON) then
     Exit;
 
-  Node := json.FindValue(path);
+  Node := JSON.FindValue(path);
   if not Assigned(Node) or (Node is TJSONNull) then
     Exit;
 
@@ -163,51 +168,53 @@ begin
     Result := Nullable<Double>.Create(Value);
 end;
 
-function GetValueInt64Def(json: TJSONValue; path: string; default: Int64): Int64;
+function GetValueInt64Def(JSON: TJSONValue; path: string;
+  default: Int64): Int64;
 begin
   Result := default;
   try
-    json.TryGetValue<Int64>(path, Result);
+    JSON.TryGetValue<Int64>(path, Result);
   except
   end;
 end;
 
-function GetValueIntDef(json: TJSONValue; path: string; default: integer): integer;
+function GetValueIntDef(JSON: TJSONValue; path: string;
+  default: integer): integer;
 begin
-  result := default;
+  Result := default;
   try
-    json.TryGetValue<integer>(path, result);
+    JSON.TryGetValue<integer>(path, Result);
   except
   end;
 end;
 
-function GetNullableInt(json: TJSONValue; path: string): Nullable<Integer>;
+function GetNullableInt(JSON: TJSONValue; path: string): Nullable<integer>;
 var
-  Value: Integer;
+  Value: integer;
   Node: TJSONValue;
 begin
   Result.Clear;
-  if not Assigned(json) then
+  if not Assigned(JSON) then
     Exit;
 
-  Node := json.FindValue(path);
+  Node := JSON.FindValue(path);
   if not Assigned(Node) or (Node is TJSONNull) then
     Exit;
 
-  if Node.TryGetValue<Integer>(Value) then
-    Result := Nullable<Integer>.Create(Value);
+  if Node.TryGetValue<integer>(Value) then
+    Result := Nullable<integer>.Create(Value);
 end;
 
-function GetNullableInt64(json: TJSONValue; path: string): Nullable<Int64>;
+function GetNullableInt64(JSON: TJSONValue; path: string): Nullable<Int64>;
 var
   Value: Int64;
   Node: TJSONValue;
 begin
   Result.Clear;
-  if not Assigned(json) then
+  if not Assigned(JSON) then
     Exit;
 
-  Node := json.FindValue(path);
+  Node := JSON.FindValue(path);
   if not Assigned(Node) or (Node is TJSONNull) then
     Exit;
 
@@ -215,28 +222,26 @@ begin
     Result := Nullable<Int64>.Create(Value);
 end;
 
-
-
-function GetValueStrDef(json: TJSONValue; path: string; default: string): string;
+function GetValueStrDef(JSON: TJSONValue; path: string;
+  default: string): string;
 begin
-  result := default;
+  Result := default;
   try
-    json.TryGetValue<string>(path, result);
+    JSON.TryGetValue<string>(path, Result);
   except
   end;
 end;
 
-
-function GetNullableStr(json: TJSONValue; path: string): Nullable<string>;
+function GetNullableStr(JSON: TJSONValue; path: string): Nullable<string>;
 var
   Value: string;
   Node: TJSONValue;
 begin
   Result.Clear;
-  if not Assigned(json) then
+  if not Assigned(JSON) then
     Exit;
 
-  Node := json.FindValue(path);
+  Node := JSON.FindValue(path);
   if not Assigned(Node) or (Node is TJSONNull) then
     Exit;
 
@@ -244,25 +249,23 @@ begin
     Result := Nullable<string>.Create(Value);
 end;
 
-
-function GetValueBool(json: TJSONValue; path: string): boolean;
+function GetValueBool(JSON: TJSONValue; path: string): Boolean;
 begin
-  result := false;
+  Result := False;
   try
-    json.TryGetValue<boolean>(path, result);
+    JSON.TryGetValue<Boolean>(path, Result);
   except
   end;
 end;
-
 
 function ClassNameSafe(o: TObject): string;
 begin
   if o = nil then
   begin
-    result := 'nil';
-    exit;
+    Result := 'nil';
+    Exit;
   end;
-  result := o.ClassName;
+  Result := o.ClassName;
 end;
 
 end.

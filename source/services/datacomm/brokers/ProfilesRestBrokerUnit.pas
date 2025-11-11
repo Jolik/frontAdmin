@@ -16,7 +16,7 @@ type
     function Info(AReq: TProfileReqInfo): TProfileInfoResponse; overload;
     function Info(AReq: TReqInfo): TEntityResponse; overload; override;
     function New(AReq: TProfileReqNew): TJSONResponse; overload;
-    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
+    function New(AReq: TReqNew; AResp: TJSONResponse): TJSONResponse; overload; override;
     function Update(AReq: TProfileReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload; override;
     function Remove(AReq: TProfileReqRemove): TJSONResponse; overload;
@@ -50,7 +50,7 @@ begin
   Result := List(AReq as TReqList) as TProfileListResponse;
 end;
 
-function TProfilesRestBroker.New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse;
+function TProfilesRestBroker.New(AReq: TReqNew; AResp: TJSONResponse): TJSONResponse;
 begin
   Result := inherited New(AReq, AResp);
 end;

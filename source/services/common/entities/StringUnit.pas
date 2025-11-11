@@ -8,7 +8,7 @@ uses
 
 type
   /// <summary>
-  ///   String list item.
+  /// String list item.
   /// </summary>
   TFieldSetString = class(TFieldSet)
   private
@@ -18,26 +18,28 @@ type
     constructor Create(const AValue: string); reintroduce; overload;
 
     function Assign(ASource: TFieldSet): boolean; override;
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
 
     /// <summary>
-    ///   Parses a value from an arbitrary JSON element.
+    /// Parses a value from an arbitrary JSON element.
     /// </summary>
     procedure ParseValue(const AValue: TJSONValue);
     /// <summary>
-    ///   Creates a JSON representation of the string.
+    /// Creates a JSON representation of the string.
     /// </summary>
     function SerializeValue: TJSONValue;
 
     /// <summary>
-    ///   Stored text value.
+    /// Stored text value.
     /// </summary>
     property Value: string read FValue write FValue;
   end;
 
   /// <summary>
-  ///   List of string values.
+  /// List of string values.
   /// </summary>
   TFieldSetStringList = class(TFieldSetList)
   private
@@ -50,29 +52,32 @@ type
   public
     function Assign(ASource: TFieldSetList): boolean; override;
 
-    procedure ParseList(src: TJSONArray; const APropertyNames: TArray<string> = nil); overload; override;
-    procedure AddList(src: TJSONArray; const APropertyNames: TArray<string> = nil); overload; override;
-    procedure SerializeList(dst: TJSONArray; const APropertyNames: TArray<string> = nil); overload; override;
+    procedure ParseList(src: TJSONArray;
+      const APropertyNames: TArray<string> = nil); overload; override;
+    procedure AddList(src: TJSONArray;
+      const APropertyNames: TArray<string> = nil); overload; override;
+    procedure SerializeList(dst: TJSONArray;
+      const APropertyNames: TArray<string> = nil); overload; override;
 
     /// <summary>
-    ///   Adds a new value.
+    /// Adds a new value.
     /// </summary>
     procedure AddString(const AValue: string);
     /// <summary>
-    ///   Clears the list.
+    /// Clears the list.
     /// </summary>
     procedure ClearStrings;
     /// <summary>
-    ///   Represents the contents as an array of strings.
+    /// Represents the contents as an array of strings.
     /// </summary>
     function ToStringArray: TArray<string>;
 
-//    property Items[Index: Integer]: TFieldSetString read GetStringItem write SetStringItem; default;
-//    property Strings[Index: Integer]: string read GetItemValue write SetItemValue;
+    // property Items[Index: Integer]: TFieldSetString read GetStringItem write SetStringItem; default;
+    // property Strings[Index: Integer]: string read GetItemValue write SetItemValue;
   end;
 
   /// <summary>
-  ///   Named string value stored inside a JSON object.
+  /// Named string value stored inside a JSON object.
   /// </summary>
   TFieldSetNamedString = class(TFieldSetString)
   private
@@ -87,7 +92,7 @@ type
   end;
 
   /// <summary>
-  ///   JSON object with string values.
+  /// JSON object with string values.
   /// </summary>
   TFieldSetStringListObject = class(TFieldSetStringList)
   private
@@ -96,26 +101,31 @@ type
   protected
     class function ItemClassType: TFieldSetClass; override;
     class function ShouldIncludeProperty(const APropertyName: string;
-      const APropertyNames: TArray<string>): Boolean; static;
+      const APropertyNames: TArray<string>): boolean; static;
   public
-    constructor Create(src: TJSONObject; const APropertyNames: TArray<string> = nil); overload; virtual;
+    constructor Create(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); overload; virtual;
 
     function Assign(ASource: TFieldSetList): boolean; override;
 
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); virtual;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); virtual;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); virtual;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); virtual;
 
     function Find(const AName: string): TFieldSetNamedString;
     procedure AddPair(const AName, AValue: string);
     function GetValue(const AName: string): string;
     procedure SetValue(const AName, AValue: string);
 
-    property Pairs[Index: Integer]: TFieldSetNamedString read GetNamedItem write SetNamedItem;
-    property Values[const AName: string]: string read GetValue write SetValue; default;
+    property Pairs[Index: Integer]: TFieldSetNamedString read GetNamedItem
+      write SetNamedItem;
+    property Values[const AName: string]: string read GetValue
+      write SetValue; default;
   end;
 
   /// <summary>
-  ///   Named list of strings in the form "name": ["values"].
+  /// Named list of strings in the form "name": ["values"].
   /// </summary>
   TNamedStringList = class(TFieldSet)
   private
@@ -123,33 +133,37 @@ type
     FValues: TFieldSetStringList;
   protected
     class function ShouldIncludeProperty(const APropertyName: string;
-      const APropertyNames: TArray<string>): Boolean; static;
+      const APropertyNames: TArray<string>): boolean; static;
   public
     constructor Create; overload; override;
-    constructor Create(src: TJSONObject; const APropertyNames: TArray<string> = nil); overload; override;
+    constructor Create(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); overload; override;
     destructor Destroy; override;
 
     function Assign(ASource: TFieldSet): boolean; override;
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
 
     /// <summary>
-    ///   Parses a JSON pair.
+    /// Parses a JSON pair.
     /// </summary>
-    procedure ParsePair(APair: TJSONPair; const APropertyNames: TArray<string> = nil);
+    procedure ParsePair(APair: TJSONPair;
+      const APropertyNames: TArray<string> = nil);
 
     /// <summary>
-    ///   Name of the string set.
+    /// Name of the string set.
     /// </summary>
     property Name: string read FName write FName;
     /// <summary>
-    ///   Values associated with the name.
+    /// Values associated with the name.
     /// </summary>
     property Values: TFieldSetStringList read FValues;
   end;
 
   /// <summary>
-  ///   Collection of named string lists in the form
+  /// Collection of named string lists in the form
   /// </summary>
   TNamedStringListList = class(TFieldSetList)
   private
@@ -160,26 +174,35 @@ type
   public
     function Assign(ASource: TFieldSetList): boolean; overload; override;
 
-    procedure ParseList(src: TJSONArray; const APropertyNames: TArray<string> = nil); overload; override;
-    procedure AddList(src: TJSONArray; const APropertyNames: TArray<string> = nil); overload; override;
-    procedure SerializeList(dst: TJSONArray; const APropertyNames: TArray<string> = nil); overload; override;
+    procedure ParseList(src: TJSONArray;
+      const APropertyNames: TArray<string> = nil); overload; override;
+    procedure AddList(src: TJSONArray;
+      const APropertyNames: TArray<string> = nil); overload; override;
+    procedure SerializeList(dst: TJSONArray;
+      const APropertyNames: TArray<string> = nil); overload; override;
 
-    constructor Create(src: TJSONObject; const APropertyNames: TArray<string> = nil); overload; virtual;
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); overload; virtual;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); overload; virtual;
+    constructor Create(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); overload; virtual;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); overload; virtual;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); overload; virtual;
 
-//    property Items[Index: Integer]: TNamedStringList read GetNamedList write SetNamedList; default;
+    // property Items[Index: Integer]: TNamedStringList read GetNamedList write SetNamedList; default;
   end;
 
   /// <summary>
-  ///   JSON object with named string lists.
+  /// JSON object with named string lists.
   /// </summary>
   TNamedStringListsObject = class(TNamedStringListList)
   public
-    constructor Create(src: TJSONObject; const APropertyNames: TArray<string> = nil); overload;
+    constructor Create(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); overload;
 
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
   end;
 
 implementation
@@ -193,7 +216,7 @@ begin
   if not Assigned(ASource) then
     Exit;
 
-  if not (ASource is TFieldSetString) then
+  if not(ASource is TFieldSetString) then
     Exit;
 
   FValue := TFieldSetString(ASource).Value;
@@ -215,7 +238,8 @@ begin
   FValue := AValue;
 end;
 
-procedure TFieldSetString.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TFieldSetString.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   FValue := '';
 
@@ -241,7 +265,8 @@ begin
     FValue := AValue.Value;
 end;
 
-procedure TFieldSetString.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TFieldSetString.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   if not Assigned(dst) then
     Exit;
@@ -256,14 +281,16 @@ end;
 
 { TFieldSetStringList }
 
-procedure TFieldSetStringList.AddList(src: TJSONArray; const APropertyNames: TArray<string>);
+procedure TFieldSetStringList.AddList(src: TJSONArray;
+  const APropertyNames: TArray<string>);
 begin
   if not Assigned(src) then
     Exit;
 
   for var Value in src do
   begin
-    var Item := TFieldSetString(ItemClassType.Create);
+    var
+    Item := TFieldSetString(ItemClassType.Create);
     try
       Item.ParseValue(Value);
       Add(Item);
@@ -298,14 +325,14 @@ begin
   if not Assigned(ASource) then
     Exit;
 
-  if not (ASource is TFieldSetStringList) then
+  if not(ASource is TFieldSetStringList) then
     Exit;
 
   Clear;
   for Index := 0 to ASource.Count - 1 do
   begin
     SourceItem := ASource.Items[Index];
-    if not (SourceItem is TFieldSetString) then
+    if not(SourceItem is TFieldSetString) then
       Continue;
     AddString(TFieldSetString(SourceItem).Value);
   end;
@@ -345,7 +372,8 @@ begin
   Result := TFieldSetString;
 end;
 
-procedure TFieldSetStringList.ParseList(src: TJSONArray; const APropertyNames: TArray<string>);
+procedure TFieldSetStringList.ParseList(src: TJSONArray;
+  const APropertyNames: TArray<string>);
 var
   Value: TJSONValue;
   Item: TFieldSetString;
@@ -368,7 +396,8 @@ begin
   end;
 end;
 
-procedure TFieldSetStringList.SerializeList(dst: TJSONArray; const APropertyNames: TArray<string>);
+procedure TFieldSetStringList.SerializeList(dst: TJSONArray;
+  const APropertyNames: TArray<string>);
 var
   Item: TFieldSetString;
   Index: Integer;
@@ -385,7 +414,8 @@ begin
   end;
 end;
 
-procedure TFieldSetStringList.SetItemValue(Index: Integer; const AValue: string);
+procedure TFieldSetStringList.SetItemValue(Index: Integer;
+  const AValue: string);
 var
   Item: TFieldSetString;
 begin
@@ -396,7 +426,8 @@ begin
   Item.Value := AValue;
 end;
 
-procedure TFieldSetStringList.SetStringItem(Index: Integer; const AItem: TFieldSetString);
+procedure TFieldSetStringList.SetStringItem(Index: Integer;
+  const AItem: TFieldSetString);
 begin
   if (Index < 0) or (Index >= Count) then
     Exit;
@@ -429,7 +460,7 @@ begin
   if not Result then
     Exit;
 
-  if not (ASource is TFieldSetNamedString) then
+  if not(ASource is TFieldSetNamedString) then
   begin
     Result := False;
     Exit;
@@ -503,7 +534,7 @@ begin
   if not Assigned(ASource) then
     Exit;
 
-  if not (ASource is TFieldSetStringListObject) then
+  if not(ASource is TFieldSetStringListObject) then
     Exit;
 
   Source := TFieldSetStringListObject(ASource);
@@ -520,14 +551,16 @@ begin
   Result := True;
 end;
 
-constructor TFieldSetStringListObject.Create(src: TJSONObject; const APropertyNames: TArray<string>);
+constructor TFieldSetStringListObject.Create(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   inherited Create;
 
   Parse(src, APropertyNames);
 end;
 
-function TFieldSetStringListObject.Find(const AName: string): TFieldSetNamedString;
+function TFieldSetStringListObject.Find(const AName: string)
+  : TFieldSetNamedString;
 var
   Index: Integer;
   Item: TFieldSetNamedString;
@@ -544,7 +577,8 @@ begin
   end;
 end;
 
-function TFieldSetStringListObject.GetNamedItem(Index: Integer): TFieldSetNamedString;
+function TFieldSetStringListObject.GetNamedItem(Index: Integer)
+  : TFieldSetNamedString;
 begin
   Result := nil;
 
@@ -566,7 +600,8 @@ begin
     Result := Item.Value;
 end;
 
-procedure TFieldSetStringListObject.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TFieldSetStringListObject.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   Pair: TJSONPair;
   Item: TFieldSetNamedString;
@@ -597,7 +632,8 @@ begin
   end;
 end;
 
-procedure TFieldSetStringListObject.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TFieldSetStringListObject.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   Index: Integer;
   Item: TFieldSetNamedString;
@@ -619,7 +655,8 @@ begin
   end;
 end;
 
-procedure TFieldSetStringListObject.SetNamedItem(Index: Integer; const AItem: TFieldSetNamedString);
+procedure TFieldSetStringListObject.SetNamedItem(Index: Integer;
+  const AItem: TFieldSetNamedString);
 begin
   if (Index < 0) or (Index >= Count) then
     Exit;
@@ -652,8 +689,8 @@ begin
   Result := TFieldSetNamedString;
 end;
 
-class function TFieldSetStringListObject.ShouldIncludeProperty(
-  const APropertyName: string; const APropertyNames: TArray<string>): Boolean;
+class function TFieldSetStringListObject.ShouldIncludeProperty
+  (const APropertyName: string; const APropertyNames: TArray<string>): boolean;
 var
   PropertyName: string;
 begin
@@ -680,7 +717,7 @@ begin
   if not Assigned(ASource) then
     Exit;
 
-  if not (ASource is TNamedStringList) then
+  if not(ASource is TNamedStringList) then
     Exit;
 
   Source := TNamedStringList(ASource);
@@ -699,7 +736,8 @@ begin
   FName := '';
 end;
 
-constructor TNamedStringList.Create(src: TJSONObject; const APropertyNames: TArray<string>);
+constructor TNamedStringList.Create(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   Create;
 
@@ -713,7 +751,8 @@ begin
   inherited;
 end;
 
-procedure TNamedStringList.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TNamedStringList.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   Pair: TJSONPair;
 begin
@@ -730,7 +769,8 @@ begin
   ParsePair(Pair, APropertyNames);
 end;
 
-procedure TNamedStringList.ParsePair(APair: TJSONPair; const APropertyNames: TArray<string>);
+procedure TNamedStringList.ParsePair(APair: TJSONPair;
+  const APropertyNames: TArray<string>);
 var
   Value: TJSONValue;
 begin
@@ -761,7 +801,8 @@ begin
   end;
 end;
 
-procedure TNamedStringList.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TNamedStringList.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   ValuesArray: TJSONArray;
 begin
@@ -784,8 +825,8 @@ begin
   end;
 end;
 
-class function TNamedStringList.ShouldIncludeProperty(const APropertyName: string;
-  const APropertyNames: TArray<string>): Boolean;
+class function TNamedStringList.ShouldIncludeProperty(const APropertyName
+  : string; const APropertyNames: TArray<string>): boolean;
 var
   PropertyName: string;
 begin
@@ -803,7 +844,8 @@ end;
 
 { TNamedStringListList }
 
-procedure TNamedStringListList.AddList(src: TJSONArray; const APropertyNames: TArray<string>);
+procedure TNamedStringListList.AddList(src: TJSONArray;
+  const APropertyNames: TArray<string>);
 var
   Value: TJSONValue;
   JSONObject: TJSONObject;
@@ -815,7 +857,7 @@ begin
 
   for Value in src do
   begin
-    if not (Value is TJSONObject) then
+    if not(Value is TJSONObject) then
       Continue;
 
     JSONObject := TJSONObject(Value);
@@ -847,14 +889,14 @@ begin
   if not Assigned(ASource) then
     Exit;
 
-  if not (ASource is TNamedStringListList) then
+  if not(ASource is TNamedStringListList) then
     Exit;
 
   Clear;
   for Index := 0 to ASource.Count - 1 do
   begin
     SourceItem := ASource.Items[Index];
-    if not (SourceItem is TNamedStringList) then
+    if not(SourceItem is TNamedStringList) then
       Continue;
 
     Item := TNamedStringList(ItemClassType.Create);
@@ -870,7 +912,8 @@ begin
   Result := True;
 end;
 
-constructor TNamedStringListList.Create(src: TJSONObject; const APropertyNames: TArray<string>);
+constructor TNamedStringListList.Create(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   inherited Create;
 
@@ -893,7 +936,8 @@ begin
   Result := TNamedStringList;
 end;
 
-procedure TNamedStringListList.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TNamedStringListList.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   Pair: TJSONPair;
   Item: TNamedStringList;
@@ -919,14 +963,16 @@ begin
   end;
 end;
 
-procedure TNamedStringListList.ParseList(src: TJSONArray; const APropertyNames: TArray<string>);
+procedure TNamedStringListList.ParseList(src: TJSONArray;
+  const APropertyNames: TArray<string>);
 begin
   Clear;
 
   AddList(src, APropertyNames);
 end;
 
-procedure TNamedStringListList.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TNamedStringListList.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   Item: TNamedStringList;
   Index: Integer;
@@ -943,7 +989,8 @@ begin
   end;
 end;
 
-procedure TNamedStringListList.SerializeList(dst: TJSONArray; const APropertyNames: TArray<string>);
+procedure TNamedStringListList.SerializeList(dst: TJSONArray;
+  const APropertyNames: TArray<string>);
 var
   Item: TNamedStringList;
   JSONObject: TJSONObject;
@@ -972,7 +1019,8 @@ begin
   end;
 end;
 
-procedure TNamedStringListList.SetNamedList(Index: Integer; const AValue: TNamedStringList);
+procedure TNamedStringListList.SetNamedList(Index: Integer;
+  const AValue: TNamedStringList);
 begin
   if (Index < 0) or (Index >= Count) then
     Exit;
@@ -988,19 +1036,22 @@ end;
 
 { TNamedStringListsObject }
 
-constructor TNamedStringListsObject.Create(src: TJSONObject; const APropertyNames: TArray<string>);
+constructor TNamedStringListsObject.Create(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   inherited Create;
 
   Parse(src, APropertyNames);
 end;
 
-procedure TNamedStringListsObject.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TNamedStringListsObject.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   inherited Parse(src, APropertyNames);
 end;
 
-procedure TNamedStringListsObject.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TNamedStringListsObject.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   inherited Serialize(dst, APropertyNames);
 end;

@@ -15,9 +15,11 @@ uses
 
 type
   TAbonentsRestBroker = class(TRestEntityBroker)
-  private
-    procedure ApplyTicketLocal(const Req: THttpRequest);
+  protected
+    BasePath: string;
   public
+    constructor Create(const ATicket: string = ''); override;
+
     // Фабрики базовых запросов
     function CreateReqList: TReqList; override;
     function CreateReqInfo(id:string=''): TReqInfo; override;
@@ -25,87 +27,104 @@ type
     function CreateReqUpdate: TReqUpdate; override;
     function CreateReqRemove: TReqRemove; override;
 
-    function List(AReq: TAbonentReqList): TAbonentListResponse;
-    function ListBase(AReq: TAbonentReqList): TListResponse;
-    function Info(AReq: TAbonentReqInfo): TAbonentInfoResponse;
-    function New(AReq: TAbonentReqNew): TAbonentNewResponse;
+    function List(AReq: TAbonentReqList): TAbonentListResponse;overload;
+    function List(AReq: TReqList): TListResponse;overload;override;
+
+    function Info(AReq: TAbonentReqInfo): TAbonentInfoResponse;overload;
+    function Info(AReq: TReqInfo): TEntityResponse;overload;override;
+
+    function New(AReq: TAbonentReqNew): TIdNewResponse;overload;
+    function New(AReq: TReqNew): TJSONResponse;overload;override;
+
     function Update(AReq: TAbonentReqUpdate): TJSONResponse;
+
     function Remove(AReq: TAbonentReqRemove): TJSONResponse;
   end;
 
 implementation
 
-procedure TAbonentsRestBroker.ApplyTicketLocal(const Req: THttpRequest);
-begin
-  if Assigned(Req) and not Ticket.Trim.IsEmpty then
-    Req.Headers.AddOrSetValue('X-Ticket', Ticket);
-end;
+uses APIConst;
 
 function TAbonentsRestBroker.List(AReq: TAbonentReqList): TAbonentListResponse;
 begin
-  Result := TAbonentListResponse.Create;
-  ApplyTicketLocal(AReq);
-  HttpClient.Request(AReq, Result);
+  result:= List(AReq as TReqList) as TAbonentListResponse;
 end;
 
-function TAbonentsRestBroker.ListBase(AReq: TAbonentReqList): TListResponse;
+function TAbonentsRestBroker.List(AReq: TReqList): TListResponse;
 begin
-  Result := TListResponse.Create(TAbonentList, 'response', 'abonents');
-  ApplyTicketLocal(AReq);
-  HttpClient.Request(AReq, Result);
+  Result := TAbonentListResponse.Create;
+  inherited List(AReq,Result);
+end;
+
+function TAbonentsRestBroker.New(AReq: TReqNew): TJSONResponse;
+begin
+  Result := TIdNewResponse.Create('abid');
+  inherited New(AReq, Result);
+end;
+
+function TAbonentsRestBroker.New(AReq: TAbonentReqNew): TIdNewResponse;
+begin
+  Result:= New(AReq as TReqNew) as TIdNewResponse;
+end;
+
+function TAbonentsRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+begin
+  Result := TAbonentInfoResponse.Create;
+  inherited Info(AReq, Result);
 end;
 
 function TAbonentsRestBroker.Info(AReq: TAbonentReqInfo): TAbonentInfoResponse;
 begin
-  Result := TAbonentInfoResponse.Create;
-  ApplyTicketLocal(AReq);
-  HttpClient.Request(AReq, Result);
-end;
-
-function TAbonentsRestBroker.New(AReq: TAbonentReqNew): TAbonentNewResponse;
-begin
-  Result := TAbonentNewResponse.Create;
-  ApplyTicketLocal(AReq);
-  HttpClient.Request(AReq, Result);
+  Result := Info(AReq as TReqInfo) as TAbonentInfoResponse;
 end;
 
 function TAbonentsRestBroker.Update(AReq: TAbonentReqUpdate): TJSONResponse;
 begin
-  Result := TJSONResponse.Create;
-  ApplyTicketLocal(AReq);
-  HttpClient.Request(AReq, Result);
+  result := inherited Update(AReq);
 end;
 
 function TAbonentsRestBroker.Remove(AReq: TAbonentReqRemove): TJSONResponse;
 begin
-  Result := TJSONResponse.Create;
-  ApplyTicketLocal(AReq);
-  HttpClient.Request(AReq, Result);
+  result := inherited Remove(AReq)
+end;
+
+
+constructor TAbonentsRestBroker.Create(const ATicket: string);
+begin
+  inherited Create(ATicket);
+  // Задаём фиксированный базовый путь для маршрутизатора
+  BasePath := constURLRouterBasePath;
 end;
 
 function TAbonentsRestBroker.CreateReqList: TReqList;
 begin
   Result := TAbonentReqList.Create;
+  Result.BasePath := BasePath;
 end;
+
 
 function TAbonentsRestBroker.CreateReqInfo(id:string=''): TReqInfo;
 begin
   Result := TAbonentReqInfo.CreateID(id);
+  Result.BasePath := BasePath;
 end;
 
 function TAbonentsRestBroker.CreateReqNew: TReqNew;
 begin
   Result := TAbonentReqNew.Create;
+  Result.BasePath := BasePath;
 end;
 
 function TAbonentsRestBroker.CreateReqUpdate: TReqUpdate;
 begin
   Result := TAbonentReqUpdate.Create;
+  Result.BasePath := BasePath;
 end;
 
 function TAbonentsRestBroker.CreateReqRemove: TReqRemove;
 begin
   Result := TAbonentReqRemove.Create;
+  Result.BasePath := BasePath;
 end;
 
 end.

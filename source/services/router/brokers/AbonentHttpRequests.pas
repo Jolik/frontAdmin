@@ -12,28 +12,29 @@ uses
   BaseResponses,
   BaseRequests;
 
-
 type
   /// <summary>
-  ///   Helper field set that stores the identifier of the newly created abonent.
+  /// Helper field set that stores the identifier of the newly created abonent.
   /// </summary>
   TAbonentNewResult = class(TFieldSet)
   private
     FAbid: string;
   public
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
     property Abid: string read FAbid write FAbid;
   end;
 
   /// <summary>
-  ///   Request body for abonent list requests.
+  /// Request body for abonent list requests.
   /// </summary>
   TAbonentReqListBody = class(TReqListBody)
   end;
 
   /// <summary>
-  ///   Response wrapper that parses abonent list payloads.
+  /// Response wrapper that parses abonent list payloads.
   /// </summary>
   TAbonentListResponse = class(TListResponse)
   private
@@ -44,7 +45,7 @@ type
   end;
 
   /// <summary>
-  ///   Response wrapper that parses abonent info payloads.
+  /// Response wrapper that parses abonent info payloads.
   /// </summary>
   TAbonentInfoResponse = class(TEntityResponse)
   private
@@ -55,7 +56,7 @@ type
   end;
 
   /// <summary>
-  ///   Request body for abonent creation requests.
+  /// Request body for abonent creation requests.
   /// </summary>
   TAbonentReqNewUpdateBody = class(THttpReqBody)
   private
@@ -68,8 +69,10 @@ type
     procedure SetCaption(const Value: string);
     procedure SetAbid(const Value: string);
   protected
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Parse(src: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject;
+      const APropertyNames: TArray<string> = nil); override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -82,8 +85,8 @@ type
   end;
 
   /// <summary>
-  ///   Response wrapper that parses abonent creation payloads.
-  ///   Inherits common FieldSet-based response.
+  /// Response wrapper that parses abonent creation payloads.
+  /// Inherits common FieldSet-based response.
   /// </summary>
   TAbonentNewResponse = class(TFieldSetResponse)
   private
@@ -94,7 +97,7 @@ type
   end;
 
   /// <summary>
-  ///   HTTP request descriptor for /abonents/list endpoint.
+  /// HTTP request descriptor for /abonents/list endpoint.
   /// </summary>
   TAbonentReqList = class(TReqList)
   private
@@ -107,7 +110,7 @@ type
   end;
 
   /// <summary>
-  ///   HTTP request descriptor for /abonents/new endpoint.
+  /// HTTP request descriptor for /abonents/new endpoint.
   /// </summary>
   TAbonentReqNew = class(TReqNew)
   private
@@ -120,7 +123,7 @@ type
   end;
 
   /// <summary>
-  ///   HTTP request descriptor for /abonents/:abid/update endpoint.
+  /// HTTP request descriptor for /abonents/:abid/update endpoint.
   /// </summary>
   TAbonentReqUpdate = class(TReqUpdate)
   private
@@ -131,15 +134,15 @@ type
   public
     constructor Create; override;
     /// <summary>
-    ///   Identifier of the abonent being updated. Assigning the value appends
-    ///   the required "/:abid/update" suffix to the request URL via AddPath.
+    /// Identifier of the abonent being updated. Assigning the value appends
+    /// the required "/:abid/update" suffix to the request URL via AddPath.
     /// </summary>
     property AbonentId: string write SetAbonentId;
     property Body: TAbonentReqNewUpdateBody read GetBody;
   end;
 
   /// <summary>
-  ///   HTTP request descriptor for /rou/:abid/remove endpoint.
+  /// HTTP request descriptor for /rou/:abid/remove endpoint.
   /// </summary>
   TAbonentReqRemove = class(TReqRemove)
   private
@@ -147,14 +150,14 @@ type
   public
     constructor Create; override;
     /// <summary>
-    ///   Identifier of the abonent being removed. Assigning the value appends
-    ///   the required "/:abid/remove" suffix to the request URL via AddPath.
+    /// Identifier of the abonent being removed. Assigning the value appends
+    /// the required "/:abid/remove" suffix to the request URL via AddPath.
     /// </summary>
     property AbonentId: string write SetAbonentId;
   end;
 
   /// <summary>
-  ///   HTTP request descriptor for GET /abonents/:abid endpoint.
+  /// HTTP request descriptor for GET /abonents/:abid endpoint.
   /// </summary>
   TAbonentReqInfo = class(TReqInfo)
   public
@@ -168,16 +171,17 @@ uses
   LoggingUnit, APIConst;
 
 const
-  
+
   AbidKey = 'abid';
   NameKey = 'name';
   CaptionKey = 'caption';
   ChannelsKey = 'channels';
   AttrKey = 'attr';
 
-{ TAbonentNewResult }
+  { TAbonentNewResult }
 
-procedure TAbonentNewResult.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TAbonentNewResult.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   Value: TJSONValue;
 begin
@@ -193,7 +197,8 @@ begin
     FAbid := Value.ToString;
 end;
 
-procedure TAbonentNewResult.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TAbonentNewResult.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 begin
   if not Assigned(dst) then
     Exit;
@@ -276,12 +281,14 @@ begin
   end;
 end;
 
-procedure TAbonentReqNewUpdateBody.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TAbonentReqNewUpdateBody.Parse(src: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   V: TJSONValue;
 begin
   inherited Parse(src, APropertyNames);
-  if not Assigned(src) then Exit;
+  if not Assigned(src) then
+    Exit;
 
   V := src.Values[NameKey];
   if V is TJSONString then
@@ -316,12 +323,14 @@ begin
   end;
 end;
 
-procedure TAbonentReqNewUpdateBody.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TAbonentReqNewUpdateBody.Serialize(dst: TJSONObject;
+  const APropertyNames: TArray<string>);
 var
   Arr: TJSONArray;
   Obj: TJSONObject;
 begin
-  if not Assigned(dst) then Exit;
+  if not Assigned(dst) then
+    Exit;
   inherited Serialize(dst, APropertyNames);
 
   if not FName.Trim.IsEmpty then
@@ -373,20 +382,11 @@ begin
   SetEndpoint('abonents/new');
 end;
 
- 
-
 { TAbonentReqUpdate }
-
- 
 
 { TAbonentReqRemove }
 
- 
-
 { TAbonentReqInfo }
-
- 
-
 
 { TAbonentReqList }
 
@@ -415,7 +415,6 @@ class function TAbonentReqNew.BodyClassType: TFieldSetClass;
 begin
   Result := TAbonentReqNewUpdateBody;
 end;
-
 
 function TAbonentReqNew.GetBody: TAbonentReqNewUpdateBody;
 begin
@@ -492,7 +491,6 @@ begin
   Create;
   Id := AAbonentId;
 end;
-
 
 { TAbonentNewResponse }
 

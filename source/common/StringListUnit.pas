@@ -9,10 +9,10 @@ uses
 
 type
   /// <summary>
-  ///   Класс для хранения и сериализации массива строк, полученного из JSON.
+  /// Класс для хранения и сериализации массива строк, полученного из JSON.
   /// </summary>
-  ///  формат JSON который парсит класс
-  ///  ["lch1","mitra"]
+  /// формат JSON который парсит класс
+  /// ["lch1","mitra"]
   ///
   TStringArray = class
   private
@@ -41,14 +41,14 @@ type
   end;
 
   /// <summary>
-  ///   Набор объектов TStringArray с поддержкой разных форматов JSON.
+  /// Набор объектов TStringArray с поддержкой разных форматов JSON.
   /// </summary>
   ///
-  ///  формат массива JSON который парсит класс для вызова ParseList
-  ///  [["lch1","mitra"],["ab1","ab2","ab3"]]
+  /// формат массива JSON который парсит класс для вызова ParseList
+  /// [["lch1","mitra"],["ab1","ab2","ab3"]]
   ///
-  ///  формат объекта  JSON который парсит класс для вызова Parse
-  ///  {"lch1":["lch1","mitra"],"lch2":["ab1","ab2"]}
+  /// формат объекта  JSON который парсит класс для вызова Parse
+  /// {"lch1":["lch1","mitra"],"lch2":["ab1","ab2"]}
   ///
   TStringArrayList = class(TObjectList<TStringArray>)
   private
@@ -75,15 +75,16 @@ type
     function JSONList: string; virtual;
     function JSON: string; virtual;
 
-    property Items[Index: Integer]: TStringArray read GetItem write SetItem; default;
+    property Items[Index: Integer]: TStringArray read GetItem
+      write SetItem; default;
   end;
 
   /// <summary>
-  ///   Коллекция строковых пар «ключ-значение» с разбором из JSON-объекта.
+  /// Коллекция строковых пар «ключ-значение» с разбором из JSON-объекта.
   /// </summary>
   ///
-  ///  формам объекта который парсит класс
-  ///  {"name":"TTAAii","email":"first@sample.com"}
+  /// формам объекта который парсит класс
+  /// {"name":"TTAAii","email":"first@sample.com"}
   ///
   TKeyValueStringList = class
   private
@@ -109,7 +110,8 @@ type
     function Keys: TArray<string>;
 
     property Count: Integer read GetCount;
-    property Values[const Name: string]: string read GetValue write SetValue; default;
+    property Values[const Name: string]: string read GetValue
+      write SetValue; default;
     property Key[Index: Integer]: string read GetKey;
   end;
 
@@ -546,4 +548,3 @@ begin
 end;
 
 end.
-
