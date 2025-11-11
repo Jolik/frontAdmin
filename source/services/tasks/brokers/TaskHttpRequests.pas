@@ -25,7 +25,7 @@ type
   private
     function GetTaskList: TTaskList;
   public
-    constructor Create;
+    constructor Create(AListClass: TEntityListClass = nil); reintroduce; overload;
     property TaskList: TTaskList read GetTaskList;
   end;
 
@@ -41,7 +41,7 @@ type
   private
     function GetTask: TTask;
   public
-    constructor Create;
+    constructor Create(AEntityClass: TEntityClass = nil); reintroduce; overload;
     property Task: TTask read GetTask;
   end;
 
@@ -132,9 +132,11 @@ implementation
 
 { TTaskListResponse }
 
-constructor TTaskListResponse.Create;
+constructor TTaskListResponse.Create(AListClass: TEntityListClass);
 begin
-  inherited Create(TTaskList, 'response', 'tasks');
+  if not Assigned(AListClass) then
+    AListClass := TTaskList;
+  inherited Create(AListClass, 'response', 'tasks');
 end;
 
 function TTaskListResponse.GetTaskList: TTaskList;
@@ -144,9 +146,11 @@ end;
 
 { TTaskInfoResponse }
 
-constructor TTaskInfoResponse.Create;
+constructor TTaskInfoResponse.Create(AEntityClass: TEntityClass);
 begin
-  inherited Create(TTask, 'response', 'task');
+  if not Assigned(AEntityClass) then
+    AEntityClass := TTask;
+  inherited Create(AEntityClass, 'response', 'task');
 end;
 
 function TTaskInfoResponse.GetTask: TTask;

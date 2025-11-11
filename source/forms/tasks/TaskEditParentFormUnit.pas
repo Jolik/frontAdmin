@@ -44,6 +44,7 @@ type
     SourcesMemsid: TStringField;
     SourcesMemname: TStringField;
     unbtnSrcDel1: TUniButton;
+    uncntnrpnSrcButtons: TUniContainerPanel;
 
     procedure btnSourcesEditClick(Sender: TObject);
     procedure UniFormShow(Sender: TObject);

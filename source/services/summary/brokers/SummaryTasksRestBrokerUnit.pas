@@ -17,7 +17,7 @@ type
   // REST broker for Summary tasks; reuses Task requests with summary base path
   TSummaryTasksRestBroker = class(TTasksRestBroker)
   public
-    constructor Create(const ATicket: string = ''); override;
+    constructor Create(const ATicket: string = ''); overload; override;
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TReqInfo): TEntityResponse; overload; override;
     function CreateReqList: TReqList; override;

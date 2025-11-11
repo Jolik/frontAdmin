@@ -1,36 +1,37 @@
-inherited TaskEditParentForm: TTaskEditParentForm
+﻿inherited TaskEditParentForm: TTaskEditParentForm
   ClientWidth = 1349
   Caption = #1057#1086#1079#1076#1072#1085#1080#1077'/'#1088#1077#1076#1072#1082#1090#1080#1088#1086#1074#1072#1085#1080#1077' '#1079#1072#1076#1072#1095#1080'...'
   ExplicitWidth = 1365
   TextHeight = 15
   inherited pnBottom: TUniContainerPanel
     Width = 1349
-    ExplicitWidth = 1347
+    ExplicitTop = 468
+    ExplicitWidth = 1349
     inherited btnOk: TUniButton
       Left = 1190
-      ExplicitLeft = 1188
+      ExplicitLeft = 1190
     end
     inherited btnCancel: TUniButton
       Left = 1271
-      ExplicitLeft = 1269
+      ExplicitLeft = 1271
     end
   end
   inherited pnCaption: TUniContainerPanel
     Width = 1349
     Visible = False
-    ExplicitWidth = 1347
+    ExplicitWidth = 1349
     inherited teCaption: TUniEdit
-      Left = 118
-      Width = 1228
+      Left = 120
+      Width = 1226
       Visible = False
-      ExplicitLeft = 118
+      ExplicitLeft = 120
       ExplicitWidth = 1226
     end
   end
   inherited pnName: TUniContainerPanel
     Width = 1349
     Height = 30
-    ExplicitWidth = 1347
+    ExplicitWidth = 1349
     ExplicitHeight = 30
     inherited lName: TUniLabel
       Left = 24
@@ -40,13 +41,13 @@ inherited TaskEditParentForm: TTaskEditParentForm
       ExplicitTop = 9
     end
     inherited teName: TUniEdit
-      Left = 118
+      Left = 120
       Top = 5
-      Width = 1228
+      Width = 1226
       Height = 20
       Margins.Top = 5
       Margins.Bottom = 5
-      ExplicitLeft = 118
+      ExplicitLeft = 120
       ExplicitTop = 5
       ExplicitWidth = 1226
       ExplicitHeight = 20
@@ -59,7 +60,7 @@ inherited TaskEditParentForm: TTaskEditParentForm
     Align = alLeft
     ExplicitTop = 57
     ExplicitWidth = 497
-    ExplicitHeight = 403
+    ExplicitHeight = 411
     ScrollHeight = 411
     ScrollWidth = 497
     object lTid: TUniLabel
@@ -179,33 +180,37 @@ inherited TaskEditParentForm: TTaskEditParentForm
     Width = 365
     Height = 411
     Hint = ''
+    Margins.Left = 0
     Visible = False
     ParentColor = False
     Align = alRight
     TabOrder = 4
-    ExplicitLeft = 982
-    ExplicitHeight = 403
   end
   object pnSources: TUniContainerPanel [5]
-    Left = 497
-    Top = 57
-    Width = 487
-    Height = 411
+    AlignWithMargins = True
+    Left = 500
+    Top = 60
+    Width = 479
+    Height = 405
     Hint = ''
+    Margins.Right = 5
     ParentColor = False
     Align = alClient
     TabOrder = 5
-    ExplicitWidth = 485
-    ExplicitHeight = 403
+    ExplicitLeft = 497
+    ExplicitTop = 57
+    ExplicitWidth = 487
+    ExplicitHeight = 411
     object gridSources: TUniDBGrid
       Left = 0
-      Top = 34
-      Width = 487
-      Height = 377
+      Top = 37
+      Width = 479
+      Height = 368
       Hint = ''
+      WebOptions.Paged = False
       WebOptions.PageSize = 200
       LoadMask.Message = 'Loading data...'
-      Align = alBottom
+      Align = alClient
       TabOrder = 1
       Columns = <
         item
@@ -226,25 +231,47 @@ inherited TaskEditParentForm: TTaskEditParentForm
           ReadOnly = True
         end>
     end
-    object btnSourcesEdit: TUniButton
+    object uncntnrpnSrcButtons: TUniContainerPanel
+      AlignWithMargins = True
       Left = 0
-      Top = 6
-      Width = 120
-      Height = 25
+      Top = 3
+      Width = 476
+      Height = 31
       Hint = ''
-      Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1080#1089#1090#1086#1095#1085#1080#1082
+      Margins.Left = 0
+      ParentColor = False
+      Align = alTop
       TabOrder = 2
-      OnClick = btnSourcesEditClick
-    end
-    object unbtnSrcDel1: TUniButton
-      Left = 126
-      Top = 6
-      Width = 120
-      Height = 25
-      Hint = ''
-      Caption = #1059#1076#1072#1083#1080#1090#1100' '#1080#1089#1090#1086#1095#1085#1080#1082
-      TabOrder = 3
-      OnClick = unbtnSrcDel1Click
+      ExplicitWidth = 473
+      object btnSourcesEdit: TUniButton
+        AlignWithMargins = True
+        Left = 0
+        Top = 3
+        Width = 120
+        Height = 25
+        Hint = ''
+        Margins.Left = 0
+        Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1080#1089#1090#1086#1095#1085#1080#1082
+        Align = alLeft
+        TabOrder = 1
+        OnClick = btnSourcesEditClick
+        ExplicitTop = 6
+      end
+      object unbtnSrcDel1: TUniButton
+        AlignWithMargins = True
+        Left = 123
+        Top = 3
+        Width = 120
+        Height = 25
+        Hint = ''
+        Margins.Left = 0
+        Caption = #1059#1076#1072#1083#1080#1090#1100' '#1080#1089#1090#1086#1095#1085#1080#1082
+        Align = alLeft
+        TabOrder = 2
+        OnClick = unbtnSrcDel1Click
+        ExplicitLeft = 126
+        ExplicitTop = 6
+      end
     end
   end
   object SourcesDS: TDataSource

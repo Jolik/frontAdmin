@@ -46,13 +46,12 @@ end;
 
 function TMonitoringTasksForm.CreateEditForm: TParentEditForm;
 begin
-  ///   ""
   Result := MonitoringTaskEditForm();
 end;
 
 function TMonitoringTasksForm.CreateRestBroker: TRestEntityBroker;
 begin
-  result:= inherited;
+  result := TTasksRestBroker.Create(UniMainModule.XTicket,TMonitoringTaskList,TMonitoringTask);
   (result as TTasksRestBroker).BasePath:= APIConst.constURLMonitoringBasePath
 end;
 

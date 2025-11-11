@@ -1,7 +1,7 @@
 object SourcesForm: TSourcesForm
   Left = 0
   Top = 0
-  ClientHeight = 520
+  ClientHeight = 656
   ClientWidth = 1321
   Caption = #1042#1099#1073#1086#1088' '#1080#1089#1090#1086#1095#1085#1080#1082#1086#1074' '#1079#1072#1076#1072#1095#1080
   BorderStyle = bsSingle
@@ -13,9 +13,9 @@ object SourcesForm: TSourcesForm
   TextHeight = 15
   object gridSources: TUniDBGrid
     Left = 0
-    Top = 25
+    Top = 31
     Width = 496
-    Height = 495
+    Height = 625
     Hint = ''
     ClientEvents.ExtEvents.Strings = (
       
@@ -50,14 +50,17 @@ object SourcesForm: TSourcesForm
       end>
   end
   object unpnlFilter: TUniContainerPanel
-    Left = 0
-    Top = 0
-    Width = 1321
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 1315
     Height = 25
     Hint = ''
     ParentColor = False
     Align = alTop
     TabOrder = 1
+    ExplicitLeft = 0
+    ExplicitTop = 0
     ExplicitWidth = 1319
     object undtSourceFilter: TUniEdit
       Left = 47
@@ -102,25 +105,27 @@ object SourcesForm: TSourcesForm
   end
   object uncntnrpnBtns: TUniContainerPanel
     Left = 496
-    Top = 25
+    Top = 31
     Width = 825
-    Height = 495
+    Height = 625
     Hint = ''
     ParentColor = False
     Align = alRight
     TabOrder = 2
+    ExplicitTop = 29
+    ExplicitHeight = 489
     object uncntnrpnBtns1: TUniContainerPanel
       Left = 0
       Top = 0
       Width = 825
-      Height = 41
+      Height = 32
       Hint = ''
       ParentColor = False
       Align = alTop
       TabOrder = 1
       object unspdbtnCreate1: TUniSpeedButton
         Left = 6
-        Top = 6
+        Top = 0
         Width = 97
         Height = 32
         Hint = ''
@@ -132,7 +137,7 @@ object SourcesForm: TSourcesForm
       end
       object unspdbtnEdit: TUniSpeedButton
         Left = 94
-        Top = 6
+        Top = 0
         Width = 126
         Height = 32
         Hint = ''
@@ -146,9 +151,9 @@ object SourcesForm: TSourcesForm
     object pcEntityInfo: TUniPageControl
       AlignWithMargins = True
       Left = 5
-      Top = 46
+      Top = 37
       Width = 815
-      Height = 444
+      Height = 583
       Hint = ''
       Margins.Left = 5
       Margins.Top = 5
@@ -157,15 +162,18 @@ object SourcesForm: TSourcesForm
       ActivePage = untbshtMap1
       Align = alClient
       TabOrder = 2
+      ExplicitTop = 0
+      ExplicitHeight = 441
       object tsSourceInfo: TUniTabSheet
         Hint = ''
         TabVisible = False
         Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103
+        ExplicitHeight = 408
         object cpSourceInfo: TUniContainerPanel
           Left = 0
           Top = 39
           Width = 807
-          Height = 377
+          Height = 516
           Hint = ''
           Margins.Right = 0
           ParentColor = False
@@ -174,10 +182,11 @@ object SourcesForm: TSourcesForm
           TabOrder = 0
           Layout = 'table'
           LayoutAttribs.Columns = 2
-          object uncntnrpnUpdate: TUniContainerPanel
+          ExplicitHeight = 369
+          object cpSourceInfoID: TUniContainerPanel
             AlignWithMargins = True
             Left = 10
-            Top = 200
+            Top = 0
             Width = 792
             Height = 40
             Hint = ''
@@ -189,46 +198,10 @@ object SourcesForm: TSourcesForm
             ParentColor = False
             Align = alTop
             ParentAlignmentControl = False
-            TabOrder = 6
+            TabOrder = 1
             Layout = 'table'
             LayoutAttribs.Columns = 2
-            object unlblUpdate: TUniLabel
-              AlignWithMargins = True
-              Left = 5
-              Top = 7
-              Width = 100
-              Height = 20
-              Hint = ''
-              Margins.Left = 5
-              Margins.Top = 7
-              Margins.Right = 5
-              Margins.Bottom = 7
-              Alignment = taRightJustify
-              AutoSize = False
-              Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1072
-              Align = alLeft
-              ParentFont = False
-              Font.Style = [fsBold]
-              TabOrder = 1
-            end
-            object unlblUpdatedVal: TUniLabel
-              AlignWithMargins = True
-              Left = 115
-              Top = 7
-              Width = 672
-              Height = 20
-              Hint = ''
-              Margins.Left = 5
-              Margins.Top = 7
-              Margins.Right = 5
-              Margins.Bottom = 7
-              AutoSize = False
-              Caption = 'ID'
-              Align = alClient
-              ParentFont = False
-              TabOrder = 2
-            end
-            object unpnl2: TUniContainerPanel
+            object pSeparator1: TUniPanel
               AlignWithMargins = True
               Left = 0
               Top = 34
@@ -239,10 +212,10 @@ object SourcesForm: TSourcesForm
               Margins.Top = 0
               Margins.Right = 0
               Margins.Bottom = 5
-              ParentColor = False
-              Color = clHighlight
               Align = alBottom
-              TabOrder = 3
+              TabOrder = 1
+              Caption = ''
+              Color = clHighlight
             end
           end
           object cpSourceInfoCreated: TUniContainerPanel
@@ -352,10 +325,10 @@ object SourcesForm: TSourcesForm
               end
             end
           end
-          object cpSourceInfoID: TUniContainerPanel
+          object uncntnrpnUpdate: TUniContainerPanel
             AlignWithMargins = True
             Left = 10
-            Top = 0
+            Top = 200
             Width = 792
             Height = 40
             Hint = ''
@@ -367,10 +340,46 @@ object SourcesForm: TSourcesForm
             ParentColor = False
             Align = alTop
             ParentAlignmentControl = False
-            TabOrder = 1
+            TabOrder = 6
             Layout = 'table'
             LayoutAttribs.Columns = 2
-            object pSeparator1: TUniPanel
+            object unlblUpdate: TUniLabel
+              AlignWithMargins = True
+              Left = 5
+              Top = 7
+              Width = 100
+              Height = 20
+              Hint = ''
+              Margins.Left = 5
+              Margins.Top = 7
+              Margins.Right = 5
+              Margins.Bottom = 7
+              Alignment = taRightJustify
+              AutoSize = False
+              Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1072
+              Align = alLeft
+              ParentFont = False
+              Font.Style = [fsBold]
+              TabOrder = 1
+            end
+            object unlblUpdatedVal: TUniLabel
+              AlignWithMargins = True
+              Left = 115
+              Top = 7
+              Width = 672
+              Height = 20
+              Hint = ''
+              Margins.Left = 5
+              Margins.Top = 7
+              Margins.Right = 5
+              Margins.Bottom = 7
+              AutoSize = False
+              Caption = 'ID'
+              Align = alClient
+              ParentFont = False
+              TabOrder = 2
+            end
+            object unpnl2: TUniContainerPanel
               AlignWithMargins = True
               Left = 0
               Top = 34
@@ -381,10 +390,10 @@ object SourcesForm: TSourcesForm
               Margins.Top = 0
               Margins.Right = 0
               Margins.Bottom = 5
-              Align = alBottom
-              TabOrder = 1
-              Caption = ''
+              ParentColor = False
               Color = clHighlight
+              Align = alBottom
+              TabOrder = 3
             end
           end
           object uncntnrpnSourceInfoRegion: TUniContainerPanel
@@ -674,7 +683,7 @@ object SourcesForm: TSourcesForm
           end
           object pnBottom: TUniContainerPanel
             Left = 0
-            Top = 327
+            Top = 466
             Width = 807
             Height = 50
             Hint = ''
@@ -735,15 +744,12 @@ object SourcesForm: TSourcesForm
       object untbshtMap1: TUniTabSheet
         Hint = ''
         Caption = #1050#1072#1088#1090#1072
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 256
         ExplicitHeight = 408
         object unmpSource1: TUniMap
           Left = 0
           Top = 0
           Width = 807
-          Height = 416
+          Height = 555
           Hint = ''
           DefaultLat = 39.164141000000000000
           DefaultLong = 35.068359000000000000

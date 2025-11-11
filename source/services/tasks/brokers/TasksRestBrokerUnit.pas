@@ -8,12 +8,23 @@ uses
   BaseResponses,
   HttpClientUnit,
   TaskHttpRequests,
-  TaskUnit;
+  TaskUnit,
+  EntityUnit;
 
  type
   TTasksRestBroker = class(TRestEntityBroker)
+  private
+    FListClass: TEntityListClass;
+    FEntityClass: TEntityClass;
+    procedure SetEntityClass(const Value: TEntityClass);
+    procedure SetListClass(const Value: TEntityListClass);
   public
     BasePath: string;
+    constructor Create(const ATicket: string = ''); overload; override;
+    constructor Create(const ATicket: string; AListClass: TEntityListClass;
+      AEntityClass: TEntityClass); reintroduce; overload;
+    property ListClass: TEntityListClass read FListClass write SetListClass;
+    property EntityClass: TEntityClass read FEntityClass write SetEntityClass;
     function List(AReq: TTaskReqList): TTaskListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
     function TypesList(AReq: TTaskTypesReqList): TTaskTypesListResponse;
@@ -37,9 +48,40 @@ implementation
 
 { TTasksRestBroker }
 
+constructor TTasksRestBroker.Create(const ATicket: string);
+begin
+  inherited Create(ATicket);
+  SetListClass(nil);
+  SetEntityClass(nil);
+end;
+
+constructor TTasksRestBroker.Create(const ATicket: string;
+  AListClass: TEntityListClass; AEntityClass: TEntityClass);
+begin
+  inherited Create(ATicket);
+  SetListClass(AListClass);
+  SetEntityClass(AEntityClass);
+end;
+
+procedure TTasksRestBroker.SetEntityClass(const Value: TEntityClass);
+begin
+  if Assigned(Value) then
+    FEntityClass := Value
+  else
+    FEntityClass := TTask;
+end;
+
+procedure TTasksRestBroker.SetListClass(const Value: TEntityListClass);
+begin
+  if Assigned(Value) then
+    FListClass := Value
+  else
+    FListClass := TTaskList;
+end;
+
 function TTasksRestBroker.List(AReq: TReqList): TListResponse;
 begin
-  Result := TTaskListResponse.Create;
+  Result := TTaskListResponse.Create(FListClass);
   Result := inherited List(AReq, Result);
 end;
 
@@ -123,7 +165,7 @@ end;
 
 function TTasksRestBroker.Info(AReq: TReqInfo): TEntityResponse;
 begin
-  Result := TTaskInfoResponse.Create;
+  Result := TTaskInfoResponse.Create(FEntityClass);
   inherited Info(AReq, Result);
 end;
 
