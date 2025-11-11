@@ -1,22 +1,23 @@
-﻿object ProfileFrame: TProfileFrame
+object ProfileFrame: TProfileFrame
   Left = 0
   Top = 0
-  Width = 358
+  Width = 401
   Height = 521
   TabOrder = 0
   object UniGroupBox1: TUniGroupBox
     Left = 0
     Top = 60
-    Width = 358
+    Width = 401
     Height = 239
     Hint = ''
     Caption = ' '#1055#1088#1072#1074#1080#1083#1086' '
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 358
     object UniPanel1: TUniPanel
       Left = 2
-      Top = 22
-      Width = 354
+      Top = 15
+      Width = 397
       Height = 66
       Hint = ''
       Align = alTop
@@ -24,11 +25,11 @@
       BorderStyle = ubsNone
       ShowCaption = False
       Caption = 'UniPanel1'
-      ExplicitTop = 15
+      ExplicitWidth = 354
       inline FrameRuleEnabled: TFrameBoolInput
         Left = 0
         Top = 0
-        Width = 354
+        Width = 397
         Height = 30
         Align = alTop
         Anchors = [akLeft, akTop, akRight]
@@ -41,7 +42,7 @@
           Caption = #1042#1082#1083#1102#1095#1077#1085#1086
         end
         inherited CheckBox: TUniCheckBox
-          Width = 216
+          Width = 259
           OnChange = FrameRuleEnabledCheckBoxChange
           ExplicitWidth = 216
         end
@@ -49,7 +50,7 @@
       inline FrameRulePosition: TFrameTextInput
         Left = 0
         Top = 30
-        Width = 354
+        Width = 397
         Height = 30
         Align = alTop
         Anchors = [akLeft, akTop, akRight]
@@ -63,13 +64,13 @@
           Caption = #1055#1086#1079#1080#1094#1080#1103
         end
         inherited Edit: TUniEdit
-          Width = 183
+          Width = 226
           InputType = 'number'
           OnChange = FrameRulePositionEditChange
           ExplicitWidth = 183
         end
         inherited PanelUnits: TUniPanel
-          Left = 328
+          Left = 371
           Caption = ''
           ExplicitLeft = 328
         end
@@ -77,54 +78,58 @@
     end
     object UniPanel2: TUniPanel
       Left = 2
-      Top = 88
-      Width = 354
-      Height = 149
+      Top = 81
+      Width = 397
+      Height = 156
       Hint = ''
       Align = alClient
       TabOrder = 2
       ShowCaption = False
       Caption = 'UniPanel2'
+      ExplicitWidth = 429
       object UniSplitter2: TUniSplitter
-        Left = 169
+        Left = 190
         Top = 1
         Width = 6
-        Height = 147
+        Height = 154
         Hint = ''
         Align = alLeft
         ParentColor = False
         Color = clBtnFace
-        ExplicitHeight = 154
+        ExplicitLeft = 169
       end
       object PanelConditions: TUniPanel
-        Left = 175
+        Left = 196
         Top = 1
-        Width = 178
-        Height = 147
+        Width = 200
+        Height = 154
         Hint = ''
         Align = alClient
         TabOrder = 2
         BorderStyle = ubsNone
         ShowCaption = False
         Caption = 'PanelConditions'
-        ExplicitHeight = 154
+        ExplicitLeft = 175
+        ExplicitWidth = 178
       end
       object UniPanel3: TUniPanel
         Left = 1
         Top = 1
-        Width = 168
-        Height = 147
+        Width = 189
+        Height = 154
         Hint = ''
         Align = alLeft
+        Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 3
         BorderStyle = ubsNone
         ShowCaption = False
         Caption = 'UniPanel3'
+        ExplicitWidth = 200
         object RuleTreeView: TUniTreeView
           Left = 0
           Top = 25
-          Width = 168
-          Height = 122
+          Width = 189
+          Height = 129
           Hint = ''
           Items.FontData = {0100000000}
           Align = alClient
@@ -132,11 +137,12 @@
           Color = clWindow
           UseCheckBox = True
           OnChange = RuleTreeViewChange
+          ExplicitWidth = 168
         end
         object UniPanel4: TUniPanel
           Left = 0
           Top = 0
-          Width = 168
+          Width = 189
           Height = 25
           Hint = ''
           Align = alTop
@@ -144,6 +150,7 @@
           BorderStyle = ubsFrameLowered
           ShowCaption = False
           Caption = 'UniPanel4'
+          ExplicitWidth = 168
           object UniPanel5: TUniPanel
             AlignWithMargins = True
             Left = 2
@@ -215,28 +222,30 @@
   object UniSplitter1: TUniSplitter
     Left = 0
     Top = 299
-    Width = 358
+    Width = 401
     Height = 6
     Cursor = crVSplit
     Hint = ''
     Align = alTop
     ParentColor = False
     Color = clBtnFace
+    ExplicitWidth = 358
   end
   object UniGroupBox2: TUniGroupBox
     Left = 0
     Top = 305
-    Width = 358
+    Width = 401
     Height = 216
     Hint = ''
     Caption = ' '#1044#1077#1081#1089#1090#1074#1080#1103' '
     Align = alClient
     TabOrder = 2
+    ExplicitWidth = 358
     object FtaGroupBox: TUniGroupBox
       AlignWithMargins = True
       Left = 12
       Top = 25
-      Width = 334
+      Width = 377
       Height = 184
       Hint = ''
       Margins.Left = 10
@@ -246,11 +255,12 @@
       Caption = #1053#1072#1087#1088#1072#1074#1080#1090#1100' '#1074' FTA'
       Align = alTop
       TabOrder = 1
+      ExplicitWidth = 334
       object CheckBox_fta_XML: TUniCheckBox
         AlignWithMargins = True
         Left = 12
         Top = 156
-        Width = 317
+        Width = 360
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -258,12 +268,13 @@
         Align = alTop
         TabOrder = 1
         OnChange = CheckBox_fta_XMLChange
+        ExplicitWidth = 317
       end
       object CheckBox_fta_JSON: TUniCheckBox
         AlignWithMargins = True
         Left = 12
         Top = 133
-        Width = 317
+        Width = 360
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -271,12 +282,13 @@
         Align = alTop
         TabOrder = 2
         OnChange = CheckBox_fta_JSONChange
+        ExplicitWidth = 317
       end
       object CheckBox_fta_SIMPLE: TUniCheckBox
         AlignWithMargins = True
         Left = 12
         Top = 110
-        Width = 317
+        Width = 360
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -284,12 +296,13 @@
         Align = alTop
         TabOrder = 3
         OnChange = CheckBox_fta_SIMPLEChange
+        ExplicitWidth = 317
       end
       object CheckBox_fta_GAO: TUniCheckBox
         AlignWithMargins = True
         Left = 12
         Top = 87
-        Width = 317
+        Width = 360
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -297,12 +310,13 @@
         Align = alTop
         TabOrder = 4
         OnChange = CheckBox_fta_GAOChange
+        ExplicitWidth = 317
       end
       object CheckBox_fta_TLG: TUniCheckBox
         AlignWithMargins = True
         Left = 12
         Top = 64
-        Width = 317
+        Width = 360
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -310,12 +324,13 @@
         Align = alTop
         TabOrder = 5
         OnChange = CheckBox_fta_TLGChange
+        ExplicitWidth = 317
       end
       object CheckBox_fta_TLF: TUniCheckBox
         AlignWithMargins = True
         Left = 12
         Top = 41
-        Width = 317
+        Width = 360
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -323,12 +338,13 @@
         Align = alTop
         TabOrder = 6
         OnChange = CheckBox_fta_TLFChange
+        ExplicitWidth = 317
       end
       object CheckBox_fta_FILE: TUniCheckBox
         AlignWithMargins = True
         Left = 12
         Top = 18
-        Width = 317
+        Width = 360
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -336,13 +352,14 @@
         Align = alTop
         TabOrder = 7
         OnChange = CheckBox_fta_FILEChange
+        ExplicitWidth = 317
       end
     end
   end
   inline PridFrame: TFrameTextInput
     Left = 0
     Top = 0
-    Width = 358
+    Width = 401
     Height = 30
     Align = alTop
     Anchors = [akLeft, akTop, akRight]
@@ -355,12 +372,12 @@
       Caption = 'ID '#1087#1088#1086#1092#1080#1083#1103
     end
     inherited Edit: TUniEdit
-      Width = 187
+      Width = 230
       ReadOnly = True
       ExplicitWidth = 187
     end
     inherited PanelUnits: TUniPanel
-      Left = 332
+      Left = 375
       Caption = ''
       ExplicitLeft = 332
     end
@@ -368,7 +385,7 @@
   inline DescriptionFrame: TFrameTextInput
     Left = 0
     Top = 30
-    Width = 358
+    Width = 401
     Height = 30
     Align = alTop
     Anchors = [akLeft, akTop, akRight]
@@ -382,12 +399,12 @@
       Caption = #1054#1087#1080#1089#1072#1085#1080#1077
     end
     inherited Edit: TUniEdit
-      Width = 187
+      Width = 230
       OnChange = DescriptionFrameEditChange
       ExplicitWidth = 187
     end
     inherited PanelUnits: TUniPanel
-      Left = 332
+      Left = 375
       Caption = ''
       ExplicitLeft = 332
     end

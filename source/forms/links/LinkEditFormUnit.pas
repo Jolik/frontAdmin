@@ -43,14 +43,14 @@ type
     destructor Destroy; override;
   end;
 
-function LinkEditForm: TLinkEditForm;
+function LinkEditForm(AProfilesServicePath: string): TLinkEditForm;
 
 implementation
 
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, IdHTTP,
+  MainModule, uniGUIApplication, IdHTTP, APIConst,
   LinkFrameUtils,
   LoggingUnit,
   common,
@@ -59,9 +59,10 @@ uses
   HttpClientUnit,
   LinksRestBrokerUnit;
 
-function LinkEditForm: TLinkEditForm;
+function LinkEditForm(AProfilesServicePath: string): TLinkEditForm;
 begin
   Result := TLinkEditForm(UniMainModule.GetFormInstance(TLinkEditForm));
+  Result.FProfilesBroker:=  TProfilesRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath) ;
 end;
 
 { TLinkEditForm }
@@ -72,7 +73,6 @@ begin
   inherited;
   for var ls in LinkType2Str.Keys do
     comboLinkType.Items.Add(ls);
-  FProfilesBroker := TProfilesRestBroker.Create(UniMainModule.XTicket);
   FProfiles := TProfileList.Create();
 end;
 
@@ -306,7 +306,7 @@ begin
   var frameClass := LinkFrameByType(link.linkType);
   if frameClass = nil then
     exit;
-  FLinkSettingsEditFrame := frameClass.Create(LinkEditForm);
+  FLinkSettingsEditFrame := frameClass.Create(LinkEditForm(FProfilesBroker.BasePath));
   FLinkSettingsEditFrame.Parent := pnClient;
   FLinkSettingsEditFrame.Align := alClient;
   FLinkSettingsEditFrame.SetData(Link, FProfiles);

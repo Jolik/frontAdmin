@@ -1,4 +1,4 @@
-﻿object ProfilesFrame: TProfilesFrame
+object ProfilesFrame: TProfilesFrame
   Left = 0
   Top = 0
   Width = 292

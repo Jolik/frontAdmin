@@ -36,7 +36,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, LinkEditFormUnit;
+  APIConst, MainModule, uniGUIApplication, LinkEditFormUnit;
 
 function LinksForm: TLinksForm;
 begin
@@ -48,12 +48,13 @@ end;
 function TLinksForm.CreateEditForm: TParentEditForm;
 begin
   ///  создаем "нашу" форму редактирования для Абонентов
-  Result := LinkEditForm();
+  Result := LinkEditForm(constURLDrvcommBasePath);
+
 end;
 
 function TLinksForm.CreateRestBroker: TRestEntityBroker;
 begin
-  Result := TLinksRestBroker.Create(UniMainModule.XTicket);
+  Result := TLinksRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath);
 end;
 
 procedure TLinksForm.Refresh(const AId: String = '');

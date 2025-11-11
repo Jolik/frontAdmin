@@ -80,3 +80,4 @@ __recovery/
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
 /source/frontDCC/Win32/*
+/source/frontMSS/Win32

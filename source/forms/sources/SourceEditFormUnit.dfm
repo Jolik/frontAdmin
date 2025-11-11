@@ -16,6 +16,7 @@ object SourceEditForm: TSourceEditForm
     Align = alClient
     TabOrder = 0
     Caption = ''
+    ExplicitWidth = 1302
     object pnlLeft: TUniScrollBox
       Left = 1
       Top = 1

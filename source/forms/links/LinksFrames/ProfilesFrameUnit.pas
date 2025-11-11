@@ -163,6 +163,7 @@ begin
   var p := TProfile(profilesComboBox.Items.Objects[profilesComboBox.ItemIndex]);
   FProfileFrame := TProfileFrame.Create(Self);
   FProfileFrame.Parent := profilePanel;
+  FProfileFrame.Align:= TAlign.alClient;
   FProfileFrame.SetData(p, FLink);
   FProfileFrame.OnChange := OnFrameChange;
 end;

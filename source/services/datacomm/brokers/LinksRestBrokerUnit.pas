@@ -4,13 +4,13 @@ interface
 
 uses
   RestBrokerBaseUnit, BaseRequests, BaseResponses, RestEntityBrokerUnit,
-  LinksHttpRequests, HttpClientUnit;
+  LinksHttpRequests, HttpClientUnit, APIConst;
 
 type
   TLinksRestBroker = class(TRestEntityBroker)
   public
     BasePath: string;
-    constructor Create(const ATicket: string = ''); override;
+    constructor Create(const ATicket: string; const ABasePath:string);overload;
     function List(AReq: TLinkReqList): TLinkListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TLinkReqInfo): TLinkInfoResponse; overload;
@@ -30,12 +30,10 @@ type
 
 implementation
 
-uses APIConst;
-
-constructor TLinksRestBroker.Create(const ATicket: string);
+constructor TLinksRestBroker.Create(const ATicket: string; const ABasePath:string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLDatacommBasePath;
+  BasePath := ABasePath;
 end;
 
 function TLinksRestBroker.List(AReq: TReqList): TListResponse;

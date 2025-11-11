@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  SourceUnit, OrganizationUnit, ContextTypeUnit, SourceCredsUnit,
+  SourceUnit, OrganizationUnit, ContextTypeUnit, SourceCredsUnit, LinksRestBrokerUnit,
   LocationUnit, ContextsRestBrokerUnit, ContextUnit, SourceCredsRestBrokerUnit,
   LinkUnit, FuncUnit, IntefraceEditFormUnit;
 
@@ -116,6 +116,7 @@ type
    protected
     class var FLinks: TDictionary<string, TLink>;
     FIsEditMode: Boolean;
+    FLinksBroker: TLinksRestBroker;
     FSource: TSource;
     FOrganizations: TObjectList<TOrganization>;
     FLocations: TObjectList<TLocation>;
@@ -193,7 +194,7 @@ implementation
 uses
   IdHTTP, MainModule, SourcesRestBrokerUnit, OrganizationsRestBrokerUnit,
   OrganizationHttpRequests, LocationsRestBrokerUnit, LocationHttpRequests,
-  ContextsHttpRequests, LinksRestBrokerUnit, APIConst,
+  ContextsHttpRequests, APIConst,
   HttpClientUnit, LoggingUnit, BaseResponses,
   LinksHttpRequests, ContextCreateFormUnit, SourceHttpRequests;
 
@@ -218,6 +219,7 @@ begin
   FSelectedCountryId := 'RU';
   FSelectedRegionId := '';
   FSelectedOwnerOrgId := 0;
+  FLinksBroker := TLinksRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath);
   if not Assigned(FLinks) then
      FLinks:= TDictionary<String,TLink>.Create;
   FCredBroker:= TSourceCredsRestBroker.Create(UniMainModule.XTicket);
@@ -566,6 +568,7 @@ begin
   FLocations.Free;
   FOrgTypes.Free;
   FContextTypes.Free;
+  FLinksBroker.Free;
   inherited;
 end;
 
@@ -814,12 +817,9 @@ begin
     LinkReq := nil;
     LinkResp := nil;
     try
-      var DrvLinkBroker:= TLinksRestBroker.Create(MainModuleInst.XTicket);
-      DrvLinkBroker.BasePath:= APIConst.constURLDrvcommBasePath;
-
       try
-        LinkReq := DrvLinkBroker.CreateReqList as TLinkReqList;
-        LinkResp := DrvLinkBroker.List(LinkReq);
+        LinkReq := FLinksBroker.CreateReqList as TLinkReqList;
+        LinkResp := FLinksBroker.List(LinkReq);
         if Assigned(LinkResp.LinkList) then
         begin
           LinkResp.LinkList.OwnsObjects:= false;
@@ -827,7 +827,6 @@ begin
             FLinks.Add(link.id, link as TLink);
         end;
       finally
-        DrvLinkBroker.Free;
         LinkReq.Free;
         LinkResp.Free;
       end;

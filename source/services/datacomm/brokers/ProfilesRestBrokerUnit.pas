@@ -10,7 +10,7 @@ type
   TProfilesRestBroker = class(TRestEntityBroker)
   public
     BasePath: string;
-    constructor Create(const ATicket: string = ''); override;
+    constructor Create(const ATicket: string; const АBasePath:string);
     function List(AReq: TProfileReqList): TProfileListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TProfileReqInfo): TProfileInfoResponse; overload;
@@ -33,10 +33,10 @@ implementation
 
 uses APIConst;
 
-constructor TProfilesRestBroker.Create(const ATicket: string);
+constructor TProfilesRestBroker.Create(const ATicket: string; const АBasePath:string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLDatacommBasePath;
+  BasePath := АBasePath;
 end;
 
 function TProfilesRestBroker.List(AReq: TReqList): TListResponse;
