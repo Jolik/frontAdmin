@@ -14,7 +14,6 @@ uses
   FuncUnit in '..\common\FuncUnit.pas',
   GUIDListUnit in '..\common\GUIDListUnit.pas',
   StringListUnit in '..\common\StringListUnit.pas',
-  StringUnit in '..\common\StringUnit.pas',
   APIConst in '..\services\common\brokers\APIConst.pas',
   BaseRequests in '..\services\common\brokers\BaseRequests.pas',
   BaseResponses in '..\services\common\brokers\BaseResponses.pas',
@@ -114,7 +113,8 @@ uses
   TasksRestBrokerUnit in '..\services\tasks\brokers\TasksRestBrokerUnit.pas',
   SummaryTasksRestBrokerUnit in '..\services\summary\brokers\SummaryTasksRestBrokerUnit.pas',
   TaskSourceHttpRequests in '..\services\tasks\brokers\TaskSourceHttpRequests.pas',
-  SummaryTasksHttpRequests in '..\services\summary\brokers\SummaryTasksHttpRequests.pas';
+  SummaryTasksHttpRequests in '..\services\summary\brokers\SummaryTasksHttpRequests.pas',
+  StringUnit in '..\services\common\entities\StringUnit.pas';
 
 {$R *.res}
 

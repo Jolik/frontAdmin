@@ -130,7 +130,6 @@
         <DCCReference Include="..\common\FuncUnit.pas"/>
         <DCCReference Include="..\common\GUIDListUnit.pas"/>
         <DCCReference Include="..\common\StringListUnit.pas"/>
-        <DCCReference Include="..\common\StringUnit.pas"/>
         <DCCReference Include="..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseRequests.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseResponses.pas"/>
@@ -399,6 +398,7 @@
         <DCCReference Include="..\services\summary\brokers\SummaryTasksRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\tasks\brokers\TaskSourceHttpRequests.pas"/>
         <DCCReference Include="..\services\summary\brokers\SummaryTasksHttpRequests.pas"/>
+        <DCCReference Include="..\services\common\entities\StringUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
