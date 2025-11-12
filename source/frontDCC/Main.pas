@@ -16,38 +16,25 @@ uses
 
 type
   TMainForm = class(TUniForm)
-    btnChannel: TUniButton;
     btnStripTasks: TUniButton;
     btnLinks: TUniButton;
     btnSummTask: TUniButton;
-    btnRouterSources: TUniButton;
-    btnAliases: TUniButton;
-    btnQueues: TUniButton;
-    btnAbonents: TUniButton;
     btnDSProcessorTasks: TUniButton;
-    btnRules: TUniButton;
     UniButton1: TUniButton;
     cbCurDept: TUniComboBox;
     UniLabel1: TUniLabel;
     cbCurComp: TUniComboBox;
     UniLabel2: TUniLabel;
-    btnHandlers: TUniButton;
     unbtnSources: TUniButton;
-    procedure btnAbonentsClick(Sender: TObject);
-    procedure btnChannelClick(Sender: TObject);
+    OSLabel: TUniLabel;
     procedure btnStripTasksClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
     procedure btnSummTaskClick(Sender: TObject);
-    procedure btnRouterSourcesClick(Sender: TObject);
-    procedure btnAliasesClick(Sender: TObject);
     procedure btnDSProcessorTasksClick(Sender: TObject);
-    procedure btnRulesClick(Sender: TObject);
     procedure UniButton1Click(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
     procedure cbCurCompChange(Sender: TObject);
-    procedure btnHandlersClick(Sender: TObject);
-    procedure btnQueuesClick(Sender: TObject);
     procedure unbtnSourcesClick(Sender: TObject);
   private
     FDeps: TEntityList;
@@ -99,54 +86,14 @@ end;
 
 {  TMainForm  }
 
-procedure TMainForm.btnChannelClick(Sender: TObject);
-begin
-//  ChannelsForm.Show();
-end;
-
 procedure TMainForm.btnDSProcessorTasksClick(Sender: TObject);
 begin
  DSProcessorTasksForm.Show();
 end;
 
-procedure TMainForm.btnHandlersClick(Sender: TObject);
-begin
-//  HandlersForm.Show()
-end;
-
-procedure TMainForm.btnRulesClick(Sender: TObject);
-begin
-//  RulesForm.Show();
-end;
-
-//procedure TMainForm.btnHandlersClick(Sender: TObject);
-//begin
-//  HandlersForm.Show();
-//end;
-//
-procedure TMainForm.btnAbonentsClick(Sender: TObject);
-begin
-//  AbonentsForm.Show();
-end;
-
-procedure TMainForm.btnAliasesClick(Sender: TObject);
-begin
-//  AliasesForm.Show();
-end;
-
-procedure TMainForm.btnRouterSourcesClick(Sender: TObject);
-begin
-//  RouterSourcesForm.Show();
-end;
-
 procedure TMainForm.btnLinksClick(Sender: TObject);
 begin
   LinksForm.Show();
-end;
-
-procedure TMainForm.btnQueuesClick(Sender: TObject);
-begin
-//  QueuesForm.Show();
 end;
 
 procedure TMainForm.btnStripTasksClick(Sender: TObject);
@@ -192,9 +139,13 @@ var
   Req: TReqList;
   Resp: TListResponse;
 begin
+  OSLabel.Caption := 'Платформа: ' + TOSVersion.ToString;
+
   UniMainModule.XTicket:= 'ST-Test';
   HttpClient.Addr :=  '213.167.42.170';
+//  HttpClient.Addr :=  '192.168.1.140';
   HttpClient.Port := 8088;
+
   FCompanyBroker := TCompaniesRestBroker.Create(UniMainModule.XTicket);
   FDepartmentBroker := TDepartmentsRestBroker.Create(UniMainModule.XTicket);
 

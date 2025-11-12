@@ -28,6 +28,7 @@ type
     cbCurComp: TUniComboBox;
     UniLabel2: TUniLabel;
     btnHandlers: TUniButton;
+    OSLabel: TUniLabel;
     procedure btnAbonentsClick(Sender: TObject);
     procedure btnChannelClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
@@ -144,9 +145,13 @@ var
   Req: TReqList;
   Resp: TListResponse;
 begin
+  OSLabel.Caption := 'Платформа: ' + TOSVersion.ToString;
+
   UniMainModule.XTicket:= 'ST-Test';
   HttpClient.Addr :=  '213.167.42.170';
+  HttpClient.Addr :=  '192.168.1.140';
   HttpClient.Port := 8088;
+
   FCompanyBroker := TCompaniesRestBroker.Create(UniMainModule.XTicket);
   FDepartmentBroker := TDepartmentsRestBroker.Create(UniMainModule.XTicket);
 

@@ -14,8 +14,8 @@ object MainForm: TMainForm
   OnDestroy = UniFormDestroy
   TextHeight = 15
   object btnAliases: TUniButton
-    Left = 40
-    Top = 120
+    Left = 32
+    Top = 176
     Width = 75
     Height = 25
     Hint = ''
@@ -24,8 +24,8 @@ object MainForm: TMainForm
     OnClick = btnAliasesClick
   end
   object btnChannel: TUniButton
-    Left = 40
-    Top = 264
+    Left = 32
+    Top = 320
     Width = 75
     Height = 25
     Hint = ''
@@ -34,8 +34,8 @@ object MainForm: TMainForm
     OnClick = btnChannelClick
   end
   object btnLinks: TUniButton
-    Left = 40
-    Top = 160
+    Left = 32
+    Top = 216
     Width = 75
     Height = 25
     Hint = ''
@@ -44,8 +44,8 @@ object MainForm: TMainForm
     OnClick = btnLinksClick
   end
   object btnQueues: TUniButton
-    Left = 40
-    Top = 233
+    Left = 32
+    Top = 289
     Width = 75
     Height = 25
     Hint = ''
@@ -54,8 +54,8 @@ object MainForm: TMainForm
     OnClick = btnQueuesClick
   end
   object btnRouterSources: TUniButton
-    Left = 40
-    Top = 304
+    Left = 32
+    Top = 360
     Width = 75
     Height = 25
     Hint = ''
@@ -64,8 +64,8 @@ object MainForm: TMainForm
     OnClick = btnRouterSourcesClick
   end
   object btnAbonents: TUniButton
-    Left = 40
-    Top = 80
+    Left = 32
+    Top = 136
     Width = 75
     Height = 25
     Hint = ''
@@ -74,8 +74,8 @@ object MainForm: TMainForm
     OnClick = btnAliasesClick
   end
   object btnRules: TUniButton
-    Left = 40
-    Top = 360
+    Left = 32
+    Top = 416
     Width = 75
     Height = 25
     Hint = ''
@@ -84,8 +84,8 @@ object MainForm: TMainForm
     OnClick = btnRulesClick
   end
   object cbCurDept: TUniComboBox
-    Left = 304
-    Top = 44
+    Left = 600
+    Top = 76
     Width = 145
     Hint = ''
     Style = csDropDownList
@@ -94,8 +94,8 @@ object MainForm: TMainForm
     IconItems = <>
   end
   object UniLabel1: TUniLabel
-    Left = 227
-    Top = 47
+    Left = 523
+    Top = 79
     Width = 71
     Height = 13
     Hint = ''
@@ -103,8 +103,8 @@ object MainForm: TMainForm
     TabOrder = 7
   end
   object cbCurComp: TUniComboBox
-    Left = 304
-    Top = 19
+    Left = 600
+    Top = 51
     Width = 145
     Hint = ''
     Text = ''
@@ -113,8 +113,8 @@ object MainForm: TMainForm
     OnChange = cbCurCompChange
   end
   object UniLabel2: TUniLabel
-    Left = 227
-    Top = 25
+    Left = 523
+    Top = 57
     Width = 54
     Height = 13
     Hint = ''
@@ -122,13 +122,22 @@ object MainForm: TMainForm
     TabOrder = 9
   end
   object btnHandlers: TUniButton
-    Left = 40
-    Top = 200
+    Left = 32
+    Top = 256
     Width = 75
     Height = 25
     Hint = ''
     Caption = #1054#1073#1088#1072#1073#1086#1090#1095#1080#1082#1080
     TabOrder = 10
     OnClick = btnHandlersClick
+  end
+  object OSLabel: TUniLabel
+    Left = 40
+    Top = 24
+    Width = 42
+    Height = 13
+    Hint = ''
+    Caption = 'OSLabel'
+    TabOrder = 12
   end
 end
