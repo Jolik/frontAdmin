@@ -4,12 +4,9 @@ interface
 
 uses
   Classes,
-  {$ifdef mswindows}
   Windows,
-  {$else}
-  BaseUnix,
-  {$endif}
   StrUtils, DateUtils, SysUtils;
+
 const
   // перевод строки независимо от ос
   CR = #13;
@@ -315,11 +312,8 @@ function LastError: string;
 var
   i: dword;
 begin
-  {$ifdef mswindows}
   i := GetLastError;
-  {$else}
-  i := fpgeterrno;
-  {$endif}
+
   if i <> 0 then
     result := Format('system error %d %s', [i, SysErrorMessage(i)])
   else

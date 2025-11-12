@@ -6,6 +6,9 @@
         <Projects Include="BrokerTestProj\BrokerTestProj.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="CommonUnitTest\CommonUnitTestProject.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -23,14 +26,23 @@
     <Target Name="BrokerTestProj:Make">
         <MSBuild Projects="BrokerTestProj\BrokerTestProj.dproj" Targets="Make"/>
     </Target>
+    <Target Name="CommonUnitTestProject">
+        <MSBuild Projects="CommonUnitTest\CommonUnitTestProject.dproj"/>
+    </Target>
+    <Target Name="CommonUnitTestProject:Clean">
+        <MSBuild Projects="CommonUnitTest\CommonUnitTestProject.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CommonUnitTestProject:Make">
+        <MSBuild Projects="CommonUnitTest\CommonUnitTestProject.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="BrokerTestProj"/>
+        <CallTarget Targets="BrokerTestProj;CommonUnitTestProject"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="BrokerTestProj:Clean"/>
+        <CallTarget Targets="BrokerTestProj:Clean;CommonUnitTestProject:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="BrokerTestProj:Make"/>
+        <CallTarget Targets="BrokerTestProj:Make;CommonUnitTestProject:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
