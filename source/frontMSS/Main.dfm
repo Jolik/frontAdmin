@@ -140,4 +140,13 @@ object MainForm: TMainForm
     Caption = 'OSLabel'
     TabOrder = 12
   end
+  object URLLabel: TUniLabel
+    Left = 40
+    Top = 43
+    Width = 20
+    Height = 13
+    Hint = ''
+    Caption = 'URL'
+    TabOrder = 13
+  end
 end
