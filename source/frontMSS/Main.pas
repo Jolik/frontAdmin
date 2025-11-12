@@ -149,7 +149,7 @@ begin
 
   UniMainModule.XTicket:= 'ST-Test';
   HttpClient.Addr :=  '213.167.42.170';
-  HttpClient.Addr :=  '192.168.1.140';
+//  HttpClient.Addr :=  '192.168.1.140';
   HttpClient.Port := 8088;
 
   FCompanyBroker := TCompaniesRestBroker.Create(UniMainModule.XTicket);
