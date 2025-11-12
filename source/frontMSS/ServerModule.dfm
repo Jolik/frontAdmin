@@ -1,4 +1,4 @@
-﻿object UniServerModule: TUniServerModule
+object UniServerModule: TUniServerModule
   TempFolder = 'temp\'
   Title = 'New Application'
   SuppressErrors = []
@@ -13,7 +13,7 @@
   SSL.SSLOptions.VerifyDepth = 0
   ConnectionFailureRecovery.ErrorMessage = 'Connection Error'
   ConnectionFailureRecovery.RetryMessage = 'Retrying...'
-  Height = 188
-  Width = 269
-  PixelsPerInch = 120
+  Height = 263
+  Width = 377
+  PixelsPerInch = 168
 end

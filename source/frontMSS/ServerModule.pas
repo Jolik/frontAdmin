@@ -33,7 +33,8 @@ end;
 
 procedure TUniServerModule.FirstInit;
 begin
-  Self.Title := 'ЦСДН коммутация';
+  Self.Title := 'ЦСДН - Подсистема коммутации';
+  URLPath := '/admin/mss';
   InitServerModule(Self);
 end;
 
