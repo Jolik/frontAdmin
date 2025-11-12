@@ -5,10 +5,11 @@
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Linux64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>129</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>frontMSS.dpr</MainSource>
+        <ProjectName Condition="'$(ProjectName)'==''">frontMSS</ProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -401,6 +402,16 @@
         <DCCReference Include="..\services\router\brokers\RulesRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\router\entities\RuleUnit.pas"/>
         <DCCReference Include="..\services\router\entities\SmallRuleUnit.pas"/>
+        <DCCReference Include="..\forms\channels\QueueFrameUnit.pas">
+            <Form>QueueFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\channels\SharedFrameQueueFilterUnit.pas">
+            <Form>QueueConditionFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

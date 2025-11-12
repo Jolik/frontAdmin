@@ -105,7 +105,9 @@ uses
   RuleHttpRequests in '..\services\router\brokers\RuleHttpRequests.pas',
   RulesRestBrokerUnit in '..\services\router\brokers\RulesRestBrokerUnit.pas',
   RuleUnit in '..\services\router\entities\RuleUnit.pas',
-  SmallRuleUnit in '..\services\router\entities\SmallRuleUnit.pas';
+  SmallRuleUnit in '..\services\router\entities\SmallRuleUnit.pas',
+  QueueFrameUnit in '..\forms\channels\QueueFrameUnit.pas' {QueueFrame: TUniFrame},
+  SharedFrameQueueFilterUnit in '..\forms\channels\SharedFrameQueueFilterUnit.pas' {QueueConditionFrame: TUniFrame};
 
 {$R *.res}
 

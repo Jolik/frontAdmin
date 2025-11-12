@@ -1,4 +1,4 @@
-п»їunit ChannelsFormUnit;
+unit ChannelsFormUnit;
 
 interface
 
@@ -10,16 +10,23 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPanel, uniPageControl, uniSplitter, uniBasicGrid,
   uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  
-  ParentEditFormUnit, uniLabel,
-  RestEntityBrokerUnit, ChannelsRestBrokerUnit;
+  RestEntityBrokerUnit, ChannelsRestBrokerUnit,
+  ParentEditFormUnit, uniLabel;
 
 type
   TChannelsForm = class(TListParentForm)
+    procedure btnUpdateClick(Sender: TObject);
+  private
   protected
-    procedure Refresh(const AId: String = ''); override;
-    function CreateEditForm(): TParentEditForm; override;
+  protected
+    ///  функция для создания нужного брокера потомком
     function CreateRestBroker(): TRestEntityBroker; override;
+
+    ///  функиця для создания нужной формы редактирвоания
+    function CreateEditForm(): TParentEditForm; override;
+
+  public
+
   end;
 
 function ChannelsForm: TChannelsForm;
@@ -29,7 +36,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, ChannelEditFormUnit, EntityUnit, ChannelUnit;
+  MainModule, uniGUIApplication, ChannelEditFormUnit;
 
 function ChannelsForm: TChannelsForm;
 begin
@@ -38,19 +45,38 @@ end;
 
 { TChannelsForm }
 
+procedure TChannelsForm.btnUpdateClick(Sender: TObject);
+begin
+  inherited;
+  //
+end;
+
+function TChannelsForm.CreateBroker: TEntityBroker;
+begin
+  Result := TChannelsBroker.Create(UniMainModule.CompID, UniMainModule.DeptID);
+end;
+
 function TChannelsForm.CreateEditForm: TParentEditForm;
 begin
   Result := ChannelEditForm();
 end;
 
+
 procedure TChannelsForm.Refresh(const AId: String = '');
 begin
-  inherited Refresh(AId);
+  inherited Refresh(AId)
 end;
 
-function TChannelsForm.CreateRestBroker: TRestEntityBroker;
+procedure TChannelsForm.NewCallback(ASender: TComponent; AResult: Integer);
 begin
-  Result := TChannelsRestBroker.Create(UniMainModule.XTicket);
+  if AResult = mrOk then
+    Refresh();
+end;
+
+procedure TChannelsForm.UpdateCallback(ASender: TComponent; AResult: Integer);
+begin
+  if AResult = mrOk then
+    Refresh();
 end;
 
 end.

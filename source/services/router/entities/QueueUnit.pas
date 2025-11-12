@@ -4,7 +4,8 @@ interface
 
 uses
   System.Classes, System.JSON, System.Generics.Collections,
-  EntityUnit;
+  EntityUnit,
+  FilterUnit;
 
 type
   // TQueue настройки очереди. хранитс€ в роутере
@@ -14,6 +15,7 @@ type
     FUid: string;
     FDoubles: boolean;
     FCmpid: string;
+    FFilters: TQueueFilterList;
     FCountersColor: string;
     FCountersHeld: Integer;
     FCountersPrio1: Integer;
@@ -31,6 +33,9 @@ type
     function GetIdKey: string; override;
 
   public
+    constructor Create; override;
+    destructor Destroy; override;
+
     function Assign(ASource: TFieldSet): boolean; override;
 
     // эти требуют существующего правильного экземпл€ра объекта. на ошибки - эксешан
@@ -42,6 +47,7 @@ type
     property AllowPut: boolean read FAllowPut write FAllowPut;
     property Uid: string read FUid write FUid;
     property Doubles: boolean read FDoubles write FDoubles;
+    property Filters: TQueueFilterList read FFilters write FFilters;
     // Extra fields
     property Cmpid: string read FCmpid write FCmpid;
     property CountersColor: string read FCountersColor write FCountersColor;
@@ -89,6 +95,18 @@ const
 
 { TQueue }
 
+constructor TQueue.Create;
+begin
+  inherited;
+  FFilters := TQueueFilterList.Create;
+end;
+
+destructor TQueue.Destroy;
+begin
+  FFilters.Free;
+  inherited;
+end;
+
 function TQueue.Assign(ASource: TFieldSet): boolean;
 begin
   Result := false;
@@ -104,6 +122,7 @@ begin
   AllowPut := src.AllowPut;
   Uid := src.Uid;
   Doubles := src.Doubles;
+  FFilters.Assign(src.Filters);
 
   Result := true;
 end;
@@ -132,6 +151,14 @@ begin
 
   ///  читаем поле Uid
   Uid := GetValueStrDef(src, UidKey, '');
+  AllowPut := GetValueBool(src, 'allow_put');
+  Doubles := GetValueBool(src, 'doubles');
+
+  var f := src.FindValue('filters');
+  if not (f is TJSONArray) then
+    exit;
+  FFilters.ParseList((f as TJSONArray));
+
   Cmpid := GetValueStrDef(src, CmpidKey, '');
 
   var C := src.GetValue(CountersKey) as TJSONObject;
@@ -172,6 +199,14 @@ begin
   inherited Serialize(dst);
 
   dst.AddPair(UidKey, Uid);
+
+  dst.AddPair('allow_put', AllowPut);
+  dst.AddPair('doubles', Doubles);
+
+  var f := TJSONArray.Create;
+  FFilters.SerializeList(f);
+  dst.AddPair('filters', f);
+
   dst.AddPair(CmpidKey, Cmpid);
   // counters summary
   var C := TJSONObject.Create;
