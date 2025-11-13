@@ -84,6 +84,7 @@ begin
       begin
         OperatorLink := TOperatorLink(NewRequest.ReqBody);
         CreatedLinkId := TGUID.NewGuid.ToString.Replace('{', '').Replace('}', '');
+//        CreatedLinkId := '85697f9f-b80d-4668-8ed2-2f70ed825eed';
         OperatorLink.Lid := CreatedLinkId;
         OperatorLink.LinkType := 'LINKOP-MSG-HOLDER';
         OperatorLink.Dir := 'input';
@@ -197,9 +198,6 @@ begin
         Writeln('-----------------------------------------------------------------');
         Writeln('Skipping operator link update and remove operations: identifier unavailable.');
       end;
-
-      if Assigned(ListRequest.Body) then
-        ListRequest.Body.PageSize := 5;
 
       ListResponse := Broker.List(ListRequest);
 
@@ -559,7 +557,7 @@ begin
     HttpClient.Port := 8088;
 
     ExecuteOperatorLinkRequest;
-    ExecuteAbonentsRequest;
+//    ExecuteAbonentsRequest;
     // TestAbonentListRequest;
   except
     on E: Exception do
