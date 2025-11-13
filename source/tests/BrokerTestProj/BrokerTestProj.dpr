@@ -21,7 +21,7 @@ uses
   APIConst in '..\..\services\common\brokers\APIConst.pas',
   StringUnit in '..\..\services\common\entities\StringUnit.pas';
 
-procedure ExecuteRequest;
+procedure ExecuteAbonentsRequest;
 var
   Broker: TAbonentsRestBroker;
   ListRequest: TAbonentReqList;
@@ -303,7 +303,7 @@ begin
     HttpClient.Addr := '213.167.42.170';
     HttpClient.Port := 8088;
 
-    ExecuteRequest;
+    ExecuteAbonentsRequest;
     // TestAbonentListRequest;
   except
     on E: Exception do
