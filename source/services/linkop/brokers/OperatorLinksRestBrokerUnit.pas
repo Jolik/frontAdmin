@@ -21,6 +21,8 @@ type
     function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TOperatorLinkReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload; override;
+    function Archive(AReq: TOperatorLinkReqArchive): TJSONResponse; overload;
+    function Archive(AReq: TReqInfo): TJSONResponse; overload;
     function Remove(AReq: TOperatorLinkReqRemove): TJSONResponse; overload;
     function Remove(AReq: TReqRemove): TJSONResponse; overload; override;
     function CreateReqList: TReqList; override;
@@ -28,6 +30,7 @@ type
     function CreateReqNew: TReqNew; override;
     function CreateReqUpdate: TReqUpdate; override;
     function CreateReqRemove: TReqRemove; override;
+    function CreateReqArchive: TOperatorLinkReqArchive;
   end;
 
 implementation
@@ -35,7 +38,26 @@ implementation
 constructor TOperatorLinksRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  // Задаём фиксированный базовый путь для маршрутизатора
+function TOperatorLinksRestBroker.CreateReqArchive: TOperatorLinkReqArchive;
+begin
+  Result := TOperatorLinkReqArchive.Create;
+  Result.BasePath := BasePath;
+end;
+
+function TOperatorLinksRestBroker.Archive(AReq: TReqInfo): TJSONResponse;
+begin
+  Result := TJSONResponse.Create;
+  ApplyTicket(AReq);
+  HttpClient.Request(AReq, Result);
+end;
+
+function TOperatorLinksRestBroker.Archive(AReq: TOperatorLinkReqArchive)
+  : TJSONResponse;
+begin
+  Result := Archive(AReq as TReqInfo);
+end;
+
+  // Г‡Г Г¤Г ВёГ¬ ГґГЁГЄГ±ГЁГ°Г®ГўГ Г­Г­Г»Г© ГЎГ Г§Г®ГўГ»Г© ГЇГіГІГј Г¤Г«Гї Г¬Г Г°ГёГ°ГіГІГЁГ§Г ГІГ®Г°Г 
   BasePath := constURLLinkOpBasePath;
 end;
 
