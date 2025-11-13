@@ -1,1 +1,1 @@
-docker build -t frontdcc:latest .
+docker build -t front-mss-admin-unigui:latest ./docker
