@@ -45,6 +45,8 @@ var
   NewResponse: TIdNewResponse;
   UpdateRequest: TOperatorLinkReqUpdate;
   UpdateResponse: TJSONResponse;
+  ArchiveRequest: TOperatorLinkReqArchive;
+  ArchiveResponse: TJSONResponse;
   RemoveRequest: TOperatorLinkReqRemove;
   RemoveResponse: TJSONResponse;
   OperatorLink: TOperatorLink;
@@ -62,6 +64,8 @@ begin
   NewResponse := nil;
   UpdateRequest := nil;
   UpdateResponse := nil;
+  ArchiveRequest := nil;
+  ArchiveResponse := nil;
   RemoveRequest := nil;
   RemoveResponse := nil;
   OperatorLink := nil;
@@ -78,12 +82,13 @@ begin
       InfoRequest := Broker.CreateReqInfo as TOperatorLinkReqInfo;
       NewRequest := Broker.CreateReqNew as TOperatorLinkReqNew;
       UpdateRequest := Broker.CreateReqUpdate as TOperatorLinkReqUpdate;
+      ArchiveRequest := Broker.CreateReqArchive as TOperatorLinkReqArchive;
       RemoveRequest := Broker.CreateReqRemove as TOperatorLinkReqRemove;
 
       if Assigned(NewRequest.ReqBody) and (NewRequest.ReqBody is TOperatorLink) then
       begin
         OperatorLink := TOperatorLink(NewRequest.ReqBody);
-        CreatedLinkId := TGUID.NewGuid.ToString.Replace('{', '').Replace('}', '');
+        CreatedLinkId := TGUID.NewGuid.ToString.Replace('{', '').Replace('}', '').ToLower;
 //        CreatedLinkId := '85697f9f-b80d-4668-8ed2-2f70ed825eed';
         OperatorLink.Lid := CreatedLinkId;
         OperatorLink.LinkType := 'LINKOP-MSG-HOLDER';
@@ -182,6 +187,18 @@ begin
         else
           Writeln('Operator link details were not returned in the response.');
 
+        ArchiveRequest.Id := CreatedLinkId;
+        FreeAndNil(ArchiveResponse);
+        ArchiveResponse := Broker.Archive(ArchiveRequest);
+
+        Writeln('-----------------------------------------------------------------');
+        Writeln('Operator link archive request URL: ' + ArchiveRequest.GetURLWithParams);
+        Writeln('Operator link archive response:');
+        if Assigned(ArchiveResponse) and not ArchiveResponse.Response.Trim.IsEmpty then
+          Writeln(ArchiveResponse.Response)
+        else
+          Writeln('(empty response body)');
+
         RemoveRequest.Id := CreatedLinkId;
         RemoveResponse := Broker.Remove(RemoveRequest);
 
@@ -262,6 +279,8 @@ begin
   finally
     RemoveResponse.Free;
     RemoveRequest.Free;
+    ArchiveResponse.Free;
+    ArchiveRequest.Free;
     UpdateResponse.Free;
     UpdateRequest.Free;
     NewResponse.Free;

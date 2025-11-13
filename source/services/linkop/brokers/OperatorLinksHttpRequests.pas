@@ -58,6 +58,13 @@ type
     constructor Create; override;
   end;
 
+  TOperatorLinkReqArchive = class(TReqInfo)
+  protected
+    function BuildAddPath(const Id: string): string; override;
+  public
+    constructor Create; override;
+  end;
+
 implementation
 
 { TOperatorLinkListResponse }
@@ -142,6 +149,23 @@ end;
 constructor TOperatorLinkReqRemove.Create;
 begin
   inherited Create;
+  SetEndpoint('links');
+end;
+
+{ TOperatorLinkReqArchive }
+
+function TOperatorLinkReqArchive.BuildAddPath(const Id: string): string;
+begin
+  if Id.Trim.IsEmpty then
+    Result := ''
+  else
+    Result := Format('%s/archive', [Id.Trim]);
+end;
+
+constructor TOperatorLinkReqArchive.Create;
+begin
+  inherited Create;
+  Method := mPOST;
   SetEndpoint('links');
 end;
 
