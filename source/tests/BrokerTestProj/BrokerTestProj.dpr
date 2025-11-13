@@ -8,10 +8,8 @@ uses
   IdHTTP,
   AbonentsRestBrokerUnit in '..\..\services\router\brokers\AbonentsRestBrokerUnit.pas',
   AbonentHttpRequests in '..\..\services\router\brokers\AbonentHttpRequests.pas',
-  StringListUnit in '..\..\common\StringListUnit.pas',
   AbonentUnit in '..\..\services\router\entities\AbonentUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
-  FuncUnit in '..\..\common\FuncUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
   HttpClientUnit in '..\..\services\common\brokers\HttpClientUnit.pas',
   BaseRequests in '..\..\services\common\brokers\BaseRequests.pas',
@@ -22,7 +20,18 @@ uses
   OperatorLinksRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
   OperatorLinksHttpRequests in '..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
   OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
-  StringUnit in '..\..\services\common\entities\StringUnit.pas';
+  StringUnit in '..\..\services\common\entities\StringUnit.pas',
+  LinkUnit in '..\..\services\datacomm\entities\LinkUnit.pas',
+  LinkSettingsUnit in '..\..\services\datacomm\entities\LinkSettingsUnit.pas',
+  ConnectionSettingsUnit in '..\..\services\datacomm\entities\ConnectionSettingsUnit.pas',
+  DirSettingsUnit in '..\..\services\datacomm\entities\DirSettingsUnit.pas',
+  S3SettingsUnit in '..\..\services\datacomm\entities\S3SettingsUnit.pas',
+  ScheduleSettingsUnit in '..\..\services\datacomm\entities\ScheduleSettingsUnit.pas',
+  LinksHttpRequests in '..\..\services\datacomm\brokers\LinksHttpRequests.pas',
+  LinksRestBrokerUnit in '..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas',
+  KeyValUnit in '..\..\common\KeyValUnit.pas',
+  FuncUnit in '..\..\common\FuncUnit.pas',
+  StringListUnit in '..\..\common\StringListUnit.pas';
 
 procedure ExecuteOperatorLinkRequest;
 var
@@ -44,8 +53,6 @@ begin
 
     try
       ListRequest := Broker.CreateReqList as TOperatorLinkReqList;
-      if Assigned(ListRequest.Body) then
-        ListRequest.Body.PageSize := 5;
 
       ListResponse := Broker.List(ListRequest);
 

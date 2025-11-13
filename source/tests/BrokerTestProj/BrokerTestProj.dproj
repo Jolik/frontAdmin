@@ -30,10 +30,8 @@
         </DelphiCompile>
         <DCCReference Include="..\..\services\router\brokers\AbonentsRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\router\brokers\AbonentHttpRequests.pas"/>
-        <DCCReference Include="..\..\common\StringListUnit.pas"/>
         <DCCReference Include="..\..\services\router\entities\AbonentUnit.pas"/>
         <DCCReference Include="..\..\services\common\entities\EntityUnit.pas"/>
-        <DCCReference Include="..\..\common\FuncUnit.pas"/>
         <DCCReference Include="..\..\logging\LoggingUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\HttpClientUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\BaseRequests.pas"/>
@@ -41,7 +39,21 @@
         <DCCReference Include="..\..\services\common\brokers\RestBrokerBaseUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\RestEntityBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\APIConst.pas"/>
+        <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\linkop\entities\OperatorLinkUnit.pas"/>
         <DCCReference Include="..\..\services\common\entities\StringUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\entities\LinkUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\entities\LinkSettingsUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\entities\ConnectionSettingsUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\entities\DirSettingsUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\entities\S3SettingsUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\entities\ScheduleSettingsUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\brokers\LinksHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\common\KeyValUnit.pas"/>
+        <DCCReference Include="..\..\common\FuncUnit.pas"/>
+        <DCCReference Include="..\..\common\StringListUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

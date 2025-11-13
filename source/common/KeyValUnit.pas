@@ -1,8 +1,6 @@
 ﻿unit KeyValUnit;
 
 interface
-uses
- Classes, SysUtils;
 
 type
   TKeyValue<T> = class

@@ -12,7 +12,7 @@ type
     BasePath: string;
   public
     constructor Create(const ATicket: string = ''); override;
-    constructor Create(const ATicket: string; const ABasePath: string); reintroduce; overload;
+
     function List(AReq: TOperatorLinkReqList): TOperatorLinkListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TOperatorLinkReqInfo): TOperatorLinkInfoResponse; overload;
@@ -35,14 +35,8 @@ implementation
 constructor TOperatorLinksRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
+  // Задаём фиксированный базовый путь для маршрутизатора
   BasePath := constURLLinkOpBasePath;
-end;
-
-constructor TOperatorLinksRestBroker.Create(const ATicket: string;
-  const ABasePath: string);
-begin
-  inherited Create(ATicket);
-  BasePath := ABasePath;
 end;
 
 function TOperatorLinksRestBroker.CreateReqInfo(id: string): TReqInfo;
