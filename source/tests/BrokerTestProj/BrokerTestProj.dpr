@@ -19,7 +19,106 @@ uses
   RestBrokerBaseUnit in '..\..\services\common\brokers\RestBrokerBaseUnit.pas',
   RestEntityBrokerUnit in '..\..\services\common\brokers\RestEntityBrokerUnit.pas',
   APIConst in '..\..\services\common\brokers\APIConst.pas',
+  OperatorLinksRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
+  OperatorLinksHttpRequests in '..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
+  OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
   StringUnit in '..\..\services\common\entities\StringUnit.pas';
+
+procedure ExecuteOperatorLinkRequest;
+var
+  Broker: TOperatorLinksRestBroker;
+  ListRequest: TOperatorLinkReqList;
+  ListResponse: TOperatorLinkListResponse;
+  InfoRequest: TOperatorLinkReqInfo;
+  InfoResponse: TOperatorLinkInfoResponse;
+  OperatorLink: TOperatorLink;
+begin
+  Broker := nil;
+  ListRequest := nil;
+  ListResponse := nil;
+  InfoRequest := nil;
+  InfoResponse := nil;
+
+  try
+    Broker := TOperatorLinksRestBroker.Create('ST-Test');
+
+    try
+      ListRequest := Broker.CreateReqList as TOperatorLinkReqList;
+      if Assigned(ListRequest.Body) then
+        ListRequest.Body.PageSize := 5;
+
+      ListResponse := Broker.List(ListRequest);
+
+      Writeln('-----------------------------------------------------------------');
+      Writeln('Operator link list request URL: ' + ListRequest.GetURLWithParams);
+      Writeln(Format('Operator link list request body: %s',
+        [ListRequest.ReqBodyContent]));
+
+      if Assigned(ListResponse) then
+      begin
+        if Assigned(ListResponse.LinkList) then
+          Writeln(Format('Operator link records: %d',
+            [ListResponse.LinkList.Count]))
+        else
+          Writeln('Operator link list was not returned.');
+
+        if Assigned(ListResponse.LinkList) and
+          (ListResponse.LinkList.Count > 0) then
+        begin
+          OperatorLink := TOperatorLink(ListResponse.LinkList[0]);
+          Writeln(Format('First operator link: %s (%s)',
+            [OperatorLink.Name, OperatorLink.Lid]));
+
+          InfoRequest := Broker.CreateReqInfo(OperatorLink.Lid)
+            as TOperatorLinkReqInfo;
+          InfoResponse := Broker.Info(InfoRequest);
+
+          Writeln('-----------------------------------------------------------------');
+          Writeln('Operator link info request URL: ' + InfoRequest.GetURLWithParams);
+          Writeln('Operator link info response:');
+
+          if Assigned(InfoResponse) and Assigned(InfoResponse.Link) then
+          begin
+            OperatorLink := InfoResponse.Link;
+            Writeln(Format('Name: %s', [OperatorLink.Name]));
+            Writeln(Format('Type: %s', [OperatorLink.LinkType]));
+            Writeln(Format('Status: %s', [OperatorLink.Status]));
+            Writeln(Format('Connection status: %s', [OperatorLink.Comsts]));
+            Writeln(Format('Last activity time: %d',
+              [OperatorLink.LastActivityTime]));
+          end
+          else
+            Writeln('Operator link details were not returned in the response.');
+        end
+        else
+          Writeln('No operator links returned in the list response.');
+      end
+      else
+        Writeln('Operator link list response was not created.');
+
+      Writeln('-----------------------------------------------------------------');
+      Readln;
+    except
+      on E: EIdHTTPProtocolException do
+      begin
+        Writeln(Format('Error : %d %s', [E.ErrorCode, E.ErrorMessage]));
+        Readln;
+      end;
+      on E: Exception do
+      begin
+        Writeln('Error: ' + E.Message);
+        Readln;
+      end;
+    end;
+
+  finally
+    InfoResponse.Free;
+    InfoRequest.Free;
+    ListResponse.Free;
+    ListRequest.Free;
+    Broker.Free;
+  end;
+end;
 
 procedure ExecuteAbonentsRequest;
 var
@@ -303,6 +402,7 @@ begin
     HttpClient.Addr := '213.167.42.170';
     HttpClient.Port := 8088;
 
+    ExecuteOperatorLinkRequest;
     ExecuteAbonentsRequest;
     // TestAbonentListRequest;
   except

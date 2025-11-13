@@ -21,6 +21,9 @@ const
   constURLDatacommBasePath = '/datacomm/api/v1';
 
 const
+  constURLLinkOpBasePath = '/linkop/api/v1';
+
+const
   constURLDrvcommBasePath = '/drvcomm/api/v1';
 
 const
