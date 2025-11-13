@@ -3,7 +3,7 @@
 Make the proper directory structure:
 ```
 - ./etc/fmsoft           dir   # contains required uniGUI assets
-- ./opt/FrontDCC         file  # uniGUI app binary file
+- ./opt/FrontMSS         file  # uniGUI app binary file
 - ./Dockerfile           file  # Dockerfile
 - ./docker-build.sh      file  # Docker build script
 - ./docker-run.sh        file  # Docker run script
