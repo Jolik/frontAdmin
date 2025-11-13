@@ -10,7 +10,6 @@ inherited ChannelsForm: TChannelsForm
   inherited pcEntityInfo: TUniPageControl
     ExplicitHeight = 530
     inherited tsTaskInfo: TUniTabSheet
-      ExplicitHeight = 502
       inherited cpTaskInfo: TUniContainerPanel
         ExplicitHeight = 502
       end

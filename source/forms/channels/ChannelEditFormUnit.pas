@@ -1,4 +1,4 @@
-unit ChannelEditFormUnit;
+﻿unit ChannelEditFormUnit;
 
 interface
 
@@ -44,7 +44,7 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    ///  ������ �� FEntity � ����������� ���� � "������"
+    ///  ссылка на FEntity с приведением типа к "нашему"
     property Channel : TChannel read GetChannel;
 
   end;
@@ -57,8 +57,15 @@ implementation
 {$R *.dfm}
 
 uses
+  IdHTTP,
+  HttpClientUnit,
   LinkFrameUtils,
+  ProfileHttpRequests,
   MainModule;
+
+resourcestring
+  CreateCaption = 'Создание канала';
+  EditCaption = 'Редактирование канала';
 
 
 function ChannelEditForm: TChannelEditForm;
@@ -126,30 +133,44 @@ end;
 
 function TChannelEditForm.LoadProfiles: boolean;
 var
-  Pages : integer;
+  resp: TProfileListResponse;
+  req: TProfileReqList;
 begin
   if not IsEdit then
   begin
     result := true;
     exit;
   end;
-
+  req:= nil; resp:= nil;
   result := false;
   FProfiles.Clear;
   try
-    var pl := FProfilesBroker.List(Pages);
-    if pl = nil then
-      exit;
-    for var p in pl do
-    begin
-      var profile := FProfilesBroker.Info(p.Id);
-      if profile <> nil then
-        FProfiles.Add(profile);
+    try
+      req := FProfilesBroker.CreateReqList as TProfileReqList;
+      req.Lid := Channel.Link.Id;
+      resp := FProfilesBroker.List(req);
+      if resp = nil then exit;
+      resp.ProfileList.OwnsObjects := false;
+      FProfiles.AddRange(resp.ProfileList);
+      finally
+        req.Free;
+        resp.Free;
     end;
     result := true;
-  except on e: exception do begin
-    Log('TLinkEditForm.LoadProfiles ' + e.Message, lrtError);
-  end; end;
+  except
+    on E: EIdHTTPProtocolException do begin
+      MessageDlg(Format('Ошибка получения спика профилей. HTTP %d'#13#10'%s',
+        [E.ErrorCode, E.ErrorMessage]), mtWarning, [mbOK], nil);
+      Log('TLinkEditForm.LoadProfiles ' + e.Message+' '+E.ErrorMessage, lrtError);
+      result := false;
+    end;
+    on E: Exception do begin
+      MessageDlg('Ошибка получения спика профилей: ' + E.Message, mtWarning, [mbOK], nil);
+      Log('TLinkEditForm.LoadProfiles ' + e.Message, lrtError);
+      result := false;
+    end;
+  end;
+
 end;
 
 
@@ -157,7 +178,7 @@ end;
 procedure TChannelEditForm.comboLinkTypeChange(Sender: TObject);
 begin
   inherited;
-  // ������������� ���� ������ ��� �������� ������ �����
+  // редактироваие типа только при создании нового линка
   if IsEdit then
     exit;
   if not (Entity is TChannel) then
@@ -187,38 +208,76 @@ begin
   FQueueEditFrame.SetData(channel.Queue);
 end;
 
-
-
-
 function TChannelEditForm.SaveChannel: boolean;
+var
+  resp : TJSONResponse;
 begin
-  var chanBroker := TChannelsBroker.Create(UniMainModule.CompID, UniMainModule.DeptID);
-  try
+  resp := nil;
+  var chanBroker := TChannelsRestBroker.Create(UniMainModule.CompID);
+   try
     try
       if IsEdit then
-        result := chanBroker.Update(Channel)
+      begin
+        var req := chanBroker.CreateReqUpdate();
+        try
+          req.ApplyFromEntity(Channel);
+          resp := chanBroker.Update(req);
+          exit(true);
+        finally
+           req.free;
+        end;
+      end
       else
-        result := chanBroker.New(Channel);
+      begin
+      var req := chanBroker.CreateReqNew();
+        try
+          req.ApplyBody(Channel);
+          resp := chanBroker.New(req);
+          exit(true);
+        finally
+          req.Free;
+        end;
+      end;
     except on e: exception do begin
       Log('TLinkEditForm.SaveLink ' + e.Message, lrtError);
     end; end;
   finally
     chanBroker.Free;
+    resp.Free
   end;
 end;
 
 
 function TChannelEditForm.SaveProfiles: boolean;
+var
+  delresp, newresp :TJSONResponse;
 begin
   try
-    result := FProfilesBroker.Synchronize(FProfiles);
+    for var prof in FProfiles do
+    begin
+       var remReq := FProfilesBroker.CreateReqRemove;
+       try
+         remReq.Id := prof.Id;
+         delresp := FProfilesBroker.Remove(remReq);
+       finally
+          delresp.Free;
+          remReq.Free;
+       end;
+       var newReq := FProfilesBroker.CreateReqNew;
+       try
+         newReq.ApplyBody(prof);
+         newResp := FProfilesBroker.New(newReq);
+       finally
+          newReq.Free;
+          newResp.Free;
+       end;
+    end;
   except on e: exception do begin
     Log('TLinkEditForm.SaveProfiles ' + e.Message, lrtError);
   end; end;
 end;
 
-
-procedure TChannelEditForm.SetEntity(AEntity: TEntity);
+procedure TChannelEditForm.SetEntity(AEntity: TFieldSet);
 begin
   inherited;
   if not (AEntity is TChannel) then
@@ -230,12 +289,14 @@ begin
   comboLinkType.ItemIndex := comboLinkType.Items.IndexOf(channel.Link.TypeStr);
   if not IsEdit then
   begin
+    caption := CreateCaption;
     channel.Link.id := GenerateGuid;
     channel.Queue.id := GenerateGuid;
     Channel.Chid := GenerateGuid;
+  end
+  else begin
+    caption := format('%s - %s', [EditCaption, channel.Link.id]);
   end;
-  teID.Text := channel.Link.id;
-  FProfilesBroker.Lid := channel.Link.Id;
   ComboBoxDirection.ItemIndex := ComboBoxDirection.Items.IndexOf(channel.Link.Dir);
   CreateFrame;
   comboLinkType.ItemIndex := comboLinkType.Items.IndexOf(channel.Link.TypeStr);

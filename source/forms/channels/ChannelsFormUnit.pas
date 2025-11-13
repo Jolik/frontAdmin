@@ -16,8 +16,6 @@ uses
 type
   TChannelsForm = class(TListParentForm)
     procedure btnUpdateClick(Sender: TObject);
-  private
-  protected
   protected
     ///  функция для создания нужного брокера потомком
     function CreateRestBroker(): TRestEntityBroker; override;
@@ -51,9 +49,9 @@ begin
   //
 end;
 
-function TChannelsForm.CreateBroker: TEntityBroker;
+function TChannelsForm.CreateRestBroker: TRestEntityBroker;
 begin
-  Result := TChannelsBroker.Create(UniMainModule.CompID, UniMainModule.DeptID);
+  Result := TChannelsRestBroker.Create(UniMainModule.CompID);
 end;
 
 function TChannelsForm.CreateEditForm: TParentEditForm;
@@ -62,21 +60,21 @@ begin
 end;
 
 
-procedure TChannelsForm.Refresh(const AId: String = '');
-begin
-  inherited Refresh(AId)
-end;
-
-procedure TChannelsForm.NewCallback(ASender: TComponent; AResult: Integer);
-begin
-  if AResult = mrOk then
-    Refresh();
-end;
-
-procedure TChannelsForm.UpdateCallback(ASender: TComponent; AResult: Integer);
-begin
-  if AResult = mrOk then
-    Refresh();
-end;
+//procedure TChannelsForm.Refresh(const AId: String = '');
+//begin
+//  inherited Refresh(AId)
+//end;
+//
+//procedure TChannelsForm.NewCallback(ASender: TComponent; AResult: Integer);
+//begin
+//  if AResult = mrOk then
+//    Refresh();
+//end;
+//
+//procedure TChannelsForm.UpdateCallback(ASender: TComponent; AResult: Integer);
+//begin
+//  if AResult = mrOk then
+//    Refresh();
+//end;
 
 end.

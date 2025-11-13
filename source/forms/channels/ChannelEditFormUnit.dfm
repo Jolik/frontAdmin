@@ -2,8 +2,8 @@ inherited ChannelEditForm: TChannelEditForm
   ClientHeight = 546
   ClientWidth = 882
   Caption = #1057#1086#1079#1076#1072#1085#1080#1077'/'#1088#1077#1076#1072#1082#1090#1080#1088#1086#1074#1072#1085#1080#1077' '#1082#1072#1085#1072#1083#1072'...'
-  ExplicitWidth = 906
-  ExplicitHeight = 610
+  ExplicitWidth = 898
+  ExplicitHeight = 585
   TextHeight = 15
   inherited pnBottom: TUniContainerPanel
     Top = 496
@@ -24,32 +24,31 @@ inherited ChannelEditForm: TChannelEditForm
     Visible = False
     ExplicitWidth = 880
     inherited teCaption: TUniEdit
-      Left = 92
-      Width = 787
-      ExplicitLeft = 92
-      ExplicitWidth = 785
+      Left = 94
+      Width = 785
+      ExplicitLeft = 94
+      ExplicitWidth = 783
     end
   end
   inherited pnName: TUniContainerPanel
     Width = 882
     ExplicitWidth = 880
     inherited teName: TUniEdit
-      Left = 92
-      Width = 787
-      ExplicitLeft = 92
-      ExplicitWidth = 785
+      Left = 94
+      Width = 785
+      ExplicitLeft = 94
+      ExplicitWidth = 783
     end
   end
   inherited pnClient: TUniContainerPanel
     Top = 108
     Width = 882
     Height = 388
-    ExplicitLeft = 120
-    ExplicitTop = 192
-    ExplicitWidth = 760
-    ExplicitHeight = 296
-    ScrollHeight = 414
-    ScrollWidth = 819
+    ExplicitTop = 108
+    ExplicitWidth = 880
+    ExplicitHeight = 380
+    ScrollHeight = 388
+    ScrollWidth = 882
     object panelLink: TUniPanel
       Left = 0
       Top = 0
@@ -85,21 +84,19 @@ inherited ChannelEditForm: TChannelEditForm
       Left = 0
       Top = 199
       Width = 882
-      Height = 162
+      Height = 189
       Hint = ''
       Align = alClient
       TabOrder = 3
       Caption = 'panelQueue'
-      ExplicitHeight = 216
       object scrollBoxQueue: TUniScrollBox
         Left = 1
         Top = 1
         Width = 880
-        Height = 160
+        Height = 187
         Hint = ''
         Align = alClient
         TabOrder = 1
-        ExplicitHeight = 214
       end
     end
   end
@@ -112,9 +109,7 @@ inherited ChannelEditForm: TChannelEditForm
     ParentColor = False
     Align = alTop
     TabOrder = 5
-    ExplicitLeft = -104
-    ExplicitTop = 81
-    ExplicitWidth = 986
+    ExplicitWidth = 880
     object UniLabel2: TUniLabel
       AlignWithMargins = True
       Left = 3
@@ -133,9 +128,9 @@ inherited ChannelEditForm: TChannelEditForm
     end
     object comboLinkType: TUniComboBox
       AlignWithMargins = True
-      Left = 92
+      Left = 94
       Top = 3
-      Width = 787
+      Width = 785
       Height = 21
       Hint = ''
       Style = csOwnerDrawFixed
@@ -145,7 +140,7 @@ inherited ChannelEditForm: TChannelEditForm
       TabOrder = 2
       IconItems = <>
       OnChange = comboLinkTypeChange
-      ExplicitLeft = 89
+      ExplicitWidth = 783
     end
   end
   object directionPanel: TUniContainerPanel [5]
@@ -157,7 +152,7 @@ inherited ChannelEditForm: TChannelEditForm
     ParentColor = False
     Align = alTop
     TabOrder = 4
-    ExplicitTop = 12312
+    ExplicitWidth = 880
     object UniLabel5: TUniLabel
       AlignWithMargins = True
       Left = 3
@@ -176,9 +171,9 @@ inherited ChannelEditForm: TChannelEditForm
     end
     object ComboBoxDirection: TUniComboBox
       AlignWithMargins = True
-      Left = 92
+      Left = 94
       Top = 3
-      Width = 787
+      Width = 785
       Height = 21
       Hint = ''
       Style = csOwnerDrawFixed
@@ -192,7 +187,7 @@ inherited ChannelEditForm: TChannelEditForm
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 2
       IconItems = <>
-      ExplicitLeft = 102
+      ExplicitWidth = 783
     end
   end
 end
