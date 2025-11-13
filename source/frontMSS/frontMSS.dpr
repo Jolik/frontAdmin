@@ -38,6 +38,8 @@ uses
   LinkEditFormUnit in '..\forms\links\LinkEditFormUnit.pas' {LinkEditForm: TUniForm},
   LinkSettingsFormUnit in '..\forms\links\LinkSettingsFormUnit.pas' {LinkSettingsForm: TUniForm},
   LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
+  OperatorLinkEditFormUnit in '..\forms\operatorLinks\OperatorLinkEditFormUnit.pas' {OperatorLinkEditForm: TUniForm},
+  OperatorLinksFormUnit in '..\forms\operatorLinks\OperatorLinksFormUnit.pas' {OperatorLinksForm: TUniForm},
   ParentLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\ParentLinkSettingEditFrameUnit.pas' {ParentLinkSettingEditFrame: TUniFrame},
   ProfilesFrameUnit in '..\forms\links\LinksFrames\ProfilesFrameUnit.pas' {ProfilesFrame: TUniFrame},
   ProfileFrameUnit in '..\forms\links\LinksFrames\ProfileFrameUnit.pas' {ProfileFrame: TUniFrame},
@@ -107,7 +109,10 @@ uses
   RuleUnit in '..\services\router\entities\RuleUnit.pas',
   SmallRuleUnit in '..\services\router\entities\SmallRuleUnit.pas',
   QueueFrameUnit in '..\forms\channels\QueueFrameUnit.pas' {QueueFrame: TUniFrame},
-  SharedFrameQueueFilterUnit in '..\forms\channels\SharedFrameQueueFilterUnit.pas' {QueueConditionFrame: TUniFrame};
+  SharedFrameQueueFilterUnit in '..\forms\channels\SharedFrameQueueFilterUnit.pas' {QueueConditionFrame: TUniFrame},
+  OperatorLinkUnit in '..\services\linkop\entities\OperatorLinkUnit.pas',
+  OperatorLinksHttpRequests in '..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
+  OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas';
 
 {$R *.res}
 

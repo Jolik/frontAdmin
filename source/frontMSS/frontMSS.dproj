@@ -386,6 +386,16 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\operatorLinks\OperatorLinkEditFormUnit.pas">
+            <Form>OperatorLinkEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\operatorLinks\OperatorLinksFormUnit.pas">
+            <Form>OperatorLinksForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\services\router\brokers\AbonentHttpRequests.pas"/>
         <DCCReference Include="..\services\router\brokers\AbonentsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\router\brokers\AliasesRestBrokerUnit.pas"/>
@@ -402,6 +412,9 @@
         <DCCReference Include="..\services\router\brokers\RulesRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\router\entities\RuleUnit.pas"/>
         <DCCReference Include="..\services\router\entities\SmallRuleUnit.pas"/>
+        <DCCReference Include="..\services\linkop\entities\OperatorLinkUnit.pas"/>
+        <DCCReference Include="..\services\linkop\brokers\OperatorLinksHttpRequests.pas"/>
+        <DCCReference Include="..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\forms\channels\QueueFrameUnit.pas">
             <Form>QueueFrame</Form>
             <FormType>dfm</FormType>

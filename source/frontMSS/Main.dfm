@@ -71,7 +71,17 @@ object MainForm: TMainForm
     Hint = ''
     Caption = #1040#1073#1086#1085#1077#1085#1090#1099
     TabOrder = 4
-    OnClick = btnAliasesClick
+    OnClick = btnAbonentsClick
+  end
+  object btnOperatorLinks: TUniButton
+    Left = 32
+    Top = 96
+    Width = 75
+    Height = 25
+    Hint = ''
+    Caption = #1054#1087#1077#1088'. '#1089#1074#1103#1079#1080
+    TabOrder = 14
+    OnClick = btnOperatorLinksClick
   end
   object btnRules: TUniButton
     Left = 32
