@@ -1,4 +1,4 @@
-unit OperatorLinksRestBrokerUnit;
+﻿unit OperatorLinksRestBrokerUnit;
 
 interface
 
@@ -38,10 +38,8 @@ implementation
 constructor TOperatorLinksRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-function TOperatorLinksRestBroker.CreateReqArchive: TOperatorLinkReqArchive;
-begin
-  Result := TOperatorLinkReqArchive.Create;
-  Result.BasePath := BasePath;
+  // Çàäà¸ì ôèêñèðîâàííûé áàçîâûé ïóòü äëÿ ìàðøðóòèçàòîðà
+  BasePath := constURLLinkOpBasePath;
 end;
 
 function TOperatorLinksRestBroker.Archive(AReq: TReqInfo): TJSONResponse;
@@ -55,10 +53,6 @@ function TOperatorLinksRestBroker.Archive(AReq: TOperatorLinkReqArchive)
   : TJSONResponse;
 begin
   Result := Archive(AReq as TReqInfo);
-end;
-
-  // Çàäà¸ì ôèêñèðîâàííûé áàçîâûé ïóòü äëÿ ìàðøðóòèçàòîðà
-  BasePath := constURLLinkOpBasePath;
 end;
 
 function TOperatorLinksRestBroker.CreateReqInfo(id: string): TReqInfo;
@@ -82,6 +76,12 @@ end;
 function TOperatorLinksRestBroker.CreateReqRemove: TReqRemove;
 begin
   Result := TOperatorLinkReqRemove.Create;
+  Result.BasePath := BasePath;
+end;
+
+function TOperatorLinksRestBroker.CreateReqArchive: TOperatorLinkReqArchive;
+begin
+  Result := TOperatorLinkReqArchive.Create;
   Result.BasePath := BasePath;
 end;
 
