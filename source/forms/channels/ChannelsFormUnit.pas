@@ -51,7 +51,7 @@ end;
 
 function TChannelsForm.CreateRestBroker: TRestEntityBroker;
 begin
-  Result := TChannelsRestBroker.Create(UniMainModule.CompID);
+  Result := TChannelsRestBroker.Create(UniMainModule.XTicket);
 end;
 
 function TChannelsForm.CreateEditForm: TParentEditForm;
@@ -59,22 +59,5 @@ begin
   Result := ChannelEditForm();
 end;
 
-
-//procedure TChannelsForm.Refresh(const AId: String = '');
-//begin
-//  inherited Refresh(AId)
-//end;
-//
-//procedure TChannelsForm.NewCallback(ASender: TComponent; AResult: Integer);
-//begin
-//  if AResult = mrOk then
-//    Refresh();
-//end;
-//
-//procedure TChannelsForm.UpdateCallback(ASender: TComponent; AResult: Integer);
-//begin
-//  if AResult = mrOk then
-//    Refresh();
-//end;
 
 end.

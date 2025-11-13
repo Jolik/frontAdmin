@@ -54,7 +54,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, HttpClientUnit, IdHTTP;
+  MainModule, uniGUIApplication, HttpClientUnit, IdHTTP, LoggingUnit;
 
 { TParentForm }
 
@@ -150,8 +150,17 @@ begin
           JsonRes.Free;
         end;
       except
-        on E: Exception do
-          Result := False;
+        on E: EIdHTTPProtocolException do begin
+          MessageDlg(Format('Ошибка получения спика профилей лика. HTTP %d'#13#10'%s',
+            [E.ErrorCode, E.ErrorMessage]), mtWarning, [mbOK], nil);
+          Log('TLinkEditForm.LoadProfiles ' + e.Message+' '+E.ErrorMessage, lrtError);
+          result := false;
+        end;
+        on E: Exception do begin
+          MessageDlg('Ошибка получения спика профилей лика: ' + E.Message, mtWarning, [mbOK], nil);
+          Log('TLinkEditForm.LoadProfiles ' + e.Message, lrtError);
+          result := false;
+        end;
       end;
     end
     else

@@ -40,7 +40,7 @@ type
     procedure CreateFrame();
     function LoadProfiles: boolean;
     function SaveProfiles: boolean;
-    function SaveChannel: boolean;
+//    function SaveChannel: boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -80,7 +80,7 @@ begin
   inherited;
   for var ls in LinkType2Str.Keys do
     comboLinkType.Items.Add(ls);
-  FProfilesBroker := TProfilesRestBroker.Create(UniMainModule.XTicket, constURLRouterBasePath) ;
+  FProfilesBroker := TProfilesRestBroker.Create(UniMainModule.XTicket, constURLDatacommBasePath) ;
   FProfiles := TProfileList.Create();
 end;
 
@@ -109,10 +109,6 @@ begin
   Channel.Queue.DepId := UniMainModule.DeptID;
   Channel.Queue.Caption := 'queue for ' + Channel.Name;
   Channel.Queue.Uid := UID;
-  if not SaveChannel() then
-    exit;
-  if not SaveProfiles then
-    exit;
   result := inherited;
 end;
 
@@ -206,45 +202,6 @@ begin
   FQueueEditFrame := TQueueFrame.Create(Self);
   FQueueEditFrame.Parent := scrollBoxQueue;
   FQueueEditFrame.SetData(channel.Queue);
-end;
-
-function TChannelEditForm.SaveChannel: boolean;
-var
-  resp : TJSONResponse;
-begin
-  resp := nil;
-  var chanBroker := TChannelsRestBroker.Create(UniMainModule.CompID);
-   try
-    try
-      if IsEdit then
-      begin
-        var req := chanBroker.CreateReqUpdate();
-        try
-          req.ApplyFromEntity(Channel);
-          resp := chanBroker.Update(req);
-          exit(true);
-        finally
-           req.free;
-        end;
-      end
-      else
-      begin
-      var req := chanBroker.CreateReqNew();
-        try
-          req.ApplyBody(Channel);
-          resp := chanBroker.New(req);
-          exit(true);
-        finally
-          req.Free;
-        end;
-      end;
-    except on e: exception do begin
-      Log('TLinkEditForm.SaveLink ' + e.Message, lrtError);
-    end; end;
-  finally
-    chanBroker.Free;
-    resp.Free
-  end;
 end;
 
 

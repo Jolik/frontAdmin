@@ -241,7 +241,6 @@ begin
         Log('TLinkEditForm.LoadProfiles ' + e.Message, lrtError);
         result := false;
       end;
-
     end;
   finally
     req.Free;

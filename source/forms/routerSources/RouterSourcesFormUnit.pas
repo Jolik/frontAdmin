@@ -3,27 +3,32 @@
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
-  uniToolBar, uniGUIBaseClasses,
-   ParentEditFormUnit, RestBrokerBaseUnit,   RestEntityBrokerUnit,
-  RouterSourcesRestBrokerUnit, uniPanel, uniLabel;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
+  ListParentFormUnit, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, uniPageControl,
+  uniSplitter, uniBasicGrid, uniDBGrid, uniToolBar, uniGUIBaseClasses,
+  ParentEditFormUnit, RestBrokerBaseUnit, RestEntityBrokerUnit,
+  RouterSourcesRestBrokerUnit, uniPanel, uniLabel, EntityUnit;
 
 type
   TRouterSourcesForm = class(TListParentForm)
+    FDMemTableEntitycaption2: TStringField;
+    FDMemTableEntitywho: TStringField;
+    FDMemTableEntitysercive: TStringField;
   protected
     ///
-    procedure Refresh(const AId: String = ''); override;
+    procedure Refresh(const AId: string = ''); override;
 
     ///
-    function  CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestEntityBroker; override;
 
     ///
     function CreateEditForm(): TParentEditForm; override;
+
+    procedure OnAddListItem(item: TEntity); override;
+
   end;
 
 function RouterSourcesForm: TRouterSourcesForm;
@@ -33,7 +38,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, RouterSourceEditFormUnit;
+  MainModule, uniGUIApplication, RouterSourceEditFormUnit, RouterSourceUnit;
 
 function RouterSourcesForm: TRouterSourcesForm;
 begin
@@ -53,7 +58,16 @@ begin
   Result := TRouterSourcesRestBroker.Create(UniMainModule.XTicket);
 end;
 
-procedure TRouterSourcesForm.Refresh(const AId: String = '');
+procedure TRouterSourcesForm.OnAddListItem(item: TEntity);
+begin
+  inherited;
+  var src := item as TRouterSource;
+  FDMemTableEntity.FieldByName('Caption').AsString := src.Caption;
+  FDMemTableEntity.FieldByName('who').AsString := src.Who;
+  FDMemTableEntity.FieldByName('service').AsString := src.SvcId;
+end;
+
+procedure TRouterSourcesForm.Refresh(const AId: string = '');
 begin
   inherited Refresh(AId)
 end;

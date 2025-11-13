@@ -1,14 +1,14 @@
 inherited LinkEditForm: TLinkEditForm
-  ClientHeight = 809
-  ClientWidth = 986
+  ClientHeight = 801
+  ClientWidth = 984
   Caption = #1057#1086#1079#1076#1072#1085#1080#1077'/'#1056#1077#1076#1072#1082#1090#1080#1088#1086#1074#1072#1085#1080#1077' '#1083#1080#1085#1082#1086#1074'..'
   ExplicitWidth = 1002
   ExplicitHeight = 848
   TextHeight = 15
   inherited pnBottom: TUniContainerPanel
-    Top = 759
-    Width = 986
-    ExplicitTop = 551
+    Top = 751
+    Width = 984
+    ExplicitTop = 751
     ExplicitWidth = 984
     inherited btnOk: TUniButton
       Left = 825
@@ -16,40 +16,40 @@ inherited LinkEditForm: TLinkEditForm
       ExplicitLeft = 825
     end
     inherited btnCancel: TUniButton
-      Left = 908
+      Left = 906
       ExplicitLeft = 906
     end
   end
   inherited pnCaption: TUniContainerPanel
-    Width = 986
+    Width = 984
     Visible = False
     ExplicitWidth = 984
     inherited teCaption: TUniEdit
-      Left = 102
-      Width = 881
-      ExplicitLeft = 102
-      ExplicitWidth = 879
+      Left = 104
+      Width = 877
+      ExplicitLeft = 104
+      ExplicitWidth = 877
     end
   end
   inherited pnName: TUniContainerPanel
-    Width = 986
+    Width = 984
     ExplicitWidth = 984
     inherited teName: TUniEdit
-      Left = 102
-      Width = 881
-      ExplicitLeft = 102
-      ExplicitWidth = 879
+      Left = 104
+      Width = 877
+      ExplicitLeft = 104
+      ExplicitWidth = 877
     end
   end
   inherited pnClient: TUniContainerPanel
     Top = 108
-    Width = 986
-    Height = 651
+    Width = 984
+    Height = 643
     ExplicitTop = 108
     ExplicitWidth = 984
-    ExplicitHeight = 443
-    ScrollHeight = 414
-    ScrollWidth = 819
+    ExplicitHeight = 643
+    ScrollHeight = 643
+    ScrollWidth = 984
   end
   object pnID: TUniContainerPanel [4]
     Left = 0
@@ -71,13 +71,12 @@ inherited LinkEditForm: TLinkEditForm
   object UniContainerPanel1: TUniContainerPanel [5]
     Left = 0
     Top = 54
-    Width = 986
+    Width = 984
     Height = 27
     Hint = ''
     ParentColor = False
     Align = alTop
     TabOrder = 5
-    ExplicitWidth = 984
     object UniLabel2: TUniLabel
       AlignWithMargins = True
       Left = 3
@@ -96,9 +95,9 @@ inherited LinkEditForm: TLinkEditForm
     end
     object comboLinkType: TUniComboBox
       AlignWithMargins = True
-      Left = 102
+      Left = 104
       Top = 3
-      Width = 881
+      Width = 877
       Height = 21
       Hint = ''
       Style = csOwnerDrawFixed
@@ -108,19 +107,17 @@ inherited LinkEditForm: TLinkEditForm
       TabOrder = 2
       IconItems = <>
       OnChange = comboLinkTypeChange
-      ExplicitWidth = 879
     end
   end
   object UniContainerPanel3: TUniContainerPanel [6]
     Left = 0
     Top = 81
-    Width = 986
+    Width = 984
     Height = 27
     Hint = ''
     ParentColor = False
     Align = alTop
     TabOrder = 6
-    ExplicitWidth = 984
     object UniLabel4: TUniLabel
       AlignWithMargins = True
       Left = 3
@@ -139,10 +136,10 @@ inherited LinkEditForm: TLinkEditForm
     end
     object UniComboBox2: TUniComboBox
       AlignWithMargins = True
-      Left = 104
+      Left = 106
       Top = 30
-      Width = 879
-      Height = -6
+      Width = 875
+      Height = 0
       Hint = ''
       Style = csOwnerDrawFixed
       Text = ''
@@ -151,19 +148,16 @@ inherited LinkEditForm: TLinkEditForm
       TabOrder = 2
       IconItems = <>
       OnChange = comboLinkTypeChange
-      ExplicitLeft = 102
-      ExplicitHeight = 0
     end
     object directionPanel: TUniContainerPanel
       Left = 0
       Top = 0
-      Width = 986
+      Width = 984
       Height = 27
       Hint = ''
       ParentColor = False
       Align = alTop
       TabOrder = 3
-      ExplicitWidth = 984
       object UniLabel5: TUniLabel
         AlignWithMargins = True
         Left = 3
@@ -182,9 +176,9 @@ inherited LinkEditForm: TLinkEditForm
       end
       object ComboBoxDirection: TUniComboBox
         AlignWithMargins = True
-        Left = 104
+        Left = 106
         Top = 3
-        Width = 879
+        Width = 875
         Height = 21
         Hint = ''
         Style = csOwnerDrawFixed
@@ -198,7 +192,6 @@ inherited LinkEditForm: TLinkEditForm
         Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 2
         IconItems = <>
-        ExplicitLeft = 102
       end
     end
   end

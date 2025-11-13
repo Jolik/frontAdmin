@@ -74,7 +74,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication;
+  MainModule, uniGUIApplication, IdHTTP, LoggingUnit;
 
 {  TListParentForm  }
 
@@ -212,18 +212,17 @@ begin
   FDMemTableEntity.Active := True;
   Resp := nil;
   EntityList := nil;
-  if Assigned(RestBroker) then
-  begin
-    // Сначала пытаемся спросить у брокера фабрикой
-    var Req := RestBroker.CreateReqList();
-    Resp := RestBroker.List(Req);
-    if Assigned(Resp) then
-      EntityList := Resp.EntityList
-  end;
+  if not Assigned(RestBroker) then exit;
+  var Req := RestBroker.CreateReqList();
   try
-    FDMemTableEntity.EmptyDataSet;
+    try
+      Resp := RestBroker.List(Req);
+      if not  Assigned(Resp) then exit;
 
-    if Assigned(EntityList) then
+      EntityList := Resp.EntityList;
+      FDMemTableEntity.EmptyDataSet;
+
+      if Assigned(EntityList) then
       for var Entity in EntityList do
       begin
         FDMemTableEntity.Append;
@@ -231,13 +230,24 @@ begin
         FDMemTableEntity.Post;
       end;
 
-    if FDMemTableEntity.IsEmpty then
-      tsTaskInfo.TabVisible := False
-    else
-      if AID.IsEmpty then
-        FDMemTableEntity.First
+      if FDMemTableEntity.IsEmpty then
+        tsTaskInfo.TabVisible := False
       else
-        FDMemTableEntity.Locate('Id', AID, []);
+        if AID.IsEmpty then
+          FDMemTableEntity.First
+        else
+          FDMemTableEntity.Locate('Id', AID, []);
+      except
+        on E: EIdHTTPProtocolException do begin
+          MessageDlg(Format('Ошибка получения спика . HTTP %d'#13#10'%s',
+            [E.ErrorCode, E.ErrorMessage]), mtWarning, [mbOK], nil);
+          Log('TListParentForm.Refresh ' + e.Message+' '+E.ErrorMessage, lrtError);
+        end;
+        on E: Exception do begin
+          MessageDlg('Ошибка получения спика : ' + E.Message, mtWarning, [mbOK], nil);
+          Log('TListParentForm.Refresh ' + e.Message, lrtError);
+        end;
+    end;      
   finally
     if Assigned(Resp) then
       Resp.Free
