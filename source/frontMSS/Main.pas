@@ -22,6 +22,7 @@ type
     btnAliases: TUniButton;
     btnQueues: TUniButton;
     btnAbonents: TUniButton;
+    btnOperatorLinks: TUniButton;
     btnRules: TUniButton;
     cbCurDept: TUniComboBox;
     UniLabel1: TUniLabel;
@@ -41,6 +42,7 @@ type
     procedure cbCurCompChange(Sender: TObject);
     procedure btnHandlersClick(Sender: TObject);
     procedure btnQueuesClick(Sender: TObject);
+    procedure btnOperatorLinksClick(Sender: TObject);
   private
     FDeps: TEntityList;
     FComps: TEntityList;
@@ -73,7 +75,8 @@ uses
   CompanyUnit,
   DepartmentUnit,
   HandlersFormUnit,
-  RulesFormUnit;
+  RulesFormUnit,
+  OperatorLinksFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -101,6 +104,11 @@ end;
 procedure TMainForm.btnAbonentsClick(Sender: TObject);
 begin
   AbonentsForm.Show();
+end;
+
+procedure TMainForm.btnOperatorLinksClick(Sender: TObject);
+begin
+  OperatorLinksForm.Show();
 end;
 
 procedure TMainForm.btnAliasesClick(Sender: TObject);
