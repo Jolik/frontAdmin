@@ -2,15 +2,15 @@
 
 Make the proper directory structure:
 ```
-- ./etc/fmsoft           dir   # contains required uniGUI assets
-- ./opt/FrontMSS         file  # uniGUI app binary file
-- ./Dockerfile           file  # Dockerfile
-- ./docker-build.sh      file  # Docker build script
-- ./docker-run.sh        file  # Docker run script
+- ./docker/etc/fmsoft           dir   # contains required uniGUI assets
+- ./docker/opt/app              file  # uniGUI app binary file
+- ./docker/Dockerfile           file  # Dockerfile
+- ./docker/docker-run.sh        file  # Docker run script
+- ./inc_version.sh              file  # increases git tag version, builds and pushes image to docker registry
+- ./push-to-docker.sh           file  # builds and pushes image to docker registry 
 ```
 
 Next: 
 ```bash
-./docker-build.sh
-./docker-run.sh           # to run as a daemon
+./inc_version.sh        
 ```

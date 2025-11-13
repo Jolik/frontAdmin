@@ -1,1 +1,1 @@
-docker run -d --name frontdcc -p 8077:8077 --restart unless-stopped frontdcc:latest
+docker run -d --name front-mss-admin-unigui -p 8077:8077 --restart unless-stopped front-mss-admin-unigui:latest
