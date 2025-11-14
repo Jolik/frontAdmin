@@ -66,7 +66,7 @@ begin
     try
       // Limit the result set for demonstration purposes.
       ListRequest.SetCount(5);
-      ListRequest.SetFlags(['-body']);
+      ListRequest.SetFlags(['body']);
       ListResponse := Broker.List(ListRequest);
 
       Writeln('-----------------------------------------------------------------');
@@ -89,7 +89,7 @@ begin
             [SampleRecord.Name, SampleRecord.JRID]));
 
           InfoRequest.SetJournalRecordId(SampleJrid);
-          InfoRequest.SetFlags(['-body', '-history']);
+          InfoRequest.SetFlags(['body', 'history']);
           InfoResponse := Broker.Info(InfoRequest);
 
           Writeln('-----------------------------------------------------------------');

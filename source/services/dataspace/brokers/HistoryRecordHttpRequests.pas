@@ -62,7 +62,6 @@ type
     class function BodyClassType: TFieldSetClass; override;
   public
     constructor Create; override;
-    function Body: THistoryRecordSearchBody;
     procedure SetStartAt(const Value: Int64);
     procedure ClearStartAt;
     procedure SetEndAt(const Value: Int64);
@@ -70,6 +69,9 @@ type
     procedure SetTraceIds(const Values: array of string);
     procedure SetJRids(const Values: array of string);
     procedure SetCacheIds(const Values: array of string);
+
+    property Body: THistoryRecordSearchBody read GetBody;
+
   end;
 
 implementation
@@ -246,11 +248,6 @@ begin
 end;
 
 { THistoryRecordReqList }
-
-function THistoryRecordReqList.Body: THistoryRecordSearchBody;
-begin
-  Result := GetBody;
-end;
 
 class function THistoryRecordReqList.BodyClassType: TFieldSetClass;
 begin

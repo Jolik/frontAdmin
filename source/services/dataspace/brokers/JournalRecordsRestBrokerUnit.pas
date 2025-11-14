@@ -21,7 +21,8 @@ type
     function List(AReq: TReqList): TFieldSetListResponse; overload; override;
     function ListByIds(AReq: TJournalRecordReqListByIds): TJournalRecordListResponse;
     function Info(AReq: TJournalRecordReqInfo): TJournalRecordInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
 
     function CreateReqList: TReqList; override;
     function CreateReqInfo(id: string = ''): TReqInfo; override;

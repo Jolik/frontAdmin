@@ -101,11 +101,13 @@ type
     class function BodyClassType: TFieldSetClass; override;
   public
     constructor Create; override;
-    function Body: TJournalRecordReqListByIdsBody;
     procedure SetJRIDs(const Values: array of string);
     procedure SetHashes(const Values: array of string);
     procedure SetUsid(const Value: string);
     procedure SetFlags(const Values: array of string);
+
+    property  Body: TJournalRecordReqListByIdsBody read GetBody;
+
   end;
 
   // GET /storage/<jrid>
@@ -457,11 +459,6 @@ end;
 
 { TJournalRecordReqListByIds }
 
-function TJournalRecordReqListByIds.Body: TJournalRecordReqListByIdsBody;
-begin
-  Result := GetBody;
-end;
-
 constructor TJournalRecordReqListByIds.Create;
 begin
   inherited Create;
@@ -497,7 +494,7 @@ end;
 
 procedure TJournalRecordReqListByIds.SetHashes(const Values: array of string);
 begin
-  if Assigned(Body) then
+  if System.Assigned(Body) then
     Body.SetHashes(Values);
 end;
 
