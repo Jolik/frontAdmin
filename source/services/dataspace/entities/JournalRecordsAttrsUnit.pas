@@ -67,7 +67,7 @@ type
     property MM: string read FMM write FMM;
     property MT: string read FMT write FMT;
     property TT: string read FTT write FTT;
-    property &From: string read FFromValue write FFromValue;
+    property From: string read FFromValue write FFromValue;
     property LinkName: string read FLinkName write FLinkName;
     property OriginFileName: string read FOriginFileName write FOriginFileName;
     property PRID: string read FPrid write FPrid;

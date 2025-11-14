@@ -9,6 +9,9 @@
         <Projects Include="frontMSS\frontMSS.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="tests\UnitTestProj\UnitTestProj.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="frontMSS:Make">
         <MSBuild Projects="frontMSS\frontMSS.dproj" Targets="Make"/>
     </Target>
+    <Target Name="UnitTestProj">
+        <MSBuild Projects="tests\UnitTestProj\UnitTestProj.dproj"/>
+    </Target>
+    <Target Name="UnitTestProj:Clean">
+        <MSBuild Projects="tests\UnitTestProj\UnitTestProj.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="UnitTestProj:Make">
+        <MSBuild Projects="tests\UnitTestProj\UnitTestProj.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="frontDCC;frontMSS"/>
+        <CallTarget Targets="frontDCC;frontMSS;UnitTestProj"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="frontDCC:Clean;frontMSS:Clean"/>
+        <CallTarget Targets="frontDCC:Clean;frontMSS:Clean;UnitTestProj:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="frontDCC:Make;frontMSS:Make"/>
+        <CallTarget Targets="frontDCC:Make;frontMSS:Make;UnitTestProj:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
