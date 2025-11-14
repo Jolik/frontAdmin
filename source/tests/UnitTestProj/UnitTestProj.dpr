@@ -1,4 +1,4 @@
-program UnitTestProj;
+﻿program UnitTestProj;
 
 {$APPTYPE CONSOLE}
 
@@ -6,7 +6,15 @@ uses
   System.SysUtils,
   HistoryRecordUnitTest in 'HistoryRecordUnitTest.pas',
   JournalRecordsAttrsUnitTest in 'JournalRecordsAttrsUnitTest.pas',
-  JournalRecordsUnitTest in 'JournalRecordsUnitTest.pas';
+  JournalRecordsUnitTest in 'JournalRecordsUnitTest.pas',
+  FuncUnit in '..\..\common\FuncUnit.pas',
+  EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
+  LoggingUnit in '..\..\logging\LoggingUnit.pas',
+  StringListUnit in '..\..\common\StringListUnit.pas',
+  HistoryRecordUnit in '..\..\services\dataspace\entities\HistoryRecordUnit.pas',
+  JournalRecordsAttrsUnit in '..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
+  JournalRecordUnit in '..\..\services\dataspace\entities\JournalRecordUnit.pas',
+  GUIDListUnit in '..\..\common\GUIDListUnit.pas';
 
 begin
   try
