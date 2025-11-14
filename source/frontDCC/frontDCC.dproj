@@ -275,7 +275,6 @@
         <DCCReference Include="..\services\dataserver\brokers\LocationsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\dataserver\brokers\OrganizationHttpRequests.pas"/>
         <DCCReference Include="..\services\dataserver\brokers\OrganizationsRestBrokerUnit.pas"/>
-        <DCCReference Include="..\services\dataserver\brokers\RestFieldSetBrokerUnit.pas"/>
         <DCCReference Include="..\services\dataserver\brokers\SourceCredsHttpRequests.pas"/>
         <DCCReference Include="..\services\dataserver\brokers\SourceCredsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\dataserver\brokers\SourceHttpRequests.pas"/>
@@ -394,6 +393,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -422,6 +422,12 @@
             <Deployment Version="5">
                 <DeployFile LocalName="Linux64\Debug\frontDCC" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>frontDCC.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

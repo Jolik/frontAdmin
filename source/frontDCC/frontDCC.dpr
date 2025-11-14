@@ -72,7 +72,6 @@ uses
   LocationsRestBrokerUnit in '..\services\dataserver\brokers\LocationsRestBrokerUnit.pas',
   OrganizationHttpRequests in '..\services\dataserver\brokers\OrganizationHttpRequests.pas',
   OrganizationsRestBrokerUnit in '..\services\dataserver\brokers\OrganizationsRestBrokerUnit.pas',
-  RestFieldSetBrokerUnit in '..\services\dataserver\brokers\RestFieldSetBrokerUnit.pas',
   SourceCredsHttpRequests in '..\services\dataserver\brokers\SourceCredsHttpRequests.pas',
   SourceCredsRestBrokerUnit in '..\services\dataserver\brokers\SourceCredsRestBrokerUnit.pas',
   SourceHttpRequests in '..\services\dataserver\brokers\SourceHttpRequests.pas',
@@ -114,7 +113,8 @@ uses
   StringUnit in '..\services\common\entities\StringUnit.pas',
   DirDownSettingEditFrameUnit in '..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas' {DirDownSettingEditFrame: TUniFrame},
   FTPServerDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas' {FTPServerDownLinkSettingEditFrame: TUniFrame},
-  SMTPSrvDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas' {SMTPSrvDownLinkSettingEditFrame: TUniFrame};
+  SMTPSrvDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas' {SMTPSrvDownLinkSettingEditFrame: TUniFrame},
+  RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas';
 
 {$R *.res}
 
