@@ -32,7 +32,14 @@ uses
   LinksRestBrokerUnit in '..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas',
   KeyValUnit in '..\..\common\KeyValUnit.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
-  StringListUnit in '..\..\common\StringListUnit.pas';
+  StringListUnit in '..\..\common\StringListUnit.pas',
+  HistoryRecordUnit in '..\..\services\dataspace\entities\HistoryRecordUnit.pas',
+  JournalRecordUnit in '..\..\services\dataspace\entities\JournalRecordUnit.pas',
+  JournalRecordsRestBrokerUnit in '..\..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas',
+  JournalRecordHttpRequests in '..\..\services\dataspace\brokers\JournalRecordHttpRequests.pas',
+  HistoryRecordHttpRequests in '..\..\services\dataspace\brokers\HistoryRecordHttpRequests.pas',
+  HistoryRecordsRestBrokerUnit in '..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
+  JournalRecordRequestUnit in '.\JournalRecordRequestUnit.pas';
 
 procedure ExecuteOperatorLinkRequest;
 var
@@ -576,6 +583,7 @@ begin
     HttpClient.Port := 8088;
 
     ExecuteOperatorLinkRequest;
+    ExecuteJournalRecordRequest;
 //    ExecuteAbonentsRequest;
     // TestAbonentListRequest;
   except
