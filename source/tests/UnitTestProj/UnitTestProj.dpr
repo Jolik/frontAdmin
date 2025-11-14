@@ -22,6 +22,7 @@ begin
     RunJournalRecordsAttrsTests;
     RunJournalRecordTests;
     Writeln('Все тесты пройдены успешно.');
+    Readln;
   except
     on E: Exception do
     begin
