@@ -36,7 +36,6 @@
         <DCCReference Include="..\..\services\common\brokers\HttpClientUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\BaseRequests.pas"/>
         <DCCReference Include="..\..\services\common\brokers\BaseResponses.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\RestBrokerBaseUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\RestEntityBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
@@ -54,6 +53,17 @@
         <DCCReference Include="..\..\common\KeyValUnit.pas"/>
         <DCCReference Include="..\..\common\FuncUnit.pas"/>
         <DCCReference Include="..\..\common\StringListUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\entities\HistoryRecordUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\entities\JournalRecordUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\JournalRecordHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas"/>
+        <DCCReference Include="JournalRecordRequestUnit.pas"/>
+        <DCCReference Include="..\..\common\GUIDListUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\RestBrokerBaseUnit.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

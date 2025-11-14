@@ -15,7 +15,6 @@ uses
   HttpClientUnit in '..\..\services\common\brokers\HttpClientUnit.pas',
   BaseRequests in '..\..\services\common\brokers\BaseRequests.pas',
   BaseResponses in '..\..\services\common\brokers\BaseResponses.pas',
-  RestBrokerBaseUnit in '..\..\services\common\brokers\RestBrokerBaseUnit.pas',
   RestEntityBrokerUnit in '..\..\services\common\brokers\RestEntityBrokerUnit.pas',
   APIConst in '..\..\services\common\brokers\APIConst.pas',
   OperatorLinksRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
@@ -32,7 +31,18 @@ uses
   LinksRestBrokerUnit in '..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas',
   KeyValUnit in '..\..\common\KeyValUnit.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
-  StringListUnit in '..\..\common\StringListUnit.pas';
+  StringListUnit in '..\..\common\StringListUnit.pas',
+  HistoryRecordUnit in '..\..\services\dataspace\entities\HistoryRecordUnit.pas',
+  JournalRecordUnit in '..\..\services\dataspace\entities\JournalRecordUnit.pas',
+  JournalRecordsRestBrokerUnit in '..\..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas',
+  JournalRecordHttpRequests in '..\..\services\dataspace\brokers\JournalRecordHttpRequests.pas',
+  HistoryRecordHttpRequests in '..\..\services\dataspace\brokers\HistoryRecordHttpRequests.pas',
+  HistoryRecordsRestBrokerUnit in '..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
+  JournalRecordRequestUnit in 'JournalRecordRequestUnit.pas',
+  GUIDListUnit in '..\..\common\GUIDListUnit.pas',
+  JournalRecordsAttrsUnit in '..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
+  RestBrokerBaseUnit in '..\..\services\common\brokers\RestBrokerBaseUnit.pas',
+  RestFieldSetBrokerUnit in '..\..\services\common\brokers\RestFieldSetBrokerUnit.pas';
 
 procedure ExecuteOperatorLinkRequest;
 var
@@ -575,9 +585,11 @@ begin
     HttpClient.Addr := '213.167.42.170';
     HttpClient.Port := 8088;
 
-    ExecuteOperatorLinkRequest;
+//    ExecuteOperatorLinkRequest;
+    ExecuteJournalRecordRequest;
 //    ExecuteAbonentsRequest;
     // TestAbonentListRequest;
+    Readln;
   except
     on E: Exception do
       Writeln(E.ClassName + ': ' + E.Message);

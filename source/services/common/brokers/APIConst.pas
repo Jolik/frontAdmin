@@ -35,6 +35,9 @@ const
 const
   constURLAclBasePath = '/acl/api/v1';
 
+const
+  constURLDataspaceBasePath = '/dataspace/api/v2';
+
 implementation
 
 end.
