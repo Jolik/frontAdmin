@@ -38,6 +38,20 @@ begin
   Result := LowerCase(Result);
 end;
 
+function PrepareGuidString(const AGuidString: string): string;
+begin
+  Result := AGuidString.Trim;
+
+  if Result = '' then
+    Exit;
+
+  if Result[1] <> '{' then
+    Result := '{' + Result;
+
+  if Result[Length(Result)] <> '}' then
+    Result := Result + '}';
+end;
+
 { TGUIDList }
 
 procedure TGUIDList.Add(const Value: TGUID);
@@ -112,7 +126,7 @@ begin
     else
       GuidString := JSONValue.Value;
     try
-      GuidValue := StringToGUID(GuidString);
+      GuidValue := StringToGUID(PrepareGuidString(GuidString));
       FItems.Add(GuidValue);
     except on e:exception do
       begin
