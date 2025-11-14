@@ -102,6 +102,7 @@
         <DCCReference Include="..\..\common\FuncUnit.pas"/>
         <DCCReference Include="..\..\common\StringListUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\HistoryRecordUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
