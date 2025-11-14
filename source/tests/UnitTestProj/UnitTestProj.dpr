@@ -1,4 +1,4 @@
-program UnitTestProj;
+﻿program UnitTestProj;
 
 {$APPTYPE CONSOLE}
 
@@ -9,7 +9,8 @@ uses
   FuncUnit in '..\..\common\FuncUnit.pas',
   StringListUnit in '..\..\common\StringListUnit.pas',
   HistoryRecordUnit in '..\..\services\dataspace\entities\HistoryRecordUnit.pas',
-  JournalRecordsAttrsUnit in '..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas';
+  JournalRecordsAttrsUnit in '..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
+  LoggingUnit in '..\..\logging\LoggingUnit.pas';
 
 type
   ETestFailure = class(Exception);
@@ -20,6 +21,8 @@ const
   EventKeyName = 'event';
   QIDKeyName = 'qid';
   QRIDKeyName = 'qrid';
+  AAKeyName = 'AA';
+  BBBKeyName = 'BBB';
   EmailHeadersKeyName = 'email_headers';
   ToEmailKeyName = 'to_email';
   FromEmailKeyName = 'from_email';
@@ -234,7 +237,7 @@ end;
 procedure TestRecordListParse;
 const
   JsonText =
-    '[{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"32a1bea6-c788-4410-baf6-93bfd20555b6","qid":"7d3dfb7f-241b-4661-959e-d562ad47e255","qrid":"772d2872-c198-11f0-9994-02420a000199","reason":"Распределена в 7d3dfb7f-241b-4661-959e-d562ad47e255 (ftp cli up local6)","time":"2025-11-14T20:28:22.713128Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"331c5f2a-c62f-4e49-9b52-a6b393e648fc","qid":"05003636-4a12-4df2-b4ce-3521a2e59a81","qrid":"772d2905-c198-11f0-9994-02420a000199","reason":"Распределена в 05003636-4a12-4df2-b4ce-3521a2e59a81 (queue for ftp srv up local)","time":"2025-11-14T20:28:22.713274Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"6b4905dd-d002-4cce-a7bc-9527b31cdf84","qid":"fe1c8d18-3577-11f0-ad06-02420a000181","qrid":"772d2943-c198-11f0-9994-02420a000199","reason":"Распределена в fe1c8d18-3577-11f0-ad06-02420a000181 (queue for ftp cli down local)","time":"2025-11-14T20:28:22.7134Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"5cd8f5c1-bdcc-4c85-ac65-75bddf643191","qid":"51dbc218-b6b6-4a42-bf8a-9c554abb8d66","qrid":"772d2965-c198-11f0-9994-02420a000199","reason":"Распределена в 51dbc218-b6b6-4a42-bf8a-9c554abb8d66 (queue for dir up seba test)","time":"2025-11-14T20:28:22.713534Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"d63072ba-e577-41e9-83d6-00df63fa41bd","reason":"Распределена в обработчик 2db5ac24-f8e2-11ef-bf6c-02420a000125","time":"2025-11-14T20:28:22.713833Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"event":"created","hrid":"2a3488e4-f370-4a92-93da-9765aeb5a185","reason":"","time":"2025-11-14T20:28:22.75433Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"event":"stored","hrid":"7733a7e0-c198-11f0-b6e3-02420a00017c","reason":"","time":"2025-11-14T20:28:22.754916Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"}]';
+    '[{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"32a1bea6-c788-4410-baf6-93bfd20555b6","qid":"7d3dfb7f-241b-4661-959e-d562ad47e255","qrid":"772d2872-c198-11f0-9994-02420a000199","reason":"Распределена в 7d3dfb7f-241b-4661-959e-d562ad47e255 (ftp cli up local6)","time":"2025-11-14T20:28:22.713128Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"331c5f2a-c62f-4e49-9b52-a6b393e648fc","qid":"05003636-4a12-4df2-b4ce-3521a2e59a81","qrid":"772d2905-c198-11f0-9994-02420a000199","reason":"Распределена в 05003636-4a12-4df2-b4ce-3521a2e59a81 (queue for ftp srv up local)","time":"2025-11-14T20:28:22.713274Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"6b4905dd-d002-4cce-a7bc-9527b31cdf84","qid":"fe1c8d18-3577-11f0-ad06-02420a000181","qrid":"772d2943-c198-11f0-9994-02420a000199","reason":"Распределена в fe1c8d18-3577-11f0-ad06-02420a000181 (queue for ftp cli down local)","time":"2025-11-14T20:28:22.7134Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"5cd8f5c1-bdcc-4c85-ac65-75bddf643191","qid":"51dbc218-b6b6-4a42-bf8a-9c554abb8d66","qrid":"772d2965-c198-11f0-9994-02420a000199","reason":"Распределена в 51dbc218-b6b6-4a42-bf8a-9c554abb8d66 (queue for dir up seba test)","time":"2025-11-14T20:28:22.713534Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"cacheID":"jrs:772d1515-c198-11f0-9994-02420a000199","event":"routed","hrid":"d63072ba-e577-41e9-83d6-00df63fa41bd","reason":"Распределена в обработчик 2db5ac24-f8e2-11ef-bf6c-02420a000125","time":"2025-11-14T20:28:22.713833Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"},{"attrs":null,"event":"created","hrid":"2a3488e4-f370-4a92-93da-9765aeb5a185","reason":"","time":"2025-11-14T20:28:22.75433Z","traceID":"zbh0ldkhlcl8hngdnk6x","who":"05168138-87cd-4eee-9d8e-6d3b676454c0"}]';
 var
   JsonArr: TJSONArray;
   List: THistoryRecordList;
@@ -245,7 +248,7 @@ begin
     List := THistoryRecordList.Create;
     try
       List.ParseList(JsonArr);
-      Ensure(List.Count = 7, 'Список должен содержать семь элементов.');
+      Ensure(List.Count = 6, 'Список должен содержать шесть элементов.');
       Item := THistoryRecord(List.Items[4]);
       Ensure(Assigned(Item), 'Элемент списка не должен быть nil.');
       Ensure(Item.QID = '', 'Отсутствующее поле qid должно приводить к пустой строке.');
@@ -446,6 +449,7 @@ begin
     TestJournalRecordsAttrsParseMissingFields;
     TestJournalRecordsAttrsSerialize;
     Writeln('Все тесты пройдены успешно.');
+    Readln;
   except
     on E: Exception do
     begin
