@@ -8,6 +8,7 @@ implementation
 
 uses
   System.SysUtils,
+  System.JSON,
   IdHTTP,
   OperatorLinksRestBrokerUnit,
   OperatorLinksContentRestBrokerUnit,
@@ -28,6 +29,8 @@ var
   ContentInfoResp: TOperatorLinkContentInfoResponse;
   SelectedLink: TOperatorLink;
   ContentRecord: TJournalRecord;
+  RecordJson: TJSONObject;
+  RecordIndex: Integer;
   LinkId: string;
 begin
   LinkBroker := nil;
@@ -75,9 +78,16 @@ begin
       if Assigned(ContentListResp) and Assigned(ContentListResp.Records) and
         (ContentListResp.Records.Count > 0) then
       begin
-        ContentRecord := TJournalRecord(ContentListResp.Records[0]);
         Writeln(Format('Content records returned: %d',
           [ContentListResp.Records.Count]));
+        Writeln('Content record names:');
+        for RecordIndex := 0 to ContentListResp.Records.Count - 1 do
+        begin
+          ContentRecord := TJournalRecord(ContentListResp.Records[RecordIndex]);
+          Writeln(Format('  %d. %s', [RecordIndex + 1, ContentRecord.Name]));
+        end;
+
+        ContentRecord := TJournalRecord(ContentListResp.Records[0]);
         Writeln('First content record from list:');
         Writeln(Format('  Name: %s', [ContentRecord.Name]));
         Writeln(Format('  JRID: %s', [ContentRecord.JRID]));
@@ -99,15 +109,12 @@ begin
           if Assigned(ContentInfoResp) and Assigned(ContentInfoResp.RecordItem) then
           begin
             Writeln('Detailed information for the selected content record:');
-            Writeln(Format('  Name: %s', [ContentInfoResp.RecordItem.Name]));
-            Writeln(Format('  Type: %s', [ContentInfoResp.RecordItem.&Type]));
-            Writeln(Format('  Priority: %d', [ContentInfoResp.RecordItem.Priority]));
-            Writeln(Format('  Trace ID: %s', [ContentInfoResp.RecordItem.TraceID]));
-            if Assigned(ContentInfoResp.RecordItem.Data) then
-              Writeln(Format('  Data body length: %d',
-                [ContentInfoResp.RecordItem.Data.Body.Length]))
-            else
-              Writeln('  Data body: (not returned)');
+            RecordJson := ContentInfoResp.RecordItem.Serialize;
+            try
+              Writeln(TJSON.Format(RecordJson));
+            finally
+              RecordJson.Free;
+            end;
           end
           else
             Writeln('Content record info response was empty.');
