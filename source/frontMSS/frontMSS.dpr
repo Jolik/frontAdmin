@@ -7,6 +7,8 @@ uses
   Main in 'Main.pas' {MainForm: TUniForm},
   CompanyUnit in '..\services\acl\entities\CompanyUnit.pas',
   DepartmentUnit in '..\services\acl\entities\DepartmentUnit.pas',
+  UserUnit in '..\services\acl\entities\UserUnit.pas',
+  SessionUnit in '..\services\acl\entities\SessionUnit.pas',
   EntityUnit in '..\services\common\entities\EntityUnit.pas',
   FuncUnit in '..\common\FuncUnit.pas',
   LoggingUnit in '..\logging\LoggingUnit.pas',
@@ -17,6 +19,8 @@ uses
   CompanyHttpRequests in '..\services\acl\brokers\CompanyHttpRequests.pas',
   DepartmentHttpRequests in '..\services\acl\brokers\DepartmentHttpRequests.pas',
   DepartmentsRestBrokerUnit in '..\services\acl\brokers\DepartmentsRestBrokerUnit.pas',
+  SessionHttpRequests in '..\services\acl\brokers\SessionHttpRequests.pas',
+  SessionsRestBrokerUnit in '..\services\acl\brokers\SessionsRestBrokerUnit.pas',
   APIConst in '..\services\common\brokers\APIConst.pas',
   BaseRequests in '..\services\common\brokers\BaseRequests.pas',
   BaseResponses in '..\services\common\brokers\BaseResponses.pas',
@@ -112,7 +116,9 @@ uses
   SharedFrameQueueFilterUnit in '..\forms\channels\SharedFrameQueueFilterUnit.pas' {QueueConditionFrame: TUniFrame},
   OperatorLinkUnit in '..\services\linkop\entities\OperatorLinkUnit.pas',
   OperatorLinksHttpRequests in '..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
-  OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas';
+  OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
+  UniStorageHelpers in '..\common\UniStorageHelpers.pas',
+  AuthMainFormUnit in '..\forms\common\AuthMainFormUnit.pas' {AuthMainForm: TUniForm};
 
 {$R *.res}
 

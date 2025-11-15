@@ -9,20 +9,19 @@ uses
   uniGUIClasses, uniGUIRegClasses, uniGUIForm, uniGUIBaseClasses, uniLabel,
   uniButton, uniSplitter, uniPageControl, uniTreeView, uniTreeMenu,
   uniMultiItem, uniComboBox, EntityUnit,
-  // New REST brokers
   CompaniesRestBrokerUnit, DepartmentsRestBrokerUnit,
-  // Base REST helpers
-  RestBrokerBaseUnit, BaseRequests, BaseResponses, uniScreenMask;
+  RestBrokerBaseUnit, BaseRequests, BaseResponses, uniScreenMask, uniPanel,
+  AuthMainFormUnit, Vcl.Menus, uniMainMenu;
 
 type
-  TMainForm = class(TUniForm)
+  TMainForm = class(TAuthMainForm)
     btnChannel: TUniButton;
     btnLinks: TUniButton;
     btnRouterSources: TUniButton;
     btnAliases: TUniButton;
     btnQueues: TUniButton;
     btnAbonents: TUniButton;
-    btnOperatorLinks: TUniButton;
+	  btnOperatorLinks: TUniButton;
     btnRules: TUniButton;
     cbCurDept: TUniComboBox;
     UniLabel1: TUniLabel;
@@ -31,6 +30,7 @@ type
     btnHandlers: TUniButton;
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
+    UniContainerPanel1: TUniContainerPanel;
     procedure btnAbonentsClick(Sender: TObject);
     procedure btnChannelClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
@@ -65,7 +65,6 @@ uses
   uniGUIVars, uniGUIApplication,
   MainModule,
   HttpClientUnit,
-  ParentFormUnit,
   ChannelsFormUnit,
   LinksFormUnit,
   QueuesFormUnit,
@@ -74,9 +73,8 @@ uses
   RouterSourcesFormUnit,
   CompanyUnit,
   DepartmentUnit,
-  HandlersFormUnit,
   RulesFormUnit,
-  OperatorLinksFormUnit;
+  OperatorLinksFormUnit, HandlersFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -148,6 +146,7 @@ begin
     Result:= (cbCurDept.Items.Objects[cbCurDept.ItemIndex] as TDepartment).Id;
 end;
 
+
 procedure TMainForm.UniFormCreate(Sender: TObject);
 var
   ind, page: integer;
@@ -155,8 +154,9 @@ var
   Resp: TListResponse;
 begin
   OSLabel.Caption := 'Платформа: ' + TOSVersion.ToString;
-
   UniMainModule.XTicket:= 'ST-Test';
+
+//  uncntnrpnMainPanel.Visible:= true;
 
   HttpClient.Addr :=  '213.167.42.170';
 //  HttpClient.Addr :=  '192.168.1.140';
@@ -218,8 +218,6 @@ begin
   cbCurComp.ItemIndex:= ind;
   UpdateDeptList;
   UniMainModule.CompID:= GetCompid;
-
-
 end;
 
 procedure TMainForm.UniFormDestroy(Sender: TObject);

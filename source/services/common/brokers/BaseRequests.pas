@@ -361,7 +361,7 @@ begin
   if FId = Normalized then
     Exit;
   FId := Normalized;
-//!!!  AddPath := BuildAddPath(FId);
+  AddPath := BuildAddPath(FId);
 end;
 
 function TReqInfo.BuildAddPath(const Id: string): string;

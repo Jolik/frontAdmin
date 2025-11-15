@@ -114,7 +114,8 @@ uses
   DirDownSettingEditFrameUnit in '..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas' {DirDownSettingEditFrame: TUniFrame},
   FTPServerDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas' {FTPServerDownLinkSettingEditFrame: TUniFrame},
   SMTPSrvDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas' {SMTPSrvDownLinkSettingEditFrame: TUniFrame},
-  RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas';
+  RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas',
+  UniStorageHelpers in '..\common\UniStorageHelpers.pas';
 
 {$R *.res}
 

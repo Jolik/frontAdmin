@@ -59,9 +59,7 @@ object SourcesForm: TSourcesForm
     ParentColor = False
     Align = alTop
     TabOrder = 1
-    ExplicitLeft = 0
-    ExplicitTop = 0
-    ExplicitWidth = 1319
+    ExplicitWidth = 1313
     object undtSourceFilter: TUniEdit
       Left = 47
       Top = 1
@@ -112,8 +110,8 @@ object SourcesForm: TSourcesForm
     ParentColor = False
     Align = alRight
     TabOrder = 2
-    ExplicitTop = 29
-    ExplicitHeight = 489
+    ExplicitLeft = 494
+    ExplicitHeight = 617
     object uncntnrpnBtns1: TUniContainerPanel
       Left = 0
       Top = 0
@@ -162,13 +160,12 @@ object SourcesForm: TSourcesForm
       ActivePage = untbshtMap1
       Align = alClient
       TabOrder = 2
-      ExplicitTop = 0
-      ExplicitHeight = 441
+      ExplicitHeight = 575
       object tsSourceInfo: TUniTabSheet
         Hint = ''
         TabVisible = False
         Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103
-        ExplicitHeight = 408
+        ExplicitHeight = 547
         object cpSourceInfo: TUniContainerPanel
           Left = 0
           Top = 39
@@ -182,11 +179,11 @@ object SourcesForm: TSourcesForm
           TabOrder = 0
           Layout = 'table'
           LayoutAttribs.Columns = 2
-          ExplicitHeight = 369
-          object cpSourceInfoID: TUniContainerPanel
+          ExplicitHeight = 508
+          object uncntnrpnUpdate: TUniContainerPanel
             AlignWithMargins = True
             Left = 10
-            Top = 0
+            Top = 200
             Width = 792
             Height = 40
             Hint = ''
@@ -198,10 +195,46 @@ object SourcesForm: TSourcesForm
             ParentColor = False
             Align = alTop
             ParentAlignmentControl = False
-            TabOrder = 1
+            TabOrder = 6
             Layout = 'table'
             LayoutAttribs.Columns = 2
-            object pSeparator1: TUniPanel
+            object unlblUpdate: TUniLabel
+              AlignWithMargins = True
+              Left = 5
+              Top = 7
+              Width = 100
+              Height = 20
+              Hint = ''
+              Margins.Left = 5
+              Margins.Top = 7
+              Margins.Right = 5
+              Margins.Bottom = 7
+              Alignment = taRightJustify
+              AutoSize = False
+              Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1072
+              Align = alLeft
+              ParentFont = False
+              Font.Style = [fsBold]
+              TabOrder = 1
+            end
+            object unlblUpdatedVal: TUniLabel
+              AlignWithMargins = True
+              Left = 115
+              Top = 7
+              Width = 672
+              Height = 20
+              Hint = ''
+              Margins.Left = 5
+              Margins.Top = 7
+              Margins.Right = 5
+              Margins.Bottom = 7
+              AutoSize = False
+              Caption = 'ID'
+              Align = alClient
+              ParentFont = False
+              TabOrder = 2
+            end
+            object unpnl2: TUniContainerPanel
               AlignWithMargins = True
               Left = 0
               Top = 34
@@ -212,10 +245,10 @@ object SourcesForm: TSourcesForm
               Margins.Top = 0
               Margins.Right = 0
               Margins.Bottom = 5
-              Align = alBottom
-              TabOrder = 1
-              Caption = ''
+              ParentColor = False
               Color = clHighlight
+              Align = alBottom
+              TabOrder = 3
             end
           end
           object cpSourceInfoCreated: TUniContainerPanel
@@ -325,10 +358,10 @@ object SourcesForm: TSourcesForm
               end
             end
           end
-          object uncntnrpnUpdate: TUniContainerPanel
+          object cpSourceInfoID: TUniContainerPanel
             AlignWithMargins = True
             Left = 10
-            Top = 200
+            Top = 0
             Width = 792
             Height = 40
             Hint = ''
@@ -340,46 +373,10 @@ object SourcesForm: TSourcesForm
             ParentColor = False
             Align = alTop
             ParentAlignmentControl = False
-            TabOrder = 6
+            TabOrder = 1
             Layout = 'table'
             LayoutAttribs.Columns = 2
-            object unlblUpdate: TUniLabel
-              AlignWithMargins = True
-              Left = 5
-              Top = 7
-              Width = 100
-              Height = 20
-              Hint = ''
-              Margins.Left = 5
-              Margins.Top = 7
-              Margins.Right = 5
-              Margins.Bottom = 7
-              Alignment = taRightJustify
-              AutoSize = False
-              Caption = #1054#1073#1085#1086#1074#1083#1077#1085#1072
-              Align = alLeft
-              ParentFont = False
-              Font.Style = [fsBold]
-              TabOrder = 1
-            end
-            object unlblUpdatedVal: TUniLabel
-              AlignWithMargins = True
-              Left = 115
-              Top = 7
-              Width = 672
-              Height = 20
-              Hint = ''
-              Margins.Left = 5
-              Margins.Top = 7
-              Margins.Right = 5
-              Margins.Bottom = 7
-              AutoSize = False
-              Caption = 'ID'
-              Align = alClient
-              ParentFont = False
-              TabOrder = 2
-            end
-            object unpnl2: TUniContainerPanel
+            object pSeparator1: TUniPanel
               AlignWithMargins = True
               Left = 0
               Top = 34
@@ -390,10 +387,10 @@ object SourcesForm: TSourcesForm
               Margins.Top = 0
               Margins.Right = 0
               Margins.Bottom = 5
-              ParentColor = False
-              Color = clHighlight
               Align = alBottom
-              TabOrder = 3
+              TabOrder = 1
+              Caption = ''
+              Color = clHighlight
             end
           end
           object uncntnrpnSourceInfoRegion: TUniContainerPanel
@@ -690,7 +687,7 @@ object SourcesForm: TSourcesForm
             ParentColor = False
             Align = alBottom
             TabOrder = 8
-            ExplicitTop = 319
+            ExplicitTop = 458
             object btnOk: TUniButton
               AlignWithMargins = True
               Left = 648
@@ -744,7 +741,7 @@ object SourcesForm: TSourcesForm
       object untbshtMap1: TUniTabSheet
         Hint = ''
         Caption = #1050#1072#1088#1090#1072
-        ExplicitHeight = 408
+        ExplicitHeight = 547
         object unmpSource1: TUniMap
           Left = 0
           Top = 0
@@ -762,7 +759,7 @@ object SourcesForm: TSourcesForm
           OnMapReady = unmpSource1MapReady
           OnMarkerClick = unmpSource1MarkerClick
           Align = alClient
-          ExplicitHeight = 408
+          ExplicitHeight = 547
         end
       end
     end
