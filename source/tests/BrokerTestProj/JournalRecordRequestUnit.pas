@@ -125,7 +125,7 @@ begin
       if not SampleJrid.IsEmpty then
       begin
         IdListRequest.SetJRIDs([SampleJrid]);
-        IdListRequest.SetFlags(['-body']);
+        IdListRequest.SetFlags(['body']);
         IdListResponse := Broker.ListByIds(IdListRequest);
 
         Writeln('-----------------------------------------------------------------');
