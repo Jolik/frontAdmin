@@ -128,16 +128,10 @@ type
   TAbonentReqUpdate = class(TReqUpdate)
   private
     function GetBody: TAbonentReqNewUpdateBody;
-    procedure SetAbonentId(const Value: string);
   protected
     class function BodyClassType: TFieldSetClass; override;
   public
     constructor Create; override;
-    /// <summary>
-    /// Identifier of the abonent being updated. Assigning the value appends
-    /// the required "/:abid/update" suffix to the request URL via AddPath.
-    /// </summary>
-    property AbonentId: string write SetAbonentId;
     property Body: TAbonentReqNewUpdateBody read GetBody;
   end;
 
@@ -146,14 +140,8 @@ type
   /// </summary>
   TAbonentReqRemove = class(TReqRemove)
   private
-    procedure SetAbonentId(const Value: string);
   public
     constructor Create; override;
-    /// <summary>
-    /// Identifier of the abonent being removed. Assigning the value appends
-    /// the required "/:abid/remove" suffix to the request URL via AddPath.
-    /// </summary>
-    property AbonentId: string write SetAbonentId;
   end;
 
   /// <summary>
@@ -360,7 +348,6 @@ begin
     Obj.Free;
   end;
 end;
-{ TAbonentInfoResponse }
 
 { TAbonentInfoResponse }
 
@@ -373,33 +360,30 @@ function TAbonentInfoResponse.GetAbonent: TAbonent;
 begin
   Result := Entity as TAbonent;
 end;
+
 { TAbonentReqNew }
 
 constructor TAbonentReqNew.Create;
 begin
   inherited Create;
   Method := mPOST;
-  SetEndpoint('abonents/new');
+  SetEndpoint('abonents');
+  AddPath := 'new';
 end;
-
-{ TAbonentReqUpdate }
-
-{ TAbonentReqRemove }
-
-{ TAbonentReqInfo }
 
 { TAbonentReqList }
-
-class function TAbonentReqList.BodyClassType: TFieldSetClass;
-begin
-  Result := TAbonentReqListBody;
-end;
 
 constructor TAbonentReqList.Create;
 begin
   inherited Create;
   Method := mPOST;
-  SetEndpoint('abonents/list');
+  SetEndpoint('abonents');
+  AddPath := 'list';
+end;
+
+class function TAbonentReqList.BodyClassType: TFieldSetClass;
+begin
+  Result := TAbonentReqListBody;
 end;
 
 function TAbonentReqList.GetBody: TAbonentReqListBody;
@@ -409,6 +393,7 @@ begin
   else
     Result := nil;
 end;
+
 { TAbonentReqNew }
 
 class function TAbonentReqNew.BodyClassType: TFieldSetClass;
@@ -423,18 +408,19 @@ begin
   else
     Result := nil;
 end;
-{ TAbonentReqUpdate }
 
-class function TAbonentReqUpdate.BodyClassType: TFieldSetClass;
-begin
-  Result := TAbonentReqNewUpdateBody;
-end;
+{ TAbonentReqUpdate }
 
 constructor TAbonentReqUpdate.Create;
 begin
   inherited Create;
   Method := mPOST;
   SetEndpoint('abonents');
+end;
+
+class function TAbonentReqUpdate.BodyClassType: TFieldSetClass;
+begin
+  Result := TAbonentReqNewUpdateBody;
 end;
 
 function TAbonentReqUpdate.GetBody: TAbonentReqNewUpdateBody;
@@ -445,17 +431,6 @@ begin
     Result := nil;
 end;
 
-procedure TAbonentReqUpdate.SetAbonentId(const Value: string);
-var
-  Normalized: string;
-begin
-  Normalized := Value.Trim;
-  if Normalized.IsEmpty then
-    AddPath := ''
-  else
-    AddPath := Format('%s/update', [Normalized]);
-  Id := Normalized;
-end;
 { TAbonentReqRemove }
 
 constructor TAbonentReqRemove.Create;
@@ -465,17 +440,6 @@ begin
   SetEndpoint('abonents');
 end;
 
-procedure TAbonentReqRemove.SetAbonentId(const Value: string);
-var
-  Normalized: string;
-begin
-  Normalized := Value.Trim;
-  if Normalized.IsEmpty then
-    AddPath := ''
-  else
-    AddPath := Format('%s/remove', [Normalized]);
-  Id := Normalized;
-end;
 { TAbonentReqInfo }
 
 constructor TAbonentReqInfo.Create;

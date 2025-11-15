@@ -82,7 +82,7 @@ begin
 
       if not CreatedAbonentId.Trim.IsEmpty then
       begin
-        UpdateRequest.AbonentId := CreatedAbonentId;
+        UpdateRequest.ID := CreatedAbonentId;
 
         if Assigned(UpdateRequest.Body) then
         begin
@@ -136,7 +136,7 @@ begin
         else
           Writeln('Abonent details were not returned in the response.');
 
-        RemoveRequest.AbonentId := CreatedAbonentId;
+        RemoveRequest.ID := CreatedAbonentId;
         RemoveResponse := Broker.Remove(RemoveRequest);
 
         Writeln('-----------------------------------------------------------------');

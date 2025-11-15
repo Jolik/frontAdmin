@@ -113,11 +113,11 @@ begin
     HttpClient.Addr := '213.167.42.170';
     HttpClient.Port := 8088;
 
-    ExecuteOperatorLinkRequest;
-    ExecuteJournalRecordRequest;
+//    ExecuteOperatorLinkRequest;
+//    ExecuteJournalRecordRequest;
     ExecuteAbonentsRequest;
-    ExecuteOperatorLinksContentRequests;
-    ExecuteSearchRequest;
+//    ExecuteOperatorLinksContentRequests;
+//    ExecuteSearchRequest;
     Readln;
   except
     on E: Exception do

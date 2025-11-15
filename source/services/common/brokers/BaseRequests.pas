@@ -105,10 +105,8 @@ type
   end;
 
   // Base update request by identifier (POST/PUT with entity body)
-  TReqUpdate = class(TBaseServiceRequest)
+  TReqUpdate = class(TReqWithID)
   private
-    FId: string;
-    procedure SetId(const Value: string);
   protected
     class function BodyClassType: TFieldSetClass; override;
   public
@@ -116,18 +114,12 @@ type
     // Copies fields from an entity into the request body when possible.
     // Default implementation assigns TFieldSet contents if both sides are field sets.
     procedure ApplyFromEntity(AEntity: TEntity); virtual;
-    property Id: string read FId write SetId;
   end;
 
   // Base remove request by identifier
-  TReqRemove = class(TBaseServiceRequest)
-  private
-    FId: string;
-    procedure SetId(const Value: string);
+  TReqRemove = class(TReqWithID)
   public
     constructor Create; override;
-    constructor CreateID(const AId: string); reintroduce; overload;
-    property Id: string read FId write SetId;
   end;
 
 implementation
@@ -405,22 +397,7 @@ constructor TReqUpdate.Create;
 begin
   inherited Create;
   Method := mPOST;
-  FId := '';
-  AddPath := '';
-end;
-
-procedure TReqUpdate.SetId(const Value: string);
-var
-  N: string;
-begin
-  N := Value.Trim;
-  if FId = N then
-    Exit;
-  FId := N;
-  if FId.IsEmpty then
-    AddPath := ''
-  else
-    AddPath := Format('%s/update', [FId]);
+  AddPath := 'update';
 end;
 
 procedure TReqUpdate.ApplyFromEntity(AEntity: TEntity);
@@ -435,28 +412,7 @@ constructor TReqRemove.Create;
 begin
   inherited Create;
   Method := mPOST;
-  FId := '';
-  AddPath := '';
-end;
-
-constructor TReqRemove.CreateID(const AId: string);
-begin
-  Create;
-  Id := AId;
-end;
-
-procedure TReqRemove.SetId(const Value: string);
-var
-  N: string;
-begin
-  N := Value.Trim;
-  if FId = N then
-    Exit;
-  FId := N;
-  if FId.IsEmpty then
-    AddPath := ''
-  else
-    AddPath := Format('%s/remove', [FId]);
+  AddPath := 'remove';
 end;
 
 end.
