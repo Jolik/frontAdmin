@@ -107,8 +107,12 @@ begin
             begin
               SampleHistory := THistoryRecord(
                 InfoResponse.JournalRecord.History[0]);
-              Writeln(Format('  First history event: %s (%s)',
-                [SampleHistory.Event, SampleHistory.Time]));
+              Writeln('  First history record:');
+              Writeln(Format('    Event: %s', [SampleHistory.Event]));
+              Writeln(Format('    Time: %s', [SampleHistory.Time]));
+              Writeln(Format('    Who: %s', [SampleHistory.Who]));
+              Writeln(Format('    Reason: %s', [SampleHistory.Reason]));
+              Writeln(Format('    Trace ID: %s', [SampleHistory.TraceID]));
             end
             else
               Writeln('  History: (empty)');
@@ -148,10 +152,19 @@ begin
         begin
           Writeln(Format('History entries returned: %d',
             [HistoryResponse.HistoryRecords.Count]));
-          if (HistoryResponse.HistoryRecords.Count > 0) and
-            (TraceIdForSearch = '') then
-            TraceIdForSearch := THistoryRecord(
-              HistoryResponse.HistoryRecords[0]).TraceID;
+          if HistoryResponse.HistoryRecords.Count > 0 then
+          begin
+            SampleHistory := THistoryRecord(HistoryResponse.HistoryRecords[0]);
+            Writeln('  First history record in response:');
+            Writeln(Format('    Event: %s', [SampleHistory.Event]));
+            Writeln(Format('    Time: %s', [SampleHistory.Time]));
+            Writeln(Format('    Who: %s', [SampleHistory.Who]));
+            Writeln(Format('    Reason: %s', [SampleHistory.Reason]));
+            Writeln(Format('    Trace ID: %s', [SampleHistory.TraceID]));
+
+            if TraceIdForSearch = '' then
+              TraceIdForSearch := SampleHistory.TraceID;
+          end;
         end
         else
           Writeln('History list response was empty.');
