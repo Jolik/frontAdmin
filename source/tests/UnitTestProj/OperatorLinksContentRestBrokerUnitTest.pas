@@ -47,7 +47,7 @@ begin
 
     InfoReq := Broker.CreateReqInfo as TOperatorLinkContentReqInfo;
     try
-      InfoReq.LinkId := 'link-123';
+      InfoReq.ID := 'link-123';
       InfoReq.JournalRecordId := 'jrec-001';
       InfoReq.SetFlags(['body']);
       Url := InfoReq.GetURLWithParams;
