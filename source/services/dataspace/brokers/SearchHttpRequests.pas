@@ -362,7 +362,7 @@ begin
   FWho.Clear;
   FJRids.Clear;
   FDoubleIds.Clear;
-  FAttrs.Clear;
+//  FAttrs.Clear;
 end;
 
 constructor TSearchNewBody.Create;
@@ -431,7 +431,7 @@ begin
     for Item in TJSONArray(Value) do
       FDoubleIds.Add(Item.Value);
 
-  FAttrs.Clear;
+//  FAttrs.Clear;
   Value := src.GetValue('attrs');
   if Value is TJSONObject then
     for Pair in TJSONObject(Value) do

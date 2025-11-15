@@ -26,7 +26,7 @@ type
 
     function Start(AReq: TSearchNewRequest): TSearchNewResponse;
     function Info(AReq: TSearchReqInfo): TSearchInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
     function List(AReq: TSearchListRequest): TSearchListResponse; overload;
     function List(AReq: TReqList): TFieldSetListResponse; overload; override;
     function Abort(AReq: TSearchAbortRequest): TJSONResponse;
