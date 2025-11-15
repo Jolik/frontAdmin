@@ -19,6 +19,8 @@ uses
   APIConst in '..\..\services\common\brokers\APIConst.pas',
   OperatorLinksRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
   OperatorLinksHttpRequests in '..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
+  OperatorLinksContentRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas',
+  OperatorLinksContentHttpRequests in '..\..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas',
   OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
   StringUnit in '..\..\services\common\entities\StringUnit.pas',
   LinkUnit in '..\..\services\datacomm\entities\LinkUnit.pas',
@@ -113,6 +115,7 @@ begin
 //    ExecuteOperatorLinkRequest;
 //    ExecuteJournalRecordRequest;
 //    ExecuteAbonentsRequest;
+    TestOperatorLinksContentRestBroker;
     ExecuteSearchRequest;
     // TestAbonentListRequest;
     Readln;
