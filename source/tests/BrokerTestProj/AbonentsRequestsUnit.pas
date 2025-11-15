@@ -13,6 +13,7 @@ uses
   AbonentsRestBrokerUnit,
   AbonentHttpRequests,
   AbonentUnit,
+  HttpClientUnit,
   BaseResponses;
 
 procedure ExecuteAbonentsRequest;

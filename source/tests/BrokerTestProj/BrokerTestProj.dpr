@@ -107,8 +107,8 @@ begin
     HttpClient.Port := 8088;
 
 //    ExecuteOperatorLinkRequest;
-    ExecuteJournalRecordRequest;
-//    ExecuteAbonentsRequest;
+//    ExecuteJournalRecordRequest;
+    ExecuteAbonentsRequest;
     // TestAbonentListRequest;
     Readln;
   except

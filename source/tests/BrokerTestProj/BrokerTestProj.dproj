@@ -60,6 +60,8 @@
         <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas"/>
         <DCCReference Include="JournalRecordRequestUnit.pas"/>
+        <DCCReference Include="OperatorRequestsUnit.pas"/>
+        <DCCReference Include="AbonentsRequestsUnit.pas"/>
         <DCCReference Include="..\..\common\GUIDListUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\RestBrokerBaseUnit.pas"/>

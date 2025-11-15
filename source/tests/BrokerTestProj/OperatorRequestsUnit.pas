@@ -13,6 +13,7 @@ uses
   OperatorLinksRestBrokerUnit,
   OperatorLinksHttpRequests,
   OperatorLinkUnit,
+  HttpClientUnit,
   BaseResponses;
 
 procedure ExecuteOperatorLinkRequest;
@@ -190,21 +191,21 @@ begin
           Writeln('(empty response body)');
       end;
 
-      ListRequest.SetCount(5);
-      ListRequest.SetFlags(['body']);
+//      ListRequest.SetCount(5);
+//      ListRequest.SetFlags(['body']);
       ListResponse := Broker.List(ListRequest);
 
       Writeln('-----------------------------------------------------------------');
       Writeln('Operator link list request URL: ' + ListRequest.GetURLWithParams);
       Writeln('Operator link list response:');
-      if Assigned(ListResponse) and Assigned(ListResponse.Links) then
+      if Assigned(ListResponse) and Assigned(ListResponse.LinkList) then
       begin
         Writeln(Format('Operator links returned: %d',
-          [ListResponse.Links.Count]));
+          [ListResponse.LinkList.Count]));
 
-        if ListResponse.Links.Count > 0 then
+        if ListResponse.LinkList.Count > 0 then
         begin
-          LinkFromList := TOperatorLink(ListResponse.Links[0]);
+          LinkFromList := TOperatorLink(ListResponse.LinkList[0]);
           Writeln(Format('First operator link: %s (%s)',
             [LinkFromList.Name, LinkFromList.Lid]));
         end;
