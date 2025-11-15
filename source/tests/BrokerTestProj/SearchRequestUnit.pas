@@ -1,4 +1,4 @@
-unit SearchRequestUnit;
+﻿unit SearchRequestUnit;
 
 interface
 
@@ -13,6 +13,7 @@ uses
   SearchRestBrokerUnit,
   SearchHttpRequests,
   JournalRecordUnit,
+  HttpClientUnit,
   BaseResponses;
 
 procedure ExecuteSearchRequest;
@@ -140,6 +141,32 @@ begin
             end;
             Completed := True;
             Aborted := True;
+
+            InfoResponse := Broker.Info(InfoRequest);
+            try
+              if Assigned(InfoResponse) and Assigned(InfoResponse.Search) then
+              begin
+                Writeln('----------------------------------------------');
+                Writeln(Format('Информация о поиске %s:', [SearchId]));
+                Writeln(Format('  Статус: %s', [InfoResponse.Search.Status]));
+                Writeln(Format('  Найдено: %s из %s, в кеше: %s',
+                  [IntToStr(InfoResponse.Search.Find),
+                  IntToStr(InfoResponse.Search.Total),
+                  IntToStr(InfoResponse.Search.InCache)]));
+                Writeln(Format('  Интервал: %s - %s',
+                  [IntToStr(InfoResponse.Search.StartAt),
+                  IntToStr(InfoResponse.Search.EndAt)]));
+
+//                Completed := SameText(InfoResponse.Search.Status, 'done') or
+//                  SameText(InfoResponse.Search.Status, 'abort');
+//                Aborted := SameText(InfoResponse.Search.Status, 'abort');
+              end
+              else
+                Writeln('Информация о поиске не получена.');
+            finally
+              InfoResponse.Free;
+            end;
+
           end
           else
           begin
