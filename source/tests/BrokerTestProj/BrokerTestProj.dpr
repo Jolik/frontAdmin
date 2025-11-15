@@ -44,6 +44,7 @@ uses
   OperatorRequestsUnit in 'OperatorRequestsUnit.pas',
   OperatorLinksContentRequestsUnit in 'OperatorLinksContentRequestsUnit.pas',
   AbonentsRequestsUnit in 'AbonentsRequestsUnit.pas',
+  CompaniesRequestsUnit in 'CompaniesRequestsUnit.pas',
   SearchRequestUnit in 'SearchRequestUnit.pas',
   GUIDListUnit in '..\..\common\GUIDListUnit.pas',
   JournalRecordsAttrsUnit in '..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
@@ -115,6 +116,7 @@ begin
 
 //    ExecuteOperatorLinkRequest;
 //    ExecuteJournalRecordRequest;
+    ExecuteCompaniesRequests;
     ExecuteAbonentsRequest;
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteSearchRequest;
