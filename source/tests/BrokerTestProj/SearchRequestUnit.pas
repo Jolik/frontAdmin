@@ -1,4 +1,4 @@
-unit SearchRequestUnit;
+﻿unit SearchRequestUnit;
 
 interface
 
@@ -45,7 +45,7 @@ begin
 
     try
       // Запускаем новый поиск по маске ключа SA*
-      NewRequest.SetKey('SA*');
+      NewRequest.SetKey('SN*');
       NewRequest.SetAttachments(False);
 
       NewResponse := Broker.Start(NewRequest);

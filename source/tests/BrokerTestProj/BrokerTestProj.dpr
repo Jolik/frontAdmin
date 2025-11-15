@@ -112,7 +112,7 @@ begin
 
 //    ExecuteOperatorLinkRequest;
 //    ExecuteJournalRecordRequest;
-    ExecuteAbonentsRequest;
+//    ExecuteAbonentsRequest;
     ExecuteSearchRequest;
     // TestAbonentListRequest;
     Readln;
