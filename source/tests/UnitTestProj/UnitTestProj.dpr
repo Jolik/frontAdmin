@@ -7,6 +7,7 @@ uses
   HistoryRecordUnitTest in 'HistoryRecordUnitTest.pas',
   JournalRecordsAttrsUnitTest in 'JournalRecordsAttrsUnitTest.pas',
   JournalRecordsUnitTest in 'JournalRecordsUnitTest.pas',
+  SearchUnitTests in 'SearchUnitTests.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
@@ -14,6 +15,7 @@ uses
   HistoryRecordUnit in '..\..\services\dataspace\entities\HistoryRecordUnit.pas',
   JournalRecordsAttrsUnit in '..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
   JournalRecordUnit in '..\..\services\dataspace\entities\JournalRecordUnit.pas',
+  SearchUnit in '..\..\services\dataspace\entities\SearchUnit.pas',
   GUIDListUnit in '..\..\common\GUIDListUnit.pas';
 
 begin
@@ -21,6 +23,7 @@ begin
     RunHistoryRecordTests;
     RunJournalRecordsAttrsTests;
     RunJournalRecordTests;
+    RunSearchTests;
     Writeln('Все тесты пройдены успешно.');
     Readln;
   except
