@@ -52,7 +52,10 @@ uses
   RestFieldSetBrokerUnit in '..\..\services\common\brokers\RestFieldSetBrokerUnit.pas',
   SearchRestBrokerUnit in '..\..\services\dataspace\brokers\SearchRestBrokerUnit.pas',
   SearchHttpRequests in '..\..\services\dataspace\brokers\SearchHttpRequests.pas',
-  SearchUnit in '..\..\services\dataspace\entities\SearchUnit.pas';
+  SearchUnit in '..\..\services\dataspace\entities\SearchUnit.pas',
+  CompaniesRestBrokerUnit in '..\..\services\acl\brokers\CompaniesRestBrokerUnit.pas',
+  CompanyHttpRequests in '..\..\services\acl\brokers\CompanyHttpRequests.pas',
+  CompanyUnit in '..\..\services\acl\entities\CompanyUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -117,7 +120,7 @@ begin
 //    ExecuteOperatorLinkRequest;
 //    ExecuteJournalRecordRequest;
     ExecuteCompaniesRequests;
-    ExecuteAbonentsRequest;
+//    ExecuteAbonentsRequest;
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteSearchRequest;
     Readln;

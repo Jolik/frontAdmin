@@ -65,6 +65,7 @@
         <DCCReference Include="OperatorRequestsUnit.pas"/>
         <DCCReference Include="OperatorLinksContentRequestsUnit.pas"/>
         <DCCReference Include="AbonentsRequestsUnit.pas"/>
+        <DCCReference Include="CompaniesRequestsUnit.pas"/>
         <DCCReference Include="SearchRequestUnit.pas"/>
         <DCCReference Include="..\..\common\GUIDListUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
@@ -73,6 +74,9 @@
         <DCCReference Include="..\..\services\dataspace\brokers\SearchRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\SearchHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\SearchUnit.pas"/>
+        <DCCReference Include="..\..\services\acl\brokers\CompaniesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\acl\brokers\CompanyHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\acl\entities\CompanyUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

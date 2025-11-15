@@ -128,7 +128,8 @@ end;
 constructor TCompanyReqList.Create;
 begin
   inherited Create;
-  SetEndpoint('companies/list');
+  SetEndpoint('companies');
+  AddPath:= 'list';
 end;
 
 constructor TCompanyReqInfo.Create;
@@ -151,7 +152,8 @@ end;
 constructor TCompanyReqNew.Create;
 begin
   inherited Create;
-  SetEndpoint('companies/new');
+  SetEndpoint('companies');
+  AddPath := 'new';
 end;
 
 class function TCompanyReqUpdate.BodyClassType: TFieldSetClass;
