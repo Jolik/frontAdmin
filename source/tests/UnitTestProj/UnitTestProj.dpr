@@ -8,6 +8,7 @@ uses
   JournalRecordsAttrsUnitTest in 'JournalRecordsAttrsUnitTest.pas',
   JournalRecordsUnitTest in 'JournalRecordsUnitTest.pas',
   SearchUnitTests in 'SearchUnitTests.pas',
+  OperatorLinksContentRestBrokerUnitTest in 'OperatorLinksContentRestBrokerUnitTest.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
@@ -23,6 +24,7 @@ begin
     RunHistoryRecordTests;
     RunJournalRecordsAttrsTests;
     RunJournalRecordTests;
+    TestOperatorLinksContentRestBroker;
     RunSearchTests;
     Writeln('Все тесты пройдены успешно.');
     Readln;

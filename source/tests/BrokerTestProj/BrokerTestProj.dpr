@@ -42,6 +42,7 @@ uses
   HistoryRecordsRestBrokerUnit in '..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
   JournalRecordRequestUnit in 'JournalRecordRequestUnit.pas',
   OperatorRequestsUnit in 'OperatorRequestsUnit.pas',
+  OperatorLinksContentRequestsUnit in 'OperatorLinksContentRequestsUnit.pas',
   AbonentsRequestsUnit in 'AbonentsRequestsUnit.pas',
   SearchRequestUnit in 'SearchRequestUnit.pas',
   GUIDListUnit in '..\..\common\GUIDListUnit.pas',
@@ -115,7 +116,7 @@ begin
 //    ExecuteOperatorLinkRequest;
 //    ExecuteJournalRecordRequest;
 //    ExecuteAbonentsRequest;
-    TestOperatorLinksContentRestBroker;
+    ExecuteOperatorLinksContentRequests;
     ExecuteSearchRequest;
     // TestAbonentListRequest;
     Readln;
