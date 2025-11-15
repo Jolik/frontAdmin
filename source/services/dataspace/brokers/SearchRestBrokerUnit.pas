@@ -1,4 +1,4 @@
-﻿unit SearchRestBrokerUnit;
+unit SearchRestBrokerUnit;
 
 interface
 

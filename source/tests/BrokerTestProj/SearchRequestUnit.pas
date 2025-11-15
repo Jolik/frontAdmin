@@ -1,4 +1,4 @@
-﻿unit SearchRequestUnit;
+unit SearchRequestUnit;
 
 interface
 
@@ -8,10 +8,12 @@ implementation
 
 uses
   System.SysUtils,
+  System.Diagnostics,
   IdHTTP,
   SearchRestBrokerUnit,
   SearchHttpRequests,
-  JournalRecordUnit;
+  JournalRecordUnit,
+  BaseResponses;
 
 procedure ExecuteSearchRequest;
 var
@@ -22,8 +24,12 @@ var
   InfoResponse: TSearchInfoResponse;
   ResultsRequest: TSearchResultsRequest;
   ResultsResponse: TSearchResultsResponse;
+  AbortRequest: TSearchAbortRequest;
+  AbortResponse: TJSONResponse;
+  Stopwatch: TStopwatch;
   SearchId: string;
   Completed: Boolean;
+  Aborted: Boolean;
   JournalRecord: TJournalRecord;
   I: Integer;
 begin
@@ -34,18 +40,21 @@ begin
   NewResponse := nil;
   InfoResponse := nil;
   ResultsResponse := nil;
+  AbortRequest := nil;
   SearchId := '';
   Completed := False;
+  Aborted := False;
 
   try
     Broker := TSearchRestBroker.Create('ST-Test');
     NewRequest := Broker.CreateNewRequest;
     InfoRequest := Broker.CreateInfoRequest;
     ResultsRequest := Broker.CreateResultsRequest;
+    AbortRequest := Broker.CreateAbortRequest;
 
     try
       // Запускаем новый поиск по маске ключа SA*
-      NewRequest.SetKey('SN*');
+      NewRequest.SetKey('SA*');
       NewRequest.SetAttachments(False);
 
       NewResponse := Broker.Start(NewRequest);
@@ -67,6 +76,10 @@ begin
       // Подготавливаем запросы к информации и результатам
       InfoRequest.SetSearchId(SearchId);
       ResultsRequest.SetSearchId(SearchId);
+      AbortRequest.SetSearchId(SearchId);
+
+      // Стартуем таймер ожидания результата поиска
+      Stopwatch := TStopwatch.StartNew;
 
       while not Completed do
       begin
@@ -87,6 +100,7 @@ begin
 
             Completed := SameText(InfoResponse.Search.Status, 'done') or
               SameText(InfoResponse.Search.Status, 'abort');
+            Aborted := SameText(InfoResponse.Search.Status, 'abort');
           end
           else
             Writeln('Информация о поиске не получена.');
@@ -114,12 +128,31 @@ begin
 
         if not Completed then
         begin
-          Writeln('Ожидание следующего опроса (3 секунды)...');
-          Sleep(3000);
+          if Stopwatch.ElapsedMilliseconds >= 30000 then
+          begin
+            // Если поиск выполняется более 30 секунд, останавливаем его принудительно
+            Writeln('Поиск выполняется более 30 секунд. Выполняем принудительную остановку...');
+            AbortResponse := Broker.Abort(AbortRequest);
+            try
+              Writeln('Отправлен запрос на принудительное завершение поиска.');
+            finally
+              AbortResponse.Free;
+            end;
+            Completed := True;
+            Aborted := True;
+          end
+          else
+          begin
+            Writeln('Ожидание следующего опроса (3 секунды)...');
+            Sleep(3000);
+          end;
         end;
       end;
 
-      Writeln('Поиск завершен: ' + SearchId);
+      if Aborted then
+        Writeln('Поиск был принудительно остановлен: ' + SearchId)
+      else
+        Writeln('Поиск завершен: ' + SearchId);
     except
       on E: EIdHTTPProtocolException do
         Writeln(Format('Ошибка HTTP: %d %s', [E.ErrorCode, E.ErrorMessage]));
@@ -127,6 +160,7 @@ begin
         Writeln('Ошибка: ' + E.Message);
     end;
   finally
+    AbortRequest.Free;
     ResultsRequest.Free;
     InfoRequest.Free;
     NewRequest.Free;
