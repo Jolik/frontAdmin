@@ -20,7 +20,7 @@ var
   InfoReq: TOperatorLinkContentReqInfo;
   RemoveReq: TOperatorLinkContentReqRemove;
   InputReq: TOperatorLinkContentReqInput;
-  InputBody: TOperatorLinkContentReqInputBody;
+  InputBody: TOperatorLinkContentInputReqBody;
   RecordObj: TJSONObject;
   DataObj: TJSONObject;
   MetaObj: TJSONObject;

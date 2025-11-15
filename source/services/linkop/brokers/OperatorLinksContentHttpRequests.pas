@@ -141,7 +141,7 @@ type
   protected
     procedure SetResponse(const Value: string); override;
   public
-    constructor Create; override;
+    constructor Create;
     destructor Destroy; override;
     property InsertedIds: TStringArray read GetInsertedIds;
   end;
@@ -370,7 +370,7 @@ end;
 procedure TOperatorLinkContentReqInfo.SetFlags(const Values: array of string);
 var
   Builder: string;
-  Item: string;
+  Item, S: string;
 begin
   if Length(Values) = 0 then
   begin
@@ -379,9 +379,9 @@ begin
   end;
 
   Builder := '';
-  for Item in Values do
+  for S in Values do
   begin
-    Item := Item.Trim;
+    Item := S.Trim;
     if Item.IsEmpty then
       Continue;
     if Builder.IsEmpty then

@@ -14,8 +14,10 @@ uses
   OperatorLinksHttpRequests,
   OperatorLinksContentHttpRequests,
   OperatorLinkUnit,
+  JournalRecordsAttrsUnit,
   JournalRecordUnit,
   HistoryRecordUnit,
+  GUIDListUnit,
   StringListUnit;
 
 function BoolToText(const Value: Boolean): string;

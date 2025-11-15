@@ -7,6 +7,7 @@ uses
   OperatorLinksContentHttpRequests,
   RestFieldSetBrokerUnit,
   BaseRequests,
+  HttpClientUnit,
   BaseResponses;
 
 type
@@ -36,8 +37,7 @@ type
 implementation
 
 uses
-  APIConst,
-  HttpClientUnit;
+  APIConst;
 
 { TOperatorLinksContentRestBroker }
 
