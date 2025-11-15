@@ -88,7 +88,7 @@ begin
           Writeln(Format('First journal record: %s (%s)',
             [SampleRecord.Name, SampleRecord.JRID]));
 
-          InfoRequest.SetJournalRecordId(SampleJrid);
+          InfoRequest.ID := SampleJrid;
           InfoRequest.SetFlags(['body', 'history']);
           InfoResponse := Broker.Info(InfoRequest);
 
@@ -142,7 +142,7 @@ begin
         else
           Writeln('  (empty response body)');
 
-        HistoryRequest.SetJournalRecordId(SampleJrid);
+        HistoryRequest.ID := SampleJrid;
         HistoryResponse := HistoryBroker.GetForJournal(HistoryRequest);
 
         Writeln('-----------------------------------------------------------------');

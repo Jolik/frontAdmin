@@ -1,4 +1,4 @@
-unit SearchHttpRequests;
+﻿unit SearchHttpRequests;
 
 interface
 
@@ -153,7 +153,6 @@ type
   TSearchReqInfo = class(TReqInfo)
   public
     constructor Create; override;
-    procedure SetSearchId(const Value: string);
   end;
 
   { GET /search/list }
@@ -169,18 +168,16 @@ type
   end;
 
   { POST /search/:id/abort }
-  TSearchAbortRequest = class(TBaseServiceRequest)
+  TSearchAbortRequest = class(TReqWithID)
   public
     constructor Create; override;
-    procedure SetSearchId(const Value: string);
     procedure SetKill(const Value: Boolean);
   end;
 
   { GET /search/:id/results }
-  TSearchResultsRequest = class(TReqInfo)
+  TSearchResultsRequest = class(TReqWithID)
   public
     constructor Create; override;
-    procedure SetSearchId(const Value: string);
     procedure SetCount(const Value: Integer);
     procedure ClearCount;
   end;
@@ -667,18 +664,6 @@ begin
   SetEndpoint('search');
 end;
 
-procedure TSearchReqInfo.SetSearchId(const Value: string);
-var
-  Normalized: string;
-begin
-  Normalized := Value.Trim;
-  Id := Normalized;
-  if Normalized.IsEmpty then
-    SetEndpoint('search')
-  else
-    SetEndpoint(Format('search/%s', [Normalized]));
-end;
-
 { TSearchListRequest }
 
 class function TSearchListRequest.BodyClassType: TFieldSetClass;
@@ -721,6 +706,7 @@ begin
   inherited Create;
   Method := mPOST;
   SetEndpoint('search');
+  AddPath := 'abort';
 end;
 
 procedure TSearchAbortRequest.SetKill(const Value: Boolean);
@@ -731,17 +717,6 @@ begin
     Params.Remove('kill');
 end;
 
-procedure TSearchAbortRequest.SetSearchId(const Value: string);
-var
-  Normalized: string;
-begin
-  Normalized := Value.Trim;
-  if Normalized.IsEmpty then
-    SetEndpoint('search')
-  else
-    SetEndpoint(Format('search/%s/abort', [Normalized]));
-end;
-
 { TSearchResultsRequest }
 
 constructor TSearchResultsRequest.Create;
@@ -749,6 +724,7 @@ begin
   inherited Create;
   Method := mGET;
   SetEndpoint('search');
+  AddPath := 'results';
 end;
 
 procedure TSearchResultsRequest.ClearCount;
@@ -762,18 +738,6 @@ begin
     Params.Remove('count')
   else
     Params.AddOrSetValue('count', Value.ToString);
-end;
-
-procedure TSearchResultsRequest.SetSearchId(const Value: string);
-var
-  Normalized: string;
-begin
-  Normalized := Value.Trim;
-  Id := Normalized;
-  if Normalized.IsEmpty then
-    SetEndpoint('search')
-  else
-    SetEndpoint(Format('search/%s/results', [Normalized]));
 end;
 
 end.

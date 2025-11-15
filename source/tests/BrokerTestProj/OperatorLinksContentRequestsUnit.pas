@@ -273,7 +273,7 @@ begin
         if not ContentRecord.JRID.Trim.IsEmpty then
         begin
           ContentInfoReq := ContentBroker.CreateReqInfo as TOperatorLinkContentReqInfo;
-          ContentInfoReq.LinkId := LinkId;
+          ContentInfoReq.ID := LinkId;
           ContentInfoReq.JournalRecordId := ContentRecord.JRID;
           ContentInfoReq.SetFlags(['body']);
 

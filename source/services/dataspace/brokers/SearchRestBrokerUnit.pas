@@ -1,4 +1,4 @@
-unit SearchRestBrokerUnit;
+﻿unit SearchRestBrokerUnit;
 
 interface
 
@@ -56,7 +56,7 @@ begin
   Result := TSearchAbortRequest.Create;
   Result.BasePath := BasePath;
   if not ASearchId.Trim.IsEmpty then
-    Result.SetSearchId(ASearchId);
+    Result.ID := ASearchId;
 end;
 
 function TSearchRestBroker.CreateInfoRequest(const ASearchId: string): TSearchReqInfo;
@@ -64,7 +64,7 @@ begin
   Result := TSearchReqInfo.Create;
   Result.BasePath := BasePath;
   if not ASearchId.Trim.IsEmpty then
-    Result.SetSearchId(ASearchId);
+    Result.ID := ASearchId;
 end;
 
 function TSearchRestBroker.CreateListRequest: TSearchListRequest;
@@ -84,7 +84,7 @@ begin
   Result := TSearchResultsRequest.Create;
   Result.BasePath := BasePath;
   if not ASearchId.Trim.IsEmpty then
-    Result.SetSearchId(ASearchId);
+    Result.ID := ASearchId;
 end;
 
 function TSearchRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;

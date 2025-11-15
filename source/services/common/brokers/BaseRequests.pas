@@ -76,20 +76,21 @@ type
     function Body: TReqListBody;
   end;
 
-  // Base info request by identifier
-  TReqInfo = class(TBaseServiceRequest)
+  // Base request with identifier
+  TReqWithID = class(TBaseServiceRequest)
   private
-    FId: string;
+    function GetId: string;
     procedure SetId(const Value: string);
   protected
-    // Builds URL AddPath for the current Id. Descendants may override
-    // to append custom suffixes (e.g., '/info').
-    function BuildAddPath(const Id: string): string; virtual;
   public
     constructor Create; override;
     constructor CreateID(const AId: string); reintroduce; overload;
-    property Id: string read FId write SetId;
+    ///  wrapper for InternalPathSeg from parent class
+    property ID: string read GetID write SetID;
   end;
+
+  // Base info request by identifier
+  TReqInfo = class(TReqWithID);
 
   // Base create request (POST with entity body)
   TReqNew = class(TBaseServiceRequest)
@@ -337,39 +338,34 @@ begin
     Result := nil;
 end;
 
-{ TReqInfo }
+{ TReqWithID }
 
-constructor TReqInfo.Create;
+constructor TReqWithID.Create;
 begin
   inherited Create;
   Method := mGET;
-  FId := '';
   AddPath := '';
 end;
 
-constructor TReqInfo.CreateID(const AId: string);
+constructor TReqWithID.CreateID(const AId: string);
 begin
   Create;
   Id := AId;
 end;
 
-procedure TReqInfo.SetId(const Value: string);
+function TReqWithID.GetId: string;
+begin
+  Result := InternalPathSeg;
+end;
+
+procedure TReqWithID.SetId(const Value: string);
 var
   Normalized: string;
 begin
   Normalized := Value.Trim;
-  if FId = Normalized then
+  if InternalPathSeg = Normalized then
     Exit;
-  FId := Normalized;
-//!!!  AddPath := BuildAddPath(FId);
-end;
-
-function TReqInfo.BuildAddPath(const Id: string): string;
-begin
-  if Id.IsEmpty then
-    Result := ''
-  else
-    Result := Id;
+  InternalPathSeg := Normalized;
 end;
 
 { TReqNew }

@@ -32,8 +32,6 @@ type
   end;
 
   TOperatorLinkReqInfo = class(TReqInfo)
-  protected
-    function BuildAddPath(const Id: string): string; override;
   public
     constructor Create; override;
     constructor CreateID(const AId: string); reintroduce; overload;
@@ -60,7 +58,6 @@ type
 
   TOperatorLinkReqArchive = class(TReqInfo)
   protected
-    function BuildAddPath(const Id: string): string; override;
   public
     constructor Create; override;
   end;
@@ -108,20 +105,13 @@ constructor TOperatorLinkReqInfo.Create;
 begin
   inherited Create;
   SetEndpoint('links');
+  AddPath := 'info';
 end;
 
 constructor TOperatorLinkReqInfo.CreateID(const AId: string);
 begin
   Create;
   Id := AId;
-end;
-
-function TOperatorLinkReqInfo.BuildAddPath(const Id: string): string;
-begin
-  if Id.Trim.IsEmpty then
-    Result := ''
-  else
-    Result := Format('%s/info', [Id.Trim]);
 end;
 
 class function TOperatorLinkReqNew.BodyClassType: TFieldSetClass;
@@ -154,19 +144,12 @@ end;
 
 { TOperatorLinkReqArchive }
 
-function TOperatorLinkReqArchive.BuildAddPath(const Id: string): string;
-begin
-  if Id.Trim.IsEmpty then
-    Result := ''
-  else
-    Result := Format('%s/archive', [Id.Trim]);
-end;
-
 constructor TOperatorLinkReqArchive.Create;
 begin
   inherited Create;
   Method := mPOST;
   SetEndpoint('links');
+  AddPath := 'archive';
 end;
 
 end.

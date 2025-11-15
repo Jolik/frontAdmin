@@ -114,7 +114,7 @@ type
   TJournalRecordReqInfo = class(TReqInfo)
   public
     constructor Create; override;
-    procedure SetJournalRecordId(const Value: string);
+    constructor CreateID(const AJournalRecordId: string);
     procedure SetUsid(const Value: string);
     procedure SetFlags(const Values: array of string);
   end;
@@ -532,21 +532,18 @@ begin
   SetEndpoint('storage');
 end;
 
+constructor TJournalRecordReqInfo.CreateID(const AJournalRecordId: string);
+begin
+  Create;
+  Id := AJournalRecordId;
+end;
+
 procedure TJournalRecordReqInfo.SetFlags(const Values: array of string);
 begin
   if Length(Values) = 0 then
     Params.Remove('flag')
   else
     Params.AddOrSetValue('flag', JoinCsvValues(Values));
-end;
-
-procedure TJournalRecordReqInfo.SetJournalRecordId(const Value: string);
-begin
-  Id := Value;
-  if Value.Trim.IsEmpty then
-    SetEndpoint('storage')
-  else
-    SetEndpoint(Format('storage/%s', [Value.Trim]));
 end;
 
 procedure TJournalRecordReqInfo.SetUsid(const Value: string);

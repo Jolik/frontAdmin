@@ -41,10 +41,8 @@ end;
 
 function TJournalRecordsRestBroker.CreateReqInfo(id: string): TReqInfo;
 begin
-  Result := TJournalRecordReqInfo.Create;
+  Result := TJournalRecordReqInfo.CreateID(id);
   Result.BasePath := BasePath;
-  if id <> '' then
-    TJournalRecordReqInfo(Result).SetJournalRecordId(id);
 end;
 
 function TJournalRecordsRestBroker.CreateReqList: TReqList;

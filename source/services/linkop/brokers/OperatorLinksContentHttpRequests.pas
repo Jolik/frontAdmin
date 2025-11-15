@@ -56,15 +56,14 @@ type
 
   TOperatorLinkContentReqList = class(TReqList)
   private
-    FLinkId: string;
     function GetBody: TOperatorLinkContentReqListBody;
     procedure SetLinkId(const Value: string);
+    function GetLinkId: string;
   protected
     class function BodyClassType: TFieldSetClass; override;
-    procedure UpdateAddPath; virtual;
   public
     constructor Create; override;
-    property LinkId: string read FLinkId write SetLinkId;
+    property LinkId: string read GetLinkId write SetLinkId;
     property Body: TOperatorLinkContentReqListBody read GetBody;
   end;
 
@@ -78,9 +77,7 @@ type
 
   TOperatorLinkContentReqInfo = class(TReqInfo)
   private
-    FLinkId: string;
-    function GetJournalRecordId: string;
-    procedure SetLinkId(const Value: string);
+    FJournalRecordId : string;
     procedure SetJournalRecordId(const Value: string);
   protected
     procedure UpdateAddPath; virtual;
@@ -88,8 +85,7 @@ type
     constructor Create; override;
     procedure SetFlags(const Values: array of string);
 
-    property LinkId: string read FLinkId write SetLinkId;
-    property JournalRecordId: string read GetJournalRecordId write SetJournalRecordId;
+    property JournalRecordId: string read FJournalRecordId write SetJournalRecordId;
   end;
 
   TOperatorLinkContentReqRemove = class(TReqRemove)
@@ -312,8 +308,7 @@ end;
 constructor TOperatorLinkContentReqList.Create;
 begin
   inherited Create;
-  FLinkId := '';
-  AddPath := '';
+  AddPath := 'list';
 end;
 
 function TOperatorLinkContentReqList.GetBody: TOperatorLinkContentReqListBody;
@@ -324,21 +319,19 @@ begin
     Result := nil;
 end;
 
-procedure TOperatorLinkContentReqList.SetLinkId(const Value: string);
+function TOperatorLinkContentReqList.GetLinkId: string;
 begin
-  FLinkId := Value.Trim;
-  UpdateAddPath;
+  Result := InternalPathSeg;
 end;
 
-procedure TOperatorLinkContentReqList.UpdateAddPath;
+procedure TOperatorLinkContentReqList.SetLinkId(const Value: string);
 var
   Normalized: string;
 begin
-  Normalized := FLinkId.Trim;
-  if Normalized.IsEmpty then
-    AddPath := ''
-  else
-    AddPath := Format('%s/list', [Normalized]);
+  Normalized := Value.Trim;
+  if InternalPathSeg = Normalized then
+    Exit;
+  InternalPathSeg := Normalized;
 end;
 
 { TOperatorLinkContentInfoResponse }
@@ -358,13 +351,7 @@ end;
 constructor TOperatorLinkContentReqInfo.Create;
 begin
   inherited Create;
-  FLinkId := '';
   AddPath := '';
-end;
-
-function TOperatorLinkContentReqInfo.GetJournalRecordId: string;
-begin
-  Result := Id;
 end;
 
 procedure TOperatorLinkContentReqInfo.SetFlags(const Values: array of string);
@@ -398,34 +385,18 @@ end;
 
 procedure TOperatorLinkContentReqInfo.SetJournalRecordId(const Value: string);
 begin
-  Id := Value;
-  UpdateAddPath;
-end;
-
-procedure TOperatorLinkContentReqInfo.SetLinkId(const Value: string);
-begin
-  FLinkId := Value.Trim;
+  FJournalRecordId := Value;
   UpdateAddPath;
 end;
 
 procedure TOperatorLinkContentReqInfo.UpdateAddPath;
 var
-  Link: string;
   Rec: string;
 begin
-  Link := FLinkId.Trim;
-  Rec := Id.Trim;
+  Rec := JournalRecordId.Trim;
 
-  if Link.IsEmpty then
-  begin
-    AddPath := '';
-    Exit;
-  end;
-
-  if Rec.IsEmpty then
-    AddPath := Link
-  else
-    AddPath := Format('%s/%s', [Link, Rec]);
+  if not Rec.IsEmpty then
+    AddPath := Rec;
 end;
 
 { TOperatorLinkContentReqRemove }

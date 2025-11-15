@@ -75,9 +75,9 @@ begin
         Exit;
 
       // Подготавливаем запросы к информации и результатам
-      InfoRequest.SetSearchId(SearchId);
-      ResultsRequest.SetSearchId(SearchId);
-      AbortRequest.SetSearchId(SearchId);
+      InfoRequest.ID := SearchId;
+      ResultsRequest.ID := SearchId;
+      AbortRequest.ID := SearchId;
 
       // Стартуем таймер ожидания результата поиска
       Stopwatch := TStopwatch.StartNew;
