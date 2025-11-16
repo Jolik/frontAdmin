@@ -68,6 +68,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
     ForceFit = True
     Align = alClient
     TabOrder = 1
+    OnDblClick = gridContentDblClick
     OnSelectionChange = gridContentSelectionChange
     Columns = <
       item
