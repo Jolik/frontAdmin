@@ -169,4 +169,14 @@ object MainForm: TMainForm
     Caption = 'URL'
     TabOrder = 13
   end
+  object btnSearch: TUniButton
+    Left = 32
+    Top = 8
+    Width = 75
+    Height = 25
+    Hint = ''
+    Caption = #1055#1086#1080#1089#1082
+    TabOrder = 16
+    OnClick = btnSearchClick
+  end
 end
