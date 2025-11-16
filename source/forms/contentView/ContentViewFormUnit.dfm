@@ -51,6 +51,16 @@ object ContentViewForm: TContentViewForm
     ParentColor = False
     Align = alBottom
     TabOrder = 1
+    object btnRefreshHistory: TUniButton
+      Left = 16
+      Top = 12
+      Width = 160
+      Height = 36
+      Hint = ''
+      Caption = 'Refresh history'
+      TabOrder = 1
+      OnClick = btnRefreshHistoryClick
+    end
     object btnClose: TUniButton
       Left = 884
       Top = 12
@@ -58,7 +68,7 @@ object ContentViewForm: TContentViewForm
       Height = 36
       Hint = ''
       Caption = 'Close'
-      TabOrder = 1
+      TabOrder = 2
       OnClick = btnCloseClick
     end
   end
@@ -118,6 +128,7 @@ object ContentViewForm: TContentViewForm
         ActivePage = tsInfo
         Align = alClient
         TabOrder = 1
+        OnChange = pcInfoChange
         object tsInfo: TUniTabSheet
           Hint = ''
           Caption = 'Info'
@@ -245,18 +256,73 @@ object ContentViewForm: TContentViewForm
         object tsHistory: TUniTabSheet
           Hint = ''
           Caption = 'History'
-          object memoHistory: TUniMemo
+          object gridHistory: TUniDBGrid
             Left = 0
             Top = 0
             Width = 426
             Height = 430
             Hint = ''
-            Align = alClient
+            DataSource = dsHistory
             ReadOnly = True
+            Align = alClient
             TabOrder = 0
+            Columns = <
+              item
+                FieldName = 'time'
+                Title.Caption = 'Time'
+                Width = 120
+              end
+              item
+                FieldName = 'event'
+                Title.Caption = 'Event'
+                Width = 120
+              end
+              item
+                FieldName = 'who'
+                Title.Caption = 'Who'
+                Width = 100
+              end
+              item
+                FieldName = 'reason'
+                Title.Caption = 'Reason'
+                Width = 200
+              end>
           end
         end
       end
+    end
+  end
+  object dsHistory: TDataSource
+    Left = 792
+    Top = 520
+    DataSet = mtHistory
+  end
+  object mtHistory: TFDMemTable
+    Left = 856
+    Top = 520
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    object mtHistorytime: TStringField
+      FieldName = 'time'
+      Size = 64
+    end
+    object mtHistoryevent: TStringField
+      FieldName = 'event'
+      Size = 255
+    end
+    object mtHistorywho: TStringField
+      FieldName = 'who'
+      Size = 128
+    end
+    object mtHistoryreason: TStringField
+      FieldName = 'reason'
+      Size = 512
     end
   end
 end

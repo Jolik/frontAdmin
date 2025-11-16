@@ -7,8 +7,14 @@ uses
   Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm, uniGUIBaseClasses,
   uniPanel, uniLabel, uniMemo, uniButton, uniPageControl, uniSplitter,
+  Data.DB,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  uniDBGrid,
   JournalRecordsRestBrokerUnit, JournalRecordHttpRequests, JournalRecordUnit,
-  HistoryRecordUnit;
+  EntityUnit,
+  HistoryRecordUnit, HistoryRecordsRestBrokerUnit, HistoryRecordHttpRequests;
 
 type
   TContentViewForm = class(TUniForm)
@@ -37,20 +43,33 @@ type
     cpInfoWho: TUniContainerPanel;
     lInfoWho: TUniLabel;
     lInfoWhoValue: TUniLabel;
-    memoHistory: TUniMemo;
+    gridHistory: TUniDBGrid;
+    dsHistory: TDataSource;
+    mtHistory: TFDMemTable;
+    mtHistorytime: TStringField;
+    mtHistoryevent: TStringField;
+    mtHistorywho: TStringField;
+    mtHistoryreason: TStringField;
+    btnRefreshHistory: TUniButton;
     procedure btnCloseClick(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
     procedure UniFormShow(Sender: TObject);
+    procedure pcInfoChange(Sender: TObject);
+    procedure btnRefreshHistoryClick(Sender: TObject);
   private
     FBroker: TJournalRecordsRestBroker;
     FInfoRequest: TJournalRecordReqInfo;
+    FHistoryBroker: THistoryRecordsRestBroker;
+    FHistoryRequest: TJournalRecordHistoryReq;
     FJRID: string;
+    FHistoryLoaded: Boolean;
     procedure ClearContentInfo;
     procedure LoadContentInfo;
+    procedure LoadHistoryRecords(const AForce: Boolean = False);
+    procedure FillHistoryDataset(AHistory: THistoryRecordList);
     procedure SetJRID(const Value: string);
     procedure UpdateContentInfo(const ARecord: TJournalRecord);
-    procedure UpdateHistoryInfo(const ARecord: TJournalRecord);
   public
     property JRID: string read FJRID write SetJRID;
   end;
@@ -82,7 +101,14 @@ begin
   lInfoTypeValue.Caption := '';
   lInfoWhoValue.Caption := '';
   memoBody.Lines.Clear;
-  memoHistory.Lines.Clear;
+  if Assigned(mtHistory) then
+  begin
+    if mtHistory.Active then
+      mtHistory.EmptyDataSet
+    else
+      mtHistory.CreateDataSet;
+  end;
+  FHistoryLoaded := False;
   pcInfo.ActivePage := tsInfo;
 end;
 
@@ -117,19 +143,28 @@ begin
   FJRID := Trim(Value);
   if Assigned(FInfoRequest) then
     FInfoRequest.ID := FJRID;
+  if Assigned(FHistoryRequest) then
+    FHistoryRequest.ID := FJRID;
+  FHistoryLoaded := False;
 end;
 
 procedure TContentViewForm.UniFormCreate(Sender: TObject);
 begin
   FBroker := TJournalRecordsRestBroker.Create(UniMainModule.XTicket);
   FInfoRequest := FBroker.CreateReqInfo as TJournalRecordReqInfo;
+  FInfoRequest.SetFlags(['body']);
+
+  FHistoryBroker := THistoryRecordsRestBroker.Create(UniMainModule.XTicket);
+  FHistoryRequest := FHistoryBroker.CreateJournalHistoryReq;
   ClearContentInfo;
 end;
 
 procedure TContentViewForm.UniFormDestroy(Sender: TObject);
 begin
   FreeAndNil(FInfoRequest);
+  FreeAndNil(FHistoryRequest);
   FreeAndNil(FBroker);
+  FreeAndNil(FHistoryBroker);
 end;
 
 procedure TContentViewForm.UniFormShow(Sender: TObject);
@@ -154,32 +189,80 @@ begin
   finally
     memoBody.Lines.EndUpdate;
   end;
-
-  UpdateHistoryInfo(ARecord);
+  FHistoryLoaded := False;
 end;
 
-procedure TContentViewForm.UpdateHistoryInfo(const ARecord: TJournalRecord);
+procedure TContentViewForm.FillHistoryDataset(AHistory: THistoryRecordList);
 var
-  HistoryItem: THistoryRecord;
-  Index: Integer;
+  Item: TFieldSet;
+  HistoryRecord: THistoryRecord;
 begin
-  memoHistory.Lines.BeginUpdate;
+  if not Assigned(mtHistory) then
+    Exit;
+
+  if not mtHistory.Active then
+    mtHistory.CreateDataSet;
+
+  mtHistory.DisableControls;
   try
-    memoHistory.Lines.Clear;
-    if Assigned(ARecord) and Assigned(ARecord.History) then
-      for Index := 0 to ARecord.History.Count - 1 do
+    mtHistory.EmptyDataSet;
+    if Assigned(AHistory) then
+      for Item in AHistory do
       begin
-        HistoryItem := THistoryRecord(ARecord.History.Items[Index]);
-        if not Assigned(HistoryItem) then
+        if not (Item is THistoryRecord) then
           Continue;
-        memoHistory.Lines.Add(Format('%s - %s (%s)',
-          [HistoryItem.Time, HistoryItem.Event, HistoryItem.Who]));
-        if not HistoryItem.Reason.IsEmpty then
-          memoHistory.Lines.Add('  ' + HistoryItem.Reason);
+
+        HistoryRecord := THistoryRecord(Item);
+        mtHistory.Append;
+        mtHistorytime.AsString := HistoryRecord.Time;
+        mtHistoryevent.AsString := HistoryRecord.Event;
+        mtHistorywho.AsString := HistoryRecord.Who;
+        mtHistoryreason.AsString := HistoryRecord.Reason;
+        mtHistory.Post;
       end;
   finally
-    memoHistory.Lines.EndUpdate;
+    mtHistory.EnableControls;
   end;
+end;
+
+procedure TContentViewForm.LoadHistoryRecords(const AForce: Boolean);
+var
+  Resp: THistoryRecordListResponse;
+begin
+  if (not Assigned(FHistoryBroker)) or FJRID.Trim.IsEmpty then
+    Exit;
+
+  if not AForce and FHistoryLoaded then
+    Exit;
+
+  if not Assigned(FHistoryRequest) then
+    FHistoryRequest := FHistoryBroker.CreateJournalHistoryReq;
+
+  FHistoryRequest.ID := FJRID.Trim;
+
+  Resp := FHistoryBroker.GetForJournal(FHistoryRequest);
+  try
+    if Assigned(Resp) then
+      FillHistoryDataset(Resp.HistoryRecords)
+    else
+      FillHistoryDataset(nil);
+  finally
+    Resp.Free;
+  end;
+
+  FHistoryLoaded := True;
+end;
+
+procedure TContentViewForm.btnRefreshHistoryClick(Sender: TObject);
+begin
+  LoadHistoryRecords(True);
+  pcInfo.ActivePage := tsHistory;
+end;
+
+procedure TContentViewForm.pcInfoChange(Sender: TObject);
+begin
+  if pcInfo.ActivePage = tsHistory then
+    LoadHistoryRecords(False);
 end;
 
 end.

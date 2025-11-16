@@ -122,6 +122,8 @@ uses
   HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
   JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
   JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas',
+  JournalRecordsRestBrokerUnit in '..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas',
+  JournalRecordHttpRequests in '..\services\dataspace\brokers\JournalRecordHttpRequests.pas',
   SearchRestBrokerUnit in '..\services\dataspace\brokers\SearchRestBrokerUnit.pas',
   SearchHttpRequests in '..\services\dataspace\brokers\SearchHttpRequests.pas',
   SearchUnit in '..\services\dataspace\entities\SearchUnit.pas';
