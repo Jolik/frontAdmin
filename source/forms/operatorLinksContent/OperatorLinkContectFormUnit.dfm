@@ -3,7 +3,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
   Top = 0
   ClientHeight = 600
   ClientWidth = 1100
-  Caption = 'Контент линков оператора'
+  Caption = #1050#1086#1085#1090#1077#1085#1090#32#1083#1080#1085#1082#1086#1074#32#1086#1087#1077#1088#1072#1090#1086#1088#1072
   BorderStyle = bsSizeable
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
@@ -25,7 +25,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
       Width = 184
       Height = 17
       Hint = ''
-      Caption = 'Линк оператора'
+      Caption = #1051#1080#1085#1082#32#1086#1087#1077#1088#1072#1090#1086#1088#1072
       ParentFont = False
       Font.Style = [fsBold]
       TabOrder = 1
@@ -50,7 +50,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
     Height = 552
     Hint = ''
     DataSource = dsContent
-    LoadMask.Message = 'Загрузка...'
+    LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072#46#46#46
     ForceFit = True
     ReadOnly = True
     Align = alClient
@@ -64,22 +64,22 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
       end
       item
         FieldName = 'name'
-        Title.Caption = 'Название'
+        Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
         Width = 200
       end
       item
         FieldName = 'who'
-        Title.Caption = 'Отправитель'
+        Title.Caption = #1054#1090#1087#1088#1072#1074#1080#1090#1077#1083#1100
         Width = 160
       end
       item
         FieldName = 'time'
-        Title.Caption = 'Время'
+        Title.Caption = #1042#1088#1077#1084#1103
         Width = 120
       end
       item
         FieldName = 'size'
-        Title.Caption = 'Размер'
+        Title.Caption = #1056#1072#1079#1084#1077#1088
         Width = 80
       end>
   end
@@ -106,7 +106,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
     object tsContentInfo: TUniTabSheet
       Hint = ''
       TabVisible = False
-      Caption = 'Контент'
+      Caption = #1050#1086#1085#1090#1077#1085#1090
       object cpContentInfo: TUniContainerPanel
         Left = 0
         Top = 0
@@ -213,7 +213,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Margins.Bottom = 7
             Alignment = taRightJustify
             AutoSize = False
-            Caption = 'Название'
+            Caption = #1053#1072#1079#1074#1072#1085#1080#1077
             Align = alLeft
             ParentFont = False
             Font.Style = [fsBold]
@@ -279,7 +279,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Margins.Bottom = 7
             Alignment = taRightJustify
             AutoSize = False
-            Caption = 'Отправитель'
+            Caption = #1054#1090#1087#1088#1072#1074#1080#1090#1077#1083#1100
             Align = alLeft
             ParentFont = False
             Font.Style = [fsBold]
@@ -345,7 +345,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Margins.Bottom = 7
             Alignment = taRightJustify
             AutoSize = False
-            Caption = 'Время'
+            Caption = #1042#1088#1077#1084#1103
             Align = alLeft
             ParentFont = False
             Font.Style = [fsBold]
@@ -411,7 +411,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Margins.Bottom = 7
             Alignment = taRightJustify
             AutoSize = False
-            Caption = 'Тип'
+            Caption = #1058#1080#1087
             Align = alLeft
             ParentFont = False
             Font.Style = [fsBold]
@@ -477,7 +477,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Margins.Bottom = 7
             Alignment = taRightJustify
             AutoSize = False
-            Caption = 'Размер'
+            Caption = #1056#1072#1079#1084#1077#1088
             Align = alLeft
             ParentFont = False
             Font.Style = [fsBold]
@@ -543,7 +543,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Margins.Bottom = 7
             Alignment = taRightJustify
             AutoSize = False
-            Caption = 'Владелец'
+            Caption = #1042#1083#1072#1076#1077#1083#1077#1094
             Align = alLeft
             ParentFont = False
             Font.Style = [fsBold]
@@ -609,7 +609,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Margins.Bottom = 7
             Alignment = taRightJustify
             AutoSize = False
-            Caption = 'Тема'
+            Caption = #1058#1077#1084#1072
             Align = alLeft
             ParentFont = False
             Font.Style = [fsBold]
@@ -675,7 +675,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Margins.Bottom = 7
             Alignment = taRightJustify
             AutoSize = False
-            Caption = 'Причина'
+            Caption = #1055#1088#1080#1095#1080#1085#1072
             Align = alLeft
             ParentFont = False
             Font.Style = [fsBold]
@@ -733,7 +733,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Width = 120
             Height = 16
             Hint = ''
-            Caption = 'Тело сообщения'
+            Caption = #1058#1077#1083#1086#32#1089#1086#1086#1073#1097#1077#1085#1080#1103
             ParentFont = False
             Font.Style = [fsBold]
             TabOrder = 1

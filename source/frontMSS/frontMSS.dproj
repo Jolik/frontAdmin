@@ -430,6 +430,8 @@
         <DCCReference Include="..\services\linkop\entities\OperatorLinkUnit.pas"/>
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksHttpRequests.pas"/>
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas"/>
+        <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

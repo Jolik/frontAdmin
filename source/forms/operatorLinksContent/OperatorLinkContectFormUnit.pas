@@ -11,6 +11,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  EntityUnit,
   OperatorLinksRestBrokerUnit, OperatorLinksContentRestBrokerUnit,
   OperatorLinksHttpRequests, OperatorLinksContentHttpRequests,
   OperatorLinkUnit, JournalRecordUnit;
@@ -166,7 +167,7 @@ procedure TOperatorLinkContectForm.LoadLinkContent(const ALink: TOperatorLink);
 var
   Req: TOperatorLinkContentReqList;
   Resp: TOperatorLinkContentListResponse;
-  Item: TJournalRecord;
+  Item: TFieldSet;
 begin
   ClearContentGrid;
   ClearContentInfo;
@@ -188,14 +189,14 @@ begin
           for Item in Resp.Records do
           begin
             mtContent.Append;
-            mtContentjrid.AsString := Item.JRID;
-            mtContentname.AsString := Item.Name;
-            mtContentwho.AsString := Item.Who;
-            if Item.Time > 0 then
-              mtContenttime.AsDateTime := UnixToDateTime(Item.Time, True)
+            mtContentjrid.AsString := TJournalRecord(Item).JRID;
+            mtContentname.AsString := TJournalRecord(Item).Name;
+            mtContentwho.AsString := TJournalRecord(Item).Who;
+            if TJournalRecord(Item).Time > 0 then
+              mtContenttime.AsDateTime := UnixToDateTime(TJournalRecord(Item).Time, True)
             else
               mtContenttime.Clear;
-            mtContentsize.AsLargeInt := Item.Size;
+            mtContentsize.AsLargeInt := TJournalRecord(Item).Size;
             mtContent.Post;
           end;
         finally
@@ -277,9 +278,14 @@ var
   JRID: string;
   Req: TOperatorLinkContentReqInfo;
   Resp: TOperatorLinkContentInfoResponse;
+  Link: TOperatorLink;
 begin
   ClearContentInfo;
   if not Assigned(FContentBroker) or not mtContent.Active or mtContent.IsEmpty then
+    Exit;
+
+  Link := GetSelectedLink;
+  if not Assigned(Link) then
     Exit;
 
   JRID := mtContentjrid.AsString;
@@ -288,6 +294,8 @@ begin
 
   Req := FContentBroker.CreateReqInfo(JRID) as TOperatorLinkContentReqInfo;
   try
+    Req.ID := Link.Lid;
+    Req.SetFlags(['body']);
     Resp := FContentBroker.Info(Req);
     try
       if Assigned(Resp) and Assigned(Resp.RecordItem) then

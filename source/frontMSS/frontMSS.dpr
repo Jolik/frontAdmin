@@ -113,7 +113,9 @@ uses
   SharedFrameQueueFilterUnit in '..\forms\channels\SharedFrameQueueFilterUnit.pas' {QueueConditionFrame: TUniFrame},
   OperatorLinkUnit in '..\services\linkop\entities\OperatorLinkUnit.pas',
   OperatorLinksHttpRequests in '..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
-  OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas';
+  OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
+  OperatorLinksContentHttpRequests in '..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas',
+  OperatorLinksContentRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas';
 
 {$R *.res}
 
