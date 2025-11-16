@@ -14,7 +14,7 @@ uses
   EntityUnit,
   OperatorLinksRestBrokerUnit, OperatorLinksContentRestBrokerUnit,
   OperatorLinksHttpRequests, OperatorLinksContentHttpRequests,
-  OperatorLinkUnit, JournalRecordUnit;
+  OperatorLinkUnit, JournalRecordUnit, uniMultiItem;
 
 type
   TOperatorLinkContectForm = class(TUniForm)
@@ -334,7 +334,7 @@ begin
   Req := FContentBroker.CreateReqRemove as TOperatorLinkContentReqRemove;
   Resp := nil;
   try
-    Req.LinkId := Link.Lid;
+    Req.ID := Link.Lid;
     Req.JournalRecordId := JRID;
     Resp := FContentBroker.Remove(Req);
   finally

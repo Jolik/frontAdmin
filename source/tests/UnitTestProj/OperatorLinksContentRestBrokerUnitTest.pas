@@ -60,7 +60,7 @@ begin
 
     RemoveReq := Broker.CreateReqRemove as TOperatorLinkContentReqRemove;
     try
-      RemoveReq.LinkId := 'link-123';
+      RemoveReq.Id := 'link-123';
       RemoveReq.JournalRecordId := 'jrec-001';
       Url := RemoveReq.GetURLWithParams;
       if Url <> '/linkop/api/v1/content/link-123/jrec-001/remove' then

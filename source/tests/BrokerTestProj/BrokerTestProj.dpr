@@ -119,9 +119,9 @@ begin
 
 //    ExecuteOperatorLinkRequest;
 //    ExecuteJournalRecordRequest;
-    ExecuteCompaniesRequests;
+//    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
-//    ExecuteOperatorLinksContentRequests;
+    ExecuteOperatorLinksContentRequests;
 //    ExecuteSearchRequest;
     Readln;
   except

@@ -3,8 +3,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
   Top = 0
   ClientHeight = 600
   ClientWidth = 1100
-  Caption = #1050#1086#1085#1090#1077#1085#1090#32#1083#1080#1085#1082#1086#1074#32#1086#1087#1077#1088#1072#1090#1086#1088#1072
-  BorderStyle = bsSizeable
+  Caption = #1050#1086#1085#1090#1077#1085#1090' '#1083#1080#1085#1082#1086#1074' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
   OnCreate = UniFormCreate
@@ -16,16 +15,19 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
     Width = 1100
     Height = 48
     Hint = ''
-    Align = alTop
     ParentColor = False
+    Align = alTop
     TabOrder = 0
+    DesignSize = (
+      1100
+      48)
     object lOperatorLink: TUniLabel
       Left = 16
       Top = 16
-      Width = 184
-      Height = 17
+      Width = 89
+      Height = 13
       Hint = ''
-      Caption = #1051#1080#1085#1082#32#1086#1087#1077#1088#1072#1090#1086#1088#1072
+      Caption = #1051#1080#1085#1082' '#1086#1087#1077#1088#1072#1090#1086#1088#1072
       ParentFont = False
       Font.Style = [fsBold]
       TabOrder = 1
@@ -36,9 +38,9 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
       Width = 232
       Height = 25
       Hint = ''
-      Caption = #1059#1076#1072#1083#1080#1090#1100#32#1079#1072#1087#1080#1089#1100
-      TabOrder = 2
       Enabled = False
+      Caption = #1059#1076#1072#1083#1080#1090#1100' '#1079#1072#1087#1080#1089#1100
+      TabOrder = 2
       OnClick = btnRemoveContentClick
     end
     object cbOperatorLinks: TUniComboBox
@@ -46,9 +48,9 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
       Top = 12
       Width = 452
       Hint = ''
-      Anchors = [akTop, akRight]
       Style = csDropDownList
       Text = ''
+      Anchors = [akTop, akRight]
       TabOrder = 3
       IconItems = <>
       OnChange = cbOperatorLinksChange
@@ -61,9 +63,9 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
     Height = 552
     Hint = ''
     DataSource = dsContent
-    LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072#46#46#46
-    ForceFit = True
     ReadOnly = True
+    LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072'...'
+    ForceFit = True
     Align = alClient
     TabOrder = 1
     OnSelectionChange = gridContentSelectionChange
@@ -72,26 +74,31 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         FieldName = 'jrid'
         Title.Caption = 'ID'
         Width = 120
+        ReadOnly = True
       end
       item
         FieldName = 'name'
         Title.Caption = #1053#1072#1079#1074#1072#1085#1080#1077
         Width = 200
+        ReadOnly = True
       end
       item
         FieldName = 'who'
         Title.Caption = #1054#1090#1087#1088#1072#1074#1080#1090#1077#1083#1100
         Width = 160
+        ReadOnly = True
       end
       item
         FieldName = 'time'
         Title.Caption = #1042#1088#1077#1084#1103
         Width = 120
+        ReadOnly = True
       end
       item
         FieldName = 'size'
         Title.Caption = #1056#1072#1079#1084#1077#1088
         Width = 80
+        ReadOnly = True
       end>
   end
   object splContent: TUniSplitter
@@ -122,7 +129,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         Left = 0
         Top = 0
         Width = 386
-        Height = 524
+        Height = 507
         Hint = ''
         ParentColor = False
         Align = alClient
@@ -200,7 +207,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         object cpContentInfoName: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
-          Top = 55
+          Top = 56
           Width = 366
           Height = 40
           Hint = ''
@@ -211,6 +218,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
           TabOrder = 2
           Layout = 'table'
           LayoutAttribs.Columns = 2
+          ExplicitTop = 55
           object lContentInfoName: TUniLabel
             AlignWithMargins = True
             Left = 5
@@ -266,7 +274,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         object cpContentInfoWho: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
-          Top = 100
+          Top = 102
           Width = 366
           Height = 40
           Hint = ''
@@ -277,6 +285,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
           TabOrder = 3
           Layout = 'table'
           LayoutAttribs.Columns = 2
+          ExplicitTop = 100
           object lContentInfoWho: TUniLabel
             AlignWithMargins = True
             Left = 5
@@ -332,7 +341,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         object cpContentInfoTime: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
-          Top = 145
+          Top = 148
           Width = 366
           Height = 40
           Hint = ''
@@ -343,6 +352,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
           TabOrder = 4
           Layout = 'table'
           LayoutAttribs.Columns = 2
+          ExplicitTop = 145
           object lContentInfoTime: TUniLabel
             AlignWithMargins = True
             Left = 5
@@ -398,7 +408,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         object cpContentInfoType: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
-          Top = 190
+          Top = 194
           Width = 366
           Height = 40
           Hint = ''
@@ -409,6 +419,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
           TabOrder = 5
           Layout = 'table'
           LayoutAttribs.Columns = 2
+          ExplicitTop = 190
           object lContentInfoType: TUniLabel
             AlignWithMargins = True
             Left = 5
@@ -464,7 +475,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         object cpContentInfoSize: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
-          Top = 235
+          Top = 240
           Width = 366
           Height = 40
           Hint = ''
@@ -475,6 +486,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
           TabOrder = 6
           Layout = 'table'
           LayoutAttribs.Columns = 2
+          ExplicitTop = 235
           object lContentInfoSize: TUniLabel
             AlignWithMargins = True
             Left = 5
@@ -530,7 +542,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         object cpContentInfoOwner: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
-          Top = 280
+          Top = 286
           Width = 366
           Height = 40
           Hint = ''
@@ -541,6 +553,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
           TabOrder = 7
           Layout = 'table'
           LayoutAttribs.Columns = 2
+          ExplicitTop = 280
           object lContentInfoOwner: TUniLabel
             AlignWithMargins = True
             Left = 5
@@ -596,7 +609,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         object cpContentInfoTopic: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
-          Top = 325
+          Top = 332
           Width = 366
           Height = 40
           Hint = ''
@@ -607,6 +620,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
           TabOrder = 8
           Layout = 'table'
           LayoutAttribs.Columns = 2
+          ExplicitTop = 325
           object lContentInfoTopic: TUniLabel
             AlignWithMargins = True
             Left = 5
@@ -662,7 +676,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         object cpContentInfoReason: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
-          Top = 370
+          Top = 378
           Width = 366
           Height = 40
           Hint = ''
@@ -673,6 +687,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
           TabOrder = 9
           Layout = 'table'
           LayoutAttribs.Columns = 2
+          ExplicitTop = 370
           object lContentInfoReason: TUniLabel
             AlignWithMargins = True
             Left = 5
@@ -728,7 +743,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         object cpContentBody: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
-          Top = 415
+          Top = 424
           Width = 366
           Height = 170
           Hint = ''
@@ -741,10 +756,10 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
           object lContentInfoBody: TUniLabel
             Left = 5
             Top = 8
-            Width = 120
-            Height = 16
+            Width = 90
+            Height = 13
             Hint = ''
-            Caption = #1058#1077#1083#1086#32#1089#1086#1086#1073#1097#1077#1085#1080#1103
+            Caption = #1058#1077#1083#1086' '#1089#1086#1086#1073#1097#1077#1085#1080#1103
             ParentFont = False
             Font.Style = [fsBold]
             TabOrder = 1
@@ -755,11 +770,11 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Width = 366
             Height = 138
             Hint = ''
-            ReadOnly = True
+            ScrollBars = ssVertical
             Lines.Strings = (
               '')
-            ScrollBars = ssVertical
             Align = alBottom
+            ReadOnly = True
             TabOrder = 2
           end
         end
@@ -772,8 +787,13 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
     Top = 208
   end
   object mtContent: TFDMemTable
-    Active = False
-    FieldDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
     Left = 112
     Top = 208
     object mtContentjrid: TStringField

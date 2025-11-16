@@ -19,6 +19,7 @@ uses
   HistoryRecordUnit,
   GUIDListUnit,
   StringListUnit,
+  HttpClientUnit,
   BaseResponses;
 
 function BoolToText(const Value: Boolean): string;
@@ -283,7 +284,7 @@ begin
               [SecondRecord.Name, SecondRecord.JRID]));
             ContentRemoveReq := ContentBroker.CreateReqRemove as TOperatorLinkContentReqRemove;
             try
-              ContentRemoveReq.LinkId := LinkId;
+              ContentRemoveReq.ID := LinkId;
               ContentRemoveReq.JournalRecordId := SecondRecord.JRID;
 
               Writeln('Operator link content remove request URL: ' +

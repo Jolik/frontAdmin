@@ -347,7 +347,7 @@ end;
 
 function TReqWithID.GetId: string;
 begin
-  Result := InternalPathSeg;
+  Result := InternalPathSeg1;
 end;
 
 procedure TReqWithID.SetId(const Value: string);
@@ -355,9 +355,9 @@ var
   Normalized: string;
 begin
   Normalized := Value.Trim;
-  if InternalPathSeg = Normalized then
+  if InternalPathSeg1 = Normalized then
     Exit;
-  InternalPathSeg := Normalized;
+  InternalPathSeg1 := Normalized;
 end;
 
 { TReqNew }

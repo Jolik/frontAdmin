@@ -29,7 +29,7 @@ type
     FParams: TDictionary<string, string>;
     FReqBody: TFieldSet;
     // Stores a single dynamic path segment that should be insert to the URL during execution.
-    FInternalPathSeg: string;
+    FInternalPathSeg1, FInternalPathSeg2: string;
     // Stores a single dynamic path segment that should be appended to the URL during execution.
     FAddPath: string;
     function GetCurl: string;
@@ -39,7 +39,8 @@ type
     procedure SetReqBodyContent(const Value: string);
     procedure SetURL(const Value: string);
     procedure ParseParamsFromQuery(const Query: string);
-    procedure SetInternalPathSeg(const Value: string);
+    procedure SetInternalPathSeg1(const Value: string);
+    procedure SetInternalPathSeg2(const Value: string);
     procedure SetAddPath(const Value: string);
     class function BodyClassType: TFieldSetClass; virtual;
   public
@@ -53,7 +54,8 @@ type
     property Curl: string read GetCurl write SetCurl;
     property ReqBodyContent: string read GetReqBodyContent write SetReqBodyContent;
     // Allows callers to add identification URL segments (e.g., entity id) in a safe way.
-    property InternalPathSeg: string read FInternalPathSeg write SetInternalPathSeg;
+    property InternalPathSeg1: string read FInternalPathSeg1 write SetInternalPathSeg1;
+    property InternalPathSeg2: string read FInternalPathSeg2 write SetInternalPathSeg2;
     // Allows callers to append additional URL segments (e.g., resource identifiers) in a safe way.
     property AddPath: string read FAddPath write SetAddPath;
     function GetURLWithParams(const BaseUrl: string = ''): string;
@@ -119,7 +121,7 @@ begin
   // Default to GET which is the most common HTTP method for broker requests.
   FMethod := mGET;
   // Initialize without a trailing segment; callers can assign InternalPathSeg later per request.
-  FInternalPathSeg := '';
+  FInternalPathSeg1 := ''; FInternalPathSeg2 := '';
   // Initialize without a trailing segment; callers can assign AddPath later per request.
   FAddPath := '';
   if BodyClassType <> nil then
@@ -224,10 +226,16 @@ begin
   FAddPath := Value.Trim;
 end;
 
-procedure THttpRequest.SetInternalPathSeg(const Value: string);
+procedure THttpRequest.SetInternalPathSeg1(const Value: string);
 begin
   // Store a trimmed copy of the segment to avoid issues with accidental leading/trailing spaces.
-  FInternalPathSeg := Value.Trim;
+  FInternalPathSeg1 := Value.Trim;
+end;
+
+procedure THttpRequest.SetInternalPathSeg2(const Value: string);
+begin
+  // Store a trimmed copy of the segment to avoid issues with accidental leading/trailing spaces.
+  FInternalPathSeg2:= Value.Trim;
 end;
 
 procedure TJSONResponse.SetResponse(const Value: string);
@@ -306,7 +314,7 @@ begin
   FParams.Clear;
   FURL := '';
   // Reset InternalPathSeg to ensure subsequent requests constructed from the curl string start clean.
-  FInternalPathSeg := '';
+  FInternalPathSeg1 := ''; FInternalPathSeg2 := '';
   // Reset AddPath to ensure subsequent requests constructed from the curl string start clean.
   FAddPath := '';
   SetReqBodyContent('');
@@ -477,9 +485,13 @@ begin
     // Otherwise start with the externally supplied base (e.g., fully qualified URL).
     ResultUrl := BaseUrl;
 
-  if not FInternalPathSeg.Trim.IsEmpty then
+  if not FInternalPathSeg1.Trim.IsEmpty then
     // AppendPathSegment is responsible for inserting the necessary slash separator.
-    ResultUrl := AppendPathSegment(ResultUrl, FInternalPathSeg);
+    ResultUrl := AppendPathSegment(ResultUrl, FInternalPathSeg1);
+
+  if not FInternalPathSeg2.Trim.IsEmpty then
+    // AppendPathSegment is responsible for inserting the necessary slash separator.
+    ResultUrl := AppendPathSegment(ResultUrl, FInternalPathSeg2);
 
   if not FAddPath.Trim.IsEmpty then
     // AppendPathSegment is responsible for inserting the necessary slash separator.
