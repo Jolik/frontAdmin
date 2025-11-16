@@ -14,8 +14,8 @@ object MainForm: TMainForm
   OnDestroy = UniFormDestroy
   TextHeight = 15
   object btnAliases: TUniButton
-    Left = 32
-    Top = 176
+    Left = 40
+    Top = 296
     Width = 75
     Height = 25
     Hint = ''
@@ -24,8 +24,8 @@ object MainForm: TMainForm
     OnClick = btnAliasesClick
   end
   object btnChannel: TUniButton
-    Left = 32
-    Top = 320
+    Left = 40
+    Top = 440
     Width = 75
     Height = 25
     Hint = ''
@@ -34,8 +34,8 @@ object MainForm: TMainForm
     OnClick = btnChannelClick
   end
   object btnLinks: TUniButton
-    Left = 32
-    Top = 216
+    Left = 40
+    Top = 336
     Width = 75
     Height = 25
     Hint = ''
@@ -44,8 +44,8 @@ object MainForm: TMainForm
     OnClick = btnLinksClick
   end
   object btnQueues: TUniButton
-    Left = 32
-    Top = 289
+    Left = 40
+    Top = 409
     Width = 75
     Height = 25
     Hint = ''
@@ -54,8 +54,8 @@ object MainForm: TMainForm
     OnClick = btnQueuesClick
   end
   object btnRouterSources: TUniButton
-    Left = 32
-    Top = 360
+    Left = 40
+    Top = 480
     Width = 75
     Height = 25
     Hint = ''
@@ -64,8 +64,8 @@ object MainForm: TMainForm
     OnClick = btnRouterSourcesClick
   end
   object btnAbonents: TUniButton
-    Left = 32
-    Top = 136
+    Left = 40
+    Top = 256
     Width = 75
     Height = 25
     Hint = ''
@@ -74,8 +74,8 @@ object MainForm: TMainForm
     OnClick = btnAbonentsClick
   end
   object btnOperatorLinksContent: TUniButton
-    Left = 32
-    Top = 64
+    Left = 40
+    Top = 184
     Width = 75
     Height = 25
     Hint = ''
@@ -84,8 +84,8 @@ object MainForm: TMainForm
     OnClick = btnOperatorLinksContentClick
   end
   object btnOperatorLinks: TUniButton
-    Left = 32
-    Top = 96
+    Left = 40
+    Top = 216
     Width = 75
     Height = 25
     Hint = ''
@@ -94,8 +94,8 @@ object MainForm: TMainForm
     OnClick = btnOperatorLinksClick
   end
   object btnRules: TUniButton
-    Left = 32
-    Top = 416
+    Left = 40
+    Top = 536
     Width = 75
     Height = 25
     Hint = ''
@@ -142,8 +142,8 @@ object MainForm: TMainForm
     TabOrder = 9
   end
   object btnHandlers: TUniButton
-    Left = 32
-    Top = 256
+    Left = 40
+    Top = 376
     Width = 75
     Height = 25
     Hint = ''
@@ -152,8 +152,8 @@ object MainForm: TMainForm
     OnClick = btnHandlersClick
   end
   object OSLabel: TUniLabel
-    Left = 40
-    Top = 24
+    Left = 48
+    Top = 60
     Width = 42
     Height = 13
     Hint = ''
@@ -161,8 +161,8 @@ object MainForm: TMainForm
     TabOrder = 12
   end
   object URLLabel: TUniLabel
-    Left = 40
-    Top = 43
+    Left = 48
+    Top = 79
     Width = 20
     Height = 13
     Hint = ''
@@ -170,8 +170,8 @@ object MainForm: TMainForm
     TabOrder = 13
   end
   object btnSearch: TUniButton
-    Left = 32
-    Top = 8
+    Left = 48
+    Top = 584
     Width = 75
     Height = 25
     Hint = ''

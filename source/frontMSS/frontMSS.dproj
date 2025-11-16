@@ -213,6 +213,10 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\search\SearchFormUnit.pas">
+            <Form>SearchForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\ParentLinkSettingEditFrameUnit.pas">
             <Form>ParentLinkSettingEditFrame</Form>
             <FormType>dfm</FormType>
@@ -436,6 +440,9 @@
         <DCCReference Include="..\services\dataspace\entities\HistoryRecordUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\JournalRecordUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\SearchRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\SearchHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\SearchUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
