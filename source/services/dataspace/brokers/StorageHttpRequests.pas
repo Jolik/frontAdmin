@@ -1,4 +1,4 @@
-unit JournalRecordHttpRequests;
+unit StorageHttpRequests;
 
 interface
 
@@ -15,7 +15,7 @@ uses
 
 type
   // List response for journal records
-  TJournalRecordListResponse = class(TFieldSetListResponse)
+  TStorageListResponse = class(TFieldSetListResponse)
   private
     function GetJournalRecords: TJournalRecordList;
   public
@@ -24,7 +24,7 @@ type
   end;
 
   // Info response for a single journal record
-  TJournalRecordInfoResponse = class(TFieldSetResponse)
+  TStorageInfoResponse = class(TFieldSetResponse)
   private
     function GetJournalRecord: TJournalRecord;
   public
@@ -33,7 +33,7 @@ type
   end;
 
   // GET /storage/list request with query parameters
-  TJournalRecordReqList = class(TReqList)
+  TStorageReqList = class(TReqList)
   private
     procedure SetCsvParam(const AName: string; const Values: array of string);
     procedure SetOptionalParam(const AName, Value: string);
@@ -75,7 +75,7 @@ type
   end;
 
   // POST /storage/list body holder
-  TJournalRecordReqListByIdsBody = class(TFieldSet)
+  TStorageReqListByIdsBody = class(TFieldSet)
   private
     FJrid: TStringList;
     FHash: TStringList;
@@ -92,9 +92,9 @@ type
   end;
 
   // POST /storage/list with explicit identifiers
-  TJournalRecordReqListByIds = class(TBaseServiceRequest)
+  TStorageReqListByIds = class(TBaseServiceRequest)
   private
-    function GetBody: TJournalRecordReqListByIdsBody;
+    function GetBody: TStorageReqListByIdsBody;
     procedure SetCsvParam(const AName: string; const Values: array of string);
     procedure SetOptionalParam(const AName, Value: string);
   protected
@@ -106,12 +106,12 @@ type
     procedure SetUsid(const Value: string);
     procedure SetFlags(const Values: array of string);
 
-    property  Body: TJournalRecordReqListByIdsBody read GetBody;
+    property  Body: TStorageReqListByIdsBody read GetBody;
 
   end;
 
   // GET /storage/<jrid>
-  TJournalRecordReqInfo = class(TReqInfo)
+  TStorageReqInfo = class(TReqInfo)
   public
     constructor Create; override;
     constructor CreateID(const AJournalRecordId: string);
@@ -142,80 +142,80 @@ begin
   end;
 end;
 
-{ TJournalRecordListResponse }
+{ TStorageListResponse }
 
-constructor TJournalRecordListResponse.Create;
+constructor TStorageListResponse.Create;
 begin
   inherited Create(TJournalRecordList, 'response', 'jrecs');
 end;
 
-function TJournalRecordListResponse.GetJournalRecords: TJournalRecordList;
+function TStorageListResponse.GetJournalRecords: TJournalRecordList;
 begin
   Result := FieldSetList as TJournalRecordList;
 end;
 
-{ TJournalRecordInfoResponse }
+{ TStorageInfoResponse }
 
-constructor TJournalRecordInfoResponse.Create;
+constructor TStorageInfoResponse.Create;
 begin
   inherited Create(TJournalRecord, 'response', '');
 end;
 
-function TJournalRecordInfoResponse.GetJournalRecord: TJournalRecord;
+function TStorageInfoResponse.GetJournalRecord: TJournalRecord;
 begin
   Result := FieldSet as TJournalRecord;
 end;
 
-{ TJournalRecordReqList }
+{ TStorageReqList }
 
-procedure TJournalRecordReqList.ClearEndAt;
+procedure TStorageReqList.ClearEndAt;
 begin
   Params.Remove('endAt');
 end;
 
-procedure TJournalRecordReqList.ClearEndFmtAt;
+procedure TStorageReqList.ClearEndFmtAt;
 begin
   Params.Remove('endFmtAt');
 end;
 
-procedure TJournalRecordReqList.ClearStartAt;
+procedure TStorageReqList.ClearStartAt;
 begin
   Params.Remove('startAt');
 end;
 
-procedure TJournalRecordReqList.ClearStartFmtAt;
+procedure TStorageReqList.ClearStartFmtAt;
 begin
   Params.Remove('startFmtAt');
 end;
 
-constructor TJournalRecordReqList.Create;
+constructor TStorageReqList.Create;
 begin
   inherited Create;
   Method := mGET;
   SetEndpoint('storage/list');
 end;
 
-class function TJournalRecordReqList.BodyClassType: TFieldSetClass;
+class function TStorageReqList.BodyClassType: TFieldSetClass;
 begin
   Result := inherited;
 end;
 
-procedure TJournalRecordReqList.SetAAFilter(const Values: array of string);
+procedure TStorageReqList.SetAAFilter(const Values: array of string);
 begin
   SetCsvParam('aa', Values);
 end;
 
-procedure TJournalRecordReqList.SetCCCCFilter(const Values: array of string);
+procedure TStorageReqList.SetCCCCFilter(const Values: array of string);
 begin
   SetCsvParam('cccc', Values);
 end;
 
-procedure TJournalRecordReqList.SetCount(const Value: Integer);
+procedure TStorageReqList.SetCount(const Value: Integer);
 begin
   SetOptionalIntParam('count', Value);
 end;
 
-procedure TJournalRecordReqList.SetCsvParam(const AName: string;
+procedure TStorageReqList.SetCsvParam(const AName: string;
   const Values: array of string);
 var
   Csv: string;
@@ -227,67 +227,67 @@ begin
     Params.AddOrSetValue(AName, Csv);
 end;
 
-procedure TJournalRecordReqList.SetEndAt(const Value: Int64);
+procedure TStorageReqList.SetEndAt(const Value: Int64);
 begin
   SetOptionalInt64Param('endAt', Value);
 end;
 
-procedure TJournalRecordReqList.SetEndFmtAt(const Value: Int64);
+procedure TStorageReqList.SetEndFmtAt(const Value: Int64);
 begin
   SetOptionalInt64Param('endFmtAt', Value);
 end;
 
-procedure TJournalRecordReqList.SetFlags(const Values: array of string);
+procedure TStorageReqList.SetFlags(const Values: array of string);
 begin
   SetCsvParam('flag', Values);
 end;
 
-procedure TJournalRecordReqList.SetFrom(const Value: string);
+procedure TStorageReqList.SetFrom(const Value: string);
 begin
   SetOptionalParam('from', Value);
 end;
 
-procedure TJournalRecordReqList.SetFromN(const Value: string);
+procedure TStorageReqList.SetFromN(const Value: string);
 begin
   SetOptionalParam('from_n', Value);
 end;
 
-procedure TJournalRecordReqList.SetIIFilter(const Values: array of string);
+procedure TStorageReqList.SetIIFilter(const Values: array of string);
 begin
   SetCsvParam('ii', Values);
 end;
 
-procedure TJournalRecordReqList.SetIndexFilter(const Values: array of string);
+procedure TStorageReqList.SetIndexFilter(const Values: array of string);
 begin
   SetCsvParam('index', Values);
 end;
 
-procedure TJournalRecordReqList.SetKeyMask(const Values: array of string);
+procedure TStorageReqList.SetKeyMask(const Values: array of string);
 begin
   SetCsvParam('key', Values);
 end;
 
-procedure TJournalRecordReqList.SetMaxSize(const Value: Integer);
+procedure TStorageReqList.SetMaxSize(const Value: Integer);
 begin
   SetOptionalIntParam('max_size', Value);
 end;
 
-procedure TJournalRecordReqList.SetMe(const Value: string);
+procedure TStorageReqList.SetMe(const Value: string);
 begin
   SetOptionalParam('me', Value);
 end;
 
-procedure TJournalRecordReqList.SetNameMask(const Values: array of string);
+procedure TStorageReqList.SetNameMask(const Values: array of string);
 begin
   SetCsvParam('name', Values);
 end;
 
-procedure TJournalRecordReqList.SetNotWhoFilter(const Values: array of string);
+procedure TStorageReqList.SetNotWhoFilter(const Values: array of string);
 begin
   SetCsvParam('not_who', Values);
 end;
 
-procedure TJournalRecordReqList.SetOptionalInt64Param(const AName: string;
+procedure TStorageReqList.SetOptionalInt64Param(const AName: string;
   const Value: Int64);
 begin
   if Value = 0 then
@@ -296,7 +296,7 @@ begin
     Params.AddOrSetValue(AName, IntToStr(Value));
 end;
 
-procedure TJournalRecordReqList.SetOptionalIntParam(const AName: string;
+procedure TStorageReqList.SetOptionalIntParam(const AName: string;
   const Value: Integer);
 begin
   if Value = 0 then
@@ -305,7 +305,7 @@ begin
     Params.AddOrSetValue(AName, IntToStr(Value));
 end;
 
-procedure TJournalRecordReqList.SetOptionalParam(const AName, Value: string);
+procedure TStorageReqList.SetOptionalParam(const AName, Value: string);
 begin
   if Value.Trim.IsEmpty then
     Params.Remove(AName)
@@ -313,59 +313,59 @@ begin
     Params.AddOrSetValue(AName, Value.Trim);
 end;
 
-procedure TJournalRecordReqList.SetOwnerFilter(const Values: array of string);
+procedure TStorageReqList.SetOwnerFilter(const Values: array of string);
 begin
   SetCsvParam('owner', Values);
 end;
 
-procedure TJournalRecordReqList.SetParentFilter(const Values: array of string);
+procedure TStorageReqList.SetParentFilter(const Values: array of string);
 begin
   SetCsvParam('parent', Values);
 end;
 
-procedure TJournalRecordReqList.SetStartAt(const Value: Int64);
+procedure TStorageReqList.SetStartAt(const Value: Int64);
 begin
   SetOptionalInt64Param('startAt', Value);
 end;
 
-procedure TJournalRecordReqList.SetStartFmtAt(const Value: Int64);
+procedure TStorageReqList.SetStartFmtAt(const Value: Int64);
 begin
   SetOptionalInt64Param('startFmtAt', Value);
 end;
 
-procedure TJournalRecordReqList.SetTopicHierarchy(const Values: array of string);
+procedure TStorageReqList.SetTopicHierarchy(const Values: array of string);
 begin
   SetCsvParam('topic_hierarchy', Values);
 end;
 
-procedure TJournalRecordReqList.SetTTFilter(const Values: array of string);
+procedure TStorageReqList.SetTTFilter(const Values: array of string);
 begin
   SetCsvParam('tt', Values);
 end;
 
-procedure TJournalRecordReqList.SetUrnMask(const Values: array of string);
+procedure TStorageReqList.SetUrnMask(const Values: array of string);
 begin
   SetCsvParam('urn', Values);
 end;
 
-procedure TJournalRecordReqList.SetUsid(const Value: string);
+procedure TStorageReqList.SetUsid(const Value: string);
 begin
   SetOptionalParam('usid', Value);
 end;
 
-procedure TJournalRecordReqList.SetUsidFilter(const Values: array of string);
+procedure TStorageReqList.SetUsidFilter(const Values: array of string);
 begin
   SetCsvParam('usid', Values);
 end;
 
-procedure TJournalRecordReqList.SetWhoFilter(const Values: array of string);
+procedure TStorageReqList.SetWhoFilter(const Values: array of string);
 begin
   SetCsvParam('who', Values);
 end;
 
-{ TJournalRecordReqListByIdsBody }
+{ TStorageReqListByIdsBody }
 
-procedure TJournalRecordReqListByIdsBody.AssignList(Target: TStringList;
+procedure TStorageReqListByIdsBody.AssignList(Target: TStringList;
   const Values: array of string);
 var
   Value: string;
@@ -376,21 +376,21 @@ begin
       Target.Add(Value.Trim);
 end;
 
-constructor TJournalRecordReqListByIdsBody.Create;
+constructor TStorageReqListByIdsBody.Create;
 begin
   inherited Create;
   FJrid := TStringList.Create;
   FHash := TStringList.Create;
 end;
 
-destructor TJournalRecordReqListByIdsBody.Destroy;
+destructor TStorageReqListByIdsBody.Destroy;
 begin
   FHash.Free;
   FJrid.Free;
   inherited;
 end;
 
-procedure TJournalRecordReqListByIdsBody.Parse(src: TJSONObject;
+procedure TStorageReqListByIdsBody.Parse(src: TJSONObject;
   const APropertyNames: TArray<string>);
 var
   JrArray: TJSONArray;
@@ -414,7 +414,7 @@ begin
       FHash.Add(HashArray.Items[I].Value);
 end;
 
-procedure TJournalRecordReqListByIdsBody.Serialize(dst: TJSONObject;
+procedure TStorageReqListByIdsBody.Serialize(dst: TJSONObject;
   const APropertyNames: TArray<string>);
 var
   JrArray: TJSONArray;
@@ -445,36 +445,36 @@ begin
   end;
 end;
 
-procedure TJournalRecordReqListByIdsBody.SetHashes(
+procedure TStorageReqListByIdsBody.SetHashes(
   const Values: array of string);
 begin
   AssignList(FHash, Values);
 end;
 
-procedure TJournalRecordReqListByIdsBody.SetJRIDs(
+procedure TStorageReqListByIdsBody.SetJRIDs(
   const Values: array of string);
 begin
   AssignList(FJrid, Values);
 end;
 
-{ TJournalRecordReqListByIds }
+{ TStorageReqListByIds }
 
-constructor TJournalRecordReqListByIds.Create;
+constructor TStorageReqListByIds.Create;
 begin
   inherited Create;
   Method := mPOST;
   SetEndpoint('storage/list');
 end;
 
-function TJournalRecordReqListByIds.GetBody: TJournalRecordReqListByIdsBody;
+function TStorageReqListByIds.GetBody: TStorageReqListByIdsBody;
 begin
-  if ReqBody is TJournalRecordReqListByIdsBody then
-    Result := TJournalRecordReqListByIdsBody(ReqBody)
+  if ReqBody is TStorageReqListByIdsBody then
+    Result := TStorageReqListByIdsBody(ReqBody)
   else
     Result := nil;
 end;
 
-procedure TJournalRecordReqListByIds.SetCsvParam(const AName: string;
+procedure TStorageReqListByIds.SetCsvParam(const AName: string;
   const Values: array of string);
 var
   Csv: string;
@@ -486,25 +486,25 @@ begin
     Params.AddOrSetValue(AName, Csv);
 end;
 
-procedure TJournalRecordReqListByIds.SetFlags(
+procedure TStorageReqListByIds.SetFlags(
   const Values: array of string);
 begin
   SetCsvParam('flag', Values);
 end;
 
-procedure TJournalRecordReqListByIds.SetHashes(const Values: array of string);
+procedure TStorageReqListByIds.SetHashes(const Values: array of string);
 begin
   if System.Assigned(Body) then
     Body.SetHashes(Values);
 end;
 
-procedure TJournalRecordReqListByIds.SetJRIDs(const Values: array of string);
+procedure TStorageReqListByIds.SetJRIDs(const Values: array of string);
 begin
   if Assigned(Body) then
     Body.SetJRIDs(Values);
 end;
 
-procedure TJournalRecordReqListByIds.SetOptionalParam(const AName,
+procedure TStorageReqListByIds.SetOptionalParam(const AName,
   Value: string);
 begin
   if Value.Trim.IsEmpty then
@@ -513,32 +513,32 @@ begin
     Params.AddOrSetValue(AName, Value.Trim);
 end;
 
-procedure TJournalRecordReqListByIds.SetUsid(const Value: string);
+procedure TStorageReqListByIds.SetUsid(const Value: string);
 begin
   SetOptionalParam('usid', Value);
 end;
 
-class function TJournalRecordReqListByIds.BodyClassType: TFieldSetClass;
+class function TStorageReqListByIds.BodyClassType: TFieldSetClass;
 begin
-  Result := TJournalRecordReqListByIdsBody;
+  Result := TStorageReqListByIdsBody;
 end;
 
-{ TJournalRecordReqInfo }
+{ TStorageReqInfo }
 
-constructor TJournalRecordReqInfo.Create;
+constructor TStorageReqInfo.Create;
 begin
   inherited Create;
   Method := mGET;
   SetEndpoint('storage');
 end;
 
-constructor TJournalRecordReqInfo.CreateID(const AJournalRecordId: string);
+constructor TStorageReqInfo.CreateID(const AJournalRecordId: string);
 begin
   Create;
   Id := AJournalRecordId;
 end;
 
-procedure TJournalRecordReqInfo.SetFlags(const Values: array of string);
+procedure TStorageReqInfo.SetFlags(const Values: array of string);
 begin
   if Length(Values) = 0 then
     Params.Remove('flag')
@@ -546,7 +546,7 @@ begin
     Params.AddOrSetValue('flag', JoinCsvValues(Values));
 end;
 
-procedure TJournalRecordReqInfo.SetUsid(const Value: string);
+procedure TStorageReqInfo.SetUsid(const Value: string);
 begin
   if Value.Trim.IsEmpty then
     Params.Remove('usid')

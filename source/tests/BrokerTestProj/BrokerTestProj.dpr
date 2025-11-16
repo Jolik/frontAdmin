@@ -36,8 +36,6 @@ uses
   StringListUnit in '..\..\common\StringListUnit.pas',
   HistoryRecordUnit in '..\..\services\dataspace\entities\HistoryRecordUnit.pas',
   JournalRecordUnit in '..\..\services\dataspace\entities\JournalRecordUnit.pas',
-  JournalRecordsRestBrokerUnit in '..\..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas',
-  JournalRecordHttpRequests in '..\..\services\dataspace\brokers\JournalRecordHttpRequests.pas',
   HistoryRecordHttpRequests in '..\..\services\dataspace\brokers\HistoryRecordHttpRequests.pas',
   HistoryRecordsRestBrokerUnit in '..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
   JournalRecordRequestUnit in 'JournalRecordRequestUnit.pas',
@@ -55,7 +53,9 @@ uses
   SearchUnit in '..\..\services\dataspace\entities\SearchUnit.pas',
   CompaniesRestBrokerUnit in '..\..\services\acl\brokers\CompaniesRestBrokerUnit.pas',
   CompanyHttpRequests in '..\..\services\acl\brokers\CompanyHttpRequests.pas',
-  CompanyUnit in '..\..\services\acl\entities\CompanyUnit.pas';
+  CompanyUnit in '..\..\services\acl\entities\CompanyUnit.pas',
+  StorageHttpRequests in '..\..\services\dataspace\brokers\StorageHttpRequests.pas',
+  StorageRestBrokerUnit in '..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -121,8 +121,8 @@ begin
 //    ExecuteJournalRecordRequest;
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
-    ExecuteOperatorLinksContentRequests;
-//    ExecuteSearchRequest;
+//    ExecuteOperatorLinksContentRequests;
+    ExecuteSearchRequest;
     Readln;
   except
     on E: Exception do

@@ -122,13 +122,13 @@ uses
   HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
   JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
   JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas',
-  JournalRecordsRestBrokerUnit in '..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas',
-  JournalRecordHttpRequests in '..\services\dataspace\brokers\JournalRecordHttpRequests.pas',
   HistoryRecordsRestBrokerUnit in '..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
   HistoryRecordHttpRequests in '..\services\dataspace\brokers\HistoryRecordHttpRequests.pas',
   SearchRestBrokerUnit in '..\services\dataspace\brokers\SearchRestBrokerUnit.pas',
+  SearchUnit in '..\services\dataspace\entities\SearchUnit.pas',
   SearchHttpRequests in '..\services\dataspace\brokers\SearchHttpRequests.pas',
-  SearchUnit in '..\services\dataspace\entities\SearchUnit.pas';
+  StorageHttpRequests in '..\services\dataspace\brokers\StorageHttpRequests.pas',
+  StorageRestBrokerUnit in '..\services\dataspace\brokers\StorageRestBrokerUnit.pas';
 
 {$R *.res}
 

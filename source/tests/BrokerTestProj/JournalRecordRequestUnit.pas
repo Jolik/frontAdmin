@@ -12,21 +12,21 @@ uses
   IdHTTP,
   JournalRecordUnit,
   HistoryRecordUnit,
-  JournalRecordHttpRequests,
+  StorageHttpRequests,
   HistoryRecordHttpRequests,
-  JournalRecordsRestBrokerUnit,
+  StorageRestBrokerUnit,
   HistoryRecordsRestBrokerUnit;
 
 procedure ExecuteJournalRecordRequest;
 var
-  Broker: TJournalRecordsRestBroker;
+  Broker: TStorageRestBroker;
   HistoryBroker: THistoryRecordsRestBroker;
-  ListRequest: TJournalRecordReqList;
-  ListResponse: TJournalRecordListResponse;
-  InfoRequest: TJournalRecordReqInfo;
-  InfoResponse: TJournalRecordInfoResponse;
-  IdListRequest: TJournalRecordReqListByIds;
-  IdListResponse: TJournalRecordListResponse;
+  ListRequest: TStorageReqList;
+  ListResponse: TStorageListResponse;
+  InfoRequest: TStorageReqInfo;
+  InfoResponse: TStorageInfoResponse;
+  IdListRequest: TStorageReqListByIds;
+  IdListResponse: TStorageListResponse;
   HistoryRequest: TJournalRecordHistoryReq;
   HistoryResponse: THistoryRecordListResponse;
   HistorySearchRequest: THistoryRecordReqList;
@@ -54,11 +54,11 @@ begin
   TraceIdForSearch := '';
 
   try
-    Broker := TJournalRecordsRestBroker.Create('ST-Test');
+    Broker := TStorageRestBroker.Create('ST-Test');
     HistoryBroker := THistoryRecordsRestBroker.Create('ST-Test');
 
-    ListRequest := Broker.CreateReqList as TJournalRecordReqList;
-    InfoRequest := Broker.CreateReqInfo as TJournalRecordReqInfo;
+    ListRequest := Broker.CreateReqList as TStorageReqList;
+    InfoRequest := Broker.CreateReqInfo as TStorageReqInfo;
     IdListRequest := Broker.CreateReqListByIds;
     HistoryRequest := HistoryBroker.CreateJournalHistoryReq;
     HistorySearchRequest := HistoryBroker.CreateHistoryListReq;

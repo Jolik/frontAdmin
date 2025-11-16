@@ -93,7 +93,6 @@ object ContentViewForm: TContentViewForm
       ParentColor = False
       Align = alLeft
       TabOrder = 1
-      ExplicitHeight = 435
       object memoBody: TUniMemo
         Left = 0
         Top = 0
@@ -103,7 +102,6 @@ object ContentViewForm: TContentViewForm
         Align = alClient
         ReadOnly = True
         TabOrder = 1
-        ExplicitHeight = 435
       end
     end
     object splMain: TUniSplitter
@@ -143,6 +141,8 @@ object ContentViewForm: TContentViewForm
         object tsInfo: TUniTabSheet
           Hint = ''
           Caption = 'Info'
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 418
           ExplicitHeight = 407
           object cpInfoName: TUniContainerPanel
@@ -273,6 +273,8 @@ object ContentViewForm: TContentViewForm
         object tsHistory: TUniTabSheet
           Hint = ''
           Caption = 'History'
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 418
           ExplicitHeight = 407
           object gridHistory: TUniDBGrid

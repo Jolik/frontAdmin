@@ -12,7 +12,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   uniDBGrid,
-  JournalRecordsRestBrokerUnit, JournalRecordHttpRequests, JournalRecordUnit,
+  StorageRestBrokerUnit, StorageHttpRequests, JournalRecordUnit,
   EntityUnit,
   HistoryRecordUnit, HistoryRecordsRestBrokerUnit, HistoryRecordHttpRequests,
   uniBasicGrid;
@@ -59,8 +59,8 @@ type
     procedure pcInfoChange(Sender: TObject);
     procedure btnRefreshHistoryClick(Sender: TObject);
   private
-    FBroker: TJournalRecordsRestBroker;
-    FInfoRequest: TJournalRecordReqInfo;
+    FBroker: TStorageRestBroker;
+    FInfoRequest: TStorageReqInfo;
     FHistoryBroker: THistoryRecordsRestBroker;
     FHistoryRequest: TJournalRecordHistoryReq;
     FJRID: string;
@@ -115,7 +115,7 @@ end;
 
 procedure TContentViewForm.LoadContentInfo;
 var
-  Resp: TJournalRecordInfoResponse;
+  Resp: TStorageInfoResponse;
 begin
   ClearContentInfo;
 
@@ -123,7 +123,7 @@ begin
     Exit;
 
   if not Assigned(FInfoRequest) then
-    FInfoRequest := FBroker.CreateReqInfo as TJournalRecordReqInfo;
+    FInfoRequest := FBroker.CreateReqInfo as TStorageReqInfo;
 
   FInfoRequest.ID := FJRID.Trim;
 
@@ -151,8 +151,8 @@ end;
 
 procedure TContentViewForm.UniFormCreate(Sender: TObject);
 begin
-  FBroker := TJournalRecordsRestBroker.Create(UniMainModule.XTicket);
-  FInfoRequest := FBroker.CreateReqInfo as TJournalRecordReqInfo;
+  FBroker := TStorageRestBroker.Create(UniMainModule.XTicket);
+  FInfoRequest := FBroker.CreateReqInfo as TStorageReqInfo;
   FInfoRequest.SetFlags(['body']);
 
   FHistoryBroker := THistoryRecordsRestBroker.Create(UniMainModule.XTicket);

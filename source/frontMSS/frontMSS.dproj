@@ -444,13 +444,13 @@
         <DCCReference Include="..\services\dataspace\entities\HistoryRecordUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\JournalRecordUnit.pas"/>
-        <DCCReference Include="..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas"/>
-        <DCCReference Include="..\services\dataspace\brokers\JournalRecordHttpRequests.pas"/>
         <DCCReference Include="..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\dataspace\brokers\HistoryRecordHttpRequests.pas"/>
         <DCCReference Include="..\services\dataspace\brokers\SearchRestBrokerUnit.pas"/>
-        <DCCReference Include="..\services\dataspace\brokers\SearchHttpRequests.pas"/>
         <DCCReference Include="..\services\dataspace\entities\SearchUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\SearchHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\StorageHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\StorageRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

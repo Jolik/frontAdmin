@@ -57,8 +57,6 @@
         <DCCReference Include="..\..\common\StringListUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\HistoryRecordUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordUnit.pas"/>
-        <DCCReference Include="..\..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas"/>
-        <DCCReference Include="..\..\services\dataspace\brokers\JournalRecordHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas"/>
         <DCCReference Include="JournalRecordRequestUnit.pas"/>
@@ -77,6 +75,8 @@
         <DCCReference Include="..\..\services\acl\brokers\CompaniesRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\acl\brokers\CompanyHttpRequests.pas"/>
         <DCCReference Include="..\..\services\acl\entities\CompanyUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\StorageHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -54,8 +54,8 @@ begin
     AbortRequest := Broker.CreateAbortRequest;
 
     try
-      // Запускаем новый поиск по маске ключа SA*
-      NewRequest.SetKey('SA*');
+      // Запускаем новый поиск по маске имени 2025*
+      NewRequest.SetName('2025*');
       NewRequest.SetAttachments(False);
 
       NewResponse := Broker.Start(NewRequest);
