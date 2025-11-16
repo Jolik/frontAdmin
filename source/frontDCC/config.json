@@ -1,0 +1,53 @@
+{
+	"port": 8077,
+	"logging": {
+		"loglevel": "debug",
+		"api_calls": false,
+		"api_calls_response": false
+	},
+	"services": {
+		"objects": {
+			"host": "http://objects:8000/api/v1"
+		},
+		"acl": {
+			"host": "http://acl:8001/api/v1"
+		},
+		"strip": {
+			"host": "http://prsstrip:8050/api/v2"
+		},
+		"summary": {
+			"host": "http://summary:8052/api/v2"
+		},
+		"dsprocessor": {
+			"host": "http://dsprocessor:8042/api/v1"
+		},
+		"dsmonitoring": {
+			"host": "http://dsmonitoring:8043/api/v1"
+		},
+		"router": {
+			"host": "http://router:8021/api/v2"
+		},
+		"datacomm": {
+			"host": "http://datacomm:8022/api/v1"
+		},
+		"linkop": {
+			"host": "http://linkop:8023/api/v1"
+		},
+		"drvcomm": {
+			"host": "http://drvcomm:8024/api/v1"
+		},
+		"management": {
+			"host": "http://management:8004/api/v1"
+		},
+		"dataserver": {
+			"host": "http://dataserver:8040/api/v2"
+		},
+		"dataspace": {
+			"host": "http://dataspace:8020/api/v2"
+		},
+		"redis": {
+			"host": "tcp://redis:6379",
+			"key_ttl": 3600
+		}
+	}
+}
