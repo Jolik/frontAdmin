@@ -115,7 +115,11 @@ uses
   OperatorLinksHttpRequests in '..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
   OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
   OperatorLinksContentHttpRequests in '..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas',
-  OperatorLinksContentRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas';
+  OperatorLinksContentRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas',
+  RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas',
+  HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
+  JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
+  JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas';
 
 {$R *.res}
 

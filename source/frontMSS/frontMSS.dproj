@@ -432,6 +432,10 @@
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas"/>
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\HistoryRecordUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\JournalRecordUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
