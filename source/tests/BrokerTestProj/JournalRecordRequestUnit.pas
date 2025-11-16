@@ -3,6 +3,7 @@ unit JournalRecordRequestUnit;
 interface
 
 procedure ExecuteJournalRecordRequest;
+procedure ExecuteReadContentStream;
 
 implementation
 
@@ -16,6 +17,96 @@ uses
   HistoryRecordHttpRequests,
   StorageRestBrokerUnit,
   HistoryRecordsRestBrokerUnit;
+
+procedure ExecuteReadContentStream;
+const
+  BatchSize = 1000;
+  PollIntervalMs = 3000;
+  PollIterations = 3;
+var
+  Broker: TStorageRestBroker;
+  ListRequest: TStorageReqList;
+  ListResponse: TStorageListResponse;
+  LastN: Int64;
+  Iteration: Integer;
+
+  procedure RequestBatch(const IncludeFromN: Boolean);
+  var
+    I: Integer;
+    RecordItem: TJournalRecord;
+  begin
+    ListRequest := nil;
+    ListResponse := nil;
+    try
+      ListRequest := Broker.CreateReqList as TStorageReqList;
+      ListRequest.SetCount(BatchSize);
+      ListRequest.SetFlags(['forward']);
+
+      if IncludeFromN and (LastN > 0) then
+        ListRequest.SetFromN(LastN.ToString);
+
+      ListResponse := Broker.List(ListRequest);
+
+      Writeln('-----------------------------------------------------------------');
+      Writeln('Content stream request URL: ' + ListRequest.GetURLWithParams);
+      if Assigned(ListResponse) and Assigned(ListResponse.JournalRecords) then
+      begin
+        Writeln(Format('Records fetched: %d',
+          [ListResponse.JournalRecords.Count]));
+
+        if ListResponse.JournalRecords.Count = 0 then
+        begin
+          Writeln('  No new content records were returned.');
+          Exit;
+        end;
+
+        for I := 0 to ListResponse.JournalRecords.Count - 1 do
+        begin
+          RecordItem := TJournalRecord(ListResponse.JournalRecords[I]);
+          Writeln(Format('  N=%d | JRID=%s | Name=%s',
+            [RecordItem.N, RecordItem.JRID, RecordItem.Name]));
+
+          if RecordItem.N > LastN then
+            LastN := RecordItem.N;
+        end;
+
+        Writeln(Format('LastN updated to %d', [LastN]));
+      end
+      else
+        Writeln('Content stream response was empty.');
+    finally
+      ListResponse.Free;
+      ListRequest.Free;
+    end;
+  end;
+
+begin
+  Broker := nil;
+  LastN := 0;
+
+  try
+    Broker := TStorageRestBroker.Create('ST-Test');
+
+    // Initial load of the latest 1000 records.
+    RequestBatch(False);
+
+    // Poll for new records and continue requesting in the forward direction.
+    for Iteration := 1 to PollIterations do
+    begin
+      Sleep(PollIntervalMs);
+      RequestBatch(True);
+    end;
+
+  except
+    on E: EIdHTTPProtocolException do
+      Writeln(Format('HTTP error: %d %s', [E.ErrorCode, E.ErrorMessage]));
+    on E: Exception do
+      Writeln('Error: ' + E.Message);
+  end;
+
+  Writeln('-----------------------------------------------------------------');
+  Writeln('Content stream polling completed. LastN = ' + LastN.ToString);
+end;
 
 procedure ExecuteJournalRecordRequest;
 var

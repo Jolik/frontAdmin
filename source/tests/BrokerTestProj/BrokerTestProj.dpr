@@ -122,6 +122,7 @@ begin
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
 //    ExecuteOperatorLinksContentRequests;
+    ExecuteReadContentStream;
     ExecuteSearchRequest;
     Readln;
   except
