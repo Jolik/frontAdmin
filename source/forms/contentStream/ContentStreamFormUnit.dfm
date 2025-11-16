@@ -490,3 +490,4 @@ object ContentStreamForm: TContentStreamForm
       Size = 255
     end
   end
+end
