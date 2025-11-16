@@ -41,6 +41,7 @@ uses
   OperatorLinkEditFormUnit in '..\forms\operatorLinks\OperatorLinkEditFormUnit.pas' {OperatorLinkEditForm: TUniForm},
   OperatorLinksFormUnit in '..\forms\operatorLinks\OperatorLinksFormUnit.pas' {OperatorLinksForm: TUniForm},
   OperatorLinkContectFormUnit in '..\forms\operatorLinksContent\OperatorLinkContectFormUnit.pas' {OperatorLinkContectForm: TUniForm},
+  SearchFormUnit in '..\forms\search\SearchFormUnit.pas' {SearchForm: TUniForm},
   ParentLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\ParentLinkSettingEditFrameUnit.pas' {ParentLinkSettingEditFrame: TUniFrame},
   ProfilesFrameUnit in '..\forms\links\LinksFrames\ProfilesFrameUnit.pas' {ProfilesFrame: TUniFrame},
   ProfileFrameUnit in '..\forms\links\LinksFrames\ProfileFrameUnit.pas' {ProfileFrame: TUniFrame},
@@ -119,7 +120,10 @@ uses
   RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas',
   HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
   JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
-  JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas';
+  JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas',
+  SearchRestBrokerUnit in '..\services\dataspace\brokers\SearchRestBrokerUnit.pas',
+  SearchHttpRequests in '..\services\dataspace\brokers\SearchHttpRequests.pas',
+  SearchUnit in '..\services\dataspace\entities\SearchUnit.pas';
 
 {$R *.res}
 
