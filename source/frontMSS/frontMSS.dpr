@@ -124,6 +124,8 @@ uses
   JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas',
   JournalRecordsRestBrokerUnit in '..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas',
   JournalRecordHttpRequests in '..\services\dataspace\brokers\JournalRecordHttpRequests.pas',
+  HistoryRecordsRestBrokerUnit in '..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
+  HistoryRecordHttpRequests in '..\services\dataspace\brokers\HistoryRecordHttpRequests.pas',
   SearchRestBrokerUnit in '..\services\dataspace\brokers\SearchRestBrokerUnit.pas',
   SearchHttpRequests in '..\services\dataspace\brokers\SearchHttpRequests.pas',
   SearchUnit in '..\services\dataspace\entities\SearchUnit.pas';
