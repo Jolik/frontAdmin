@@ -4,12 +4,11 @@ object ContentViewForm: TContentViewForm
   ClientHeight = 600
   ClientWidth = 1000
   Caption = 'Content details'
+  OnShow = UniFormShow
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
   OnCreate = UniFormCreate
   OnDestroy = UniFormDestroy
-  OnShow = UniFormShow
-  PixelsPerInch = 96
   TextHeight = 15
   object cpHeader: TUniContainerPanel
     Left = 0
@@ -20,11 +19,12 @@ object ContentViewForm: TContentViewForm
     ParentColor = False
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 992
     object lHeaderName: TUniLabel
       Left = 16
       Top = 16
-      Width = 100
-      Height = 20
+      Width = 31
+      Height = 13
       Hint = ''
       Caption = 'Name'
       ParentFont = False
@@ -34,11 +34,10 @@ object ContentViewForm: TContentViewForm
     object lHeaderNameValue: TUniLabel
       Left = 16
       Top = 44
-      Width = 960
-      Height = 20
+      Width = 3
+      Height = 13
       Hint = ''
       Caption = ''
-      Font.Style = [fsBold]
       TabOrder = 2
     end
   end
@@ -51,6 +50,8 @@ object ContentViewForm: TContentViewForm
     ParentColor = False
     Align = alBottom
     TabOrder = 1
+    ExplicitTop = 515
+    ExplicitWidth = 992
     object btnRefreshHistory: TUniButton
       Left = 16
       Top = 12
@@ -81,6 +82,8 @@ object ContentViewForm: TContentViewForm
     ParentColor = False
     Align = alClient
     TabOrder = 2
+    ExplicitWidth = 992
+    ExplicitHeight = 435
     object cpBody: TUniContainerPanel
       Left = 0
       Top = 0
@@ -90,6 +93,7 @@ object ContentViewForm: TContentViewForm
       ParentColor = False
       Align = alLeft
       TabOrder = 1
+      ExplicitHeight = 435
       object memoBody: TUniMemo
         Left = 0
         Top = 0
@@ -99,6 +103,7 @@ object ContentViewForm: TContentViewForm
         Align = alClient
         ReadOnly = True
         TabOrder = 1
+        ExplicitHeight = 435
       end
     end
     object splMain: TUniSplitter
@@ -108,7 +113,9 @@ object ContentViewForm: TContentViewForm
       Height = 460
       Hint = ''
       Align = alLeft
-      ResizeAnchor = akLeft
+      ParentColor = False
+      Color = clBtnFace
+      ExplicitHeight = 435
     end
     object cpInfo: TUniContainerPanel
       Left = 566
@@ -119,6 +126,8 @@ object ContentViewForm: TContentViewForm
       ParentColor = False
       Align = alClient
       TabOrder = 2
+      ExplicitWidth = 426
+      ExplicitHeight = 435
       object pcInfo: TUniPageControl
         Left = 0
         Top = 0
@@ -129,9 +138,13 @@ object ContentViewForm: TContentViewForm
         Align = alClient
         TabOrder = 1
         OnChange = pcInfoChange
+        ExplicitWidth = 426
+        ExplicitHeight = 435
         object tsInfo: TUniTabSheet
           Hint = ''
           Caption = 'Info'
+          ExplicitWidth = 418
+          ExplicitHeight = 407
           object cpInfoName: TUniContainerPanel
             Left = 0
             Top = 0
@@ -141,11 +154,12 @@ object ContentViewForm: TContentViewForm
             ParentColor = False
             Align = alTop
             TabOrder = 0
+            ExplicitWidth = 418
             object lInfoName: TUniLabel
               Left = 16
               Top = 8
-              Width = 100
-              Height = 20
+              Width = 31
+              Height = 13
               Hint = ''
               Caption = 'Name'
               ParentFont = False
@@ -155,8 +169,8 @@ object ContentViewForm: TContentViewForm
             object lInfoNameValue: TUniLabel
               Left = 16
               Top = 32
-              Width = 394
-              Height = 20
+              Width = 3
+              Height = 13
               Hint = ''
               Caption = ''
               TabOrder = 2
@@ -171,11 +185,12 @@ object ContentViewForm: TContentViewForm
             ParentColor = False
             Align = alTop
             TabOrder = 1
+            ExplicitWidth = 418
             object lInfoKey: TUniLabel
               Left = 16
               Top = 8
-              Width = 100
-              Height = 20
+              Width = 19
+              Height = 13
               Hint = ''
               Caption = 'Key'
               ParentFont = False
@@ -185,8 +200,8 @@ object ContentViewForm: TContentViewForm
             object lInfoKeyValue: TUniLabel
               Left = 16
               Top = 32
-              Width = 394
-              Height = 20
+              Width = 3
+              Height = 13
               Hint = ''
               Caption = ''
               TabOrder = 2
@@ -201,11 +216,12 @@ object ContentViewForm: TContentViewForm
             ParentColor = False
             Align = alTop
             TabOrder = 2
+            ExplicitWidth = 418
             object lInfoType: TUniLabel
               Left = 16
               Top = 8
-              Width = 100
-              Height = 20
+              Width = 25
+              Height = 13
               Hint = ''
               Caption = 'Type'
               ParentFont = False
@@ -215,8 +231,8 @@ object ContentViewForm: TContentViewForm
             object lInfoTypeValue: TUniLabel
               Left = 16
               Top = 32
-              Width = 394
-              Height = 20
+              Width = 3
+              Height = 13
               Hint = ''
               Caption = ''
               TabOrder = 2
@@ -231,11 +247,12 @@ object ContentViewForm: TContentViewForm
             ParentColor = False
             Align = alTop
             TabOrder = 3
+            ExplicitWidth = 418
             object lInfoWho: TUniLabel
               Left = 16
               Top = 8
-              Width = 100
-              Height = 20
+              Width = 25
+              Height = 13
               Hint = ''
               Caption = 'Who'
               ParentFont = False
@@ -245,8 +262,8 @@ object ContentViewForm: TContentViewForm
             object lInfoWhoValue: TUniLabel
               Left = 16
               Top = 32
-              Width = 394
-              Height = 20
+              Width = 3
+              Height = 13
               Hint = ''
               Caption = ''
               TabOrder = 2
@@ -256,14 +273,17 @@ object ContentViewForm: TContentViewForm
         object tsHistory: TUniTabSheet
           Hint = ''
           Caption = 'History'
+          ExplicitWidth = 418
+          ExplicitHeight = 407
           object gridHistory: TUniDBGrid
             Left = 0
             Top = 0
             Width = 426
-            Height = 430
+            Height = 432
             Hint = ''
             DataSource = dsHistory
             ReadOnly = True
+            LoadMask.Message = 'Loading data...'
             Align = alClient
             TabOrder = 0
             Columns = <
@@ -271,21 +291,25 @@ object ContentViewForm: TContentViewForm
                 FieldName = 'time'
                 Title.Caption = 'Time'
                 Width = 120
+                ReadOnly = True
               end
               item
                 FieldName = 'event'
                 Title.Caption = 'Event'
                 Width = 120
+                ReadOnly = True
               end
               item
                 FieldName = 'who'
                 Title.Caption = 'Who'
                 Width = 100
+                ReadOnly = True
               end
               item
                 FieldName = 'reason'
                 Title.Caption = 'Reason'
                 Width = 200
+                ReadOnly = True
               end>
           end
         end
@@ -293,21 +317,20 @@ object ContentViewForm: TContentViewForm
     end
   end
   object dsHistory: TDataSource
+    DataSet = mtHistory
     Left = 792
     Top = 520
-    DataSet = mtHistory
   end
   object mtHistory: TFDMemTable
-    Left = 856
-    Top = 520
-    FieldDefs = <>
-    IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
     ResourceOptions.SilentMode = True
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
+    Left = 856
+    Top = 520
     object mtHistorytime: TStringField
       FieldName = 'time'
       Size = 64

@@ -14,7 +14,8 @@ uses
   uniDBGrid,
   JournalRecordsRestBrokerUnit, JournalRecordHttpRequests, JournalRecordUnit,
   EntityUnit,
-  HistoryRecordUnit, HistoryRecordsRestBrokerUnit, HistoryRecordHttpRequests;
+  HistoryRecordUnit, HistoryRecordsRestBrokerUnit, HistoryRecordHttpRequests,
+  uniBasicGrid;
 
 type
   TContentViewForm = class(TUniForm)
