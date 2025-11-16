@@ -40,6 +40,7 @@ uses
   LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
   OperatorLinkEditFormUnit in '..\forms\operatorLinks\OperatorLinkEditFormUnit.pas' {OperatorLinkEditForm: TUniForm},
   OperatorLinksFormUnit in '..\forms\operatorLinks\OperatorLinksFormUnit.pas' {OperatorLinksForm: TUniForm},
+  OperatorLinkContectFormUnit in '..\forms\operatorLinksContent\OperatorLinkContectFormUnit.pas' {OperatorLinkContectForm: TUniForm},
   ParentLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\ParentLinkSettingEditFrameUnit.pas' {ParentLinkSettingEditFrame: TUniFrame},
   ProfilesFrameUnit in '..\forms\links\LinksFrames\ProfilesFrameUnit.pas' {ProfilesFrame: TUniFrame},
   ProfileFrameUnit in '..\forms\links\LinksFrames\ProfileFrameUnit.pas' {ProfileFrame: TUniFrame},
@@ -112,7 +113,13 @@ uses
   SharedFrameQueueFilterUnit in '..\forms\channels\SharedFrameQueueFilterUnit.pas' {QueueConditionFrame: TUniFrame},
   OperatorLinkUnit in '..\services\linkop\entities\OperatorLinkUnit.pas',
   OperatorLinksHttpRequests in '..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
-  OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas';
+  OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
+  OperatorLinksContentHttpRequests in '..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas',
+  OperatorLinksContentRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas',
+  RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas',
+  HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
+  JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
+  JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas';
 
 {$R *.res}
 

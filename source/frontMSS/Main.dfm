@@ -73,6 +73,16 @@ object MainForm: TMainForm
     TabOrder = 4
     OnClick = btnAbonentsClick
   end
+  object btnOperatorLinksContent: TUniButton
+    Left = 32
+    Top = 64
+    Width = 75
+    Height = 25
+    Hint = ''
+    Caption = #1050#1086#1085#1090#1077#1085#1090' '#1083#1080#1085#1082#1086#1074
+    TabOrder = 15
+    OnClick = btnOperatorLinksContentClick
+  end
   object btnOperatorLinks: TUniButton
     Left = 32
     Top = 96
