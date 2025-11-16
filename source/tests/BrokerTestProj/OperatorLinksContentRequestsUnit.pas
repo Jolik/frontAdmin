@@ -18,7 +18,8 @@ uses
   JournalRecordUnit,
   HistoryRecordUnit,
   GUIDListUnit,
-  StringListUnit;
+  StringListUnit,
+  BaseResponses;
 
 function BoolToText(const Value: Boolean): string;
 begin
@@ -205,8 +206,11 @@ var
   ContentListResp: TOperatorLinkContentListResponse;
   ContentInfoReq: TOperatorLinkContentReqInfo;
   ContentInfoResp: TOperatorLinkContentInfoResponse;
+  ContentRemoveReq: TOperatorLinkContentReqRemove;
+  ContentRemoveResp: TJSONResponse;
   SelectedLink: TOperatorLink;
   ContentRecord: TJournalRecord;
+  SecondRecord: TJournalRecord;
   RecordIndex: Integer;
   LinkId: string;
 begin
@@ -218,8 +222,11 @@ begin
   ContentListResp := nil;
   ContentInfoReq := nil;
   ContentInfoResp := nil;
+  ContentRemoveReq := nil;
+  ContentRemoveResp := nil;
   SelectedLink := nil;
   ContentRecord := nil;
+  SecondRecord := nil;
   LinkId := '';
 
   try
@@ -263,6 +270,40 @@ begin
           ContentRecord := TJournalRecord(ContentListResp.Records[RecordIndex]);
           Writeln(Format('  %d. %s', [RecordIndex + 1, ContentRecord.Name]));
         end;
+
+        if ContentListResp.Records.Count > 1 then
+        begin
+          SecondRecord := TJournalRecord(ContentListResp.Records[1]);
+          if SecondRecord.JRID.Trim.IsEmpty then
+            Writeln('Second content record has empty JRID, skipping removal request.')
+          else
+          begin
+            Writeln('-----------------------------------------------------------------');
+            Writeln(Format('Preparing to remove the second content record: %s (JRID: %s)',
+              [SecondRecord.Name, SecondRecord.JRID]));
+            ContentRemoveReq := ContentBroker.CreateReqRemove as TOperatorLinkContentReqRemove;
+            try
+              ContentRemoveReq.LinkId := LinkId;
+              ContentRemoveReq.JournalRecordId := SecondRecord.JRID;
+
+              Writeln('Operator link content remove request URL: ' +
+                ContentRemoveReq.GetURLWithParams);
+
+              ContentRemoveResp := ContentBroker.Remove(ContentRemoveReq);
+              try
+                Writeln('Second content record removal request completed.');
+              finally
+                ContentRemoveResp.Free;
+                ContentRemoveResp := nil;
+              end;
+            finally
+              ContentRemoveReq.Free;
+              ContentRemoveReq := nil;
+            end;
+          end;
+        end
+        else
+          Writeln('Less than two content records returned, removal test skipped.');
 
         ContentRecord := TJournalRecord(ContentListResp.Records[0]);
         Writeln('First content record from list:');
