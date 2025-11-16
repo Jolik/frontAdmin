@@ -26,6 +26,7 @@ type
     btnOperatorLinksContent: TUniButton;
     btnRules: TUniButton;
     btnSearch: TUniButton;
+    btnContentStream: TUniButton;
     cbCurDept: TUniComboBox;
     UniLabel1: TUniLabel;
     cbCurComp: TUniComboBox;
@@ -47,6 +48,7 @@ type
     procedure btnOperatorLinksClick(Sender: TObject);
     procedure btnOperatorLinksContentClick(Sender: TObject);
     procedure btnSearchClick(Sender: TObject);
+    procedure btnContentStreamClick(Sender: TObject);
   private
     FDeps: TEntityList;
     FComps: TEntityList;
@@ -82,7 +84,8 @@ uses
   RulesFormUnit,
   OperatorLinksFormUnit,
   OperatorLinkContectFormUnit,
-  SearchFormUnit;
+  SearchFormUnit,
+  ContentStreamFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -125,6 +128,11 @@ end;
 procedure TMainForm.btnSearchClick(Sender: TObject);
 begin
   SearchForm.Show();
+end;
+
+procedure TMainForm.btnContentStreamClick(Sender: TObject);
+begin
+  ContentStreamForm.Show();
 end;
 
 procedure TMainForm.btnAliasesClick(Sender: TObject);

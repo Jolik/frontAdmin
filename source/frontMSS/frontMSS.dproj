@@ -217,6 +217,10 @@
             <Form>ContentViewForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\contentStream\ContentStreamFormUnit.pas">
+            <Form>ContentStreamForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\forms\search\SearchFormUnit.pas">
             <Form>SearchForm</Form>
             <DesignClass>TUniForm</DesignClass>

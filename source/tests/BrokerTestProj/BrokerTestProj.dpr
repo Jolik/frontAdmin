@@ -38,7 +38,7 @@ uses
   JournalRecordUnit in '..\..\services\dataspace\entities\JournalRecordUnit.pas',
   HistoryRecordHttpRequests in '..\..\services\dataspace\brokers\HistoryRecordHttpRequests.pas',
   HistoryRecordsRestBrokerUnit in '..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
-  JournalRecordRequestUnit in 'JournalRecordRequestUnit.pas',
+  StorageRequestUnit in 'StorageRequestUnit.pas',
   OperatorRequestsUnit in 'OperatorRequestsUnit.pas',
   OperatorLinksContentRequestsUnit in 'OperatorLinksContentRequestsUnit.pas',
   AbonentsRequestsUnit in 'AbonentsRequestsUnit.pas',
@@ -122,7 +122,8 @@ begin
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
 //    ExecuteOperatorLinksContentRequests;
-    ExecuteSearchRequest;
+    ExecuteReadContentStream;
+//    ExecuteSearchRequest;
     Readln;
   except
     on E: Exception do

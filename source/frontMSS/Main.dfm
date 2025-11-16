@@ -179,4 +179,14 @@ object MainForm: TMainForm
     TabOrder = 16
     OnClick = btnSearchClick
   end
+  object btnContentStream: TUniButton
+    Left = 48
+    Top = 616
+    Width = 150
+    Height = 25
+    Hint = ''
+    Caption = #1055#1086#1090#1086#1082' '#1082#1086#1085#1090#1077#1085#1090#1072
+    TabOrder = 17
+    OnClick = btnContentStreamClick
+  end
 end
