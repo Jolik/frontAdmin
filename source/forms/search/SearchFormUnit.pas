@@ -10,7 +10,8 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  SearchRestBrokerUnit, SearchHttpRequests, SearchUnit, JournalRecordUnit;
+  SearchRestBrokerUnit, SearchHttpRequests, SearchUnit, JournalRecordUnit,
+  HttpClientUnit;
 
 const
   PollIntervalMs = 1000;
@@ -174,10 +175,10 @@ begin
   Req := FSearchBroker.CreateNewRequest;
   Resp := nil;
   try
-    if not teName.Text.Trim.IsEmpty then
-      Req.SetName(teName.Text.Trim);
-    if not teKey.Text.Trim.IsEmpty then
-      Req.SetKey(teKey.Text.Trim);
+    if not Trim(teName.Text).IsEmpty then
+      Req.SetName(Trim(teName.Text));
+    if not Trim(teKey.Text).IsEmpty then
+      Req.SetKey(Trim(teKey.Text));
 
     Resp := FSearchBroker.Start(Req);
     try
