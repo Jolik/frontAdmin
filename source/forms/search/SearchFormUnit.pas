@@ -54,6 +54,7 @@ type
     procedure btnNewClick(Sender: TObject);
     procedure btnAbortClick(Sender: TObject);
     procedure SearchTimerTimer(Sender: TObject);
+    procedure gridContentDblClick(Sender: TObject);
   private
     FSearchBroker: TSearchRestBroker;
     FInfoRequest: TSearchReqInfo;
@@ -82,7 +83,8 @@ implementation
 
 uses
   MainModule, uniGUIApplication,
-  BaseResponses, EntityUnit;
+  BaseResponses, EntityUnit,
+  ContentViewFormUnit;
 
 {$R *.dfm}
 
@@ -160,6 +162,23 @@ begin
 
   StopPolling;
   PollSearch;
+end;
+
+procedure TSearchForm.gridContentDblClick(Sender: TObject);
+var
+  ViewForm: TContentViewForm;
+  JRIDValue: string;
+begin
+  if not Assigned(mtContent) or mtContent.IsEmpty then
+    Exit;
+
+  JRIDValue := Trim(mtContentjrid.AsString);
+  if JRIDValue.IsEmpty then
+    Exit;
+
+  ViewForm := ContentViewForm;
+  ViewForm.JRID := JRIDValue;
+  ViewForm.ShowModal;
 end;
 
 procedure TSearchForm.btnNewClick(Sender: TObject);
