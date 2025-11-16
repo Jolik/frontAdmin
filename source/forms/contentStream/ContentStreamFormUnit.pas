@@ -1,4 +1,4 @@
-unit ContentStreamFormUnit;
+﻿unit ContentStreamFormUnit;
 
 interface
 
@@ -447,9 +447,9 @@ begin
   if (not Assigned(FBroker)) or (not Assigned(FListRequest)) then
     Exit;
 
-  FListRequest.SetFrom('last');
-  FListRequest.SetFromN('');
-  FListRequest.SetFlags([]);
+//  FListRequest.SetFrom('last');
+//  FListRequest.SetFromN('');
+//  FListRequest.SetFlags([]);
 
   Resp := FBroker.List(FListRequest);
   try

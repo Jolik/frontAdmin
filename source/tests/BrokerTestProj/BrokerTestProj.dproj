@@ -59,7 +59,7 @@
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas"/>
-        <DCCReference Include="JournalRecordRequestUnit.pas"/>
+        <DCCReference Include="StorageRequestUnit.pas"/>
         <DCCReference Include="OperatorRequestsUnit.pas"/>
         <DCCReference Include="OperatorLinksContentRequestsUnit.pas"/>
         <DCCReference Include="AbonentsRequestsUnit.pas"/>

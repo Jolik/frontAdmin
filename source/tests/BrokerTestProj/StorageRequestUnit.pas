@@ -1,4 +1,4 @@
-unit JournalRecordRequestUnit;
+unit StorageRequestUnit;
 
 interface
 
@@ -22,7 +22,7 @@ procedure ExecuteReadContentStream;
 const
   BatchSize = 1000;
   PollIntervalMs = 3000;
-  PollIterations = 3;
+  PollIterations = 20;
 var
   Broker: TStorageRestBroker;
   ListRequest: TStorageReqList;
@@ -40,10 +40,12 @@ var
     try
       ListRequest := Broker.CreateReqList as TStorageReqList;
       ListRequest.SetCount(BatchSize);
-      ListRequest.SetFlags(['forward']);
 
       if IncludeFromN and (LastN > 0) then
+      begin
+        ListRequest.SetFlags(['forward']);
         ListRequest.SetFromN(LastN.ToString);
+      end;
 
       ListResponse := Broker.List(ListRequest);
 

@@ -18,6 +18,8 @@ object ContentStreamForm: TContentStreamForm
     ParentColor = False
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1092
+    ExplicitHeight = 575
     object cpLeft: TUniContainerPanel
       Left = 0
       Top = 0
@@ -27,6 +29,8 @@ object ContentStreamForm: TContentStreamForm
       ParentColor = False
       Align = alClient
       TabOrder = 1
+      ExplicitWidth = 752
+      ExplicitHeight = 575
       object gridContent: TUniDBGrid
         Left = 0
         Top = 0
@@ -93,11 +97,13 @@ object ContentStreamForm: TContentStreamForm
         ParentColor = False
         Align = alBottom
         TabOrder = 2
+        ExplicitTop = 455
+        ExplicitWidth = 752
         object lTotalRecords: TUniLabel
           Left = 16
           Top = 16
-          Width = 120
-          Height = 16
+          Width = 76
+          Height = 13
           Hint = ''
           Caption = #1042#1089#1077#1075#1086' '#1079#1072#1087#1080#1089#1077#1081
           ParentFont = False
@@ -107,8 +113,8 @@ object ContentStreamForm: TContentStreamForm
         object lTotalRecordsValue: TUniLabel
           Left = 160
           Top = 16
-          Width = 120
-          Height = 16
+          Width = 6
+          Height = 13
           Hint = ''
           Caption = '0'
           TabOrder = 2
@@ -116,8 +122,8 @@ object ContentStreamForm: TContentStreamForm
         object lLastN: TUniLabel
           Left = 16
           Top = 44
-          Width = 120
-          Height = 16
+          Width = 33
+          Height = 13
           Hint = ''
           Caption = 'Last N'
           ParentFont = False
@@ -127,8 +133,8 @@ object ContentStreamForm: TContentStreamForm
         object lLastNValue: TUniLabel
           Left = 160
           Top = 44
-          Width = 200
-          Height = 16
+          Width = 4
+          Height = 13
           Hint = ''
           Caption = '-'
           TabOrder = 4
@@ -136,8 +142,8 @@ object ContentStreamForm: TContentStreamForm
         object lLastUpdate: TUniLabel
           Left = 16
           Top = 72
-          Width = 120
-          Height = 16
+          Width = 100
+          Height = 13
           Hint = ''
           Caption = #1055#1086#1089#1083'. '#1086#1073#1085#1086#1074#1083#1077#1085#1080#1077
           ParentFont = False
@@ -147,8 +153,8 @@ object ContentStreamForm: TContentStreamForm
         object lLastUpdateValue: TUniLabel
           Left = 160
           Top = 72
-          Width = 200
-          Height = 16
+          Width = 4
+          Height = 13
           Hint = ''
           Caption = '-'
           TabOrder = 6
@@ -164,6 +170,8 @@ object ContentStreamForm: TContentStreamForm
       Align = alRight
       ParentColor = False
       Color = clBtnFace
+      ExplicitLeft = 752
+      ExplicitHeight = 575
     end
     object cpInfo: TUniContainerPanel
       Left = 766
@@ -174,6 +182,8 @@ object ContentStreamForm: TContentStreamForm
       ParentColor = False
       Align = alRight
       TabOrder = 2
+      ExplicitLeft = 758
+      ExplicitHeight = 575
       object pcInfo: TUniPageControl
         Left = 0
         Top = 0
@@ -184,13 +194,11 @@ object ContentStreamForm: TContentStreamForm
         Align = alClient
         TabOrder = 1
         OnChange = pcInfoChange
+        ExplicitHeight = 575
         object tsInfo: TUniTabSheet
           Hint = ''
           Caption = 'Info'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 318
-          ExplicitHeight = 557
+          ExplicitHeight = 547
           object cpInfoName: TUniContainerPanel
             Left = 0
             Top = 0
@@ -203,8 +211,8 @@ object ContentStreamForm: TContentStreamForm
             object lInfoName: TUniLabel
               Left = 16
               Top = 8
-              Width = 64
-              Height = 16
+              Width = 51
+              Height = 13
               Hint = ''
               Caption = #1053#1072#1079#1074#1072#1085#1080#1077
               ParentFont = False
@@ -215,7 +223,7 @@ object ContentStreamForm: TContentStreamForm
               Left = 16
               Top = 32
               Width = 3
-              Height = 16
+              Height = 13
               Hint = ''
               Caption = ''
               TabOrder = 2
@@ -233,8 +241,8 @@ object ContentStreamForm: TContentStreamForm
             object lInfoKey: TUniLabel
               Left = 16
               Top = 8
-              Width = 21
-              Height = 16
+              Width = 19
+              Height = 13
               Hint = ''
               Caption = 'Key'
               ParentFont = False
@@ -245,7 +253,7 @@ object ContentStreamForm: TContentStreamForm
               Left = 16
               Top = 32
               Width = 3
-              Height = 16
+              Height = 13
               Hint = ''
               Caption = ''
               TabOrder = 2
@@ -263,8 +271,8 @@ object ContentStreamForm: TContentStreamForm
             object lInfoType: TUniLabel
               Left = 16
               Top = 8
-              Width = 24
-              Height = 16
+              Width = 19
+              Height = 13
               Hint = ''
               Caption = #1058#1080#1087
               ParentFont = False
@@ -275,7 +283,7 @@ object ContentStreamForm: TContentStreamForm
               Left = 16
               Top = 32
               Width = 3
-              Height = 16
+              Height = 13
               Hint = ''
               Caption = ''
               TabOrder = 2
@@ -293,8 +301,8 @@ object ContentStreamForm: TContentStreamForm
             object lInfoWho: TUniLabel
               Left = 16
               Top = 8
-              Width = 24
-              Height = 16
+              Width = 19
+              Height = 13
               Hint = ''
               Caption = #1050#1090#1086
               ParentFont = False
@@ -305,7 +313,7 @@ object ContentStreamForm: TContentStreamForm
               Left = 16
               Top = 32
               Width = 3
-              Height = 16
+              Height = 13
               Hint = ''
               Caption = ''
               TabOrder = 2
@@ -315,30 +323,29 @@ object ContentStreamForm: TContentStreamForm
             Left = 0
             Top = 240
             Width = 326
-            Height = 317
+            Height = 332
             Hint = ''
             ParentColor = False
             Align = alClient
             TabOrder = 4
+            ExplicitHeight = 307
             object memoBody: TUniMemo
               Left = 0
               Top = 0
               Width = 326
-              Height = 317
+              Height = 332
               Hint = ''
               Align = alClient
               ReadOnly = True
               TabOrder = 1
+              ExplicitHeight = 307
             end
           end
         end
         object tsHistory: TUniTabSheet
           Hint = ''
           Caption = 'History'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 318
-          ExplicitHeight = 557
+          ExplicitHeight = 547
           object cpHistoryToolbar: TUniContainerPanel
             Left = 0
             Top = 0
@@ -363,7 +370,7 @@ object ContentStreamForm: TContentStreamForm
             Left = 0
             Top = 48
             Width = 326
-            Height = 509
+            Height = 524
             Hint = ''
             DataSource = dsHistory
             ReadOnly = True
@@ -402,14 +409,11 @@ object ContentStreamForm: TContentStreamForm
   end
   object dsContent: TDataSource
     DataSet = mtContent
+    OnDataChange = dsContentDataChange
     Left = 64
     Top = 456
-    OnDataChange = dsContentDataChange
   end
   object mtContent: TFDMemTable
-    Active = False
-    FieldDefs = <>
-    IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -450,11 +454,14 @@ object ContentStreamForm: TContentStreamForm
   end
   object StreamTimer: TUniTimer
     Enabled = False
-    Interval = 1000
-    RunOnce = False
+    ClientEvent.Strings = (
+      'function(sender)'
+      '{'
+      ' '
+      '}')
+    OnTimer = StreamTimerTimer
     Left = 200
     Top = 456
-    OnTimer = StreamTimerTimer
   end
   object dsHistory: TDataSource
     DataSet = mtHistory
@@ -462,9 +469,6 @@ object ContentStreamForm: TContentStreamForm
     Top = 456
   end
   object mtHistory: TFDMemTable
-    Active = False
-    FieldDefs = <>
-    IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
