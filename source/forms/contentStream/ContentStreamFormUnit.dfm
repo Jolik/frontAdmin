@@ -183,9 +183,10 @@ object ContentStreamForm: TContentStreamForm
         ActivePage = tsInfo
         Align = alClient
         TabOrder = 1
+        OnChange = pcInfoChange
         object tsInfo: TUniTabSheet
           Hint = ''
-          Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103
+          Caption = 'Info'
           ExplicitLeft = 0
           ExplicitTop = 0
           ExplicitWidth = 318
@@ -331,6 +332,71 @@ object ContentStreamForm: TContentStreamForm
             end
           end
         end
+        object tsHistory: TUniTabSheet
+          Hint = ''
+          Caption = 'History'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 318
+          ExplicitHeight = 557
+          object cpHistoryToolbar: TUniContainerPanel
+            Left = 0
+            Top = 0
+            Width = 326
+            Height = 48
+            Hint = ''
+            ParentColor = False
+            Align = alTop
+            TabOrder = 0
+            object btnRefreshHistory: TUniButton
+              Left = 16
+              Top = 8
+              Width = 200
+              Height = 32
+              Hint = ''
+              Caption = #1054#1073#1085#1086#1074#1080#1090#1100' '#1080#1089#1090#1086#1088#1080#1102
+              TabOrder = 1
+              OnClick = btnRefreshHistoryClick
+            end
+          end
+          object gridHistory: TUniDBGrid
+            Left = 0
+            Top = 48
+            Width = 326
+            Height = 509
+            Hint = ''
+            DataSource = dsHistory
+            ReadOnly = True
+            LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072'...'
+            Align = alClient
+            TabOrder = 1
+            Columns = <
+              item
+                FieldName = 'time'
+                Title.Caption = #1042#1088#1077#1084#1103
+                Width = 120
+                ReadOnly = True
+              end
+              item
+                FieldName = 'event'
+                Title.Caption = #1057#1086#1073#1099#1090#1080#1077
+                Width = 140
+                ReadOnly = True
+              end
+              item
+                FieldName = 'who'
+                Title.Caption = #1050#1090#1086
+                Width = 80
+                ReadOnly = True
+              end
+              item
+                FieldName = 'reason'
+                Title.Caption = #1055#1088#1080#1095#1080#1085#1072
+                Width = 160
+                ReadOnly = True
+              end>
+          end
+        end
       end
     end
   end
@@ -389,4 +455,38 @@ object ContentStreamForm: TContentStreamForm
     Left = 200
     Top = 456
     OnTimer = StreamTimerTimer
+  end
+  object dsHistory: TDataSource
+    DataSet = mtHistory
+    Left = 272
+    Top = 456
+  end
+  object mtHistory: TFDMemTable
+    Active = False
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired]
+    UpdateOptions.CheckRequired = False
+    Left = 328
+    Top = 456
+    object mtHistorytime: TStringField
+      FieldName = 'time'
+      Size = 64
+    end
+    object mtHistoryevent: TStringField
+      FieldName = 'event'
+      Size = 255
+    end
+    object mtHistorywho: TStringField
+      FieldName = 'who'
+      Size = 128
+    end
+    object mtHistoryreason: TStringField
+      FieldName = 'reason'
+      Size = 255
+    end
   end

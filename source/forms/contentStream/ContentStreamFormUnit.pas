@@ -4,15 +4,17 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.DateUtils,
+  System.Generics.Collections, System.Generics.Defaults,
   Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm, uniGUIBaseClasses,
   uniPanel, uniBasicGrid, uniDBGrid, uniLabel, uniMemo, uniPageControl, uniSplitter,
-  uniTimer,
+  uniTimer, uniButton,
   Data.DB,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  StorageRestBrokerUnit, StorageHttpRequests, JournalRecordUnit;
+  StorageRestBrokerUnit, StorageHttpRequests, JournalRecordUnit,
+  HistoryRecordUnit, HistoryRecordsRestBrokerUnit, HistoryRecordHttpRequests;
 
 type
   TContentStreamForm = class(TUniForm)
@@ -30,6 +32,7 @@ type
     splMain: TUniSplitter;
     pcInfo: TUniPageControl;
     tsInfo: TUniTabSheet;
+    tsHistory: TUniTabSheet;
     cpInfoName: TUniContainerPanel;
     lInfoName: TUniLabel;
     lInfoNameValue: TUniLabel;
@@ -44,6 +47,9 @@ type
     lInfoWhoValue: TUniLabel;
     cpInfoBody: TUniContainerPanel;
     memoBody: TUniMemo;
+    cpHistoryToolbar: TUniContainerPanel;
+    btnRefreshHistory: TUniButton;
+    gridHistory: TUniDBGrid;
     dsContent: TDataSource;
     mtContent: TFDMemTable;
     mtContentn: TLargeintField;
@@ -55,19 +61,31 @@ type
     mtContentsize: TIntegerField;
     mtContentjrid: TStringField;
     StreamTimer: TUniTimer;
+    dsHistory: TDataSource;
+    mtHistory: TFDMemTable;
+    mtHistorytime: TStringField;
+    mtHistoryevent: TStringField;
+    mtHistorywho: TStringField;
+    mtHistoryreason: TStringField;
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
     procedure StreamTimerTimer(Sender: TObject);
     procedure gridContentDblClick(Sender: TObject);
     procedure dsContentDataChange(Sender: TObject; Field: TField);
+    procedure pcInfoChange(Sender: TObject);
+    procedure btnRefreshHistoryClick(Sender: TObject);
   private
     FBroker: TStorageRestBroker;
     FListRequest: TStorageReqList;
     FInfoRequest: TStorageReqInfo;
+    FHistoryBroker: THistoryRecordsRestBroker;
+    FHistoryRequest: TJournalRecordHistoryReq;
     FLastN: Int64;
     FLastUpdate: TDateTime;
     FCurrentJRID: string;
     FUpdatingData: Boolean;
+    FHistoryLoaded: Boolean;
+    FInitialLoadComplete: Boolean;
     procedure InitializeDataset;
     procedure AppendRecords(AList: TJournalRecordList);
     procedure PollContent;
@@ -79,6 +97,10 @@ type
     procedure ResetState;
     procedure SetLastN(const Value: Int64);
     function FormatDateTimeValue(const AValue: TDateTime): string;
+    procedure LoadHistoryRecords(const AForce: Boolean = False);
+    procedure FillHistoryDataset(AHistory: THistoryRecordList);
+    procedure LoadInitialContent;
+    procedure ConfigureForwardRequest;
   public
   end;
 
@@ -108,51 +130,74 @@ var
   Item: TFieldSet;
   Rec: TJournalRecord;
   RecordTime: TDateTime;
+  SortedRecords: TList<TJournalRecord>;
+  HasRecords: Boolean;
 begin
   if not Assigned(AList) then
     Exit;
 
-  InitializeDataset;
-  FUpdatingData := True;
-  mtContent.DisableControls;
+  HasRecords := False;
+  SortedRecords := TList<TJournalRecord>.Create;
   try
     for Item in AList do
+      if Item is TJournalRecord then
+        SortedRecords.Add(TJournalRecord(Item));
+
+    HasRecords := SortedRecords.Count > 0;
+
+    if HasRecords then
     begin
-      if not (Item is TJournalRecord) then
-        Continue;
+      SortedRecords.Sort(TComparer<TJournalRecord>.Construct(
+        function(const Left, Right: TJournalRecord): Integer
+        begin
+          if Left.N = Right.N then
+            Result := 0
+          else if Left.N < Right.N then
+            Result := -1
+          else
+            Result := 1;
+        end));
 
-      Rec := TJournalRecord(Item);
+      InitializeDataset;
+      FUpdatingData := True;
+      mtContent.DisableControls;
+      try
+        for Rec in SortedRecords do
+        begin
+          mtContent.Append;
+          mtContentn.AsLargeInt := Rec.N;
+          if Rec.Time > 0 then
+          begin
+            try
+              RecordTime := UnixToDateTime(Rec.Time, True);
+              mtContenttime.AsDateTime := RecordTime;
+            except
+              mtContenttime.Clear;
+            end;
+          end
+          else
+            mtContenttime.Clear;
+          mtContentname.AsString := Rec.Name;
+          mtContenttype.AsString := Rec.&Type;
+          mtContentwho.AsString := Rec.Who;
+          mtContentkey.AsString := Rec.Key;
+          mtContentsize.AsInteger := Rec.Size;
+          mtContentjrid.AsString := Rec.JRID;
+          mtContent.Post;
 
-      mtContent.Append;
-      mtContentn.AsLargeInt := Rec.N;
-      if Rec.Time > 0 then
-      begin
-        try
-          RecordTime := UnixToDateTime(Rec.Time, True);
-          mtContenttime.AsDateTime := RecordTime;
-        except
-          mtContenttime.Clear;
+          if Rec.N > FLastN then
+            SetLastN(Rec.N);
         end;
-      end
-      else
-        mtContenttime.Clear;
-      mtContentname.AsString := Rec.Name;
-      mtContenttype.AsString := Rec.&Type;
-      mtContentwho.AsString := Rec.Who;
-      mtContentkey.AsString := Rec.Key;
-      mtContentsize.AsInteger := Rec.Size;
-      mtContentjrid.AsString := Rec.JRID;
-      mtContent.Post;
-
-      if Rec.N > FLastN then
-        SetLastN(Rec.N);
+      finally
+        mtContent.EnableControls;
+        FUpdatingData := False;
+      end;
     end;
   finally
-    mtContent.EnableControls;
-    FUpdatingData := False;
+    SortedRecords.Free;
   end;
 
-  if AList.Count > 0 then
+  if HasRecords then
     FLastUpdate := Now;
 
   TrimContent;
@@ -167,6 +212,14 @@ begin
   lInfoWhoValue.Caption := '';
   memoBody.Lines.Clear;
   FCurrentJRID := '';
+  FHistoryLoaded := False;
+  if Assigned(mtHistory) then
+  begin
+    if mtHistory.Active then
+      mtHistory.EmptyDataSet
+    else
+      mtHistory.CreateDataSet;
+  end;
   if Assigned(pcInfo) and Assigned(tsInfo) then
     pcInfo.ActivePage := tsInfo;
 end;
@@ -223,6 +276,19 @@ begin
   ViewForm.ShowModal;
 end;
 
+procedure TContentStreamForm.pcInfoChange(Sender: TObject);
+begin
+  if Assigned(pcInfo) and (pcInfo.ActivePage = tsHistory) then
+    LoadHistoryRecords(False);
+end;
+
+procedure TContentStreamForm.btnRefreshHistoryClick(Sender: TObject);
+begin
+  LoadHistoryRecords(True);
+  if Assigned(pcInfo) then
+    pcInfo.ActivePage := tsHistory;
+end;
+
 procedure TContentStreamForm.InitializeDataset;
 begin
   if not Assigned(mtContent) then
@@ -257,6 +323,11 @@ begin
     begin
       UpdateContentInfo(Resp.JournalRecord);
       FCurrentJRID := AJRID;
+      FHistoryLoaded := False;
+      if Assigned(FHistoryRequest) then
+        FHistoryRequest.ID := FCurrentJRID;
+      if Assigned(pcInfo) and (pcInfo.ActivePage = tsHistory) then
+        LoadHistoryRecords(False);
     end
     else
       ClearContentInfo;
@@ -265,11 +336,82 @@ begin
   end;
 end;
 
+procedure TContentStreamForm.FillHistoryDataset(AHistory: THistoryRecordList);
+var
+  Item: TFieldSet;
+  HistoryRecord: THistoryRecord;
+begin
+  if not Assigned(mtHistory) then
+    Exit;
+
+  if not mtHistory.Active then
+    mtHistory.CreateDataSet;
+
+  mtHistory.DisableControls;
+  try
+    mtHistory.EmptyDataSet;
+    if Assigned(AHistory) then
+      for Item in AHistory do
+        if Item is THistoryRecord then
+        begin
+          HistoryRecord := THistoryRecord(Item);
+          mtHistory.Append;
+          mtHistorytime.AsString := HistoryRecord.Time;
+          mtHistoryevent.AsString := HistoryRecord.Event;
+          mtHistorywho.AsString := HistoryRecord.Who;
+          mtHistoryreason.AsString := HistoryRecord.Reason;
+          mtHistory.Post;
+        end;
+  finally
+    mtHistory.EnableControls;
+  end;
+end;
+
+procedure TContentStreamForm.LoadHistoryRecords(const AForce: Boolean);
+var
+  Resp: THistoryRecordListResponse;
+begin
+  if not Assigned(FHistoryBroker) then
+  begin
+    FillHistoryDataset(nil);
+    Exit;
+  end;
+
+  if FCurrentJRID.Trim.IsEmpty then
+  begin
+    FillHistoryDataset(nil);
+    Exit;
+  end;
+
+  if not AForce and FHistoryLoaded then
+    Exit;
+
+  if not Assigned(FHistoryRequest) then
+    FHistoryRequest := FHistoryBroker.CreateJournalHistoryReq;
+
+  FHistoryRequest.ID := FCurrentJRID.Trim;
+
+  Resp := FHistoryBroker.GetForJournal(FHistoryRequest);
+  try
+    if Assigned(Resp) then
+      FillHistoryDataset(Resp.HistoryRecords)
+    else
+      FillHistoryDataset(nil);
+  finally
+    Resp.Free;
+  end;
+
+  FHistoryLoaded := True;
+end;
+
 procedure TContentStreamForm.PollContent;
 var
   Resp: TStorageListResponse;
 begin
   if (not Assigned(FBroker)) or (not Assigned(FListRequest)) then
+    Exit;
+
+  if not FInitialLoadComplete then
     Exit;
 
   if FLastN > 0 then
@@ -288,6 +430,39 @@ begin
   end;
 end;
 
+procedure TContentStreamForm.ConfigureForwardRequest;
+begin
+  if not Assigned(FListRequest) then
+    Exit;
+
+  FListRequest.SetFrom('');
+  FListRequest.SetFromN('');
+  FListRequest.SetFlags(['forward']);
+end;
+
+procedure TContentStreamForm.LoadInitialContent;
+var
+  Resp: TStorageListResponse;
+begin
+  if (not Assigned(FBroker)) or (not Assigned(FListRequest)) then
+    Exit;
+
+  FListRequest.SetFrom('last');
+  FListRequest.SetFromN('');
+  FListRequest.SetFlags([]);
+
+  Resp := FBroker.List(FListRequest);
+  try
+    if Assigned(Resp) and Assigned(Resp.JournalRecords) then
+      AppendRecords(Resp.JournalRecords);
+  finally
+    Resp.Free;
+  end;
+
+  ConfigureForwardRequest;
+  FInitialLoadComplete := True;
+end;
+
 procedure TContentStreamForm.ResetState;
 begin
   InitializeDataset;
@@ -298,8 +473,15 @@ begin
   finally
     FUpdatingData := False;
   end;
+  if Assigned(FListRequest) then
+  begin
+    FListRequest.SetFrom('');
+    FListRequest.SetFromN('');
+    FListRequest.SetFlags([]);
+  end;
   SetLastN(0);
   FLastUpdate := 0;
+  FInitialLoadComplete := False;
   UpdateStats;
   ClearContentInfo;
 end;
@@ -353,7 +535,12 @@ begin
   if Assigned(FInfoRequest) then
     FInfoRequest.SetFlags(['body']);
 
+  FHistoryBroker := THistoryRecordsRestBroker.Create(UniMainModule.XTicket);
+  FHistoryRequest := FHistoryBroker.CreateJournalHistoryReq;
+
   ResetState;
+
+  LoadInitialContent;
 
   StreamTimer.Enabled := True;
 end;
@@ -364,6 +551,8 @@ begin
   FreeAndNil(FInfoRequest);
   FreeAndNil(FListRequest);
   FreeAndNil(FBroker);
+  FreeAndNil(FHistoryRequest);
+  FreeAndNil(FHistoryBroker);
 end;
 
 procedure TContentStreamForm.UpdateContentInfo(const ARecord: TJournalRecord);
