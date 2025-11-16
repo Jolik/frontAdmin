@@ -77,6 +77,7 @@ type
     procedure UniFormDestroy(Sender: TObject);
     procedure cbOperatorLinksChange(Sender: TObject);
     procedure gridContentSelectionChange(Sender: TObject);
+    procedure gridContentDblClick(Sender: TObject);
     procedure btnRemoveContentClick(Sender: TObject);
   private
     FLinksBroker: TOperatorLinksRestBroker;
@@ -101,7 +102,8 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, HttpClientUnit;
+  MainModule, uniGUIApplication, HttpClientUnit,
+  ContentViewFormUnit;
 
 function OperatorLinkContectForm: TOperatorLinkContectForm;
 begin
@@ -164,6 +166,23 @@ end;
 procedure TOperatorLinkContectForm.gridContentSelectionChange(Sender: TObject);
 begin
   ShowSelectedContentInfo;
+end;
+
+procedure TOperatorLinkContectForm.gridContentDblClick(Sender: TObject);
+var
+  ViewForm: TContentViewForm;
+  JRIDValue: string;
+begin
+  if not Assigned(mtContent) or not mtContent.Active or mtContent.IsEmpty then
+    Exit;
+
+  JRIDValue := Trim(mtContentjrid.AsString);
+  if JRIDValue.IsEmpty then
+    Exit;
+
+  ViewForm := ContentViewForm;
+  ViewForm.JRID := JRIDValue;
+  ViewForm.ShowModal;
 end;
 
 procedure TOperatorLinkContectForm.LoadLinkContent(const ALink: TOperatorLink);
