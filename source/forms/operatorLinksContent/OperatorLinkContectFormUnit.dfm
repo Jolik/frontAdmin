@@ -30,6 +30,17 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
       Font.Style = [fsBold]
       TabOrder = 1
     end
+    object btnRemoveContent: TUniButton
+      Left = 232
+      Top = 12
+      Width = 232
+      Height = 25
+      Hint = ''
+      Caption = #1059#1076#1072#1083#1080#1090#1100#32#1079#1072#1087#1080#1089#1100
+      TabOrder = 2
+      Enabled = False
+      OnClick = btnRemoveContentClick
+    end
     object cbOperatorLinks: TUniComboBox
       Left = 632
       Top = 12
@@ -38,7 +49,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
       Anchors = [akTop, akRight]
       Style = csDropDownList
       Text = ''
-      TabOrder = 2
+      TabOrder = 3
       IconItems = <>
       OnChange = cbOperatorLinksChange
     end

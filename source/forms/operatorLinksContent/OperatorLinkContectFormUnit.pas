@@ -7,7 +7,7 @@ uses
   Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
   uniGUIBaseClasses, uniPanel, uniLabel, uniComboBox, uniSplitter,
-  uniPageControl, uniBasicGrid, uniDBGrid, uniMemo,
+  uniPageControl, uniBasicGrid, uniDBGrid, uniMemo, uniButton,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
@@ -72,10 +72,12 @@ type
     lContentInfoBody: TUniLabel;
     memoContentBody: TUniMemo;
     splContent: TUniSplitter;
+    btnRemoveContent: TUniButton;
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
     procedure cbOperatorLinksChange(Sender: TObject);
     procedure gridContentSelectionChange(Sender: TObject);
+    procedure btnRemoveContentClick(Sender: TObject);
   private
     FLinksBroker: TOperatorLinksRestBroker;
     FContentBroker: TOperatorLinksContentRestBroker;
@@ -99,7 +101,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication;
+  MainModule, uniGUIApplication, HttpClientUnit;
 
 function OperatorLinkContectForm: TOperatorLinkContectForm;
 begin
@@ -121,6 +123,7 @@ begin
   finally
     mtContent.EnableControls;
   end;
+  btnRemoveContent.Enabled := False;
 end;
 
 procedure TOperatorLinkContectForm.ClearContentInfo;
@@ -211,6 +214,8 @@ begin
   finally
     Req.Free;
   end;
+
+  btnRemoveContent.Enabled := not mtContent.IsEmpty;
 end;
 
 procedure TOperatorLinkContectForm.LoadOperatorLinks;
@@ -306,6 +311,38 @@ begin
   finally
     Req.Free;
   end;
+end;
+
+procedure TOperatorLinkContectForm.btnRemoveContentClick(Sender: TObject);
+var
+  Link: TOperatorLink;
+  JRID: string;
+  Req: TOperatorLinkContentReqRemove;
+  Resp: TJSONResponse;
+begin
+  if not Assigned(FContentBroker) or not mtContent.Active or mtContent.IsEmpty then
+    Exit;
+
+  Link := GetSelectedLink;
+  if not Assigned(Link) then
+    Exit;
+
+  JRID := mtContentjrid.AsString;
+  if JRID.Trim.IsEmpty then
+    Exit;
+
+  Req := FContentBroker.CreateReqRemove as TOperatorLinkContentReqRemove;
+  Resp := nil;
+  try
+    Req.LinkId := Link.Lid;
+    Req.JournalRecordId := JRID;
+    Resp := FContentBroker.Remove(Req);
+  finally
+    Resp.Free;
+    Req.Free;
+  end;
+
+  LoadLinkContent(Link);
 end;
 
 procedure TOperatorLinkContectForm.UniFormCreate(Sender: TObject);
