@@ -30,6 +30,7 @@ object SearchForm: TSearchForm
       ForceFit = True
       Align = alClient
       TabOrder = 1
+      OnDblClick = gridContentDblClick
       Columns = <
         item
           FieldName = 'jrid'
