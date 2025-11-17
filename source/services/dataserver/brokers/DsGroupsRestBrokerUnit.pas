@@ -31,7 +31,7 @@ type
     function List(AReq: TReqList): TFieldSetListResponse; overload; override;
 
     function Info(AReq: TDsGroupReqInfo): TDsGroupInfoResponse; reintroduce; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
 
     function New(AReq: TDsGroupReqNew): TDsGroupCreateResponse; reintroduce; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;

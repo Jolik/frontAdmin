@@ -419,6 +419,7 @@
         <DCCReference Include="..\services\acl\entities\SessionUnit.pas"/>
         <DCCReference Include="..\services\acl\entities\UserUnit.pas"/>
         <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\DsGroupUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

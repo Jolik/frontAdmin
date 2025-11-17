@@ -1,4 +1,4 @@
-unit DsGroupsRequestsUnit;
+﻿unit DsGroupsRequestsUnit;
 
 interface
 
@@ -12,6 +12,7 @@ uses
   DsGroupsRestBrokerUnit,
   DsGroupsHttpRequests,
   DsGroupUnit,
+  HttpClientUnit,
   BaseResponses;
 
 procedure ExecuteDsGroupsRequests;
@@ -140,16 +141,16 @@ begin
     NewReq := Broker.CreateReqNew as TDsGroupReqNew;
     try
       CreatedGroupName := Format('Auto test group %s', [FormatDateTime('yyyymmddhhnnss', Now)]);
-      if Assigned(NewReq.Body) then
+      if Assigned(NewReq.ReqBody) then
       begin
-        TDsGroup(NewReq.Body).Name := CreatedGroupName;
-        TDsGroup(NewReq.Body).Sid := 'auto-test';
+        TDsGroup(NewReq.ReqBody).Name := CreatedGroupName;
+        TDsGroup(NewReq.ReqBody).Sid := 'auto-test';
 
         MetadataObj := TJSONObject.Create;
         try
           MetadataObj.AddPair('origin', 'BrokerTestProj');
           MetadataObj.AddPair('createdAt', FormatDateTime('yyyy-mm-dd hh:nn:ss', Now));
-          TDsGroup(NewReq.Body).Metadata := MetadataObj;
+          TDsGroup(NewReq.ReqBody).Metadata := MetadataObj;
         finally
           MetadataObj.Free;
         end;
@@ -204,16 +205,16 @@ begin
       UpdateReq.Id := CreatedGroupId;
       UpdatedGroupName := CreatedGroupName + ' (updated)';
       PrintSection('5) Обновляем информацию о созданной Группе рядов');
-      if Assigned(UpdateReq.Body) then
+      if Assigned(UpdateReq.ReqBody) then
       begin
-        TDsGroup(UpdateReq.Body).Name := UpdatedGroupName;
-        TDsGroup(UpdateReq.Body).Sid := 'auto-test-updated';
+        TDsGroup(UpdateReq.ReqBody).Name := UpdatedGroupName;
+        TDsGroup(UpdateReq.ReqBody).Sid := 'auto-test-updated';
 
         MetadataObj := TJSONObject.Create;
         try
           MetadataObj.AddPair('origin', 'BrokerTestProj');
           MetadataObj.AddPair('updatedAt', FormatDateTime('yyyy-mm-dd hh:nn:ss', Now));
-          TDsGroup(UpdateReq.Body).Metadata := MetadataObj;
+          TDsGroup(UpdateReq.ReqBody).Metadata := MetadataObj;
         finally
           MetadataObj.Free;
         end;

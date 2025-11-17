@@ -131,7 +131,8 @@ uses
   SessionsRestBrokerUnit in '..\services\acl\brokers\SessionsRestBrokerUnit.pas',
   SessionUnit in '..\services\acl\entities\SessionUnit.pas',
   UserUnit in '..\services\acl\entities\UserUnit.pas',
-  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas';
+  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas',
+  DsGroupUnit in '..\services\dataserver\entities\DsGroupUnit.pas';
 
 {$R *.res}
 
