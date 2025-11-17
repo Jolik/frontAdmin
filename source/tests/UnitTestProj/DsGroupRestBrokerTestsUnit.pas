@@ -10,6 +10,7 @@ uses
   System.SysUtils,
   System.JSON,
   DsGroupsRestBrokerUnit,
+  DsGroupsHttpRequests,
   DsGroupUnit;
 
 type
@@ -147,6 +148,7 @@ begin
     NewReq := Broker.CreateReqNew as TDsGroupReqNew;
     try
       Ensure(Assigned(NewReq.Body), 'New request body must be assigned.');
+      Ensure(NewReq.Body is TDsGroupReqNewBody, 'New request body type mismatch.');
       BodyGroup := TDsGroup(NewReq.Body);
       BodyGroup.Name := 'UnitTestGroup';
       BodyGroup.Ctxid := 'ctx-unit';

@@ -10,6 +10,7 @@ uses
   System.SysUtils,
   System.JSON,
   DsGroupsRestBrokerUnit,
+  DsGroupsHttpRequests,
   DsGroupUnit,
   BaseResponses;
 
