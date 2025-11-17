@@ -19,7 +19,8 @@ uses
   CompanyUnit,
   DepartmentUnit,
   CompaniesRestBrokerUnit,
-  DepartmentsRestBrokerUnit, uniMultiItem, uniTimer, uniPanel;
+  DepartmentsRestBrokerUnit, uniMultiItem, uniTimer, uniPanel, uniImageList,
+  uniImage;
 
 type
   TAuthMainForm = class(TFormLayout)
@@ -105,7 +106,7 @@ begin
   FreeAndNil(FDeps);
   FreeAndNil(FCompanyBroker);
   FreeAndNil(FDepartmentBroker);
-
+  Req:= nil;Resp := nil;
   if UniMainModule = nil then
     Exit;
 
@@ -116,35 +117,21 @@ begin
   Req := FCompanyBroker.CreateReqList;
   try
     Resp := FCompanyBroker.List(Req);
-    try
-      for var Ent in Resp.EntityList do
-      begin
-        var C := TCompany.Create;
-        C.Assign(Ent);
-        FComps.Add(C);
-      end;
-    finally
-      Resp.Free;
-    end;
+    Resp.EntityList.OwnsObjects := false;
+    FComps.AddRange(Resp.EntityList);
   finally
-    Req.Free;
+    FreeAndNil(Resp);
+    FreeAndNil(Req);
   end;
 
   FDeps := TDepartmentList.Create;
   Req := FDepartmentBroker.CreateReqList;
   try
     Resp := FDepartmentBroker.List(Req);
-    try
-      for var Ent in Resp.EntityList do
-      begin
-        var D := TDepartment.Create;
-        D.Assign(Ent);
-        FDeps.Add(D);
-      end;
-    finally
-      Resp.Free;
-    end;
+    Resp.EntityList.OwnsObjects := false;
+    FDeps.AddRange(Resp.EntityList);
   finally
+    Resp.Free;
     Req.Free;
   end;
 

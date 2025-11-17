@@ -12,7 +12,7 @@ uses
   uniMultiItem, uniComboBox, EntityUnit,
   CompaniesRestBrokerUnit, DepartmentsRestBrokerUnit,
   RestBrokerBaseUnit, BaseRequests, BaseResponses, uniScreenMask, Vcl.Menus,
-  uniMainMenu, uniTimer, uniPanel;
+  uniMainMenu, uniTimer, uniPanel, uniImageList, uniImage;
 
 type
   TMainForm = class(TAuthMainForm)
@@ -24,6 +24,7 @@ type
     unbtnSources: TUniButton;
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
+    unlblName1: TUniLabel;
     procedure btnStripTasksClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
     procedure btnSummTaskClick(Sender: TObject);

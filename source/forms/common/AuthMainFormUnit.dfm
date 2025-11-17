@@ -4,15 +4,18 @@ inherited AuthMainForm: TAuthMainForm
   Caption = 'AuthMainForm'
   OnAfterShow = UniFormAfterShow
   OnAjaxEvent = UniFormAjaxEvent
-  ExplicitWidth = 1245
-  ExplicitHeight = 838
+  ExplicitWidth = 1243
+  ExplicitHeight = 830
   TextHeight = 15
   inherited pnlTop: TUniPanel
     Width = 1227
     ExplicitWidth = 1227
     inherited lblUtcTime: TUniLabel
-      Width = 719
-      ExplicitWidth = 717
+      Width = 599
+      ExplicitWidth = 599
+    end
+    inherited uncntnrpnLogo: TUniContainerPanel
+      TabOrder = 3
     end
     object uncntnrpnAuth: TUniContainerPanel
       Left = 720
@@ -27,12 +30,14 @@ inherited AuthMainForm: TAuthMainForm
         506
         43)
       object UserNameLabel: TUniLabel
-        Left = 383
+        AlignWithMargins = True
+        Left = 386
         Top = 3
         Width = 120
         Height = 40
         Cursor = crHandPoint
         Hint = ''
+        Margins.Top = 20
         Alignment = taCenter
         AutoSize = False
         Caption = 'User'
@@ -41,6 +46,7 @@ inherited AuthMainForm: TAuthMainForm
         Font.Height = -18
         TabOrder = 1
         OnClick = UserLabelClick
+        ExplicitLeft = 383
       end
       object cbCurComp: TUniComboBox
         Left = 65
@@ -85,7 +91,7 @@ inherited AuthMainForm: TAuthMainForm
   end
   inherited pnlRight: TUniPanel
     Height = 746
-    ExplicitHeight = 738
+    ExplicitHeight = 746
   end
   inherited tmUtc: TUniTimer
     Left = 280

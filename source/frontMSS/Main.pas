@@ -11,7 +11,7 @@ uses
   uniMultiItem, uniComboBox, EntityUnit,
   CompaniesRestBrokerUnit, DepartmentsRestBrokerUnit,
   RestBrokerBaseUnit, BaseRequests, BaseResponses, uniScreenMask, uniPanel,
-  AuthMainFormUnit, Vcl.Menus, uniMainMenu, uniTimer;
+  AuthMainFormUnit, Vcl.Menus, uniMainMenu, uniTimer, uniImage, uniImageList;
 
 type
   TMainForm = class(TAuthMainForm)
@@ -30,6 +30,8 @@ type
     btnOperatorLinksContent: TUniButton;
     btnSearch: TUniButton;
     btnContentStream: TUniButton;
+    unlblName1: TUniLabel;
+    uncntnrpnForms: TUniContainerPanel;
     procedure btnAbonentsClick(Sender: TObject);
     procedure btnChannelClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
@@ -86,7 +88,8 @@ end;
 
 procedure TMainForm.btnHandlersClick(Sender: TObject);
 begin
-  HandlersForm.Show()
+  HandlersForm.Show();
+  HandlersForm.Parent:= uncntnrpnForms;
 end;
 
 procedure TMainForm.btnRulesClick(Sender: TObject);

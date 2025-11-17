@@ -12,7 +12,7 @@ uses
   uniPanel,
   uniLabel,
   uniTimer, Vcl.Controls, Vcl.Forms,
-  uniGUIApplication;
+  uniGUIApplication, uniImageList, uniImage;
 
 type
   TFormLayout = class(TUniForm)
@@ -20,6 +20,10 @@ type
     lblUtcTime: TUniLabel;
     tmUtc: TUniTimer;
     pnlRight: TUniPanel;
+    UniImageList1: TUniImageList;
+    unmgLogo: TUniImage;
+    uncntnrpnLogo: TUniContainerPanel;
+    unlblName: TUniLabel;
     procedure tmUtcTimer(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
