@@ -121,6 +121,8 @@
         <DCCReference Include="..\services\dataserver\entities\ContextUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\LocationUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\SourceUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\ObservationUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\TDsTypesUnit.pas"/>
         <DCCReference Include="..\services\acl\entities\DepartmentUnit.pas"/>
         <DCCReference Include="..\common\FuncUnit.pas"/>
         <DCCReference Include="..\common\GUIDListUnit.pas"/>
@@ -263,6 +265,11 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\observation\ObservationFormUnit.pas">
+            <Form>ObservationForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\SourceCredsUnit.pas"/>
         <DCCReference Include="..\forms\sources\ContextCreateFormUnit.pas">
             <Form>ContextCreateForm</Form>
@@ -440,7 +447,12 @@
             <Deployment Version="5">
                 <DeployFile LocalName="Linux64\Debug\frontDCC" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>frontDCC.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>
