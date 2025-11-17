@@ -147,9 +147,9 @@ begin
   try
     NewReq := Broker.CreateReqNew as TDsGroupReqNew;
     try
-      Ensure(Assigned(NewReq.Body), 'New request body must be assigned.');
-      Ensure(NewReq.Body is TDsGroupReqNewBody, 'New request body type mismatch.');
-      BodyGroup := TDsGroup(NewReq.Body);
+      Ensure(Assigned(NewReq.ReqBody), 'New request body must be assigned.');
+      Ensure(NewReq.ReqBody is TDsGroupReqNewBody, 'New request body type mismatch.');
+      BodyGroup := TDsGroup(NewReq.ReqBody);
       BodyGroup.Name := 'UnitTestGroup';
       BodyGroup.Ctxid := 'ctx-unit';
 
@@ -171,8 +171,8 @@ begin
     try
       UpdateReq.Id := 'group-1';
       Ensure(UpdateReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1/update', 'Update request URL mismatch.');
-      Ensure(Assigned(UpdateReq.Body), 'Update request body must be assigned.');
-      BodyGroup := TDsGroup(UpdateReq.Body);
+      Ensure(Assigned(UpdateReq.ReqBody), 'Update request body must be assigned.');
+      BodyGroup := TDsGroup(UpdateReq.ReqBody);
       BodyGroup.Name := 'UpdatedGroup';
 
       Serialized := TJSONObject.Create;

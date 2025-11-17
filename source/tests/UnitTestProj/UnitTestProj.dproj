@@ -106,6 +106,8 @@
         <DCCReference Include="DsTypesUnitTest.pas"/>
         <DCCReference Include="ObservationsUnitTest.pas"/>
         <DCCReference Include="ObservationsRestBrokerUnitTest.pas"/>
+        <DCCReference Include="DsGroupTestsUnit.pas"/>
+        <DCCReference Include="DsGroupRestBrokerTestsUnit.pas"/>
         <DCCReference Include="..\..\common\FuncUnit.pas"/>
         <DCCReference Include="..\..\services\common\entities\EntityUnit.pas"/>
         <DCCReference Include="..\..\logging\LoggingUnit.pas"/>
@@ -130,6 +132,9 @@
         <DCCReference Include="..\..\services\dataserver\entities\ObservationUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\entities\TDsTypesUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\DsGroupUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
