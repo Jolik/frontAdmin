@@ -9,6 +9,9 @@ uses
   JournalRecordsUnitTest in 'JournalRecordsUnitTest.pas',
   SearchUnitTests in 'SearchUnitTests.pas',
   OperatorLinksContentRestBrokerUnitTest in 'OperatorLinksContentRestBrokerUnitTest.pas',
+  DsTypesUnitTest in 'DsTypesUnitTest.pas',
+  ObservationsUnitTest in 'ObservationsUnitTest.pas',
+  ObservationsRestBrokerUnitTest in 'ObservationsRestBrokerUnitTest.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
@@ -29,7 +32,10 @@ uses
   RestBrokerBaseUnit in '..\..\services\common\brokers\RestBrokerBaseUnit.pas',
   RestEntityBrokerUnit in '..\..\services\common\brokers\RestEntityBrokerUnit.pas',
   RestFieldSetBrokerUnit in '..\..\services\common\brokers\RestFieldSetBrokerUnit.pas',
-  OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas';
+  OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
+  ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
+  TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
+  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas';
 
 begin
   try
@@ -37,6 +43,9 @@ begin
     RunJournalRecordsAttrsTests;
     RunJournalRecordTests;
     TestOperatorLinksContentRestBroker;
+    RunDsTypesTests;
+    RunObservationTests;
+    RunObservationsBrokerTests;
     RunSearchTests;
     Writeln('Все тесты пройдены успешно.');
     Readln;
@@ -44,6 +53,7 @@ begin
     on E: Exception do
     begin
       Writeln('Ошибка тестирования: ' + E.ClassName + ': ' + E.Message);
+      Readln;
       Halt(1);
     end;
   end;
