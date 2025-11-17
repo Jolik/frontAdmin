@@ -22,6 +22,7 @@ type
     btnDSProcessorTasks: TUniButton;
     unbtnMonitoring: TUniButton;
     unbtnSources: TUniButton;
+    btnObservations: TUniButton;
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
     unlblName1: TUniLabel;
@@ -32,6 +33,7 @@ type
     procedure UniFormCreate(Sender: TObject);
     procedure unbtnSourcesClick(Sender: TObject);
     procedure unbtnMonitoringClick(Sender: TObject);
+    procedure btnObservationsClick(Sender: TObject);
   private
   public
     { Public declarations }
@@ -58,7 +60,8 @@ uses
   StripTasksFormUnit,
   MonitoringTasksFormUnit,
   SummaryTasksFormUnit,
-  DSProcessorTasksFormUnit
+  DSProcessorTasksFormUnit,
+  ObservationFormUnit
 //  AliasesFormUnit,
 //  AbonentsFormUnit,
 //  RouterSourcesFormUnit,
@@ -75,15 +78,20 @@ end;
 
 {  TMainForm  }
 
-procedure TMainForm.btnDSProcessorTasksClick(Sender: TObject);
-begin
- DSProcessorTasksForm.Show();
-end;
+  procedure TMainForm.btnDSProcessorTasksClick(Sender: TObject);
+  begin
+   DSProcessorTasksForm.Show();
+  end;
 
-procedure TMainForm.btnLinksClick(Sender: TObject);
-begin
-  LinksForm.Show();
-end;
+  procedure TMainForm.btnObservationsClick(Sender: TObject);
+  begin
+    ObservationForm.Show();
+  end;
+
+  procedure TMainForm.btnLinksClick(Sender: TObject);
+  begin
+    LinksForm.Show();
+  end;
 
 procedure TMainForm.btnStripTasksClick(Sender: TObject);
 begin
