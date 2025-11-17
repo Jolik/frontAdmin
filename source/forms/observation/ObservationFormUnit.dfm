@@ -13,7 +13,7 @@ object ObservationForm: TObservationForm
   object gridObservation: TUniDBGrid
     Left = 0
     Top = 0
-    Width = 580
+    Width = 265
     Height = 540
     Hint = ''
     DataSource = dsObservation
@@ -21,9 +21,25 @@ object ObservationForm: TObservationForm
     Align = alClient
     TabOrder = 0
     OnSelectionChange = gridObservationSelectionChange
+    Columns = <
+      item
+        FieldName = 'oid'
+        Title.Caption = 'OID'
+        Width = 80
+      end
+      item
+        FieldName = 'name'
+        Title.Caption = 'Name'
+        Width = 90
+      end
+      item
+        FieldName = 'caption'
+        Title.Caption = 'Caption'
+        Width = 95
+      end>
   end
   object splObservation: TUniSplitter
-    Left = 580
+    Left = 265
     Top = 0
     Width = 5
     Height = 540
@@ -31,9 +47,9 @@ object ObservationForm: TObservationForm
     Align = alRight
   end
   object cpObservationInfo: TUniContainerPanel
-    Left = 585
+    Left = 270
     Top = 0
-    Width = 315
+    Width = 630
     Height = 540
     Hint = ''
     Align = alRight
@@ -41,7 +57,7 @@ object ObservationForm: TObservationForm
     object cpObservationInfoHeader: TUniContainerPanel
       Left = 0
       Top = 0
-      Width = 315
+      Width = 630
       Height = 40
       Hint = ''
       Align = alTop
@@ -63,7 +79,7 @@ object ObservationForm: TObservationForm
     object cpObservationInfoStatus: TUniContainerPanel
       Left = 0
       Top = 40
-      Width = 315
+      Width = 630
       Height = 32
       Hint = ''
       Align = alTop
@@ -71,7 +87,7 @@ object ObservationForm: TObservationForm
       object lObservationListStatus: TUniLabel
         Left = 16
         Top = 8
-        Width = 283
+        Width = 598
         Height = 17
         Hint = ''
         Caption = #1053#1077#1090#32#1076#1072#1085#1085#1099#1093
@@ -81,7 +97,7 @@ object ObservationForm: TObservationForm
     object cpObservationInfoOid: TUniContainerPanel
       Left = 0
       Top = 72
-      Width = 315
+      Width = 630
       Height = 48
       Hint = ''
       Align = alTop
@@ -98,7 +114,7 @@ object ObservationForm: TObservationForm
       object lObservationOidValue: TUniLabel
         Left = 16
         Top = 24
-        Width = 279
+        Width = 598
         Height = 17
         Hint = ''
         Caption = ''
@@ -109,7 +125,7 @@ object ObservationForm: TObservationForm
     object cpObservationInfoName: TUniContainerPanel
       Left = 0
       Top = 120
-      Width = 315
+      Width = 630
       Height = 48
       Hint = ''
       Align = alTop
@@ -126,7 +142,7 @@ object ObservationForm: TObservationForm
       object lObservationNameValue: TUniLabel
         Left = 16
         Top = 24
-        Width = 279
+        Width = 598
         Height = 17
         Hint = ''
         Caption = ''
@@ -137,7 +153,7 @@ object ObservationForm: TObservationForm
     object cpObservationInfoCaption: TUniContainerPanel
       Left = 0
       Top = 168
-      Width = 315
+      Width = 630
       Height = 48
       Hint = ''
       Align = alTop
@@ -154,7 +170,7 @@ object ObservationForm: TObservationForm
       object lObservationCaptionValue: TUniLabel
         Left = 16
         Top = 24
-        Width = 279
+        Width = 598
         Height = 17
         Hint = ''
         Caption = ''
@@ -165,7 +181,7 @@ object ObservationForm: TObservationForm
     object cpObservationInfoUid: TUniContainerPanel
       Left = 0
       Top = 216
-      Width = 315
+      Width = 630
       Height = 48
       Hint = ''
       Align = alTop
@@ -182,7 +198,7 @@ object ObservationForm: TObservationForm
       object lObservationUidValue: TUniLabel
         Left = 16
         Top = 24
-        Width = 279
+        Width = 598
         Height = 17
         Hint = ''
         Caption = ''
@@ -193,7 +209,7 @@ object ObservationForm: TObservationForm
     object cpObservationInfoDsTypes: TUniContainerPanel
       Left = 0
       Top = 264
-      Width = 315
+      Width = 630
       Height = 276
       Hint = ''
       Align = alClient
@@ -202,7 +218,7 @@ object ObservationForm: TObservationForm
         AlignWithMargins = True
         Left = 16
         Top = 6
-        Width = 283
+        Width = 598
         Height = 18
         Hint = ''
         Align = alTop
@@ -215,7 +231,7 @@ object ObservationForm: TObservationForm
         AlignWithMargins = True
         Left = 16
         Top = 24
-        Width = 283
+        Width = 598
         Height = 240
         Hint = ''
         DataSource = dsDsTypes
@@ -225,6 +241,12 @@ object ObservationForm: TObservationForm
         Margins.Right = 16
         Margins.Bottom = 16
         TabOrder = 2
+        Columns = <
+          item
+            FieldName = 'name'
+            Title.Caption = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077
+            Width = 400
+          end>
       end
     end
   end
