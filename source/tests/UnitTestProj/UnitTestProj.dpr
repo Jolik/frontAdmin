@@ -12,6 +12,7 @@ uses
   DsTypesUnitTest in 'DsTypesUnitTest.pas',
   ObservationsUnitTest in 'ObservationsUnitTest.pas',
   ObservationsRestBrokerUnitTest in 'ObservationsRestBrokerUnitTest.pas',
+  DataseriesUnitTest in 'DataseriesUnitTest.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
@@ -44,6 +45,7 @@ begin
     RunJournalRecordTests;
     TestOperatorLinksContentRestBroker;
     RunDsTypesTests;
+    RunDataserieTests;
     RunObservationTests;
     RunObservationsBrokerTests;
     RunSearchTests;
