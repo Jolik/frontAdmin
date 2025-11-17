@@ -67,7 +67,8 @@ uses
   CompanyHttpRequests in '..\..\services\acl\brokers\CompanyHttpRequests.pas',
   CompanyUnit in '..\..\services\acl\entities\CompanyUnit.pas',
   StorageHttpRequests in '..\..\services\dataspace\brokers\StorageHttpRequests.pas',
-  StorageRestBrokerUnit in '..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas';
+  StorageRestBrokerUnit in '..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas',
+  ObservationsRequestsUnit in 'ObservationsRequestsUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -134,6 +135,7 @@ begin
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
     ExecuteRulesRequest;
+    ExecuteObservationRequests;
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;

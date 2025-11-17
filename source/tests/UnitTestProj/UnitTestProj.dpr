@@ -9,6 +9,9 @@ uses
   JournalRecordsUnitTest in 'JournalRecordsUnitTest.pas',
   SearchUnitTests in 'SearchUnitTests.pas',
   OperatorLinksContentRestBrokerUnitTest in 'OperatorLinksContentRestBrokerUnitTest.pas',
+  DsTypesUnitTest in 'DsTypesUnitTest.pas',
+  ObservationsUnitTest in 'ObservationsUnitTest.pas',
+  ObservationsRestBrokerUnitTest in 'ObservationsRestBrokerUnitTest.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
@@ -37,6 +40,9 @@ begin
     RunJournalRecordsAttrsTests;
     RunJournalRecordTests;
     TestOperatorLinksContentRestBroker;
+    RunDsTypesTests;
+    RunObservationTests;
+    RunObservationsBrokerTests;
     RunSearchTests;
     Writeln('Все тесты пройдены успешно.');
     Readln;
