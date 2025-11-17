@@ -42,6 +42,18 @@ uses
   OperatorRequestsUnit in 'OperatorRequestsUnit.pas',
   OperatorLinksContentRequestsUnit in 'OperatorLinksContentRequestsUnit.pas',
   AbonentsRequestsUnit in 'AbonentsRequestsUnit.pas',
+  RulesRestBrokerUnit in '..\..\services\router\brokers\RulesRestBrokerUnit.pas',
+  RuleHttpRequests in '..\..\services\router\brokers\RuleHttpRequests.pas',
+  RuleUnit in '..\..\services\router\entities\RuleUnit.pas',
+  SmallRuleUnit in '..\..\services\router\entities\SmallRuleUnit.pas',
+  ConditionUnit in '..\..\services\common\entities\ConditionUnit.pas',
+  FilterUnit in '..\..\services\common\entities\FilterUnit.pas',
+  ChannelUnit in '..\..\services\router\entities\ChannelUnit.pas',
+  HandlerUnit in '..\..\services\router\entities\HandlerUnit.pas',
+  RouterSourceUnit in '..\..\services\router\entities\RouterSourceUnit.pas',
+  AliasUnit in '..\..\services\router\entities\AliasUnit.pas',
+  QueueUnit in '..\..\services\router\entities\QueueUnit.pas',
+  RulesRequestsUnit in 'RulesRequestsUnit.pas',
   CompaniesRequestsUnit in 'CompaniesRequestsUnit.pas',
   SearchRequestUnit in 'SearchRequestUnit.pas',
   GUIDListUnit in '..\..\common\GUIDListUnit.pas',
@@ -121,8 +133,9 @@ begin
 //    ExecuteJournalRecordRequest;
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
+    ExecuteRulesRequest;
 //    ExecuteOperatorLinksContentRequests;
-    ExecuteReadContentStream;
+//    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
     Readln;
   except

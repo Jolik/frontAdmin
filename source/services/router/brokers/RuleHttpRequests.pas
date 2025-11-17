@@ -43,11 +43,13 @@ type
 
   // Requests
   TRuleReqList = class(TReqList)
+  private
+    function GetBody: TRuleReqListBody;
   protected
     class function BodyClassType: TFieldSetClass; override;
   public
     constructor Create; override;
-    function Body: TRuleReqListBody;
+    property Body: TRuleReqListBody read GetBody;
   end;
 
   TRuleReqInfo = class(TReqInfo)
@@ -126,7 +128,7 @@ begin
   SetEndpoint('rules/list');
 end;
 
-function TRuleReqList.Body: TRuleReqListBody;
+function TRuleReqList.GetBody: TRuleReqListBody;
 begin
   if ReqBody is TRuleReqListBody then
     Result := TRuleReqListBody(ReqBody)
