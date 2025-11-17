@@ -10,6 +10,7 @@ uses
   System.SysUtils,
   System.JSON,
   IdHTTP,
+  HttpClientUnit,
   RulesRestBrokerUnit,
   RuleHttpRequests,
   RuleUnit,
@@ -17,6 +18,65 @@ uses
   BaseResponses;
 
 procedure ExecuteRulesRequest;
+  procedure PrintRuleDetails(const Rule: TRule; const Header: string);
+  var
+    SmallRule: TSmallRule;
+    HandlerText: string;
+    ChannelsText: string;
+    ChannelsObject: TJSONObject;
+  begin
+    if not Header.Trim.IsEmpty then
+      Writeln(Header);
+
+    if not Assigned(Rule) then
+    begin
+      Writeln('  (rule reference is empty)');
+      Exit;
+    end;
+
+    Writeln(Format('  Rule ID: %s', [Rule.Ruid]));
+    Writeln(Format('  Name: %s', [Rule.Name]));
+    Writeln('  Caption: ' + Rule.Caption);
+    Writeln('  Description: ' + Rule.Def);
+    Writeln(Format('  Enabled: %s', [BoolToStr(Rule.Enabled, True)]));
+    Writeln(Format('  Owner: %s', [Rule.Owner]));
+    Writeln(Format('  Company: %s', [Rule.CompId]));
+    Writeln(Format('  Department: %s', [Rule.DepId]));
+
+    SmallRule := Rule.Rule;
+    if not Assigned(SmallRule) then
+    begin
+      Writeln('  Routing details: (rule payload is empty)');
+      Exit;
+    end;
+
+    HandlerText := string.Join(', ', SmallRule.Handlers.ToStringArray);
+    if HandlerText.IsEmpty then
+      HandlerText := '(no handlers)';
+
+    ChannelsObject := TJSONObject.Create;
+    try
+      SmallRule.Channels.Serialize(ChannelsObject);
+      if ChannelsObject.Count = 0 then
+        ChannelsText := '(no channels)'
+      else
+        ChannelsText := ChannelsObject.ToJSON;
+    finally
+      ChannelsObject.Free;
+    end;
+
+    Writeln('  Routing details:');
+    Writeln(Format('    Priority: %d', [SmallRule.Priority]));
+    Writeln(Format('    Position: %d', [SmallRule.Position]));
+    Writeln(Format('    Break rule: %s', [BoolToStr(SmallRule.BreakRule, True)]));
+    Writeln(Format('    Allow doubles: %s', [BoolToStr(SmallRule.Doubles, True)]));
+    Writeln(Format('    Enabled: %s', [BoolToStr(SmallRule.Enabled, True)]));
+    Writeln('    Handlers: ' + HandlerText);
+    Writeln('    Channels: ' + ChannelsText);
+    Writeln(Format('    Include filters: %d', [SmallRule.IncFilters.Count]));
+    Writeln(Format('    Exclude filters: %d', [SmallRule.ExcFilters.Count]));
+  end;
+
 var
   Broker: TRulesRestBroker;
   ListRequest: TRuleReqList;
@@ -35,12 +95,12 @@ var
   ChannelsObject: TJSONObject;
   ChannelsArray: TJSONArray;
   CreatedRuleId: string;
+  FirstRuleId: string;
   ListRule: TRule;
   ItemIndex: Integer;
-  MaxItemsToDisplay: Integer;
+  HandlerText: string;
+  PriorityValue: Integer;
 begin
-  // Initialize all interface references with nil to avoid accidental access violations
-  // in the finally block when the procedure exits because of an exception.
   Broker := nil;
   ListRequest := nil;
   ListResponse := nil;
@@ -54,17 +114,17 @@ begin
   RemoveResponse := nil;
   RuleBody := nil;
   UpdateBody := nil;
-  SmallRule := nil;
   ChannelsObject := nil;
   ChannelsArray := nil;
   CreatedRuleId := '';
+  FirstRuleId := '';
 
   try
-    // The broker wraps all HTTP calls to the /router/rules REST endpoint.
+    Writeln(Format('Executing rule requests via %s:%d',
+      [HttpClient.Addr, HttpClient.Port]));
+
     Broker := TRulesRestBroker.Create('ST-Test');
 
-    // Request factories are obtained from the broker to make sure the base path
-    // and default headers are configured consistently for every HTTP call.
     ListRequest := Broker.CreateReqList as TRuleReqList;
     InfoRequest := Broker.CreateReqInfo as TRuleReqInfo;
     NewRequest := Broker.CreateReqNew as TRuleReqNew;
@@ -72,49 +132,91 @@ begin
     RemoveRequest := Broker.CreateReqRemove as TRuleReqRemove;
 
     try
-      // Limit the number of rules returned by the list request so the console output
-      // stays readable even on installations that contain thousands of rules.
+      // 1. Fetch the entire list of rules so we can inspect the current setup.
       if Assigned(ListRequest.Body) then
       begin
         ListRequest.Body.Page := 1;
-        ListRequest.Body.PageSize := 5;
+        ListRequest.Body.PageSize := 100;
         ListRequest.Body.Order := 'priority';
         ListRequest.Body.OrderDir := 'desc';
       end;
 
-      // Compose a brand new rule entity that will be sent in the create request body.
+      ListResponse := Broker.List(ListRequest);
+
+      Writeln('-----------------------------------------------------------------');
+      Writeln('Rules list request URL: ' + ListRequest.GetURLWithParams);
+      Writeln(Format('Rules list request body: %s', [ListRequest.ReqBodyContent]));
+      Writeln('Rules list response:');
+
+      if Assigned(ListResponse) and Assigned(ListResponse.RuleList) then
+      begin
+        Writeln(Format('Rules returned: %d', [ListResponse.RuleList.Count]));
+        for ItemIndex := 0 to ListResponse.RuleList.Count - 1 do
+        begin
+          if not(ListResponse.RuleList[ItemIndex] is TRule) then
+            Continue;
+          ListRule := TRule(ListResponse.RuleList[ItemIndex]);
+          SmallRule := ListRule.Rule;
+          HandlerText := '';
+          if Assigned(SmallRule) then
+            HandlerText := string.Join(', ', SmallRule.Handlers.ToStringArray);
+          if HandlerText.IsEmpty then
+            HandlerText := '(no handlers)';
+
+          PriorityValue := 0;
+          if Assigned(SmallRule) then
+            PriorityValue := SmallRule.Priority;
+
+          Writeln(Format('  - %s [%s] priority=%d handlers=%s',
+            [ListRule.Caption, ListRule.Ruid, PriorityValue, HandlerText]));
+        end;
+
+        if ListResponse.RuleList.Count > 0 then
+          FirstRuleId := TRule(ListResponse.RuleList[0]).Ruid;
+      end
+      else
+        Writeln('No rules were returned in the list response.');
+
+      // 2. Request full information for the first rule from the list.
+      if not FirstRuleId.IsEmpty then
+      begin
+        InfoRequest.ID := FirstRuleId;
+        FreeAndNil(InfoResponse);
+        InfoResponse := Broker.Info(InfoRequest);
+
+        Writeln('-----------------------------------------------------------------');
+        Writeln('Rule info request URL: ' + InfoRequest.GetURLWithParams);
+        Writeln('Rule info response:');
+        PrintRuleDetails(InfoResponse.Rule,
+          'Full information for the first rule in the list:');
+      end
+      else
+        Writeln('Skipping the first rule info request because the list was empty.');
+
+      // 3. Create a brand new rule and dump the server response.
       if Assigned(NewRequest.ReqBody) and (NewRequest.ReqBody is TRule) then
       begin
         RuleBody := TRule(NewRequest.ReqBody);
-
-        // Generate a predictable identifier so that subsequent requests (update/info/remove)
-        // can refer to the same rule even when the server does not echo the identifier back.
-        CreatedRuleId := 'autotest-rule-' + Copy(TGUID.NewGuid.ToString.Replace('{', '').Replace('}', ''), 1, 8);
+        CreatedRuleId := TGUID.NewGuid.ToString.Replace('{', '').Replace('}', '');
         RuleBody.Ruid := CreatedRuleId;
         RuleBody.Name := 'AutoRule_' + Copy(CreatedRuleId, 1, 8);
         RuleBody.Caption := 'Automatically created router rule for broker smoke tests';
-        RuleBody.Def := 'This rule was generated by BrokerTestProj to validate TRulesRestBroker CRUD calls.';
+        RuleBody.Def := 'Generated by BrokerTestProj to verify TRulesRestBroker operations.';
         RuleBody.Enabled := True;
 
         SmallRule := RuleBody.Rule;
         if Assigned(SmallRule) then
         begin
-          // Basic routing settings describing how the rule should be executed inside the router service.
           SmallRule.Position := 10;
           SmallRule.Priority := 100;
           SmallRule.Doubles := False;
           SmallRule.BreakRule := False;
           SmallRule.Enabled := True;
 
-          // Provide an explicit handler pipeline so the request payload contains a realistic array value.
           SmallRule.Handlers.ClearStrings;
           SmallRule.Handlers.AddString('router.demo.validate');
           SmallRule.Handlers.AddString('router.demo.dispatch');
 
-          // Channels are modeled as a JSON object (name + array of destinations).
-          // Creating the JSON structure manually and letting the helper parse it keeps the code compact
-          // and guarantees that the request body matches the production format.
-          SmallRule.Channels.Clear;
           ChannelsObject := TJSONObject.Create;
           try
             ChannelsArray := TJSONArray.Create;
@@ -132,13 +234,11 @@ begin
             ChannelsObject := nil;
           end;
 
-          // Filters are cleared to produce deterministic payloads without referencing real profile IDs.
           SmallRule.IncFilters.Clear;
           SmallRule.ExcFilters.Clear;
         end;
       end;
 
-      // Send the POST /rules/new request to create the synthetic rule.
       NewResponse := Broker.New(NewRequest);
 
       Writeln('-----------------------------------------------------------------');
@@ -150,32 +250,66 @@ begin
       else
         Writeln('(empty response body)');
 
+      // 4. Retrieve info for the created rule and then perform an update touching
+      //    multiple nested TSmallRule fields before removing the entity again.
       if not CreatedRuleId.IsEmpty then
       begin
-        // Mirror the original request body into the update request so that only a couple of
-        // fields have to be changed to simulate a user editing the rule via the UI.
-        UpdateRequest.Id := CreatedRuleId;
-        if Assigned(UpdateRequest.ReqBody) and (UpdateRequest.ReqBody is TRule) and
-          Assigned(NewRequest.ReqBody) and (NewRequest.ReqBody is TRule) then
+        InfoRequest.ID := CreatedRuleId;
+        FreeAndNil(InfoResponse);
+        InfoResponse := Broker.Info(InfoRequest);
+
+        Writeln('-----------------------------------------------------------------');
+        Writeln('Rule info request URL: ' + InfoRequest.GetURLWithParams);
+        Writeln('Rule info response:');
+        PrintRuleDetails(InfoResponse.Rule, 'Details for the newly created rule:');
+
+        UpdateRequest.ID := CreatedRuleId;
+        if Assigned(UpdateRequest.ReqBody) and (UpdateRequest.ReqBody is TRule) then
         begin
           UpdateBody := TRule(UpdateRequest.ReqBody);
-          UpdateBody.Assign(TRule(NewRequest.ReqBody));
+          if Assigned(InfoResponse) and Assigned(InfoResponse.Rule) then
+            UpdateBody.Assign(InfoResponse.Rule)
+          else if Assigned(RuleBody) then
+            UpdateBody.Assign(RuleBody);
+
           UpdateBody.Caption := 'Automatically updated router rule caption';
-          UpdateBody.Def := 'Updated by BrokerTestProj to demonstrate TRulesRestBroker.Update.';
-          UpdateBody.Enabled := False;
+          UpdateBody.Def := 'Updated by BrokerTestProj to demonstrate rule editing.';
+          UpdateBody.Enabled := True;
 
           SmallRule := UpdateBody.Rule;
           if Assigned(SmallRule) then
           begin
-            // Toggle several flags to prove that the update call is capable of persisting changes.
-            SmallRule.Priority := SmallRule.Priority + 5;
-            SmallRule.Position := SmallRule.Position + 1;
+            SmallRule.Priority := SmallRule.Priority + 25;
+            SmallRule.Position := SmallRule.Position + 2;
             SmallRule.BreakRule := not SmallRule.BreakRule;
+            SmallRule.Doubles := not SmallRule.Doubles;
+            SmallRule.Enabled := not SmallRule.Enabled;
+
+            SmallRule.Handlers.ClearStrings;
+            SmallRule.Handlers.AddString('router.demo.validate');
+            SmallRule.Handlers.AddString('router.demo.dispatch');
             SmallRule.Handlers.AddString('router.demo.audit');
+
+            ChannelsObject := TJSONObject.Create;
+            try
+              ChannelsArray := TJSONArray.Create;
+              ChannelsArray.AddElement(TJSONString.Create('demo-channel-updated'));
+              ChannelsArray.AddElement(TJSONString.Create('demo-channel-secondary'));
+              ChannelsObject.AddPair('sms', ChannelsArray);
+
+              ChannelsArray := TJSONArray.Create;
+              ChannelsArray.AddElement(TJSONString.Create('email-updated'));
+              ChannelsArray.AddElement(TJSONString.Create('email-fallback'));
+              ChannelsObject.AddPair('email', ChannelsArray);
+
+              SmallRule.Channels.Parse(ChannelsObject);
+            finally
+              ChannelsObject.Free;
+              ChannelsObject := nil;
+            end;
           end;
         end;
 
-        // Issue the update call and dump the resulting JSON payload to the console.
         UpdateResponse := Broker.Update(UpdateRequest);
 
         Writeln('-----------------------------------------------------------------');
@@ -187,29 +321,15 @@ begin
         else
           Writeln('(empty response body)');
 
-        // Retrieve the same rule to make sure the server stored the values we sent earlier.
-        InfoRequest.ID := CreatedRuleId;
+        FreeAndNil(InfoResponse);
         InfoResponse := Broker.Info(InfoRequest);
 
         Writeln('-----------------------------------------------------------------');
         Writeln('Rule info request URL: ' + InfoRequest.GetURLWithParams);
         Writeln('Rule info response:');
-        if Assigned(InfoResponse) and Assigned(InfoResponse.Rule) then
-        begin
-          Writeln(Format('Rule caption: %s', [InfoResponse.Rule.Caption]));
-          Writeln(Format('Rule enabled: %s', [BoolToStr(InfoResponse.Rule.Enabled, True)]));
-          if Assigned(InfoResponse.Rule.Rule) then
-          begin
-            Writeln(Format('Handlers: %s',
-              [string.Join(', ', InfoResponse.Rule.Rule.Handlers.ToStringArray)]));
-            Writeln(Format('Priority: %d', [InfoResponse.Rule.Rule.Priority]));
-          end;
-        end
-        else
-          Writeln('Rule details were not returned in the response.');
+        PrintRuleDetails(InfoResponse.Rule, 'Details for the rule after the update:');
 
-        // Clean up the temporary rule so the test can be executed repeatedly without side effects.
-        RemoveRequest.Id := CreatedRuleId;
+        RemoveRequest.ID := CreatedRuleId;
         RemoveResponse := Broker.Remove(RemoveRequest);
 
         Writeln('-----------------------------------------------------------------');
@@ -223,37 +343,10 @@ begin
       else
       begin
         Writeln('-----------------------------------------------------------------');
-        Writeln('Skipping rule update/info/remove because the creation step did not yield an ID.');
+        Writeln('Skipping update/info/remove because the creation step did not yield an ID.');
       end;
 
-      // Execute the paged list request to show a subset of existing rules.
-      ListResponse := Broker.List(ListRequest);
-
-      Writeln('-----------------------------------------------------------------');
-      Writeln('Rules list request URL: ' + ListRequest.GetURLWithParams);
-      Writeln(Format('Rules list request body: %s', [ListRequest.ReqBodyContent]));
-      Writeln('Rules list response:');
-
-      if Assigned(ListResponse) and Assigned(ListResponse.RuleList) and
-        (ListResponse.RuleList.Count > 0) then
-      begin
-        Writeln(Format('Rules returned: %d', [ListResponse.RuleList.Count]));
-        MaxItemsToDisplay := ListResponse.RuleList.Count;
-        if MaxItemsToDisplay > 3 then
-          MaxItemsToDisplay := 3;
-
-        for ItemIndex := 0 to MaxItemsToDisplay - 1 do
-        begin
-          ListRule := TRule(ListResponse.RuleList[ItemIndex]);
-          Writeln(Format('  #%d: %s (%s)',
-            [ItemIndex + 1, ListRule.Caption, ListRule.Ruid]));
-        end;
-      end
-      else
-        Writeln('No rules were returned in the list response.');
-
     except
-      // Provide detailed diagnostics for both REST-level and general runtime errors.
       on E: EIdHTTPProtocolException do
         Writeln(Format('HTTP error: %d %s', [E.ErrorCode, E.ErrorMessage]));
       on E: Exception do
@@ -261,7 +354,6 @@ begin
     end;
 
   finally
-    // Release all dynamically created instances.
     RemoveResponse.Free;
     RemoveRequest.Free;
     UpdateResponse.Free;
