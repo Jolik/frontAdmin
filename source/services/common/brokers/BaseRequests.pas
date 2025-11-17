@@ -235,11 +235,7 @@ begin
   if not FSearchStr.IsEmpty then
     dst.AddPair('searchStr', FSearchStr);
   if not FOrder.IsEmpty then
-  begin
-    Arr := TJSONArray.Create;
-    Arr.Add(FOrder);
-    dst.AddPair('order', Arr);
-  end;
+    dst.AddPair('order', FOrder);
   if not FOrderDir.IsEmpty then
     dst.AddPair('orderDir', FOrderDir);
 
