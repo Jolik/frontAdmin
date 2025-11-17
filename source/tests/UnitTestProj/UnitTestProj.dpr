@@ -32,7 +32,10 @@ uses
   RestBrokerBaseUnit in '..\..\services\common\brokers\RestBrokerBaseUnit.pas',
   RestEntityBrokerUnit in '..\..\services\common\brokers\RestEntityBrokerUnit.pas',
   RestFieldSetBrokerUnit in '..\..\services\common\brokers\RestFieldSetBrokerUnit.pas',
-  OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas';
+  OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
+  ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
+  TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
+  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas';
 
 begin
   try
@@ -50,6 +53,7 @@ begin
     on E: Exception do
     begin
       Writeln('Ошибка тестирования: ' + E.ClassName + ': ' + E.Message);
+      Readln;
       Halt(1);
     end;
   end;

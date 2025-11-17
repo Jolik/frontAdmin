@@ -5,6 +5,7 @@ interface
 uses
   System.SysUtils,
   RestFieldSetBrokerUnit,
+  HttpClientUnit,
   BaseRequests,
   BaseResponses,
   ObservationUnit,
@@ -48,14 +49,12 @@ type
   TObservationReqInfo = class(TReqInfo)
   public
     constructor Create; override;
-    procedure SetObservationId(const Value: string);
   end;
 
   /// <summary>GET /observations/dstypes/&lt;dstid&gt;.</summary>
   TObservationReqDsTypeInfo = class(TReqInfo)
   public
     constructor Create; override;
-    procedure SetDstypeId(const Value: string);
   end;
 
   /// <summary>REST broker for dataserver observations.</summary>
@@ -73,7 +72,7 @@ type
     function List(AReq: TReqList): TFieldSetListResponse; overload; override;
 
     function Info(AReq: TObservationReqInfo): TObservationInfoResponse; reintroduce; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
 
     function DsTypeInfo(AReq: TObservationReqDsTypeInfo): TDsTypeInfoResponse; overload;
     function DsTypeInfo(AReq: TReqInfo): TFieldSetResponse; overload;
@@ -138,29 +137,11 @@ begin
   SetEndpoint('observations');
 end;
 
-procedure TObservationReqInfo.SetObservationId(const Value: string);
-begin
-  Id := Value;
-  if Value.IsEmpty then
-    SetEndpoint('observations')
-  else
-    SetEndpoint(Format('observations/%s', [Value]));
-end;
-
 constructor TObservationReqDsTypeInfo.Create;
 begin
   inherited Create;
   Method := mGET;
   SetEndpoint('observations/dstypes');
-end;
-
-procedure TObservationReqDsTypeInfo.SetDstypeId(const Value: string);
-begin
-  Id := Value;
-  if Value.IsEmpty then
-    SetEndpoint('observations/dstypes')
-  else
-    SetEndpoint(Format('observations/dstypes/%s', [Value]));
 end;
 
 { TObservationsRestBroker }
@@ -176,7 +157,7 @@ function TObservationsRestBroker.CreateReqDstTypeInfo(
 begin
   Result := TObservationReqDsTypeInfo.Create;
   Result.BasePath := BasePath;
-  Result.SetDstypeId(ADstId);
+  Result.Id := ADstId;
 end;
 
 function TObservationsRestBroker.CreateReqInfo(id: string): TReqInfo;
@@ -185,7 +166,7 @@ var
 begin
   Req := TObservationReqInfo.Create;
   Req.BasePath := BasePath;
-  Req.SetObservationId(id);
+  Req.Id := id;
   Result := Req;
 end;
 

@@ -89,6 +89,10 @@
         <DCCReference Include="..\..\services\acl\entities\CompanyUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\StorageHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas"/>
+        <DCCReference Include="ObservationsRequestsUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\ObservationUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\TDsTypesUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

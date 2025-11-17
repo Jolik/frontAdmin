@@ -76,7 +76,7 @@ type
     function GetItem(Index: Integer): TDsType;
     function GetEffectiveCount: Integer;
   public
-    constructor Create; override;
+    constructor Create;
     class function ItemClassType: TFieldSetClass; override;
     procedure ParseContainer(src: TJSONObject);
     function SerializeContainer: TJSONObject;
@@ -338,7 +338,13 @@ end;
 
 function TDsTypesList.GetItem(Index: Integer): TDsType;
 begin
-  Result := Items[Index] as TDsType;
+  Result := nil;
+
+  if (Index < 0) or (Index >= Count) then
+    Exit;
+
+  if inherited Items[Index] is TDsType then
+    Result := TDsType(inherited Items[Index]);
 end;
 
 class function TDsTypesList.ItemClassType: TFieldSetClass;

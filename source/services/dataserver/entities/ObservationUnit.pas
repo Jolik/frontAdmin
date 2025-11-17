@@ -40,7 +40,7 @@ type
     function GetItem(Index: Integer): TObservation;
     function GetEffectiveCount: Integer;
   public
-    constructor Create; override;
+    constructor Create;
     class function ItemClassType: TFieldSetClass; override;
     procedure ParseContainer(src: TJSONObject);
     function SerializeContainer: TJSONObject;
@@ -148,7 +148,13 @@ end;
 
 function TObservationsList.GetItem(Index: Integer): TObservation;
 begin
-  Result := Items[Index] as TObservation;
+  Result := nil;
+
+  if (Index < 0) or (Index >= Count) then
+    Exit;
+
+  if inherited Items[Index] is TObservation then
+    Result := TObservation(inherited Items[Index]);
 end;
 
 class function TObservationsList.ItemClassType: TFieldSetClass;

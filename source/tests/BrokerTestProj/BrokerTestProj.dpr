@@ -68,7 +68,10 @@ uses
   CompanyUnit in '..\..\services\acl\entities\CompanyUnit.pas',
   StorageHttpRequests in '..\..\services\dataspace\brokers\StorageHttpRequests.pas',
   StorageRestBrokerUnit in '..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas',
-  ObservationsRequestsUnit in 'ObservationsRequestsUnit.pas';
+  ObservationsRequestsUnit in 'ObservationsRequestsUnit.pas',
+  ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
+  TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
+  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -134,7 +137,7 @@ begin
 //    ExecuteJournalRecordRequest;
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
-    ExecuteRulesRequest;
+//    ExecuteRulesRequest;
     ExecuteObservationRequests;
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;
