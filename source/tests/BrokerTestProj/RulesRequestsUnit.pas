@@ -214,7 +214,7 @@ begin
       if Assigned(NewRequest.ReqBody) and (NewRequest.ReqBody is TRule) then
       begin
         RuleBody := TRule(NewRequest.ReqBody);
-        CreatedRuleId := TGUID.NewGuid.ToString.Replace('{', '').Replace('}', '');
+        CreatedRuleId := LowerCase(TGUID.NewGuid.ToString.Replace('{', '').Replace('}', ''));
         RuleBody.Ruid := CreatedRuleId;
         RuleBody.Name := 'AutoRule_' + Copy(CreatedRuleId, 1, 8);
         RuleBody.Caption := 'Automatically created router rule for broker smoke tests';
