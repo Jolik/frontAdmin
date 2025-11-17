@@ -155,7 +155,7 @@ begin
       if Assigned(NewReq.ReqBody) then
       begin
         TDsGroup(NewReq.ReqBody).Name := CreatedGroupName;
-        TDsGroup(NewReq.ReqBody).Sid := 'auto-test';
+        TDsGroup(NewReq.ReqBody).Sid := 'RU25-008209-0000';
 
         MetadataObj := TJSONObject.Create;
         try
@@ -221,7 +221,7 @@ begin
       if Assigned(UpdateReq.ReqBody) then
       begin
         TDsGroup(UpdateReq.ReqBody).Name := UpdatedGroupName;
-        TDsGroup(UpdateReq.ReqBody).Sid := 'auto-test-updated';
+        TDsGroup(UpdateReq.ReqBody).Sid := 'RU25-008203-0000';
 
         MetadataObj := TJSONObject.Create;
         try
