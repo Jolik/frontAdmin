@@ -40,7 +40,9 @@ uses
   ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
   DsGroupUnit in '..\..\services\dataserver\entities\DsGroupUnit.pas',
   DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
-  DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas';
+  DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
+  DataseriesUnitTest in 'DataseriesUnitTest.pas',
+  DataserieUnit in '..\..\services\dataserver\entities\DataserieUnit.pas';
 
 begin
   try

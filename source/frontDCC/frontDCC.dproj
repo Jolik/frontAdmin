@@ -420,6 +420,7 @@
         <DCCReference Include="..\services\acl\entities\UserUnit.pas"/>
         <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\DsGroupUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\DataserieUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
