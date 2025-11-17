@@ -1,7 +1,7 @@
 object ObservationForm: TObservationForm
   Left = 0
   Top = 0
-  Caption = 'Наблюдения'
+  Caption = #1053#1072#1073#1083#1102#1076#1077#1085#1080#1103
   ClientHeight = 540
   ClientWidth = 900
   OnCreate = UniFormCreate
@@ -17,7 +17,7 @@ object ObservationForm: TObservationForm
     Height = 540
     Hint = ''
     DataSource = dsObservation
-    LoadMask.Message = 'Загрузка...'
+    LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072#46#46#46
     Align = alClient
     TabOrder = 0
     OnSelectionChange = gridObservationSelectionChange
@@ -54,7 +54,7 @@ object ObservationForm: TObservationForm
         Width = 200
         Height = 18
         Hint = ''
-        Caption = 'Информация о наблюдении'
+        Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103#32#1086#32#1085#1072#1073#1083#1102#1076#1077#1085#1080#1080
         ParentFont = False
         Font.Style = [fsBold]
         TabOrder = 1
@@ -74,7 +74,7 @@ object ObservationForm: TObservationForm
         Width = 283
         Height = 17
         Hint = ''
-        Caption = 'Нет данных'
+        Caption = #1053#1077#1090#32#1076#1072#1085#1085#1099#1093
         TabOrder = 1
       end
     end
@@ -208,7 +208,7 @@ object ObservationForm: TObservationForm
         Align = alTop
         Margins.Left = 16
         Margins.Right = 16
-        Caption = 'Типы данных наблюдения:'
+        Caption = #1058#1080#1087#1099#32#1076#1072#1085#1085#1099#1093#32#1085#1072#1073#1083#1102#1076#1077#1085#1080#1103#58
         TabOrder = 1
       end
       object gridDsTypes: TUniDBGrid
@@ -219,7 +219,7 @@ object ObservationForm: TObservationForm
         Height = 240
         Hint = ''
         DataSource = dsDsTypes
-        LoadMask.Message = 'Загрузка...'
+        LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072#46#46#46
         Align = alClient
         Margins.Left = 16
         Margins.Right = 16
