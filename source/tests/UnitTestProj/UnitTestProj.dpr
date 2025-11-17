@@ -12,7 +12,8 @@ uses
   DsTypesUnitTest in 'DsTypesUnitTest.pas',
   ObservationsUnitTest in 'ObservationsUnitTest.pas',
   ObservationsRestBrokerUnitTest in 'ObservationsRestBrokerUnitTest.pas',
-  DataseriesUnitTest in 'DataseriesUnitTest.pas',
+  DsGroupTestsUnit in 'DsGroupTestsUnit.pas',
+  DsGroupRestBrokerTestsUnit in 'DsGroupRestBrokerTestsUnit.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
@@ -37,19 +38,23 @@ uses
   ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
   TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
   ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
-  DataserieUnit in '..\..\services\dataserver\entities\DataserieUnit.pas';
+  DsGroupUnit in '..\..\services\dataserver\entities\DsGroupUnit.pas',
+  DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
+  DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas';
 
 begin
   try
-//    RunHistoryRecordTests;
-//    RunJournalRecordsAttrsTests;
-//    RunJournalRecordTests;
-//    TestOperatorLinksContentRestBroker;
-//    RunDsTypesTests;
-    RunDataserieTests;
-//    RunObservationTests;
-//    RunObservationsBrokerTests;
-//    RunSearchTests;
+    RunHistoryRecordTests;
+    RunJournalRecordsAttrsTests;
+    RunJournalRecordTests;
+    TestOperatorLinksContentRestBroker;
+    RunDsTypesTests;
+    RunDataserieTests;    
+    RunObservationTests;
+    RunObservationsBrokerTests;
+    RunDsGroupTests;
+    RunDsGroupBrokerTests;
+    RunSearchTests;
     Writeln('Все тесты пройдены успешно.');
     Readln;
   except
