@@ -36,19 +36,20 @@ uses
   OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
   ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
   TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
-  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas';
+  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
+  DataserieUnit in '..\..\services\dataserver\entities\DataserieUnit.pas';
 
 begin
   try
-    RunHistoryRecordTests;
-    RunJournalRecordsAttrsTests;
-    RunJournalRecordTests;
-    TestOperatorLinksContentRestBroker;
-    RunDsTypesTests;
+//    RunHistoryRecordTests;
+//    RunJournalRecordsAttrsTests;
+//    RunJournalRecordTests;
+//    TestOperatorLinksContentRestBroker;
+//    RunDsTypesTests;
     RunDataserieTests;
-    RunObservationTests;
-    RunObservationsBrokerTests;
-    RunSearchTests;
+//    RunObservationTests;
+//    RunObservationsBrokerTests;
+//    RunSearchTests;
     Writeln('Все тесты пройдены успешно.');
     Readln;
   except

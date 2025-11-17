@@ -20,7 +20,7 @@ type
     FFmt: Nullable<Int64>;
     FHaveCv: Boolean;
     FJrId: Nullable<string>;
-    FMt: Nullable<Int64>;
+    FMtime: Nullable<Int64>;
     FUt: Nullable<Double>;
     FV: Nullable<Double>;
     FUhid: Nullable<string>;
@@ -39,7 +39,7 @@ type
     property Fmt: Nullable<Int64> read FFmt write FFmt;
     property HaveCv: Boolean read FHaveCv write FHaveCv;
     property JrId: Nullable<string> read FJrId write FJrId;
-    property Mt: Nullable<Int64> read FMt write FMt;
+    property Mtime: Nullable<Int64> read FMtime write FMtime;
     property Ut: Nullable<Double> read FUt write FUt;
     property V: Nullable<Double> read FV write FV;
     property Uhid: Nullable<string> read FUhid write FUhid;
@@ -188,7 +188,7 @@ begin
   FFmt := Src.Fmt;
   FHaveCv := Src.HaveCv;
   FJrId := Src.JrId;
-  FMt := Src.Mt;
+  FMtime := Src.Mtime;
   FUt := Src.Ut;
   FV := Src.V;
   FUhid := Src.Uhid;
@@ -205,7 +205,7 @@ begin
   FFmt.Clear;
   FHaveCv := False;
   FJrId.Clear;
-  FMt.Clear;
+  FMtime.Clear;
   FUt.Clear;
   FV.Clear;
   FUhid.Clear;
@@ -216,7 +216,7 @@ end;
 function TDsValue.HasValues: Boolean;
 begin
   Result := FC.HasValue or FCT.HasValue or FDT.HasValue or FFmt.HasValue or
-    FJrId.HasValue or FMt.HasValue or FUt.HasValue or FV.HasValue or
+    FJrId.HasValue or FMtime.HasValue or FUt.HasValue or FV.HasValue or
     FUhid.HasValue or FWhid.HasValue or FWt.HasValue or FHaveCv;
 end;
 
@@ -231,7 +231,7 @@ begin
   FFmt := GetNullableInt64(src, 'fmt');
   FHaveCv := GetValueBool(src, 'havecv');
   FJrId := GetNullableStr(src, 'jrid');
-  FMt := GetNullableInt64(src, 'mt');
+  FMtime := GetNullableInt64(src, 'mt');
   FUt := GetNullableFloat(src, 'ut');
   FV := GetNullableFloat(src, 'v');
   FUhid := GetNullableStr(src, 'uhid');
@@ -254,8 +254,8 @@ begin
   dst.AddPair('havecv', TJSONBool.Create(FHaveCv));
   if FJrId.HasValue then
     dst.AddPair('jrid', FJrId.Value);
-  if FMt.HasValue then
-    dst.AddPair('mt', TJSONNumber.Create(FMt.Value));
+  if FMtime.HasValue then
+    dst.AddPair('mt', TJSONNumber.Create(FMtime.Value));
   if FUt.HasValue then
     dst.AddPair('ut', TJSONNumber.Create(FUt.Value));
   if FV.HasValue then
