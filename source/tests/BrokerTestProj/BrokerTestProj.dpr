@@ -71,7 +71,10 @@ uses
   ObservationsRequestsUnit in 'ObservationsRequestsUnit.pas',
   ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
   TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
-  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas';
+  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
+  DsGroupsRequestsUnit in 'DsGroupsRequestsUnit.pas',
+  DsGroupUnit in '..\..\services\dataserver\entities\DsGroupUnit.pas',
+  DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -139,6 +142,7 @@ begin
 //    ExecuteAbonentsRequest;
 //    ExecuteRulesRequest;
     ExecuteObservationRequests;
+    ExecuteDsGroupsRequests;
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
