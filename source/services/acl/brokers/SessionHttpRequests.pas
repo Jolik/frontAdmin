@@ -23,7 +23,7 @@ type
     FUseInfoEndpoint: Boolean;
     procedure SetUseInfoEndpoint(const Value: Boolean);
   protected
-    function BuildAddPath(const Id: string): string; override;
+    function BuildAddPath(const Id: string): string;
   public
     constructor Create; override;
     class function CreateForInfo: TSessionReqInfo;
@@ -50,7 +50,7 @@ function TSessionReqInfo.BuildAddPath(const Id: string): string;
 begin
   if FUseInfoEndpoint then
     Exit('info');
-  Result := inherited BuildAddPath(Id);
+  Result := '';
 end;
 
 constructor TSessionReqInfo.Create;

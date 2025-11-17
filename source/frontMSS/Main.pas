@@ -22,18 +22,14 @@ type
     btnQueues: TUniButton;
     btnAbonents: TUniButton;
     btnOperatorLinks: TUniButton;
-    btnOperatorLinksContent: TUniButton;
     btnRules: TUniButton;
-    btnSearch: TUniButton;
-    btnContentStream: TUniButton;
-    cbCurDept: TUniComboBox;
-    UniLabel1: TUniLabel;
-    cbCurComp: TUniComboBox;
-    UniLabel2: TUniLabel;
     btnHandlers: TUniButton;
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
     uncntnrpnInfo: TUniContainerPanel;
+    btnOperatorLinksContent: TUniButton;
+    btnSearch: TUniButton;
+    btnContentStream: TUniButton;
     procedure btnAbonentsClick(Sender: TObject);
     procedure btnChannelClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
@@ -73,7 +69,7 @@ uses
   OperatorLinksFormUnit,
   OperatorLinkContectFormUnit,
   SearchFormUnit,
-  ContentStreamFormUnit;
+  ContentStreamFormUnit, HandlersFormUnit;
 
 function MainForm: TMainForm;
 begin

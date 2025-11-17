@@ -106,7 +106,7 @@ class function TBaseStorageHelper.DefaultOwner: TUniForm;
 begin
   if (UniMainModule <> nil) and (UniMainModule.MainForm <> nil) and
      (UniMainModule.MainForm is TUniForm) then
-    Result := UniMainModule.MainForm
+    Result := UniMainModule.MainForm as TUniForm
   else
     raise Exception.Create('DefaultOwner (MainForm) is not available yet');
 end;

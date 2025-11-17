@@ -115,7 +115,8 @@ uses
   FTPServerDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas' {FTPServerDownLinkSettingEditFrame: TUniFrame},
   SMTPSrvDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas' {SMTPSrvDownLinkSettingEditFrame: TUniFrame},
   RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas',
-  UniStorageHelpers in '..\common\UniStorageHelpers.pas';
+  UniStorageHelpers in '..\common\UniStorageHelpers.pas',
+  AuthMainFormUnit in '..\forms\common\AuthMainFormUnit.pas' {AuthMainForm: TUniForm};
 
 {$R *.res}
 

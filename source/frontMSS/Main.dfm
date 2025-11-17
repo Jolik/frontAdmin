@@ -13,8 +13,10 @@ inherited MainForm: TMainForm
   inherited pnlTop: TUniPanel
     Width = 798
     TabOrder = 1
+    ExplicitWidth = 798
     inherited lblUtcTime: TUniLabel
       Width = 290
+      ExplicitWidth = 290
     end
     inherited uncntnrpnAuth: TUniContainerPanel
       Left = 291
@@ -32,7 +34,7 @@ inherited MainForm: TMainForm
     object btnAbonents: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 97
+      Top = 66
       Width = 105
       Height = 25
       Hint = ''
@@ -40,14 +42,12 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 1
       OnClick = btnAbonentsClick
-      ExplicitLeft = 7
-      ExplicitTop = 57
-      ExplicitWidth = 75
+      ExplicitTop = 97
     end
     object btnAliases: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 159
+      Top = 128
       Width = 105
       Height = 25
       Hint = ''
@@ -55,14 +55,12 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 2
       OnClick = btnAliasesClick
-      ExplicitLeft = 7
-      ExplicitTop = 97
-      ExplicitWidth = 75
+      ExplicitTop = 159
     end
     object btnChannel: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 252
+      Top = 221
       Width = 105
       Height = 25
       Hint = ''
@@ -70,14 +68,12 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 3
       OnClick = btnChannelClick
-      ExplicitLeft = 7
-      ExplicitTop = 241
-      ExplicitWidth = 75
+      ExplicitTop = 252
     end
     object btnHandlers: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 221
+      Top = 190
       Width = 105
       Height = 25
       Hint = ''
@@ -85,14 +81,12 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 4
       OnClick = btnHandlersClick
-      ExplicitLeft = 7
-      ExplicitTop = 177
-      ExplicitWidth = 75
+      ExplicitTop = 221
     end
     object btnLinks: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 190
+      Top = 159
       Width = 105
       Height = 25
       Hint = ''
@@ -100,14 +94,12 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 5
       OnClick = btnLinksClick
-      ExplicitLeft = 7
-      ExplicitTop = 137
-      ExplicitWidth = 75
+      ExplicitTop = 190
     end
     object btnOperatorLinks: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 4
+      Top = 252
       Width = 105
       Height = 25
       Hint = ''
@@ -115,14 +107,13 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 6
       OnClick = btnOperatorLinksClick
-      ExplicitLeft = 7
-      ExplicitTop = 17
-      ExplicitWidth = 75
+      ExplicitLeft = 5
+      ExplicitTop = 268
     end
     object btnQueues: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 128
+      Top = 97
       Width = 105
       Height = 25
       Hint = ''
@@ -130,14 +121,12 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 7
       OnClick = btnQueuesClick
-      ExplicitLeft = 7
-      ExplicitTop = 210
-      ExplicitWidth = 75
+      ExplicitTop = 128
     end
     object btnRouterSources: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 66
+      Top = 35
       Width = 105
       Height = 25
       Hint = ''
@@ -145,14 +134,12 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 8
       OnClick = btnRouterSourcesClick
-      ExplicitLeft = 7
-      ExplicitTop = 281
-      ExplicitWidth = 75
+      ExplicitTop = 66
     end
     object btnRules: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 35
+      Top = 4
       Width = 105
       Height = 25
       Hint = ''
@@ -160,9 +147,7 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 9
       OnClick = btnRulesClick
-      ExplicitLeft = 7
-      ExplicitTop = 337
-      ExplicitWidth = 75
+      ExplicitTop = 35
     end
     object uncntnrpnInfo: TUniContainerPanel
       Left = 1
@@ -173,9 +158,6 @@ inherited MainForm: TMainForm
       ParentColor = False
       Align = alBottom
       TabOrder = 10
-      ExplicitLeft = 48
-      ExplicitTop = 600
-      ExplicitWidth = 256
       object URLLabel: TUniLabel
         AlignWithMargins = True
         Left = 3
@@ -188,8 +170,6 @@ inherited MainForm: TMainForm
         Caption = 'URL'
         Align = alTop
         TabOrder = 1
-        ExplicitTop = 64
-        ExplicitWidth = 92
       end
       object OSLabel: TUniLabel
         AlignWithMargins = True
@@ -203,48 +183,37 @@ inherited MainForm: TMainForm
         Caption = 'OSLabel'
         Align = alTop
         TabOrder = 2
-        ExplicitWidth = 92
       end
     end
-  end
-  object btnOperatorLinksContent: TUniButton
-    Left = 40
-    Top = 184
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1050#1086#1085#1090#1077#1085#1090' '#1083#1080#1085#1082#1086#1074
-    TabOrder = 15
-    OnClick = btnOperatorLinksContentClick
-  end
-  object btnOperatorLinks: TUniButton
-    Left = 40
-    Top = 216
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1054#1087#1077#1088'. '#1089#1074#1103#1079#1080
-    TabOrder = 14
-    OnClick = btnOperatorLinksClick
-  end
-  object btnSearch: TUniButton
-    Left = 48
-    Top = 584
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1055#1086#1080#1089#1082
-    TabOrder = 16
-    OnClick = btnSearchClick
-  end
-  object btnContentStream: TUniButton
-    Left = 48
-    Top = 616
-    Width = 150
-    Height = 25
-    Hint = ''
-    Caption = #1055#1086#1090#1086#1082' '#1082#1086#1085#1090#1077#1085#1090#1072
-    TabOrder = 17
-    OnClick = btnContentStreamClick
+    object btnOperatorLinksContent: TUniButton
+      Left = 22
+      Top = 296
+      Width = 75
+      Height = 25
+      Hint = ''
+      Caption = #1050#1086#1085#1090#1077#1085#1090' '#1083#1080#1085#1082#1086#1074
+      TabOrder = 11
+      OnClick = btnOperatorLinksContentClick
+    end
+    object btnSearch: TUniButton
+      Left = 22
+      Top = 336
+      Width = 75
+      Height = 25
+      Hint = ''
+      Caption = #1055#1086#1080#1089#1082
+      TabOrder = 12
+      OnClick = btnSearchClick
+    end
+    object btnContentStream: TUniButton
+      Left = 22
+      Top = 376
+      Width = 78
+      Height = 25
+      Hint = ''
+      Caption = #1055#1086#1090#1086#1082' '#1082#1086#1085#1090#1077#1085#1090#1072
+      TabOrder = 13
+      OnClick = btnContentStreamClick
+    end
   end
 end

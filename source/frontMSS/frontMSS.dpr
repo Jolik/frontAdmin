@@ -28,11 +28,6 @@ uses
   HttpClientUnit in '..\services\common\brokers\HttpClientUnit.pas',
   RestBrokerBaseUnit in '..\services\common\brokers\RestBrokerBaseUnit.pas',
   RestEntityBrokerUnit in '..\services\common\brokers\RestEntityBrokerUnit.pas',
-  ParentFormUnit in '..\forms\common\ParentFormUnit.pas' {ParentForm: TUniForm},
-  ParentEditFormUnit in '..\forms\common\ParentEditFormUnit.pas' {ParentEditForm: TUniForm},
-  ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas' {ListParentForm: TUniForm},
-  FormLayoutFormUnit in '..\forms\common\FormLayoutFormUnit.pas' {FormLayout: TUniForm},
-  EmbedLoginFormUnit in '..\forms\common\EmbedLoginFormUnit.pas' {EmbedLoginForm: TUniForm},
   CasRestBrokerUnit in '..\services\acl\cas\brokers\CasRestBrokerUnit.pas',
   CasHttpRequests in '..\services\acl\cas\brokers\CasHttpRequests.pas',
   HttpProtocolExceptionHelper in '..\services\common\brokers\HttpProtocolExceptionHelper.pas',
@@ -139,7 +134,14 @@ uses
   SearchUnit in '..\services\dataspace\entities\SearchUnit.pas',
   SearchHttpRequests in '..\services\dataspace\brokers\SearchHttpRequests.pas',
   StorageHttpRequests in '..\services\dataspace\brokers\StorageHttpRequests.pas',
-  StorageRestBrokerUnit in '..\services\dataspace\brokers\StorageRestBrokerUnit.pas';
+  StorageRestBrokerUnit in '..\services\dataspace\brokers\StorageRestBrokerUnit.pas',
+  UniStorageHelpers in '..\common\UniStorageHelpers.pas',
+  AuthMainFormUnit in '..\forms\common\AuthMainFormUnit.pas' {AuthMainForm: TUniForm},
+  EmbedLoginFormUnit in '..\forms\common\EmbedLoginFormUnit.pas' {EmbedLoginForm: TUniForm},
+  FormLayoutFormUnit in '..\forms\common\FormLayoutFormUnit.pas' {FormLayout: TUniForm},
+  ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas' {ListParentForm: TUniForm},
+  ParentEditFormUnit in '..\forms\common\ParentEditFormUnit.pas' {ParentEditForm: TUniForm},
+  ParentFormUnit in '..\forms\common\ParentFormUnit.pas' {ParentForm: TUniForm};
 
 {$R *.res}
 
