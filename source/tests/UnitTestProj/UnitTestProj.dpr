@@ -12,6 +12,8 @@ uses
   DsTypesUnitTest in 'DsTypesUnitTest.pas',
   ObservationsUnitTest in 'ObservationsUnitTest.pas',
   ObservationsRestBrokerUnitTest in 'ObservationsRestBrokerUnitTest.pas',
+  DsGroupTestsUnit in 'DsGroupTestsUnit.pas',
+  DsGroupRestBrokerTestsUnit in 'DsGroupRestBrokerTestsUnit.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
@@ -35,7 +37,9 @@ uses
   OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
   ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
   TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
-  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas';
+  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
+  DsGroupUnit in '..\..\services\dataserver\entities\DsGroupUnit.pas',
+  DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas';
 
 begin
   try
@@ -46,6 +50,8 @@ begin
     RunDsTypesTests;
     RunObservationTests;
     RunObservationsBrokerTests;
+    RunDsGroupTests;
+    RunDsGroupBrokerTests;
     RunSearchTests;
     Writeln('Все тесты пройдены успешно.');
     Readln;
