@@ -132,11 +132,77 @@ begin
   end;
 end;
 
+procedure TestMutationRequests;
+var
+  Broker: TDsGroupsRestBroker;
+  NewReq: TDsGroupReqNew;
+  UpdateReq: TDsGroupReqUpdate;
+  RemoveReq: TDsGroupReqRemove;
+  BodyGroup: TDsGroup;
+  Serialized: TJSONObject;
+  NameValue: TJSONValue;
+begin
+  Broker := TDsGroupsRestBroker.Create('TEST-TICKET');
+  try
+    NewReq := Broker.CreateReqNew as TDsGroupReqNew;
+    try
+      Ensure(Assigned(NewReq.Body), 'New request body must be assigned.');
+      BodyGroup := TDsGroup(NewReq.Body);
+      BodyGroup.Name := 'UnitTestGroup';
+      BodyGroup.Ctxid := 'ctx-unit';
+
+      Serialized := TJSONObject.Create;
+      try
+        BodyGroup.Serialize(Serialized);
+        NameValue := Serialized.GetValue('name');
+        Ensure(Assigned(NameValue) and (NameValue.Value = 'UnitTestGroup'), 'New request name serialization mismatch.');
+        NameValue := Serialized.GetValue('ctxid');
+        Ensure(Assigned(NameValue) and (NameValue.Value = 'ctx-unit'), 'New request ctxid serialization mismatch.');
+      finally
+        Serialized.Free;
+      end;
+    finally
+      NewReq.Free;
+    end;
+
+    UpdateReq := Broker.CreateReqUpdate as TDsGroupReqUpdate;
+    try
+      UpdateReq.Id := 'group-1';
+      Ensure(UpdateReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1/update', 'Update request URL mismatch.');
+      Ensure(Assigned(UpdateReq.Body), 'Update request body must be assigned.');
+      BodyGroup := TDsGroup(UpdateReq.Body);
+      BodyGroup.Name := 'UpdatedGroup';
+
+      Serialized := TJSONObject.Create;
+      try
+        BodyGroup.Serialize(Serialized);
+        NameValue := Serialized.GetValue('name');
+        Ensure(Assigned(NameValue) and (NameValue.Value = 'UpdatedGroup'), 'Update request name serialization mismatch.');
+      finally
+        Serialized.Free;
+      end;
+    finally
+      UpdateReq.Free;
+    end;
+
+    RemoveReq := Broker.CreateReqRemove as TDsGroupReqRemove;
+    try
+      RemoveReq.Id := 'group-1';
+      Ensure(RemoveReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1/rem', 'Remove request URL mismatch.');
+    finally
+      RemoveReq.Free;
+    end;
+  finally
+    Broker.Free;
+  end;
+end;
+
 procedure RunDsGroupBrokerTests;
 begin
   Writeln('Running dataserver group broker tests...');
   TestResponses;
   TestRequests;
+  TestMutationRequests;
   Writeln('Dataserver group broker tests finished successfully.');
 end;
 
