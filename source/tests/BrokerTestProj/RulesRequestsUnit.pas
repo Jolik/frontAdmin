@@ -152,7 +152,7 @@ begin
       begin
         ListRequest.Body.Page := 1;
         ListRequest.Body.PageSize := 100;
-        ListRequest.Body.Order := 'priority';
+        ListRequest.Body.Order := 'caption';
         ListRequest.Body.OrderDir := 'desc';
       end;
 
