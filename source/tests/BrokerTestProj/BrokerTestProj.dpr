@@ -46,6 +46,8 @@ uses
   RuleHttpRequests in '..\..\services\router\brokers\RuleHttpRequests.pas',
   RuleUnit in '..\..\services\router\entities\RuleUnit.pas',
   SmallRuleUnit in '..\..\services\router\entities\SmallRuleUnit.pas',
+  ConditionUnit in '..\..\services\common\entities\ConditionUnit.pas',
+  FilterUnit in '..\..\services\common\entities\FilterUnit.pas',
   ChannelUnit in '..\..\services\router\entities\ChannelUnit.pas',
   HandlerUnit in '..\..\services\router\entities\HandlerUnit.pas',
   RouterSourceUnit in '..\..\services\router\entities\RouterSourceUnit.pas',

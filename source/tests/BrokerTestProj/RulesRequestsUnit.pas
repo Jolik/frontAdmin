@@ -77,6 +77,21 @@ procedure ExecuteRulesRequest;
     Writeln(Format('    Exclude filters: %d', [SmallRule.ExcFilters.Count]));
   end;
 
+  procedure PrintCurlCommand(const Title: string; const Request: THttpRequest);
+  var
+    CurlLine: string;
+  begin
+    if not Assigned(Request) then
+      Exit;
+
+    if not Title.Trim.IsEmpty then
+      Writeln(Title);
+    CurlLine := Request.Curl.Trim;
+    if CurlLine.IsEmpty then
+      CurlLine := '(curl string is empty)';
+    Writeln('  ' + CurlLine);
+  end;
+
 var
   Broker: TRulesRestBroker;
   ListRequest: TRuleReqList;
@@ -141,9 +156,10 @@ begin
         ListRequest.Body.OrderDir := 'desc';
       end;
 
+      Writeln('-----------------------------------------------------------------');
+      PrintCurlCommand('Rules list request (curl):', ListRequest);
       ListResponse := Broker.List(ListRequest);
 
-      Writeln('-----------------------------------------------------------------');
       Writeln('Rules list request URL: ' + ListRequest.GetURLWithParams);
       Writeln(Format('Rules list request body: %s', [ListRequest.ReqBodyContent]));
       Writeln('Rules list response:');
@@ -181,10 +197,11 @@ begin
       if not FirstRuleId.IsEmpty then
       begin
         InfoRequest.ID := FirstRuleId;
+        Writeln('-----------------------------------------------------------------');
+        PrintCurlCommand('Rule info request (curl):', InfoRequest);
         FreeAndNil(InfoResponse);
         InfoResponse := Broker.Info(InfoRequest);
 
-        Writeln('-----------------------------------------------------------------');
         Writeln('Rule info request URL: ' + InfoRequest.GetURLWithParams);
         Writeln('Rule info response:');
         PrintRuleDetails(InfoResponse.Rule,
@@ -239,9 +256,10 @@ begin
         end;
       end;
 
+      Writeln('-----------------------------------------------------------------');
+      PrintCurlCommand('Rule create request (curl):', NewRequest);
       NewResponse := Broker.New(NewRequest);
 
-      Writeln('-----------------------------------------------------------------');
       Writeln('Rule create request URL: ' + NewRequest.GetURLWithParams);
       Writeln(Format('Rule create request body: %s', [NewRequest.ReqBodyContent]));
       Writeln('Rule create response:');
@@ -255,10 +273,11 @@ begin
       if not CreatedRuleId.IsEmpty then
       begin
         InfoRequest.ID := CreatedRuleId;
+        Writeln('-----------------------------------------------------------------');
+        PrintCurlCommand('Rule info request (curl):', InfoRequest);
         FreeAndNil(InfoResponse);
         InfoResponse := Broker.Info(InfoRequest);
 
-        Writeln('-----------------------------------------------------------------');
         Writeln('Rule info request URL: ' + InfoRequest.GetURLWithParams);
         Writeln('Rule info response:');
         PrintRuleDetails(InfoResponse.Rule, 'Details for the newly created rule:');
@@ -310,9 +329,10 @@ begin
           end;
         end;
 
+        Writeln('-----------------------------------------------------------------');
+        PrintCurlCommand('Rule update request (curl):', UpdateRequest);
         UpdateResponse := Broker.Update(UpdateRequest);
 
-        Writeln('-----------------------------------------------------------------');
         Writeln('Rule update request URL: ' + UpdateRequest.GetURLWithParams);
         Writeln(Format('Rule update request body: %s', [UpdateRequest.ReqBodyContent]));
         Writeln('Rule update response:');
@@ -321,18 +341,20 @@ begin
         else
           Writeln('(empty response body)');
 
+        Writeln('-----------------------------------------------------------------');
+        PrintCurlCommand('Rule info request (curl):', InfoRequest);
         FreeAndNil(InfoResponse);
         InfoResponse := Broker.Info(InfoRequest);
 
-        Writeln('-----------------------------------------------------------------');
         Writeln('Rule info request URL: ' + InfoRequest.GetURLWithParams);
         Writeln('Rule info response:');
         PrintRuleDetails(InfoResponse.Rule, 'Details for the rule after the update:');
 
         RemoveRequest.ID := CreatedRuleId;
+        Writeln('-----------------------------------------------------------------');
+        PrintCurlCommand('Rule remove request (curl):', RemoveRequest);
         RemoveResponse := Broker.Remove(RemoveRequest);
 
-        Writeln('-----------------------------------------------------------------');
         Writeln('Rule remove request URL: ' + RemoveRequest.GetURLWithParams);
         Writeln('Rule remove response:');
         if Assigned(RemoveResponse) and not RemoveResponse.Response.Trim.IsEmpty then

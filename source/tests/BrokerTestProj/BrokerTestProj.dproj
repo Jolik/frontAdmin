@@ -67,6 +67,8 @@
         <DCCReference Include="..\..\services\router\brokers\RuleHttpRequests.pas"/>
         <DCCReference Include="..\..\services\router\entities\RuleUnit.pas"/>
         <DCCReference Include="..\..\services\router\entities\SmallRuleUnit.pas"/>
+        <DCCReference Include="..\..\services\common\entities\ConditionUnit.pas"/>
+        <DCCReference Include="..\..\services\common\entities\FilterUnit.pas"/>
         <DCCReference Include="RulesRequestsUnit.pas"/>
         <DCCReference Include="CompaniesRequestsUnit.pas"/>
         <DCCReference Include="SearchRequestUnit.pas"/>
