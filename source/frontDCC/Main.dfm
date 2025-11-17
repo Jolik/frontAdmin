@@ -149,7 +149,7 @@ inherited MainForm: TMainForm
       Width = 137
       Height = 25
       Hint = ''
-      Caption = #1053#1072#1073#1083#1102#1076#1077#1085#1080#1103
+      Caption = 'Наблюдения'
       Align = alTop
       TabOrder = 7
       OnClick = btnObservationsClick

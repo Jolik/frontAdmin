@@ -7,7 +7,7 @@ uses
   Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
   uniGUIBaseClasses, uniPanel, uniLabel, uniSplitter,
-  uniBasicGrid, uniDBGrid, uniMemo,
+  uniBasicGrid, uniDBGrid,
   Data.DB,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
@@ -42,13 +42,19 @@ type
     lObservationUidValue: TUniLabel;
     cpObservationInfoDsTypes: TUniContainerPanel;
     lObservationDsTypes: TUniLabel;
-    memoObservationDsTypes: TUniMemo;
+    gridDsTypes: TUniDBGrid;
+    dsDsTypes: TDataSource;
+    mtDsTypes: TFDMemTable;
+    mtDsTypesdstid: TStringField;
+    mtDsTypesname: TStringField;
+    mtDsTypescaption: TStringField;
+    mtDsTypesuid: TStringField;
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
     procedure gridObservationSelectionChange(Sender: TObject);
   private
     FBroker: TObservationsRestBroker;
-    procedure EnsureMemTable;
+    procedure EnsureMemTables;
     procedure LoadObservations;
     procedure PopulateObservations(AList: TObservationsList);
     procedure ClearObservationInfo;
@@ -56,6 +62,7 @@ type
     procedure ShowSelectedObservationInfo;
     function GetSelectedOid: string;
     procedure UpdateDsTypesInfo(const AObservation: TObservation);
+    procedure ClearDsTypesData;
   public
   end;
 
@@ -79,15 +86,28 @@ begin
   lObservationNameValue.Caption := '';
   lObservationCaptionValue.Caption := '';
   lObservationUidValue.Caption := '';
-  memoObservationDsTypes.Lines.Clear;
+  ClearDsTypesData;
 end;
 
-procedure TObservationForm.EnsureMemTable;
+procedure TObservationForm.ClearDsTypesData;
 begin
-  if not Assigned(mtObservation) then
+  EnsureMemTables;
+  if not Assigned(mtDsTypes) then
     Exit;
-  if not mtObservation.Active then
+  mtDsTypes.DisableControls;
+  try
+    mtDsTypes.EmptyDataSet;
+  finally
+    mtDsTypes.EnableControls;
+  end;
+end;
+
+procedure TObservationForm.EnsureMemTables;
+begin
+  if Assigned(mtObservation) and not mtObservation.Active then
     mtObservation.CreateDataSet;
+  if Assigned(mtDsTypes) and not mtDsTypes.Active then
+    mtDsTypes.CreateDataSet;
 end;
 
 function TObservationForm.GetSelectedOid: string;
@@ -113,7 +133,7 @@ begin
     Exit;
 
   ClearObservationInfo;
-  EnsureMemTable;
+  EnsureMemTables;
   Req := FBroker.CreateReqList as TObservationsReqList;
   Resp := nil;
   try
@@ -149,7 +169,7 @@ var
   I: Integer;
   Item: TObservation;
 begin
-  EnsureMemTable;
+  EnsureMemTables;
   mtObservation.DisableControls;
   try
     mtObservation.EmptyDataSet;
@@ -210,35 +230,30 @@ procedure TObservationForm.UpdateDsTypesInfo(const AObservation: TObservation);
 var
   I: Integer;
   DsType: TDsType;
-  CaptionText: string;
 begin
-  memoObservationDsTypes.Lines.BeginUpdate;
+  EnsureMemTables;
+  if not Assigned(mtDsTypes) then
+    Exit;
+  mtDsTypes.DisableControls;
   try
-    memoObservationDsTypes.Lines.Clear;
+    mtDsTypes.EmptyDataSet;
     if not Assigned(AObservation) or not Assigned(AObservation.DsTypes) then
-    begin
-      memoObservationDsTypes.Lines.Add('Типы данных отсутствуют.');
       Exit;
-    end;
 
     for I := 0 to AObservation.DsTypes.Count - 1 do
     begin
       DsType := AObservation.DsTypes[I];
       if not Assigned(DsType) then
         Continue;
-      CaptionText := DsType.Caption;
-      if CaptionText.IsEmpty then
-        CaptionText := DsType.Name;
-      if not DsType.DstId.IsEmpty then
-        memoObservationDsTypes.Lines.Add(Format('%s (%s)', [CaptionText, DsType.DstId]))
-      else
-        memoObservationDsTypes.Lines.Add(CaptionText);
+      mtDsTypes.Append;
+      mtDsTypesdstid.AsString := DsType.DstId;
+      mtDsTypesname.AsString := DsType.Name;
+      mtDsTypescaption.AsString := DsType.Caption;
+      mtDsTypesuid.AsString := DsType.Uid;
+      mtDsTypes.Post;
     end;
-
-    if memoObservationDsTypes.Lines.Count = 0 then
-      memoObservationDsTypes.Lines.Add('Типы данных отсутствуют.');
   finally
-    memoObservationDsTypes.Lines.EndUpdate;
+    mtDsTypes.EnableControls;
   end;
 end;
 

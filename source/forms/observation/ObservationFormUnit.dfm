@@ -211,19 +211,19 @@ object ObservationForm: TObservationForm
         Caption = 'Типы данных наблюдения:'
         TabOrder = 1
       end
-      object memoObservationDsTypes: TUniMemo
+      object gridDsTypes: TUniDBGrid
         AlignWithMargins = True
         Left = 16
         Top = 24
         Width = 283
         Height = 240
         Hint = ''
+        DataSource = dsDsTypes
+        LoadMask.Message = 'Загрузка...'
         Align = alClient
         Margins.Left = 16
         Margins.Right = 16
         Margins.Bottom = 16
-        ReadOnly = True
-        ScrollBars = ssVertical
         TabOrder = 2
       end
     end
@@ -254,6 +254,38 @@ object ObservationForm: TObservationForm
     object mtObservationcaption: TStringField
       FieldName = 'caption'
       Size = 255
+    end
+  end
+  object dsDsTypes: TDataSource
+    DataSet = mtDsTypes
+    Left = 80
+    Top = 168
+  end
+  object mtDsTypes: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 144
+    Top = 168
+    object mtDsTypesdstid: TStringField
+      FieldName = 'dstid'
+      Size = 80
+    end
+    object mtDsTypesname: TStringField
+      FieldName = 'name'
+      Size = 255
+    end
+    object mtDsTypescaption: TStringField
+      FieldName = 'caption'
+      Size = 255
+    end
+    object mtDsTypesuid: TStringField
+      FieldName = 'uid'
+      Size = 80
     end
   end
 end
