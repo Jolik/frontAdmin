@@ -49,6 +49,7 @@ begin
     RunJournalRecordTests;
     TestOperatorLinksContentRestBroker;
     RunDsTypesTests;
+    RunDataserieTests;    
     RunObservationTests;
     RunObservationsBrokerTests;
     RunDsGroupTests;
