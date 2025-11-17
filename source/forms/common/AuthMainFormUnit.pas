@@ -397,6 +397,8 @@ begin
   if UniMainModule <> nil then
     UniMainModule.MainForm := Self;
 
+  EnsurePageResizeBinding;
+
   UpdateUserDisplay;
 
   EnsureQueryTicketStored;

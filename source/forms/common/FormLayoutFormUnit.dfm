@@ -32,7 +32,7 @@ object FormLayout: TFormLayout
       ParentFont = False
       Font.Height = -25
       TabOrder = 1
-      ExplicitWidth = 744
+      ExplicitWidth = 796
     end
   end
   object pnlRight: TUniPanel
@@ -44,7 +44,6 @@ object FormLayout: TFormLayout
     Align = alLeft
     TabOrder = 1
     Caption = ''
-    ExplicitLeft = 698
     ExplicitHeight = 547
   end
   object tmUtc: TUniTimer

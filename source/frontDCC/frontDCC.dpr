@@ -116,7 +116,18 @@ uses
   SMTPSrvDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas' {SMTPSrvDownLinkSettingEditFrame: TUniFrame},
   RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas',
   UniStorageHelpers in '..\common\UniStorageHelpers.pas',
-  AuthMainFormUnit in '..\forms\common\AuthMainFormUnit.pas' {AuthMainForm: TUniForm};
+  AuthMainFormUnit in '..\forms\common\AuthMainFormUnit.pas' {AuthMainForm: TUniForm},
+  EmbedLoginFormUnit in '..\forms\common\EmbedLoginFormUnit.pas',
+  FormLayoutFormUnit in '..\forms\common\FormLayoutFormUnit.pas',
+  AppConfigUnit in '..\common\AppConfigUnit.pas',
+  CasHttpRequests in '..\services\acl\cas\brokers\CasHttpRequests.pas',
+  CasRestBrokerUnit in '..\services\acl\cas\brokers\CasRestBrokerUnit.pas',
+  HttpProtocolExceptionHelper in '..\services\common\brokers\HttpProtocolExceptionHelper.pas',
+  SessionHttpRequests in '..\services\acl\brokers\SessionHttpRequests.pas',
+  SessionsRestBrokerUnit in '..\services\acl\brokers\SessionsRestBrokerUnit.pas',
+  SessionUnit in '..\services\acl\entities\SessionUnit.pas',
+  UserUnit in '..\services\acl\entities\UserUnit.pas',
+  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas';
 
 {$R *.res}
 

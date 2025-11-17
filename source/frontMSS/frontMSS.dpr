@@ -141,7 +141,8 @@ uses
   FormLayoutFormUnit in '..\forms\common\FormLayoutFormUnit.pas' {FormLayout: TUniForm},
   ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas' {ListParentForm: TUniForm},
   ParentEditFormUnit in '..\forms\common\ParentEditFormUnit.pas' {ParentEditForm: TUniForm},
-  ParentFormUnit in '..\forms\common\ParentFormUnit.pas' {ParentForm: TUniForm};
+  ParentFormUnit in '..\forms\common\ParentFormUnit.pas' {ParentForm: TUniForm},
+  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas';
 
 {$R *.res}
 

@@ -182,7 +182,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\operatorLinksContent\OperatorLinkContectFormUnit.pas">
             <Form>OperatorLinkContectForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\contentView\ContentViewFormUnit.pas">
@@ -407,17 +406,14 @@
         <DCCReference Include="..\common\UniStorageHelpers.pas"/>
         <DCCReference Include="..\forms\common\AuthMainFormUnit.pas">
             <Form>AuthMainForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\common\EmbedLoginFormUnit.pas">
             <Form>EmbedLoginForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\common\FormLayoutFormUnit.pas">
             <Form>FormLayout</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\common\ListParentFormUnit.pas">
@@ -435,6 +431,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -460,7 +457,7 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
-            <Deployment Version="5">
+            <Deployment Version="4">
                 <DeployFile LocalName="Linux64\Debug\frontMSS" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput">
@@ -479,6 +476,16 @@
                     </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidClasses">
+                    <Platform Name="Android">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
+                    </Platform>
+                    <Platform Name="Android64">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidFileProvider">

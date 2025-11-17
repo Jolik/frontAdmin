@@ -397,9 +397,21 @@
         <DCCReference Include="..\common\UniStorageHelpers.pas"/>
         <DCCReference Include="..\forms\common\AuthMainFormUnit.pas">
             <Form>AuthMainForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\common\EmbedLoginFormUnit.pas"/>
+        <DCCReference Include="..\forms\common\FormLayoutFormUnit.pas">
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\common\AppConfigUnit.pas"/>
+        <DCCReference Include="..\services\acl\cas\brokers\CasHttpRequests.pas"/>
+        <DCCReference Include="..\services\acl\cas\brokers\CasRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\HttpProtocolExceptionHelper.pas"/>
+        <DCCReference Include="..\services\acl\brokers\SessionHttpRequests.pas"/>
+        <DCCReference Include="..\services\acl\brokers\SessionsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\acl\entities\SessionUnit.pas"/>
+        <DCCReference Include="..\services\acl\entities\UserUnit.pas"/>
+        <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -425,7 +437,7 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
-            <Deployment Version="5">
+            <Deployment Version="4">
                 <DeployFile LocalName="Linux64\Debug\frontDCC" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput">
@@ -444,6 +456,16 @@
                     </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidClasses">
+                    <Platform Name="Android">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
+                    </Platform>
+                    <Platform Name="Android64">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidFileProvider">

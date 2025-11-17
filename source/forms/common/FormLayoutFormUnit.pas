@@ -11,7 +11,8 @@ uses
   uniGUIForm,
   uniPanel,
   uniLabel,
-  uniTimer, Vcl.Controls, Vcl.Forms;
+  uniTimer, Vcl.Controls, Vcl.Forms,
+  uniGUIApplication;
 
 type
   TFormLayout = class(TUniForm)
@@ -24,6 +25,7 @@ type
     procedure UniFormDestroy(Sender: TObject);
   protected
     procedure UpdateUtcTime;
+    procedure EnsurePageResizeBinding;
   end;
 
 implementation
@@ -54,7 +56,41 @@ begin
     Exit;
 
   UtcNow := TTimeZone.Local.ToUniversalTime(Now);
-  lblUtcTime.Caption := 'Время UTC' + FormatDateTime('hh:nn:ssdd.mm.yyyy', UtcNow);
+  lblUtcTime.Caption := 'Время UTC' +FormatDateTime('hh:nn:ss dd.mm.yyyy', UtcNow);
 end;
 
+procedure TFormLayout.EnsurePageResizeBinding;
+var
+  JS: string;
+begin
+  if not PageMode then
+    Exit;
+
+  if (WebForm = nil) or (WebForm.JSName = '') then
+    Exit;
+
+  JS := Format(
+    'Ext.onReady(function(){' +
+    'var frm=%s;' +
+    'if(!frm){return;}' +
+    'if(frm.__uniPageResizeHandler){' +
+    '  Ext.EventManager.removeResizeListener(frm.__uniPageResizeHandler);' +
+    '}' +
+    'frm.__uniPageResizeHandler=function(){' +
+    '  if(!frm || frm.destroyed){' +
+    '    Ext.EventManager.removeResizeListener(frm.__uniPageResizeHandler);' +
+    '    frm.__uniPageResizeHandler=null;' +
+    '    return;' +
+    '  }' +
+    '  var size = Ext.getBody().getViewSize();' +
+    '  frm.setSize(size.width, size.height);' +
+    '  if(frm.updateLayout){frm.updateLayout();}' +
+    '};' +
+    'Ext.EventManager.onWindowResize(frm.__uniPageResizeHandler);' +
+    'frm.__uniPageResizeHandler();' +
+    '});',
+    [WebForm.JSName]);
+
+  UniSession.AddJS(JS);
+end;
 end.

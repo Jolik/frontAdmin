@@ -4,17 +4,14 @@ interface
 
 uses
   System.Generics.Collections,
-  uniGUIMainModule,
+  MainModuleBaseUnit,
   OrganizationUnit,
   ContextTypeUnit,
   LocationUnit;
 
 type
-  TUniMainModule = class(TUniGUIMainModule)
+  TUniMainModule = class(TBaseUniMainModule)
   private
-    FCompID: string;
-    FDeptID: string;
-    FXTicket: string;
     FOrganizationsCache: TObjectList<TOrganization>;
     FOrganizationsTypesCache: TObjectList<TOrgType>;
     FLocationsCache: TObjectList<TLocation>;
@@ -23,10 +20,6 @@ type
   public
     procedure AfterConstruction; override;
     destructor Destroy; override;
-
-    property CompID: string read FCompID write FCompID;
-    property DeptID: string read FDeptID write FDeptID;
-    property XTicket: string read FXTicket write FXTicket;
 
     procedure AssignOrganizationsTo(Dest: TObjectList<TOrganization>);
     procedure UpdateOrganizationsCache(Src: TObjectList<TOrganization>);
