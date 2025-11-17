@@ -42,6 +42,11 @@ uses
   OperatorRequestsUnit in 'OperatorRequestsUnit.pas',
   OperatorLinksContentRequestsUnit in 'OperatorLinksContentRequestsUnit.pas',
   AbonentsRequestsUnit in 'AbonentsRequestsUnit.pas',
+  RulesRestBrokerUnit in '..\..\services\router\brokers\RulesRestBrokerUnit.pas',
+  RuleHttpRequests in '..\..\services\router\brokers\RuleHttpRequests.pas',
+  RuleUnit in '..\..\services\router\entities\RuleUnit.pas',
+  SmallRuleUnit in '..\..\services\router\entities\SmallRuleUnit.pas',
+  RulesRequestsUnit in 'RulesRequestsUnit.pas',
   CompaniesRequestsUnit in 'CompaniesRequestsUnit.pas',
   SearchRequestUnit in 'SearchRequestUnit.pas',
   GUIDListUnit in '..\..\common\GUIDListUnit.pas',
@@ -121,6 +126,7 @@ begin
 //    ExecuteJournalRecordRequest;
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
+    ExecuteRulesRequest;
 //    ExecuteOperatorLinksContentRequests;
     ExecuteReadContentStream;
 //    ExecuteSearchRequest;
