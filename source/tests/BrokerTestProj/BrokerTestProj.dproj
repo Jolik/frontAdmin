@@ -69,6 +69,11 @@
         <DCCReference Include="..\..\services\router\entities\SmallRuleUnit.pas"/>
         <DCCReference Include="..\..\services\common\entities\ConditionUnit.pas"/>
         <DCCReference Include="..\..\services\common\entities\FilterUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\ChannelUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\HandlerUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\RouterSourceUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\AliasUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\QueueUnit.pas"/>
         <DCCReference Include="RulesRequestsUnit.pas"/>
         <DCCReference Include="CompaniesRequestsUnit.pas"/>
         <DCCReference Include="SearchRequestUnit.pas"/>

@@ -135,7 +135,7 @@ begin
 //    ExecuteAbonentsRequest;
     ExecuteRulesRequest;
 //    ExecuteOperatorLinksContentRequests;
-    ExecuteReadContentStream;
+//    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
     Readln;
   except

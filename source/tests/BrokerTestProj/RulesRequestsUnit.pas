@@ -227,7 +227,7 @@ begin
         if Assigned(SmallRule) then
         begin
           SmallRule.Position := 10;
-          SmallRule.Priority := 100;
+          SmallRule.Priority := 1;
           SmallRule.Doubles := False;
           SmallRule.BreakRule := False;
           SmallRule.Enabled := True;
@@ -300,7 +300,7 @@ begin
           SmallRule := UpdateBody.Rule;
           if Assigned(SmallRule) then
           begin
-            SmallRule.Priority := SmallRule.Priority + 25;
+            SmallRule.Priority := SmallRule.Priority + 1;
             SmallRule.Position := SmallRule.Position + 2;
             SmallRule.BreakRule := not SmallRule.BreakRule;
             SmallRule.Doubles := not SmallRule.Doubles;
