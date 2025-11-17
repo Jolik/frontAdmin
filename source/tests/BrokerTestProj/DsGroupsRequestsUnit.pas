@@ -23,6 +23,15 @@ procedure ExecuteDsGroupsRequests;
     Writeln(Title);
   end;
 
+  procedure PrintCurlCommand(const Req: THttpRequest);
+  begin
+    if Assigned(Req) then
+    begin
+      Writeln('curl command:');
+      Writeln('  ' + Req.Curl);
+    end;
+  end;
+
   procedure PrintGroupDetails(const Title: string; const Group: TDsGroup);
   var
     MetadataText: string;
@@ -86,6 +95,7 @@ begin
     ListReq := Broker.CreateReqList as TDsGroupReqList;
     try
       PrintSection('1) Получаем список групп рядов и выводим их информацию');
+      PrintCurlCommand(ListReq);
       ListResp := Broker.List(ListReq);
       try
         Writeln('Request URL: ' + ListReq.GetURLWithParams);
@@ -124,6 +134,7 @@ begin
       InfoReq.IncludeDataseries := True;
       try
         PrintSection('2) Получаем полную информацию о первой группе и выводим ее');
+        PrintCurlCommand(InfoReq);
         InfoResp := Broker.Info(InfoReq);
         try
           Writeln('Request URL: ' + InfoReq.GetURLWithParams);
@@ -158,6 +169,7 @@ begin
       else
         Writeln('  Тело запроса не инициализировано.');
 
+      PrintCurlCommand(NewReq);
       NewResp := Broker.New(NewReq);
       try
         if Assigned(NewResp) then
@@ -188,6 +200,7 @@ begin
     InfoReq.IncludeDataseries := True;
     try
       PrintSection('4) Получаем полную информацию о созданной Группе рядов');
+      PrintCurlCommand(InfoReq);
       InfoResp := Broker.Info(InfoReq);
       try
         Writeln('Request URL: ' + InfoReq.GetURLWithParams);
@@ -222,6 +235,7 @@ begin
       else
         Writeln('  Тело запроса обновления пустое.');
 
+      PrintCurlCommand(UpdateReq);
       UpdateResp := Broker.Update(UpdateReq);
       try
         if Assigned(UpdateResp) then
@@ -240,6 +254,7 @@ begin
     InfoReq.IncludeDataseries := True;
     try
       PrintSection('6) Получаем полную информацию о созданной Группе рядов чтобы отобразить изменения');
+      PrintCurlCommand(InfoReq);
       InfoResp := Broker.Info(InfoReq);
       try
         Writeln('Request URL: ' + InfoReq.GetURLWithParams);
@@ -256,6 +271,7 @@ begin
     try
       RemoveReq.Id := CreatedGroupId;
       PrintSection('7) Удаляем созданную Группу рядов');
+      PrintCurlCommand(RemoveReq);
       RemoveResp := Broker.Remove(RemoveReq);
       try
         if Assigned(RemoveResp) then
