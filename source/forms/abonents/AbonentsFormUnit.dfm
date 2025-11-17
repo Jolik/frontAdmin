@@ -1,6 +1,11 @@
 inherited AbonentsForm: TAbonentsForm
   Caption = #1040#1073#1086#1085#1077#1085#1090#1099
   TextHeight = 15
+  inherited pcEntityInfo: TUniPageControl
+    inherited tsTaskInfo: TUniTabSheet
+      ExplicitHeight = 502
+    end
+  end
   inherited DatasourceEntity: TDataSource
     Left = 270
     Top = 84

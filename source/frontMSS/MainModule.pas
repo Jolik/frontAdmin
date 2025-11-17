@@ -3,8 +3,11 @@
 interface
 
 uses
+  System.SysUtils,
   System.Generics.Collections,
-  uniGUIMainModule;
+  uniGUIForm,
+  uniGUIMainModule,
+  SessionUnit;
 
 type
   TUniMainModule = class(TUniGUIMainModule)
@@ -12,7 +15,9 @@ type
     FCompID: string;
     FDeptID: string;
     FXTicket: string;
-
+    FMainForm: TUniForm;
+    FSession: TSession;
+    procedure SetSession(const Value: TSession);
 //    FOrganizationsCache: TObjectList<TOrganization>;
 //    FOrganizationsTypesCache: TObjectList<TOrgType>;
 //    FLocationsCache: TObjectList<TLocation>;
@@ -25,6 +30,8 @@ type
     property CompID: string read FCompID write FCompID;
     property DeptID: string read FDeptID write FDeptID;
     property XTicket: string read FXTicket write FXTicket;
+    property MainForm: TUniForm read FMainForm write FMainForm;
+    property Session: TSession read FSession write SetSession;
 
 //    procedure AssignOrganizationsTo(Dest: TObjectList<TOrganization>);
 //    procedure UpdateOrganizationsCache(Src: TObjectList<TOrganization>);
@@ -101,7 +108,22 @@ begin
 //  FLocationsCache.Free;
 //  FOrganizationsCache.Free;
 //  FOrganizationsTypesCache.Free;
+  FreeAndNil(FSession);
   inherited;
+end;
+
+procedure TUniMainModule.SetSession(const Value: TSession);
+begin
+  if Value = nil then
+  begin
+    FreeAndNil(FSession);
+    Exit;
+  end;
+
+  if not Assigned(FSession) then
+    FSession := TSession.Create;
+
+  FSession.Assign(Value);
 end;
 
 //procedure TUniMainModule.UpdateContextTypesCache(Src: TObjectList<TContextType>);

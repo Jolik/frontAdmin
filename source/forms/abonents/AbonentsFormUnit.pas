@@ -5,14 +5,15 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
+  uniGUIClasses, uniGUIForm, ListParentFormUnit, Data.DB,
+   uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
    ParentEditFormUnit,
   RestBrokerBaseUnit, BaseRequests, BaseResponses, RestEntityBrokerUnit,
-  AbonentsRestBrokerUnit, uniPanel, uniLabel;
+  AbonentsRestBrokerUnit, uniPanel, uniLabel, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
 
 type
   TAbonentsForm = class(TListParentForm)
@@ -40,7 +41,7 @@ end;
 
 function TAbonentsForm.CreateRestBroker: TRestEntityBroker;
 begin
-  Result := TAbonentsRestBroker.Create;
+  Result := TAbonentsRestBroker.Create(UniMainModule.XTicket);
 end;
 
 function TAbonentsForm.CreateEditForm: TParentEditForm;

@@ -23,18 +23,36 @@ implementation
 {$R *.dfm}
 
 uses
+  AppConfigUnit,
   uniGUIVars;
 
 function UniServerModule: TUniServerModule;
 begin
   Result := TUniServerModule(UniGUIServerInstance);
-  Result.SetTcpPort(8080);
+  if AppConfig = nil then
+    LoadAppConfig('FRONTMSS');
+
+  if (AppConfig <> nil) and (AppConfig.Port > 0) then
+    Result.SetTcpPort(AppConfig.Port)
+  else
+    Result.SetTcpPort(8077);
 end;
 
 procedure TUniServerModule.FirstInit;
+var
+  PathValue: string;
 begin
+  if AppConfig = nil then
+    LoadAppConfig('FRONTMSS');
+
+  PathValue := '/admin/mss';
+  if (AppConfig <> nil) and (AppConfig.URLPath <> '') then
+    PathValue := AppConfig.URLPath;
+  if (PathValue <> '') and (PathValue[Low(PathValue)] <> '/') then
+    PathValue := '/' + PathValue;
+
   Self.Title := 'ЦСДН - Подсистема коммутации';
-  URLPath := '/admin/mss';
+  URLPath := PathValue;
   InitServerModule(Self);
 end;
 

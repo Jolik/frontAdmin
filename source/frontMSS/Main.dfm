@@ -1,77 +1,211 @@
-object MainForm: TMainForm
-  Left = 0
-  Top = 0
+inherited MainForm: TMainForm
   ClientHeight = 722
   ClientWidth = 798
   Caption = 'MainForm'
   BorderStyle = bsNone
   WindowState = wsMaximized
-  OldCreateOrder = False
-  MonitoredKeys.Keys = <>
   Movable = False
+  Visible = True
   PageMode = True
-  OnCreate = UniFormCreate
-  OnDestroy = UniFormDestroy
+  ExplicitWidth = 798
+  ExplicitHeight = 722
   TextHeight = 15
-  object btnAliases: TUniButton
-    Left = 40
-    Top = 296
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1040#1083#1080#1072#1089#1099
-    TabOrder = 3
-    OnClick = btnAliasesClick
-  end
-  object btnChannel: TUniButton
-    Left = 40
-    Top = 440
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1050#1072#1085#1072#1083#1099
-    TabOrder = 0
-    OnClick = btnChannelClick
-  end
-  object btnLinks: TUniButton
-    Left = 40
-    Top = 336
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1051#1080#1085#1082#1080
+  inherited pnlTop: TUniPanel
+    Width = 798
     TabOrder = 1
-    OnClick = btnLinksClick
+    inherited lblUtcTime: TUniLabel
+      Width = 290
+    end
+    inherited uncntnrpnAuth: TUniContainerPanel
+      Left = 291
+      ExplicitLeft = 291
+    end
   end
-  object btnQueues: TUniButton
-    Left = 40
-    Top = 409
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1054#1095#1077#1088#1077#1076#1080
-    TabOrder = 11
-    OnClick = btnQueuesClick
-  end
-  object btnRouterSources: TUniButton
-    Left = 40
-    Top = 480
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1048#1089#1090#1086#1095#1085#1080#1082#1080
-    TabOrder = 2
-    OnClick = btnRouterSourcesClick
-  end
-  object btnAbonents: TUniButton
-    Left = 40
-    Top = 256
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1040#1073#1086#1085#1077#1085#1090#1099
-    TabOrder = 4
-    OnClick = btnAbonentsClick
+  inherited pnlRight: TUniPanel
+    Width = 113
+    Height = 677
+    TabOrder = 0
+    Collapsible = True
+    ExplicitLeft = 0
+    ExplicitWidth = 113
+    ExplicitHeight = 677
+    object btnAbonents: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 97
+      Width = 105
+      Height = 25
+      Hint = ''
+      Caption = #1040#1073#1086#1085#1077#1085#1090#1099
+      Align = alTop
+      TabOrder = 1
+      OnClick = btnAbonentsClick
+      ExplicitLeft = 7
+      ExplicitTop = 57
+      ExplicitWidth = 75
+    end
+    object btnAliases: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 159
+      Width = 105
+      Height = 25
+      Hint = ''
+      Caption = #1040#1083#1080#1072#1089#1099
+      Align = alTop
+      TabOrder = 2
+      OnClick = btnAliasesClick
+      ExplicitLeft = 7
+      ExplicitTop = 97
+      ExplicitWidth = 75
+    end
+    object btnChannel: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 252
+      Width = 105
+      Height = 25
+      Hint = ''
+      Caption = #1050#1072#1085#1072#1083#1099
+      Align = alTop
+      TabOrder = 3
+      OnClick = btnChannelClick
+      ExplicitLeft = 7
+      ExplicitTop = 241
+      ExplicitWidth = 75
+    end
+    object btnHandlers: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 221
+      Width = 105
+      Height = 25
+      Hint = ''
+      Caption = #1054#1073#1088#1072#1073#1086#1090#1095#1080#1082#1080
+      Align = alTop
+      TabOrder = 4
+      OnClick = btnHandlersClick
+      ExplicitLeft = 7
+      ExplicitTop = 177
+      ExplicitWidth = 75
+    end
+    object btnLinks: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 190
+      Width = 105
+      Height = 25
+      Hint = ''
+      Caption = #1051#1080#1085#1082#1080
+      Align = alTop
+      TabOrder = 5
+      OnClick = btnLinksClick
+      ExplicitLeft = 7
+      ExplicitTop = 137
+      ExplicitWidth = 75
+    end
+    object btnOperatorLinks: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 105
+      Height = 25
+      Hint = ''
+      Caption = #1054#1087#1077#1088'. '#1089#1074#1103#1079#1080
+      Align = alTop
+      TabOrder = 6
+      OnClick = btnOperatorLinksClick
+      ExplicitLeft = 7
+      ExplicitTop = 17
+      ExplicitWidth = 75
+    end
+    object btnQueues: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 128
+      Width = 105
+      Height = 25
+      Hint = ''
+      Caption = #1054#1095#1077#1088#1077#1076#1080
+      Align = alTop
+      TabOrder = 7
+      OnClick = btnQueuesClick
+      ExplicitLeft = 7
+      ExplicitTop = 210
+      ExplicitWidth = 75
+    end
+    object btnRouterSources: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 66
+      Width = 105
+      Height = 25
+      Hint = ''
+      Caption = #1048#1089#1090#1086#1095#1085#1080#1082#1080
+      Align = alTop
+      TabOrder = 8
+      OnClick = btnRouterSourcesClick
+      ExplicitLeft = 7
+      ExplicitTop = 281
+      ExplicitWidth = 75
+    end
+    object btnRules: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 35
+      Width = 105
+      Height = 25
+      Hint = ''
+      Caption = #1055#1088#1072#1074#1080#1083#1072
+      Align = alTop
+      TabOrder = 9
+      OnClick = btnRulesClick
+      ExplicitLeft = 7
+      ExplicitTop = 337
+      ExplicitWidth = 75
+    end
+    object uncntnrpnInfo: TUniContainerPanel
+      Left = 1
+      Top = 548
+      Width = 111
+      Height = 128
+      Hint = ''
+      ParentColor = False
+      Align = alBottom
+      TabOrder = 10
+      ExplicitLeft = 48
+      ExplicitTop = 600
+      ExplicitWidth = 256
+      object URLLabel: TUniLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 88
+        Width = 105
+        Height = 70
+        Hint = ''
+        CreateOrder = 1
+        AutoSize = False
+        Caption = 'URL'
+        Align = alTop
+        TabOrder = 1
+        ExplicitTop = 64
+        ExplicitWidth = 92
+      end
+      object OSLabel: TUniLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 105
+        Height = 79
+        Hint = ''
+        CreateOrder = 1
+        AutoSize = False
+        Caption = 'OSLabel'
+        Align = alTop
+        TabOrder = 2
+        ExplicitWidth = 92
+      end
+    end
   end
   object btnOperatorLinksContent: TUniButton
     Left = 40
@@ -92,82 +226,6 @@ object MainForm: TMainForm
     Caption = #1054#1087#1077#1088'. '#1089#1074#1103#1079#1080
     TabOrder = 14
     OnClick = btnOperatorLinksClick
-  end
-  object btnRules: TUniButton
-    Left = 40
-    Top = 536
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1055#1088#1072#1074#1080#1083#1072
-    TabOrder = 5
-    OnClick = btnRulesClick
-  end
-  object cbCurDept: TUniComboBox
-    Left = 600
-    Top = 76
-    Width = 145
-    Hint = ''
-    Style = csDropDownList
-    Text = ''
-    TabOrder = 6
-    IconItems = <>
-  end
-  object UniLabel1: TUniLabel
-    Left = 523
-    Top = 79
-    Width = 71
-    Height = 13
-    Hint = ''
-    Caption = #1044#1077#1087#1072#1088#1090#1072#1084#1077#1085#1090
-    TabOrder = 7
-  end
-  object cbCurComp: TUniComboBox
-    Left = 600
-    Top = 51
-    Width = 145
-    Hint = ''
-    Text = ''
-    TabOrder = 8
-    IconItems = <>
-    OnChange = cbCurCompChange
-  end
-  object UniLabel2: TUniLabel
-    Left = 523
-    Top = 57
-    Width = 54
-    Height = 13
-    Hint = ''
-    Caption = #1050#1086#1084#1087#1072#1085#1080#1103
-    TabOrder = 9
-  end
-  object btnHandlers: TUniButton
-    Left = 40
-    Top = 376
-    Width = 75
-    Height = 25
-    Hint = ''
-    Caption = #1054#1073#1088#1072#1073#1086#1090#1095#1080#1082#1080
-    TabOrder = 10
-    OnClick = btnHandlersClick
-  end
-  object OSLabel: TUniLabel
-    Left = 48
-    Top = 60
-    Width = 42
-    Height = 13
-    Hint = ''
-    Caption = 'OSLabel'
-    TabOrder = 12
-  end
-  object URLLabel: TUniLabel
-    Left = 48
-    Top = 79
-    Width = 20
-    Height = 13
-    Hint = ''
-    Caption = 'URL'
-    TabOrder = 13
   end
   object btnSearch: TUniButton
     Left = 48
