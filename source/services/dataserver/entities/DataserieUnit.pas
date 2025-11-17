@@ -7,6 +7,7 @@ uses
   System.JSON,
   EntityUnit,
   FuncUnit,
+  GUIDListUnit,
   TDsTypesUnit;
 
 type
@@ -110,7 +111,7 @@ type
     FCaption: string;
     FCreated: Nullable<Int64>;
     FDef: string;
-    FDsgid: Nullable<string>;
+    FDsgid: TGUIDList;
     FDsId: string;
     FDstId: string;
     FEndObs: Nullable<Int64>;
@@ -142,7 +143,7 @@ type
     property Caption: string read FCaption write FCaption;
     property Created: Nullable<Int64> read FCreated write FCreated;
     property Def: string read FDef write FDef;
-    property Dsgid: Nullable<string> read FDsgid write FDsgid;
+    property Dsgid: TGUIDList read FDsgid;
     property DsId: string read FDsId write FDsId;
     property DstId: string read FDstId write FDstId;
     property EndObs: Nullable<Int64> read FEndObs write FEndObs;
@@ -440,7 +441,7 @@ begin
   FCaption := Src.Caption;
   FCreated := Src.Created;
   FDef := Src.Def;
-  FDsgid := Src.Dsgid;
+  FDsgid.Assign(Src.Dsgid);
   FDsId := Src.DsId;
   FDstId := Src.DstId;
   FEndObs := Src.EndObs;
@@ -487,6 +488,7 @@ constructor TDataserie.Create;
 begin
   inherited Create;
   FAttr := TDsAttrs.Create;
+  FDsgid := TGUIDList.Create;
   FLastData := TDsValue.Create;
   FLimits := TLimits.Create;
   FMetadata := TDsMetadata.Create;
@@ -495,6 +497,7 @@ end;
 destructor TDataserie.Destroy;
 begin
   FAttr.Free;
+  FDsgid.Free;
   FLastData.Free;
   FLimits.Free;
   FMetadata.Free;
@@ -524,6 +527,7 @@ end;
 procedure TDataserie.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
 var
   AttrValue: TJSONValue;
+  DsgidValue: TJSONValue;
   LastValue: TJSONValue;
   LimitsValue: TJSONValue;
   MetadataValue: TJSONValue;
@@ -535,7 +539,6 @@ begin
   FCaption := GetValueStrDef(src, 'caption', '');
   FCreated := GetNullableInt64(src, 'created');
   FDef := GetValueStrDef(src, 'def', '');
-  FDsgid := GetNullableStr(src, 'dsgid');
   FDsId := GetValueStrDef(src, 'dsid', '');
   FDstId := GetValueStrDef(src, 'dstid', '');
   FEndObs := GetNullableInt64(src, 'end_obs');
@@ -547,6 +550,12 @@ begin
   FSid := GetValueStrDef(src, 'sid', '');
   FUid := GetValueStrDef(src, 'uid', '');
   FUpdated := GetNullableInt64(src, 'updated');
+
+  DsgidValue := src.GetValue('dsgid');
+  if DsgidValue is TJSONArray then
+    FDsgid.Parse(DsgidValue as TJSONArray)
+  else
+    FDsgid.Clear;
 
   AttrValue := src.GetValue('attr');
   if AttrValue is TJSONObject then
@@ -576,6 +585,7 @@ end;
 procedure TDataserie.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
 var
   Obj: TJSONObject;
+  Arr: TJSONArray;
 begin
   if not Assigned(dst) then
     Exit;
@@ -585,8 +595,16 @@ begin
   if FCreated.HasValue then
     dst.AddPair('created', TJSONNumber.Create(FCreated.Value));
   dst.AddPair('def', FDef);
-  if FDsgid.HasValue then
-    dst.AddPair('dsgid', FDsgid.Value);
+  if FDsgid.Count > 0 then
+  begin
+    Arr := FDsgid.SerializeList;
+    try
+      dst.AddPair('dsgid', Arr);
+    except
+      Arr.Free;
+      raise;
+    end;
+  end;
   dst.AddPair('dsid', FDsId);
   dst.AddPair('dstid', FDstId);
   if FEndObs.HasValue then

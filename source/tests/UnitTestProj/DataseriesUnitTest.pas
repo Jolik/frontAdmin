@@ -147,7 +147,8 @@ function BuildDataserieJson(const ADsId, ADstId, ACaption: string): string;
 begin
   Result := '{"attr":{"height":{"b":"SFC","k":"M","v":2},"per":{"k":"MIN","v":-10},"sig":{"k":"MEAN"}},' +
     '"begin_obs":1760445606,"caption":"' + ACaption + '","created":1760446617,"def":"",' +
-    '"dsgid":null,"dsid":"' + ADsId + '","dstid":"' + ADstId + '","end_obs":1763410806,' +
+    '"dsgid":["4482b14c-a8fd-11f0-b731-02420a00015e","4482b14c-a8fd-11f0-b731-02420a00015e"],' +
+    '"dsid":"' + ADsId + '","dstid":"' + ADstId + '","end_obs":1763410806,' +
     '"hid":"009-@@@@-0000","lastData":{"c":null,"ct":1763410857.4942627,"cv":null,' +
     '"dt":1763410806,"fmt":1763410800,"uhid":null,"ut":1763410857.49465,"v":3.3,"whid":null,"wt":1763410857.49465},' +
     '"last_insert":1763410857,"limits":{"lhv":null,"hhv":null,"luv":null,"huv":null,' +
@@ -169,6 +170,8 @@ begin
       Ensure(Serie.Caption = 'ATM-AIR-TEMP', 'Caption mismatch.');
       Ensure(Serie.LastData.V.HasValue and (Abs(Serie.LastData.V.Value - 3.3) < 1e-6), 'Last value mismatch.');
       Ensure(Serie.Metadata.Urn.HasValue and (Serie.Metadata.Urn.Value = 'CF.cXML'), 'Metadata URN missing.');
+      Ensure(Serie.Dsgid.Count = 2, 'Dsgid count mismatch.');
+      Ensure(IsEqualGUID(Serie.Dsgid[0], StringToGUID('{4482b14c-a8fd-11f0-b731-02420a00015e}')), 'First Dsgid mismatch.');
       Serialized := TJSONObject.Create;
       try
         Serie.Serialize(Serialized);
@@ -176,6 +179,7 @@ begin
         try
           Roundtrip.Parse(Serialized);
           Ensure(Roundtrip.DsId = Serie.DsId, 'DSID lost after serialization.');
+          Ensure(Roundtrip.Dsgid.Count = Serie.Dsgid.Count, 'Dsgid lost after serialization.');
         finally
           Roundtrip.Free;
         end;
