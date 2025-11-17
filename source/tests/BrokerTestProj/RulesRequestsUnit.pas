@@ -15,6 +15,8 @@ uses
   RuleHttpRequests,
   RuleUnit,
   SmallRuleUnit,
+  FilterUnit,
+  ConditionUnit,
   BaseResponses;
 
 procedure ExecuteRulesRequest;
@@ -107,14 +109,14 @@ var
   RuleBody: TRule;
   UpdateBody: TRule;
   SmallRule: TSmallRule;
-  ChannelsObject: TJSONObject;
-  ChannelsArray: TJSONArray;
   CreatedRuleId: string;
   FirstRuleId: string;
   ListRule: TRule;
   ItemIndex: Integer;
   HandlerText: string;
   PriorityValue: Integer;
+  IncludeFilter: TProfileFilter;
+  FilterCondition: TCondition;
 begin
   Broker := nil;
   ListRequest := nil;
@@ -129,10 +131,10 @@ begin
   RemoveResponse := nil;
   RuleBody := nil;
   UpdateBody := nil;
-  ChannelsObject := nil;
-  ChannelsArray := nil;
   CreatedRuleId := '';
   FirstRuleId := '';
+  IncludeFilter := nil;
+  FilterCondition := nil;
 
   try
     Writeln(Format('Executing rule requests via %s:%d',
@@ -231,28 +233,28 @@ begin
           SmallRule.Enabled := True;
 
           SmallRule.Handlers.ClearStrings;
-          SmallRule.Handlers.AddString('router.demo.validate');
-          SmallRule.Handlers.AddString('router.demo.dispatch');
-
-          ChannelsObject := TJSONObject.Create;
-          try
-            ChannelsArray := TJSONArray.Create;
-            ChannelsArray.AddElement(TJSONString.Create('demo-channel-primary'));
-            ChannelsObject.AddPair('sms', ChannelsArray);
-
-            ChannelsArray := TJSONArray.Create;
-            ChannelsArray.AddElement(TJSONString.Create('email-broadcast'));
-            ChannelsArray.AddElement(TJSONString.Create('email-fallback'));
-            ChannelsObject.AddPair('email', ChannelsArray);
-
-            SmallRule.Channels.Parse(ChannelsObject);
-          finally
-            ChannelsObject.Free;
-            ChannelsObject := nil;
-          end;
+          SmallRule.Channels.Clear;
 
           SmallRule.IncFilters.Clear;
           SmallRule.ExcFilters.Clear;
+
+          IncludeFilter := TProfileFilter.Create;
+          try
+            IncludeFilter.Disable := False;
+
+            FilterCondition := TCondition.Create;
+            FilterCondition.Field := 'format';
+            FilterCondition.Text := 'unknown';
+            FilterCondition.&Type := 'eq';
+            IncludeFilter.Conditions.Add(FilterCondition);
+            FilterCondition := nil;
+
+            SmallRule.IncFilters.Add(IncludeFilter);
+            IncludeFilter := nil;
+          finally
+            IncludeFilter.Free;
+            FilterCondition.Free;
+          end;
         end;
       end;
 
@@ -305,27 +307,7 @@ begin
             SmallRule.Enabled := not SmallRule.Enabled;
 
             SmallRule.Handlers.ClearStrings;
-            SmallRule.Handlers.AddString('router.demo.validate');
-            SmallRule.Handlers.AddString('router.demo.dispatch');
-            SmallRule.Handlers.AddString('router.demo.audit');
-
-            ChannelsObject := TJSONObject.Create;
-            try
-              ChannelsArray := TJSONArray.Create;
-              ChannelsArray.AddElement(TJSONString.Create('demo-channel-updated'));
-              ChannelsArray.AddElement(TJSONString.Create('demo-channel-secondary'));
-              ChannelsObject.AddPair('sms', ChannelsArray);
-
-              ChannelsArray := TJSONArray.Create;
-              ChannelsArray.AddElement(TJSONString.Create('email-updated'));
-              ChannelsArray.AddElement(TJSONString.Create('email-fallback'));
-              ChannelsObject.AddPair('email', ChannelsArray);
-
-              SmallRule.Channels.Parse(ChannelsObject);
-            finally
-              ChannelsObject.Free;
-              ChannelsObject := nil;
-            end;
+            SmallRule.Channels.Clear;
           end;
         end;
 
