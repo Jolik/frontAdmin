@@ -207,4 +207,44 @@ inherited MainForm: TMainForm
       end
     end
   end
+  object btnOperatorLinksContent: TUniButton
+    Left = 40
+    Top = 184
+    Width = 75
+    Height = 25
+    Hint = ''
+    Caption = #1050#1086#1085#1090#1077#1085#1090' '#1083#1080#1085#1082#1086#1074
+    TabOrder = 15
+    OnClick = btnOperatorLinksContentClick
+  end
+  object btnOperatorLinks: TUniButton
+    Left = 40
+    Top = 216
+    Width = 75
+    Height = 25
+    Hint = ''
+    Caption = #1054#1087#1077#1088'. '#1089#1074#1103#1079#1080
+    TabOrder = 14
+    OnClick = btnOperatorLinksClick
+  end
+  object btnSearch: TUniButton
+    Left = 48
+    Top = 584
+    Width = 75
+    Height = 25
+    Hint = ''
+    Caption = #1055#1086#1080#1089#1082
+    TabOrder = 16
+    OnClick = btnSearchClick
+  end
+  object btnContentStream: TUniButton
+    Left = 48
+    Top = 616
+    Width = 150
+    Height = 25
+    Hint = ''
+    Caption = #1055#1086#1090#1086#1082' '#1082#1086#1085#1090#1077#1085#1090#1072
+    TabOrder = 17
+    OnClick = btnContentStreamClick
+  end
 end

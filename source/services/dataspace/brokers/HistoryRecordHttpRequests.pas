@@ -26,7 +26,6 @@ type
   TJournalRecordHistoryReq = class(TReqInfo)
   public
     constructor Create; override;
-    procedure SetJournalRecordId(const Value: string);
   end;
 
   // Body for POST /storage/history/list
@@ -94,19 +93,8 @@ constructor TJournalRecordHistoryReq.Create;
 begin
   inherited Create;
   Method := mGET;
-  SetEndpoint('storage/history');
-end;
-
-procedure TJournalRecordHistoryReq.SetJournalRecordId(const Value: string);
-var
-  Normalized: string;
-begin
-  Normalized := Value.Trim;
-  Id := Normalized;
-  if Normalized.IsEmpty then
-    SetEndpoint('storage/history')
-  else
-    SetEndpoint(Format('storage/%s/history', [Normalized]));
+  SetEndpoint('storage');
+  AddPath := 'history';
 end;
 
 { THistoryRecordSearchBody }

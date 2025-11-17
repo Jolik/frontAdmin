@@ -189,6 +189,23 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\operatorLinksContent\OperatorLinkContectFormUnit.pas">
+            <Form>OperatorLinkContectForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\contentView\ContentViewFormUnit.pas">
+            <Form>ContentViewForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\contentStream\ContentStreamFormUnit.pas">
+            <Form>ContentStreamForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\search\SearchFormUnit.pas">
+            <Form>SearchForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\ParentLinkSettingEditFrameUnit.pas">
             <Form>ParentLinkSettingEditFrame</Form>
             <FormType>dfm</FormType>
@@ -393,8 +410,22 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\services\linkop\entities\OperatorLinkUnit.pas"/>
+        <DCCReference Include="..\services\linkop\brokers\OperatorLinksHttpRequests.pas"/>
+        <DCCReference Include="..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas"/>
+        <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
-        <DCCReference Include="..\common\UniStorageHelpers.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\HistoryRecordUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\JournalRecordUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\HistoryRecordHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\SearchRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\SearchUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\SearchHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\StorageHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\StorageRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

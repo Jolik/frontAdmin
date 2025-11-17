@@ -160,6 +160,7 @@ const
   IndexKey = 'index';
   IIKey = 'ii';
   JRIDKey = 'jrid';
+  IDKey = 'id';
   KeyKey = 'key';
   MetadataKey = 'metadata';
   MetadataBodyKey = 'body';
@@ -391,7 +392,19 @@ begin
   FHash := GetValueStrDef(src, HashKey, '');
   FIndex := GetValueStrDef(src, IndexKey, '');
   FII := GetValueStrDef(src, IIKey, '');
-  FJRID := GetValueStrDef(src, JRIDKey, '');
+
+  Value := src.FindValue(JRIDKey);
+  if Assigned(Value) and not (Value is TJSONNull) then
+    FJRID := Value.Value
+  else
+  begin
+    Value := src.FindValue(IDKey);
+    if Assigned(Value) and not (Value is TJSONNull) then
+      FJRID := Value.Value
+    else
+      FJRID := '';
+  end;
+
   FKey := GetValueStrDef(src, KeyKey, '');
   FN := GetValueInt64Def(src, NKey, 0);
   FName := GetValueStrDef(src, NameKey, '');

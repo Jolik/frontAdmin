@@ -46,7 +46,7 @@ begin
   Result := TJournalRecordHistoryReq.Create;
   Result.BasePath := BasePath;
   if AJrid <> '' then
-    Result.SetJournalRecordId(AJrid);
+    Result.ID := AJrid;
 end;
 
 function THistoryRecordsRestBroker.GetForJournal(

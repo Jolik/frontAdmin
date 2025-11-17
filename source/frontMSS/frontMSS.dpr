@@ -50,6 +50,10 @@ uses
   LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
   OperatorLinkEditFormUnit in '..\forms\operatorLinks\OperatorLinkEditFormUnit.pas' {OperatorLinkEditForm: TUniForm},
   OperatorLinksFormUnit in '..\forms\operatorLinks\OperatorLinksFormUnit.pas' {OperatorLinksForm: TUniForm},
+  OperatorLinkContectFormUnit in '..\forms\operatorLinksContent\OperatorLinkContectFormUnit.pas' {OperatorLinkContectForm: TUniForm},
+  ContentViewFormUnit in '..\forms\contentView\ContentViewFormUnit.pas' {ContentViewForm: TUniForm},
+  ContentStreamFormUnit in '..\forms\contentStream\ContentStreamFormUnit.pas' {ContentStreamForm: TUniForm},
+  SearchFormUnit in '..\forms\search\SearchFormUnit.pas' {SearchForm: TUniForm},
   ParentLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\ParentLinkSettingEditFrameUnit.pas' {ParentLinkSettingEditFrame: TUniFrame},
   ProfilesFrameUnit in '..\forms\links\LinksFrames\ProfilesFrameUnit.pas' {ProfilesFrame: TUniFrame},
   ProfileFrameUnit in '..\forms\links\LinksFrames\ProfileFrameUnit.pas' {ProfileFrame: TUniFrame},
@@ -123,8 +127,19 @@ uses
   OperatorLinkUnit in '..\services\linkop\entities\OperatorLinkUnit.pas',
   OperatorLinksHttpRequests in '..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
   OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
-  UniStorageHelpers in '..\common\UniStorageHelpers.pas',
-  AuthMainFormUnit in '..\forms\common\AuthMainFormUnit.pas' {AuthMainForm: TUniForm};
+  OperatorLinksContentHttpRequests in '..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas',
+  OperatorLinksContentRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas',
+  RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas',
+  HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
+  JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
+  JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas',
+  HistoryRecordsRestBrokerUnit in '..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
+  HistoryRecordHttpRequests in '..\services\dataspace\brokers\HistoryRecordHttpRequests.pas',
+  SearchRestBrokerUnit in '..\services\dataspace\brokers\SearchRestBrokerUnit.pas',
+  SearchUnit in '..\services\dataspace\entities\SearchUnit.pas',
+  SearchHttpRequests in '..\services\dataspace\brokers\SearchHttpRequests.pas',
+  StorageHttpRequests in '..\services\dataspace\brokers\StorageHttpRequests.pas',
+  StorageRestBrokerUnit in '..\services\dataspace\brokers\StorageRestBrokerUnit.pas';
 
 {$R *.res}
 

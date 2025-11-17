@@ -33,7 +33,6 @@ type
 
   TLinkReqInfo = class(TReqInfo)
   protected
-    function BuildAddPath(const Id: string): string; override;
   public
     constructor Create; override;
     constructor CreateID(const AId: string);
@@ -101,20 +100,13 @@ constructor TLinkReqInfo.Create;
 begin
   inherited Create;
   SetEndpoint('links');
+  AddPath := 'info';
 end;
 
 constructor TLinkReqInfo.CreateID(const AId: string);
 begin
   Create;
   Id := AId;
-end;
-
-function TLinkReqInfo.BuildAddPath(const Id: string): string;
-begin
-  if Id.Trim.IsEmpty then
-    Result := ''
-  else
-    Result := Format('%s/info', [Id.Trim]);
 end;
 
 class function TLinkReqNew.BodyClassType: TFieldSetClass;

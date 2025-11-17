@@ -1,8 +1,9 @@
-unit JournalRecordRequestUnit;
+unit StorageRequestUnit;
 
 interface
 
 procedure ExecuteJournalRecordRequest;
+procedure ExecuteReadContentStream;
 
 implementation
 
@@ -12,21 +13,113 @@ uses
   IdHTTP,
   JournalRecordUnit,
   HistoryRecordUnit,
-  JournalRecordHttpRequests,
+  StorageHttpRequests,
   HistoryRecordHttpRequests,
-  JournalRecordsRestBrokerUnit,
+  StorageRestBrokerUnit,
   HistoryRecordsRestBrokerUnit;
+
+procedure ExecuteReadContentStream;
+const
+  BatchSize = 1000;
+  PollIntervalMs = 3000;
+  PollIterations = 20;
+var
+  Broker: TStorageRestBroker;
+  ListRequest: TStorageReqList;
+  ListResponse: TStorageListResponse;
+  LastN: Int64;
+  Iteration: Integer;
+
+  procedure RequestBatch(const IncludeFromN: Boolean);
+  var
+    I: Integer;
+    RecordItem: TJournalRecord;
+  begin
+    ListRequest := nil;
+    ListResponse := nil;
+    try
+      ListRequest := Broker.CreateReqList as TStorageReqList;
+      ListRequest.SetCount(BatchSize);
+
+      if IncludeFromN and (LastN > 0) then
+      begin
+        ListRequest.SetFlags(['forward']);
+        ListRequest.SetFromN(LastN.ToString);
+      end;
+
+      ListResponse := Broker.List(ListRequest);
+
+      Writeln('-----------------------------------------------------------------');
+      Writeln('Content stream request URL: ' + ListRequest.GetURLWithParams);
+      if Assigned(ListResponse) and Assigned(ListResponse.JournalRecords) then
+      begin
+        Writeln(Format('Records fetched: %d',
+          [ListResponse.JournalRecords.Count]));
+
+        if ListResponse.JournalRecords.Count = 0 then
+        begin
+          Writeln('  No new content records were returned.');
+          Exit;
+        end;
+
+        for I := 0 to ListResponse.JournalRecords.Count - 1 do
+        begin
+          RecordItem := TJournalRecord(ListResponse.JournalRecords[I]);
+          Writeln(Format('  N=%d | JRID=%s | Name=%s',
+            [RecordItem.N, RecordItem.JRID, RecordItem.Name]));
+
+          if RecordItem.N > LastN then
+            LastN := RecordItem.N;
+        end;
+
+        Writeln(Format('LastN updated to %d', [LastN]));
+      end
+      else
+        Writeln('Content stream response was empty.');
+    finally
+      ListResponse.Free;
+      ListRequest.Free;
+    end;
+  end;
+
+begin
+  Broker := nil;
+  LastN := 0;
+
+  try
+    Broker := TStorageRestBroker.Create('ST-Test');
+
+    // Initial load of the latest 1000 records.
+    RequestBatch(False);
+
+    // Poll for new records and continue requesting in the forward direction.
+    for Iteration := 1 to PollIterations do
+    begin
+      Sleep(PollIntervalMs);
+      RequestBatch(True);
+    end;
+
+  except
+    on E: EIdHTTPProtocolException do
+      Writeln(Format('HTTP error: %d %s', [E.ErrorCode, E.ErrorMessage]));
+    on E: Exception do
+      Writeln('Error: ' + E.Message);
+  end;
+
+  Writeln('-----------------------------------------------------------------');
+  Writeln('Content stream polling completed. LastN = ' + LastN.ToString);
+end;
 
 procedure ExecuteJournalRecordRequest;
 var
-  Broker: TJournalRecordsRestBroker;
+  Broker: TStorageRestBroker;
   HistoryBroker: THistoryRecordsRestBroker;
-  ListRequest: TJournalRecordReqList;
-  ListResponse: TJournalRecordListResponse;
-  InfoRequest: TJournalRecordReqInfo;
-  InfoResponse: TJournalRecordInfoResponse;
-  IdListRequest: TJournalRecordReqListByIds;
-  IdListResponse: TJournalRecordListResponse;
+  ListRequest: TStorageReqList;
+  ListResponse: TStorageListResponse;
+  InfoRequest: TStorageReqInfo;
+  InfoResponse: TStorageInfoResponse;
+  IdListRequest: TStorageReqListByIds;
+  IdListResponse: TStorageListResponse;
   HistoryRequest: TJournalRecordHistoryReq;
   HistoryResponse: THistoryRecordListResponse;
   HistorySearchRequest: THistoryRecordReqList;
@@ -54,11 +147,11 @@ begin
   TraceIdForSearch := '';
 
   try
-    Broker := TJournalRecordsRestBroker.Create('ST-Test');
+    Broker := TStorageRestBroker.Create('ST-Test');
     HistoryBroker := THistoryRecordsRestBroker.Create('ST-Test');
 
-    ListRequest := Broker.CreateReqList as TJournalRecordReqList;
-    InfoRequest := Broker.CreateReqInfo as TJournalRecordReqInfo;
+    ListRequest := Broker.CreateReqList as TStorageReqList;
+    InfoRequest := Broker.CreateReqInfo as TStorageReqInfo;
     IdListRequest := Broker.CreateReqListByIds;
     HistoryRequest := HistoryBroker.CreateJournalHistoryReq;
     HistorySearchRequest := HistoryBroker.CreateHistoryListReq;
@@ -88,7 +181,7 @@ begin
           Writeln(Format('First journal record: %s (%s)',
             [SampleRecord.Name, SampleRecord.JRID]));
 
-          InfoRequest.SetJournalRecordId(SampleJrid);
+          InfoRequest.ID := SampleJrid;
           InfoRequest.SetFlags(['body', 'history']);
           InfoResponse := Broker.Info(InfoRequest);
 
@@ -107,8 +200,12 @@ begin
             begin
               SampleHistory := THistoryRecord(
                 InfoResponse.JournalRecord.History[0]);
-              Writeln(Format('  First history event: %s (%s)',
-                [SampleHistory.Event, SampleHistory.Time]));
+              Writeln('  First history record:');
+              Writeln(Format('    Event: %s', [SampleHistory.Event]));
+              Writeln(Format('    Time: %s', [SampleHistory.Time]));
+              Writeln(Format('    Who: %s', [SampleHistory.Who]));
+              Writeln(Format('    Reason: %s', [SampleHistory.Reason]));
+              Writeln(Format('    Trace ID: %s', [SampleHistory.TraceID]));
             end
             else
               Writeln('  History: (empty)');
@@ -125,7 +222,7 @@ begin
       if not SampleJrid.IsEmpty then
       begin
         IdListRequest.SetJRIDs([SampleJrid]);
-        IdListRequest.SetFlags(['-body']);
+        IdListRequest.SetFlags(['body']);
         IdListResponse := Broker.ListByIds(IdListRequest);
 
         Writeln('-----------------------------------------------------------------');
@@ -138,7 +235,7 @@ begin
         else
           Writeln('  (empty response body)');
 
-        HistoryRequest.SetJournalRecordId(SampleJrid);
+        HistoryRequest.ID := SampleJrid;
         HistoryResponse := HistoryBroker.GetForJournal(HistoryRequest);
 
         Writeln('-----------------------------------------------------------------');
@@ -148,10 +245,19 @@ begin
         begin
           Writeln(Format('History entries returned: %d',
             [HistoryResponse.HistoryRecords.Count]));
-          if (HistoryResponse.HistoryRecords.Count > 0) and
-            (TraceIdForSearch = '') then
-            TraceIdForSearch := THistoryRecord(
-              HistoryResponse.HistoryRecords[0]).TraceID;
+          if HistoryResponse.HistoryRecords.Count > 0 then
+          begin
+            SampleHistory := THistoryRecord(HistoryResponse.HistoryRecords[0]);
+            Writeln('  First history record in response:');
+            Writeln(Format('    Event: %s', [SampleHistory.Event]));
+            Writeln(Format('    Time: %s', [SampleHistory.Time]));
+            Writeln(Format('    Who: %s', [SampleHistory.Who]));
+            Writeln(Format('    Reason: %s', [SampleHistory.Reason]));
+            Writeln(Format('    Trace ID: %s', [SampleHistory.TraceID]));
+
+            if TraceIdForSearch = '' then
+              TraceIdForSearch := SampleHistory.TraceID;
+          end;
         end
         else
           Writeln('History list response was empty.');

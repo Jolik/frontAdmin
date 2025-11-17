@@ -21,8 +21,15 @@ type
     btnAliases: TUniButton;
     btnQueues: TUniButton;
     btnAbonents: TUniButton;
-	  btnOperatorLinks: TUniButton;
+    btnOperatorLinks: TUniButton;
+    btnOperatorLinksContent: TUniButton;
     btnRules: TUniButton;
+    btnSearch: TUniButton;
+    btnContentStream: TUniButton;
+    cbCurDept: TUniComboBox;
+    UniLabel1: TUniLabel;
+    cbCurComp: TUniComboBox;
+    UniLabel2: TUniLabel;
     btnHandlers: TUniButton;
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
@@ -37,6 +44,9 @@ type
     procedure btnHandlersClick(Sender: TObject);
     procedure btnQueuesClick(Sender: TObject);
     procedure btnOperatorLinksClick(Sender: TObject);
+    procedure btnOperatorLinksContentClick(Sender: TObject);
+    procedure btnSearchClick(Sender: TObject);
+    procedure btnContentStreamClick(Sender: TObject);
   private
   public
     { Public declarations }
@@ -60,7 +70,10 @@ uses
   AbonentsFormUnit,
   RouterSourcesFormUnit,
   RulesFormUnit,
-  OperatorLinksFormUnit, HandlersFormUnit;
+  OperatorLinksFormUnit,
+  OperatorLinkContectFormUnit,
+  SearchFormUnit,
+  ContentStreamFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -93,6 +106,21 @@ end;
 procedure TMainForm.btnOperatorLinksClick(Sender: TObject);
 begin
   OperatorLinksForm.Show();
+end;
+
+procedure TMainForm.btnOperatorLinksContentClick(Sender: TObject);
+begin
+  OperatorLinkContectForm.Show();
+end;
+
+procedure TMainForm.btnSearchClick(Sender: TObject);
+begin
+  SearchForm.Show();
+end;
+
+procedure TMainForm.btnContentStreamClick(Sender: TObject);
+begin
+  ContentStreamForm.Show();
 end;
 
 procedure TMainForm.btnAliasesClick(Sender: TObject);

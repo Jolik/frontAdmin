@@ -101,6 +101,8 @@
         <DCCReference Include="HistoryRecordUnitTest.pas"/>
         <DCCReference Include="JournalRecordsAttrsUnitTest.pas"/>
         <DCCReference Include="JournalRecordsUnitTest.pas"/>
+        <DCCReference Include="SearchUnitTests.pas"/>
+        <DCCReference Include="OperatorLinksContentRestBrokerUnitTest.pas"/>
         <DCCReference Include="..\..\common\FuncUnit.pas"/>
         <DCCReference Include="..\..\services\common\entities\EntityUnit.pas"/>
         <DCCReference Include="..\..\logging\LoggingUnit.pas"/>
@@ -108,7 +110,20 @@
         <DCCReference Include="..\..\services\dataspace\entities\HistoryRecordUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\entities\SearchUnit.pas"/>
         <DCCReference Include="..\..\common\GUIDListUnit.pas"/>
+        <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\APIConst.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\BaseRequests.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\BaseResponses.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\HttpClientUnit.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\RestBrokerBaseUnit.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\RestEntityBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\linkop\entities\OperatorLinkUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

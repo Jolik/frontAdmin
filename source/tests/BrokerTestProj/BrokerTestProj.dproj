@@ -40,6 +40,8 @@
         <DCCReference Include="..\..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas"/>
         <DCCReference Include="..\..\services\linkop\entities\OperatorLinkUnit.pas"/>
         <DCCReference Include="..\..\services\common\entities\StringUnit.pas"/>
         <DCCReference Include="..\..\services\datacomm\entities\LinkUnit.pas"/>
@@ -55,15 +57,26 @@
         <DCCReference Include="..\..\common\StringListUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\HistoryRecordUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordUnit.pas"/>
-        <DCCReference Include="..\..\services\dataspace\brokers\JournalRecordsRestBrokerUnit.pas"/>
-        <DCCReference Include="..\..\services\dataspace\brokers\JournalRecordHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas"/>
-        <DCCReference Include="JournalRecordRequestUnit.pas"/>
+        <DCCReference Include="StorageRequestUnit.pas"/>
+        <DCCReference Include="OperatorRequestsUnit.pas"/>
+        <DCCReference Include="OperatorLinksContentRequestsUnit.pas"/>
+        <DCCReference Include="AbonentsRequestsUnit.pas"/>
+        <DCCReference Include="CompaniesRequestsUnit.pas"/>
+        <DCCReference Include="SearchRequestUnit.pas"/>
         <DCCReference Include="..\..\common\GUIDListUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\RestBrokerBaseUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\SearchRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\SearchHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\dataspace\entities\SearchUnit.pas"/>
+        <DCCReference Include="..\..\services\acl\brokers\CompaniesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\acl\brokers\CompanyHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\acl\entities\CompanyUnit.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\StorageHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

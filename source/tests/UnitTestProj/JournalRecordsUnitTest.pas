@@ -337,6 +337,41 @@ begin
   end;
 end;
 
+procedure TestParseJournalRecordWithIdFallback;
+var
+  JsonObj, Serialized: TJSONObject;
+  RecordItem: TJournalRecord;
+  Value: TJSONValue;
+begin
+  JsonObj := TJSONObject.Create;
+  try
+    JsonObj.AddPair('id', 'content-record-id');
+    JsonObj.AddPair('name', 'Sample content record');
+
+    RecordItem := TJournalRecord.Create;
+    try
+      RecordItem.Parse(JsonObj);
+
+      Ensure(RecordItem.JRID = 'content-record-id', 'Поле JRID должно считываться из id.');
+
+      Serialized := RecordItem.Serialize;
+      try
+        Value := Serialized.Values['jrid'];
+        Ensure(Assigned(Value) and SameText(Value.Value, 'content-record-id'),
+          'Поле jrid должно присутствовать при сериализации.');
+
+        Ensure(not Assigned(Serialized.Values['id']), 'Поле id не должно сериализовываться.');
+      finally
+        Serialized.Free;
+      end;
+    finally
+      RecordItem.Free;
+    end;
+  finally
+    JsonObj.Free;
+  end;
+end;
+
 procedure TestAssignJournalRecord;
 var
   JsonObj: TJSONObject;
@@ -435,6 +470,7 @@ procedure RunJournalRecordTests;
 begin
   TestParseJournalRecord;
   TestSerializeJournalRecord;
+  TestParseJournalRecordWithIdFallback;
   TestAssignJournalRecord;
   TestJournalRecordListParse;
 end;
