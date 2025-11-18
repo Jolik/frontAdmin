@@ -73,6 +73,18 @@ inherited MainForm: TMainForm
       TabOrder = 1
       OnClick = btnAbonentsClick
     end
+    object btnUsers: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 97
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = #1055#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1080
+      Align = alTop
+      TabOrder = 2
+      OnClick = btnUsersClick
+    end
     object btnAliases: TUniButton
       AlignWithMargins = True
       Left = 4
@@ -82,7 +94,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1040#1083#1080#1072#1089#1099
       Align = alTop
-      TabOrder = 2
+      TabOrder = 3
       OnClick = btnAliasesClick
     end
     object btnChannel: TUniButton
@@ -118,7 +130,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1051#1080#1085#1082#1080
       Align = alTop
-      TabOrder = 5
+      TabOrder = 6
       OnClick = btnLinksClick
     end
     object btnOperatorLinks: TUniButton
@@ -142,7 +154,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1054#1095#1077#1088#1077#1076#1080
       Align = alTop
-      TabOrder = 7
+      TabOrder = 8
       OnClick = btnQueuesClick
     end
     object btnRouterSources: TUniButton
@@ -154,7 +166,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1048#1089#1090#1086#1095#1085#1080#1082#1080
       Align = alTop
-      TabOrder = 8
+      TabOrder = 9
       OnClick = btnRouterSourcesClick
     end
     object btnRules: TUniButton
@@ -166,7 +178,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1055#1088#1072#1074#1080#1083#1072
       Align = alTop
-      TabOrder = 9
+      TabOrder = 10
       OnClick = btnRulesClick
     end
     object uncntnrpnInfo: TUniContainerPanel
@@ -214,7 +226,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1050#1086#1085#1090#1077#1085#1090' '#1083#1080#1085#1082#1086#1074
       Align = alTop
-      TabOrder = 11
+      TabOrder = 12
       OnClick = btnOperatorLinksContentClick
     end
     object btnSearch: TUniButton
@@ -226,7 +238,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1055#1086#1080#1089#1082
       Align = alTop
-      TabOrder = 12
+      TabOrder = 13
       OnClick = btnSearchClick
     end
     object btnContentStream: TUniButton
@@ -238,7 +250,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1055#1086#1090#1086#1082' '#1082#1086#1085#1090#1077#1085#1090#1072
       Align = alTop
-      TabOrder = 13
+      TabOrder = 14
       OnClick = btnContentStreamClick
     end
   end

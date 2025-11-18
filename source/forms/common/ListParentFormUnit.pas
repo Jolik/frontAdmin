@@ -74,7 +74,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, IdHTTP, LoggingUnit;
+  MainModule, uniGUIApplication, IdHTTP, LoggingUnit, HttpProtocolExceptionHelper;
 
 {  TListParentForm  }
 
@@ -108,15 +108,43 @@ end;
 procedure TListParentForm.dbgEntitySelectionChange(Sender: TObject);
 var
   LId     : string;
+  req :  TReqInfo;
+  resp : TEntityResponse;
+  ErrMsg: string;
 begin
+  req := nil; resp:= nil;
   FSelectedEntity.Free;
   LId := FDMemTableEntity.FieldByName('Id').AsString;
   if Assigned(RestBroker) then
   begin
-    var Resp := RestBroker.Info(RestBroker.CreateReqInfo(LId));
-    FSelectedEntity := Resp.Entity as TEntity;
-    if not Assigned(FSelectedEntity) then Exit;
-    OnInfoUpdated(FSelectedEntity);
+    try
+      req := RestBroker.CreateReqInfo(LId);
+      Resp := RestBroker.Info(req);
+      FSelectedEntity:= Resp.Entity;
+//      FSelectedEntity := TEntity.Create;
+//      FSelectedEntity.Assign(Resp.Entity);
+      if not Assigned(FSelectedEntity) then Exit;
+      OnInfoUpdated(FSelectedEntity);
+    except
+      on E: EIdHTTPProtocolException do
+      begin
+        var Code: Integer;
+        var ServerMessage: string;
+        if E.TryParseError(Code, ServerMessage) then
+        begin
+            if ServerMessage <> '' then
+              ErrMsg := ServerMessage
+            else
+              ErrMsg := Format('Ошибка. HTTP %d', [E.ErrorCode]);
+        end
+        else
+          ErrMsg := Format('Ошибка %S. HTTP %d: %s', [Resp.ClassName, E.ErrorCode, E.ErrorMessage]);
+          MessageDlg(ErrMsg, mtWarning, [mbOK],nil);
+          Log(ErrMsg, lrtError);
+      end;
+    end;
+    req.Free;
+//    resp.Free;
   end;
 end;
 

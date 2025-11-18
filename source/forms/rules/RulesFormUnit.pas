@@ -12,11 +12,12 @@ uses
   uniToolBar, uniGUIBaseClasses,
   ParentEditFormUnit,
   uniPanel, uniLabel,
-  RestBrokerBaseUnit, RestEntityBrokerUnit,
+  EntityUnit, RestBrokerBaseUnit, RestEntityBrokerUnit,
   RulesRestBrokerUnit;
 
 type
   TRulesForm = class(TListParentForm)
+    CredMemFDMemTableEntityCaption2: TStringField;
   private
     procedure btnNewClick(Sender: TObject);
     procedure btnUpdateClick(Sender: TObject);
@@ -25,6 +26,8 @@ type
     function CreateRestBroker(): TRestEntityBroker; override;
     function CreateEditForm(): TParentEditForm; override;
     procedure UniFormCreate(Sender: TObject);
+    procedure OnAddListItem(item: TEntity); override;
+
   end;
 
 function RulesForm: TRulesForm;
@@ -34,7 +37,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, RuleEditFormUnit, RuleUnit, EntityUnit;
+  MainModule, uniGUIApplication, RuleEditFormUnit, RuleUnit;
 
 function RulesForm: TRulesForm;
 begin
@@ -56,6 +59,13 @@ end;
 function TRulesForm.CreateRestBroker: TRestEntityBroker;
 begin
   Result := TRulesRestBroker.Create(UniMainModule.XTicket);
+end;
+
+procedure TRulesForm.OnAddListItem(item: TEntity);
+begin
+  inherited;
+  var src := item as TRule;
+  FDMemTableEntity.FieldByName('Caption').AsString := src.Caption;
 end;
 
 procedure TRulesForm.UniFormCreate(Sender: TObject);

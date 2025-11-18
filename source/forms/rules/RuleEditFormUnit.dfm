@@ -1,24 +1,13 @@
-﻿inherited RuleEditForm: TRuleEditForm
+inherited RuleEditForm: TRuleEditForm
   Caption = #1055#1088#1072#1074#1080#1083#1086' '#1084#1072#1088#1096#1088#1091#1090#1080#1079#1072#1094#1080#1080
   TextHeight = 15
-  inherited pnCaption: TUniContainerPanel
-    inherited teCaption: TUniEdit
-      ExplicitWidth = 724
-    end
-  end
-  inherited pnName: TUniContainerPanel
-    inherited teName: TUniEdit
-      ExplicitWidth = 724
-    end
-  end
   inherited pnClient: TUniContainerPanel
-    ExplicitWidth = 819
-    ExplicitHeight = 414
     ScrollHeight = 504
     ScrollWidth = 819
+    ScrollY = 111
     object lRuid: TUniLabel
       Left = 40
-      Top = 32
+      Top = -79
       Width = 26
       Height = 13
       Hint = ''
@@ -27,7 +16,7 @@
     end
     object teRuid: TUniEdit
       Left = 120
-      Top = 28
+      Top = -83
       Width = 185
       Hint = ''
       Text = ''
@@ -35,7 +24,7 @@
     end
     object lPosition: TUniLabel
       Left = 40
-      Top = 72
+      Top = -39
       Width = 47
       Height = 13
       Hint = ''
@@ -44,7 +33,7 @@
     end
     object tePosition: TUniEdit
       Left = 120
-      Top = 68
+      Top = -43
       Width = 120
       Hint = ''
       Text = ''
@@ -52,7 +41,7 @@
     end
     object lPriority: TUniLabel
       Left = 40
-      Top = 112
+      Top = 1
       Width = 59
       Height = 13
       Hint = ''
@@ -61,7 +50,7 @@
     end
     object tePriority: TUniEdit
       Left = 120
-      Top = 108
+      Top = -3
       Width = 120
       Hint = ''
       Text = ''
@@ -69,7 +58,7 @@
     end
     object chkDoubles: TUniCheckBox
       Left = 272
-      Top = 68
+      Top = -43
       Width = 170
       Height = 17
       Hint = ''
@@ -78,7 +67,7 @@
     end
     object chkBreakRule: TUniCheckBox
       Left = 272
-      Top = 108
+      Top = -3
       Width = 170
       Height = 17
       Hint = ''
@@ -87,7 +76,7 @@
     end
     object lHandlers: TUniLabel
       Left = 40
-      Top = 152
+      Top = 41
       Width = 75
       Height = 13
       Hint = ''
@@ -96,7 +85,7 @@
     end
     object meHandlers: TUniMemo
       Left = 40
-      Top = 168
+      Top = 57
       Width = 240
       Height = 96
       Hint = ''
@@ -106,7 +95,7 @@
     end
     object lChannels: TUniLabel
       Left = 312
-      Top = 152
+      Top = 41
       Width = 39
       Height = 13
       Hint = ''
@@ -115,7 +104,7 @@
     end
     object meChannels: TUniMemo
       Left = 312
-      Top = 168
+      Top = 57
       Width = 360
       Height = 96
       Hint = ''
@@ -125,7 +114,7 @@
     end
     object lIncFilters: TUniLabel
       Left = 40
-      Top = 280
+      Top = 169
       Width = 109
       Height = 13
       Hint = ''
@@ -134,7 +123,7 @@
     end
     object btnAddIncFilter: TUniButton
       Left = 160
-      Top = 276
+      Top = 165
       Width = 120
       Height = 25
       Hint = ''
@@ -144,7 +133,7 @@
     end
     object sbIncFilters: TUniScrollBox
       Left = 40
-      Top = 304
+      Top = 193
       Width = 280
       Height = 200
       Hint = ''
@@ -152,7 +141,7 @@
     end
     object lExcFilters: TUniLabel
       Left = 344
-      Top = 280
+      Top = 169
       Width = 115
       Height = 13
       Hint = ''
@@ -161,7 +150,7 @@
     end
     object btnAddExcFilter: TUniButton
       Left = 472
-      Top = 276
+      Top = 165
       Width = 120
       Height = 25
       Hint = ''
@@ -171,7 +160,7 @@
     end
     object sbExcFilters: TUniScrollBox
       Left = 344
-      Top = 304
+      Top = 193
       Width = 328
       Height = 200
       Hint = ''

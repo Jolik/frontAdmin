@@ -22,8 +22,11 @@ type
     btnDSProcessorTasks: TUniButton;
     unbtnMonitoring: TUniButton;
     unbtnSources: TUniButton;
+<<<<<<< Updated upstream
     btnObservations: TUniButton;
+=======
     btnDsGroups: TUniButton;
+>>>>>>> Stashed changes
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
     unlblName1: TUniLabel;
@@ -34,8 +37,11 @@ type
     procedure UniFormCreate(Sender: TObject);
     procedure unbtnSourcesClick(Sender: TObject);
     procedure unbtnMonitoringClick(Sender: TObject);
-    procedure btnDsGroupsClick(Sender: TObject);
+<<<<<<< Updated upstream
     procedure btnObservationsClick(Sender: TObject);
+=======
+    procedure btnDsGroupsClick(Sender: TObject);
+>>>>>>> Stashed changes
   private
   public
     { Public declarations }
@@ -63,8 +69,11 @@ uses
   MonitoringTasksFormUnit,
   SummaryTasksFormUnit,
   DSProcessorTasksFormUnit,
-  DSGroupsFormUnit,
+<<<<<<< Updated upstream
   ObservationFormUnit
+=======
+  DSGroupsFormUnit
+>>>>>>> Stashed changes
 //  AliasesFormUnit,
 //  AbonentsFormUnit,
 //  RouterSourcesFormUnit,
@@ -81,25 +90,32 @@ end;
 
 {  TMainForm  }
 
-procedure TMainForm.btnDSProcessorTasksClick(Sender: TObject);
-begin
- DSProcessorTasksForm.Show();
-end;
+  procedure TMainForm.btnDSProcessorTasksClick(Sender: TObject);
+  begin
+   DSProcessorTasksForm.Show();
+  end;
+
+<<<<<<< Updated upstream
+  procedure TMainForm.btnObservationsClick(Sender: TObject);
+  begin
+    ObservationForm.Show();
+  end;
+
+  procedure TMainForm.btnLinksClick(Sender: TObject);
+  begin
+    LinksForm.Show();
+  end;
+=======
 procedure TMainForm.btnDsGroupsClick(Sender: TObject);
 begin
   DsGroupsForm.Show();
 end;
 
-procedure TMainForm.btnObservationsClick(Sender: TObject);
-begin
-  ObservationForm.Show();
-end;
-
-
 procedure TMainForm.btnLinksClick(Sender: TObject);
 begin
   LinksForm.Show();
 end;
+>>>>>>> Stashed changes
 
 procedure TMainForm.btnStripTasksClick(Sender: TObject);
 begin

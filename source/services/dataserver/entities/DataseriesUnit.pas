@@ -1,4 +1,4 @@
-unit DataserieUnit;
+unit DataseriesUnit;
 
 interface
 
@@ -104,7 +104,7 @@ type
   end;
 
   /// <summary>Dataserver serie entity.</summary>
-  TDataserie = class(TFieldSet)
+  TDataseries = class(TFieldSet)
   private
     FAttr: TDsAttrs;
     FBeginObs: Nullable<Int64>;
@@ -161,7 +161,7 @@ type
   end;
 
   /// <summary>List helper for dataserver series.</summary>
-  TDataserieList = class(TFieldSetList)
+  TDataseriesList = class(TFieldSetList)
   public
     class function ItemClassType: TFieldSetClass; override;
     procedure ParseArray(src: TJSONArray);
@@ -425,18 +425,18 @@ begin
     dst.AddPair('updated', TJSONNumber.Create(FUpdated.Value));
 end;
 
-{ TDataserie }
+{ TDataseries }
 
-function TDataserie.Assign(ASource: TFieldSet): Boolean;
+function TDataseries.Assign(ASource: TFieldSet): Boolean;
 var
-  Src: TDataserie;
+  Src: TDataseries;
 begin
   Result := False;
   if not Assigned(ASource) then
     Exit;
-  if not (ASource is TDataserie) then
+  if not (ASource is TDataseries) then
     Exit(inherited Assign(ASource));
-  Src := TDataserie(ASource);
+  Src := TDataseries(ASource);
   FBeginObs := Src.BeginObs;
   FCaption := Src.Caption;
   FCreated := Src.Created;
@@ -460,7 +460,7 @@ begin
   Result := True;
 end;
 
-procedure TDataserie.Clear;
+procedure TDataseries.Clear;
 begin
   FBeginObs.Clear;
   FCaption := '';
@@ -484,7 +484,7 @@ begin
   FMetadata.Clear;
 end;
 
-constructor TDataserie.Create;
+constructor TDataseries.Create;
 begin
   inherited Create;
   FAttr := TDsAttrs.Create;
@@ -494,7 +494,7 @@ begin
   FMetadata := TDsMetadata.Create;
 end;
 
-destructor TDataserie.Destroy;
+destructor TDataseries.Destroy;
 begin
   FAttr.Free;
   FDsgid.Free;
@@ -504,27 +504,27 @@ begin
   inherited;
 end;
 
-function TDataserie.HasAttr: Boolean;
+function TDataseries.HasAttr: Boolean;
 begin
   Result := FAttr.Height.HasValues or FAttr.Per.HasValues or FAttr.Sig.HasValues;
 end;
 
-function TDataserie.HasLastData: Boolean;
+function TDataseries.HasLastData: Boolean;
 begin
   Result := FLastData.HasValues;
 end;
 
-function TDataserie.HasLimits: Boolean;
+function TDataseries.HasLimits: Boolean;
 begin
   Result := FLimits.HasValues;
 end;
 
-function TDataserie.HasMetadata: Boolean;
+function TDataseries.HasMetadata: Boolean;
 begin
   Result := FMetadata.HasValues;
 end;
 
-procedure TDataserie.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure TDataseries.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
 var
   AttrValue: TJSONValue;
   DsgidValue: TJSONValue;
@@ -582,7 +582,7 @@ begin
     FMetadata.Clear;
 end;
 
-procedure TDataserie.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+procedure TDataseries.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
 var
   Obj: TJSONObject;
   Arr: TJSONArray;
@@ -670,19 +670,19 @@ begin
   end;
 end;
 
-{ TDataserieList }
+{ TDataseriesList }
 
-class function TDataserieList.ItemClassType: TFieldSetClass;
+class function TDataseriesList.ItemClassType: TFieldSetClass;
 begin
-  Result := TDataserie;
+  Result := TDataseries;
 end;
 
-procedure TDataserieList.ParseArray(src: TJSONArray);
+procedure TDataseriesList.ParseArray(src: TJSONArray);
 begin
   ParseList(src);
 end;
 
-function TDataserieList.SerializeArray: TJSONArray;
+function TDataseriesList.SerializeArray: TJSONArray;
 begin
   Result := SerializeList;
 end;

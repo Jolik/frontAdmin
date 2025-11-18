@@ -116,6 +116,18 @@ inherited MainForm: TMainForm
       OnClick = btnDSProcessorTasksClick
       ExplicitWidth = 105
     end
+    object btnDsGroups: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 159
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = 'DS Groups'
+      Align = alTop
+      TabOrder = 5
+      OnClick = btnDsGroupsClick
+    end
     object unbtnMonitoring: TUniButton
       AlignWithMargins = True
       Left = 4
@@ -132,7 +144,7 @@ inherited MainForm: TMainForm
     object unbtnSources: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 159
+      Top = 190
       Width = 137
       Height = 25
       Hint = ''

@@ -7,49 +7,11 @@ uses
   System.JSON,
   System.DateUtils,
   EntityUnit,
+  DataseriesUnit,
+  StringListUnit,
   FuncUnit;
 
 type
-  /// <summary>Represents a single dataserie inside a dataserver group.</summary>
-  TDataserie = class(TFieldSet)
-  private
-    FDsId: string;
-    FCreated: TDateTime;
-    FUpdated: TDateTime;
-    FHasCreated: Boolean;
-    FHasUpdated: Boolean;
-    FMid: string;
-    FLastInsert: TDateTime;
-    FHasLastInsert: Boolean;
-    FLastData: TJSONObject;
-    procedure SetLastData(Value: TJSONObject);
-  public
-    constructor Create; override;
-    destructor Destroy; override;
-    function Assign(ASource: TFieldSet): Boolean; override;
-    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
-
-    property Dsid: string read FDsId write FDsId;
-    property Created: TDateTime read FCreated write FCreated;
-    property Updated: TDateTime read FUpdated write FUpdated;
-    property Mid: string read FMid write FMid;
-    property LastInsert: TDateTime read FLastInsert write FLastInsert;
-    property LastData: TJSONObject read FLastData write SetLastData;
-    property HasLastInsert: Boolean read FHasLastInsert;
-    property HasCreated: Boolean read FHasCreated;
-    property HasUpdated: Boolean read FHasUpdated;
-  end;
-
-  /// <summary>Collection helper for dataseries.</summary>
-  TDataserieList = class(TFieldSetList)
-  private
-    function GetItem(Index: Integer): TDataserie;
-  public
-    class function ItemClassType: TFieldSetClass; override;
-    property Items[Index: Integer]: TDataserie read GetItem; default;
-  end;
-
   /// <summary>Group of dataserver series with metadata and relations.</summary>
   TDsGroup = class(TFieldSet)
   private
@@ -58,14 +20,13 @@ type
     FPdsgid: string;
     FCtxid: string;
     FSid: string;
-    FMetadata: TJSONObject;
-    FDataseries: TDataserieList;
+    FMetadata: TKeyValueStringList;
+    FDataseries: TDataseriesList;
     FDataseriesCount: Integer;
     FCreated: TDateTime;
     FUpdated: TDateTime;
     FHasCreated: Boolean;
     FHasUpdated: Boolean;
-    procedure SetMetadata(Value: TJSONObject);
     function HasMetadata: Boolean;
     function HasDataseries: Boolean;
     function GetDataseriesCount: Integer;
@@ -81,8 +42,8 @@ type
     property Pdsgid: string read FPdsgid write FPdsgid;
     property Ctxid: string read FCtxid write FCtxid;
     property Sid: string read FSid write FSid;
-    property Metadata: TJSONObject read FMetadata write SetMetadata;
-    property Dataseries: TDataserieList read FDataseries;
+    property Metadata: TKeyValueStringList read FMetadata;
+    property Dataseries: TDataseriesList read FDataseries;
     property DataseriesCount: Integer read GetDataseriesCount;
     property Created: TDateTime read FCreated write FCreated;
     property Updated: TDateTime read FUpdated write FUpdated;
@@ -100,6 +61,21 @@ type
   end;
 
 implementation
+
+const
+  DsGroupIdKey = 'dsgid';
+  ParentIdKey = 'pdsgid';
+  ContextIdKey = 'ctxid';
+  SidKey = 'sid';
+  DstIdKey = 'dstid';
+  MetadataKey = 'metadata';
+  DataseriesKey = 'dataseries';
+  DataseriesItemsKey = 'items';
+  DataseriesCountKey = 'count';
+  DataseriesMidKey = 'mid';
+  DataseriesLastInsertKey = 'last_insert';
+  DataseriesLastDataKey = 'lastData';
+
 
 function TryParseUnixTimeField(src: TJSONObject; const Key: string; out Value: TDateTime): Boolean;
 var
@@ -119,125 +95,43 @@ begin
   end;
 end;
 
-{ TDataserie }
-
-function TDataserie.Assign(ASource: TFieldSet): Boolean;
+procedure CopyKeyValue(Source, Dest: TKeyValueStringList);
 var
-  Src: TDataserie;
+  Key: string;
 begin
-  Result := inherited Assign(ASource);
-  if not Result then
+  if not Assigned(Dest) then
     Exit;
 
-  if ASource is TDataserie then
-  begin
-    Src := TDataserie(ASource);
-    FDsId := Src.Dsid;
-    FMid := Src.Mid;
-    FLastInsert := Src.LastInsert;
-    FHasLastInsert := Src.HasLastInsert;
-    FCreated := Src.Created;
-    FUpdated := Src.Updated;
-    FHasCreated := Src.HasCreated;
-    FHasUpdated := Src.HasUpdated;
-    SetLastData(Src.LastData);
-  end;
+  Dest.Clear;
+  if not Assigned(Source) then
+    Exit;
+
+  for Key in Source.Keys do
+    Dest.AddPair(Key, Source.Values[Key]);
 end;
 
-constructor TDataserie.Create;
-begin
-  inherited Create;
-  FLastData := nil;
-  FHasLastInsert := False;
-  FLastInsert := 0;
-  FCreated := 0;
-  FUpdated := 0;
-  FHasCreated := False;
-  FHasUpdated := False;
-end;
-
-destructor TDataserie.Destroy;
-begin
-  FreeAndNil(FLastData);
-  inherited;
-end;
-
-procedure TDataserie.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+procedure LoadMetadataFromJson(AJson: TJSONObject; ADict: TKeyValueStringList);
 var
-  LastInsertValue: TJSONValue;
-  LastDataValue: TJSONValue;
-  UnixValue: Int64;
+  Pair: TJSONPair;
+  Value: string;
 begin
-  inherited Parse(src, APropertyNames);
-  FDsId := GetValueStrDef(src, 'dsid', '');
-  FMid := GetValueStrDef(src, 'mid', '');
+  if not Assigned(ADict) then
+    Exit;
 
-  FHasLastInsert := False;
-  FLastInsert := 0;
-  LastInsertValue := nil;
-  if Assigned(src) then
-    LastInsertValue := src.FindValue('last_insert');
-  if LastInsertValue is TJSONNumber then
+  ADict.Clear;
+  if not Assigned(AJson) then
+    Exit;
+
+  for Pair in AJson do
   begin
-    UnixValue := Trunc(TJSONNumber(LastInsertValue).AsDouble);
-    FLastInsert := UnixToDateTime(UnixValue);
-    FHasLastInsert := True;
+    if Pair.JsonValue is TJSONString then
+      Value := TJSONString(Pair.JsonValue).Value
+    else
+      Value := Pair.JsonValue.Value;
+    ADict.AddPair(Pair.JsonString.Value, Value);
   end;
-
-  FHasCreated := TryParseUnixTimeField(src, 'created', FCreated);
-  FHasUpdated := TryParseUnixTimeField(src, 'updated', FUpdated);
-
-  LastDataValue := nil;
-  if Assigned(src) then
-    LastDataValue := src.FindValue('lastData');
-  if LastDataValue is TJSONObject then
-    SetLastData(TJSONObject(LastDataValue))
-  else
-    SetLastData(nil);
 end;
 
-procedure TDataserie.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
-begin
-  inherited Serialize(dst, APropertyNames);
-  if not FDsId.IsEmpty then
-    dst.AddPair('dsid', FDsId);
-  if not FMid.IsEmpty then
-    dst.AddPair('mid', FMid);
-  if FHasLastInsert then
-    dst.AddPair('last_insert', TJSONNumber.Create(DateTimeToUnix(FLastInsert)));
-  if FHasCreated then
-    dst.AddPair('created', TJSONNumber.Create(DateTimeToUnix(FCreated)));
-  if FHasUpdated then
-    dst.AddPair('updated', TJSONNumber.Create(DateTimeToUnix(FUpdated)));
-  if Assigned(FLastData) then
-    dst.AddPair('lastData', TJSONObject(FLastData.Clone));
-end;
-
-procedure TDataserie.SetLastData(Value: TJSONObject);
-begin
-  FreeAndNil(FLastData);
-  if Assigned(Value) then
-    FLastData := TJSONObject(Value.Clone)
-  else
-    FLastData := nil;
-end;
-
-{ TDataserieList }
-
-class function TDataserieList.ItemClassType: TFieldSetClass;
-begin
-  Result := TDataserie;
-end;
-
-function TDataserieList.GetItem(Index: Integer): TDataserie;
-begin
-  if (Index < 0) or (Index >= Count) then
-    Exit(nil);
-  if inherited Items[Index] is TDataserie then
-    Result := TDataserie(inherited Items[Index])
-  else
-    Result := nil;
-end;
 
 { TDsGroup }
 
@@ -257,7 +151,7 @@ begin
     FPdsgid := Src.Pdsgid;
     FCtxid := Src.Ctxid;
     FSid := Src.Sid;
-    SetMetadata(Src.Metadata);
+    CopyKeyValue(Src.FMetadata, FMetadata);
     FDataseries.Assign(Src.Dataseries);
     FDataseriesCount := Src.FDataseriesCount;
     FCreated := Src.Created;
@@ -270,8 +164,8 @@ end;
 constructor TDsGroup.Create;
 begin
   inherited Create;
-  FMetadata := nil;
-  FDataseries := TDataserieList.Create;
+  FMetadata := TKeyValueStringList.Create;
+  FDataseries := TDataseriesList.Create;
   FDataseriesCount := -1;
   FCreated := 0;
   FUpdated := 0;
@@ -318,14 +212,7 @@ begin
   FSid := GetValueStrDef(src, 'sid', '');
   FHasCreated := TryParseUnixTimeField(src, 'created', FCreated);
   FHasUpdated := TryParseUnixTimeField(src, 'updated', FUpdated);
-
-  MetadataValue := nil;
-  if Assigned(src) then
-    MetadataValue := src.FindValue('metadata');
-  if MetadataValue is TJSONObject then
-    SetMetadata(TJSONObject(MetadataValue))
-  else
-    SetMetadata(nil);
+  LoadMetadataFromJson(src.GetValue(MetadataKey) as TJSONObject, FMetadata);
 
   FDataseries.Clear;
   FDataseriesCount := -1;
@@ -361,8 +248,18 @@ begin
     dst.AddPair('created', TJSONNumber.Create(DateTimeToUnix(FCreated)));
   if FHasUpdated then
     dst.AddPair('updated', TJSONNumber.Create(DateTimeToUnix(FUpdated)));
-  if HasMetadata then
-    dst.AddPair('metadata', TJSONObject(FMetadata.Clone));
+
+  if Assigned(FMetadata) and (FMetadata.Count > 0) then
+  begin
+    var MetaObj := FMetadata.Serialize;
+    try
+      dst.AddPair(MetadataKey, MetaObj);
+    except
+      MetaObj.Free;
+      raise;
+    end;
+  end;
+
   if HasDataseries then
   begin
     DataseriesObj := TJSONObject.Create;
@@ -376,15 +273,6 @@ begin
       raise;
     end;
   end;
-end;
-
-procedure TDsGroup.SetMetadata(Value: TJSONObject);
-begin
-  FreeAndNil(FMetadata);
-  if Assigned(Value) then
-    FMetadata := TJSONObject(Value.Clone)
-  else
-    FMetadata := nil;
 end;
 
 { TDsGroupList }

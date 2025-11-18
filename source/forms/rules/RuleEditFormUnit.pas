@@ -167,7 +167,7 @@ begin
     ConditionsArray := AFilter.Conditions.SerializeList;
     try
       if Assigned(ConditionsArray) then
-        FMemo.Text := ConditionsArray.ToJSON
+        FMemo.Text := ConditionsArray.ToJSON([])
       else
         FMemo.Text := '[]';
     finally
@@ -280,6 +280,7 @@ begin
   Rule.Ruid := teRuid.Text;
 
 //!!!  SmallRule := Rule.Rule;
+  SmallRule := TSmallRule.Create;
   SmallRule.Position := StrToIntDef(tePosition.Text, 0);
   SmallRule.Priority := StrToIntDef(tePriority.Text, 0);
   SmallRule.Doubles := chkDoubles.Checked;
@@ -462,7 +463,7 @@ begin
 
     teRuid.Text := Rule.Ruid;
 
-//!!!    SmallRule := Rule.Rule;
+    SmallRule := Rule.Rule;
     tePosition.Text := IntToStr(SmallRule.Position);
     tePriority.Text := IntToStr(SmallRule.Priority);
     chkDoubles.Checked := SmallRule.Doubles;

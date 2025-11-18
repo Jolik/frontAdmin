@@ -21,6 +21,7 @@ type
     btnAliases: TUniButton;
     btnQueues: TUniButton;
     btnAbonents: TUniButton;
+    btnUsers: TUniButton;
     btnOperatorLinks: TUniButton;
     btnRules: TUniButton;
     btnHandlers: TUniButton;
@@ -41,6 +42,7 @@ type
     procedure UniFormCreate(Sender: TObject);
     procedure btnHandlersClick(Sender: TObject);
     procedure btnQueuesClick(Sender: TObject);
+    procedure btnUsersClick(Sender: TObject);
     procedure btnOperatorLinksClick(Sender: TObject);
     procedure btnOperatorLinksContentClick(Sender: TObject);
     procedure btnSearchClick(Sender: TObject);
@@ -71,7 +73,7 @@ uses
   OperatorLinksFormUnit,
   OperatorLinkContectFormUnit,
   SearchFormUnit,
-  ContentStreamFormUnit, HandlersFormUnit;
+  ContentStreamFormUnit, HandlersFormUnit, UsersFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -100,6 +102,11 @@ end;
 procedure TMainForm.btnAbonentsClick(Sender: TObject);
 begin
   AbonentsForm.Show();
+end;
+
+procedure TMainForm.btnUsersClick(Sender: TObject);
+begin
+  UsersForm.Show();
 end;
 
 procedure TMainForm.btnOperatorLinksClick(Sender: TObject);

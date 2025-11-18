@@ -95,6 +95,8 @@ uses
   StripTasksFormUnit in '..\forms\strip\StripTasksFormUnit.pas' {StripTasksForm: TUniForm},
   SummaryTaskEditFormUnit in '..\forms\summary\SummaryTaskEditFormUnit.pas' {SummaryTaskEditForm: TUniForm},
   SummaryTasksFormUnit in '..\forms\summary\SummaryTasksFormUnit.pas' {SummaryTasksForm: TUniForm},
+  DSGroupEditFormUnit in '..\forms\dsgroups\DSGroupEditFormUnit.pas' {DsGroupEditForm: TUniForm},
+  DSGroupsFormUnit in '..\forms\dsgroups\DSGroupsFormUnit.pas' {DsGroupsForm: TUniForm},
   SummaryTaskUnit in '..\services\summary\entities\SummaryTaskUnit.pas',
   SummaryTaskCustomSettingsUnit in '..\services\summary\entities\SummaryTaskCustomSettingsUnit.pas',
   SelectTaskSourcesFormUnit in '..\forms\tasks\SelectTaskSourcesFormUnit.pas' {SelectTaskSourcesForm: TUniForm},
@@ -133,7 +135,9 @@ uses
   UserUnit in '..\services\acl\entities\UserUnit.pas',
   MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas',
   DsGroupUnit in '..\services\dataserver\entities\DsGroupUnit.pas',
-  DataserieUnit in '..\services\dataserver\entities\DataserieUnit.pas';
+  DataseriesUnit in '..\services\dataserver\entities\DataseriesUnit.pas',
+  DsGroupsHttpRequests in '..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
+  DsGroupsRestBrokerUnit in '..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas';
 
 {$R *.res}
 

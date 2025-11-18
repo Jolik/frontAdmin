@@ -159,12 +159,12 @@ end;
 
 procedure TestDataserie;
 var
-  Serie, Roundtrip: TDataserie;
+  Serie, Roundtrip: TDataseries;
   Obj, Serialized: TJSONObject;
 begin
   Obj := ParseJsonObject(BuildDataserieJson('4482b13a-a8fd-11f0-b731-02420a00015e', 'ATM-AIR-TEMP-EM010MP002M', 'ATM-AIR-TEMP'));
   try
-    Serie := TDataserie.Create;
+    Serie := TDataseries.Create;
     try
       Serie.Parse(Obj);
       Ensure(Serie.Caption = 'ATM-AIR-TEMP', 'Caption mismatch.');
@@ -175,7 +175,7 @@ begin
       Serialized := TJSONObject.Create;
       try
         Serie.Serialize(Serialized);
-        Roundtrip := TDataserie.Create;
+        Roundtrip := TDataseries.Create;
         try
           Roundtrip.Parse(Serialized);
           Ensure(Roundtrip.DsId = Serie.DsId, 'DSID lost after serialization.');
@@ -197,20 +197,20 @@ end;
 procedure TestDataserieList;
 var
   Arr: TJSONArray;
-  List, Roundtrip: TDataserieList;
+  List, Roundtrip: TDataseriesList;
   Serialized: TJSONArray;
 begin
   Arr := ParseJsonArray('[' + BuildDataserieJson('ds-1', 'dst-1', 'First') + ',' +
     BuildDataserieJson('ds-2', 'dst-2', 'Second') + ']');
   try
-    List := TDataserieList.Create;
+    List := TDataseriesList.Create;
     try
       List.ParseArray(Arr);
       Ensure(List.Count = 2, 'List count mismatch.');
-      Ensure((List[0] is TDataserie) and (TDataserie(List[0]).DsId = 'ds-1'), 'First DSID mismatch.');
+      Ensure((List[0] is TDataseries) and (TDataseries(List[0]).DsId = 'ds-1'), 'First DSID mismatch.');
       Serialized := List.SerializeArray;
       try
-        Roundtrip := TDataserieList.Create;
+        Roundtrip := TDataseriesList.Create;
         try
           Roundtrip.ParseArray(Serialized);
           Ensure(Roundtrip.Count = 2, 'Roundtrip count mismatch.');

@@ -361,6 +361,14 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\dsgroups\DSGroupEditFormUnit.pas">
+            <Form>DsGroupEditForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dsgroups\DSGroupsFormUnit.pas">
+            <Form>DsGroupsForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\services\summary\entities\SummaryTaskUnit.pas"/>
         <DCCReference Include="..\services\summary\entities\SummaryTaskCustomSettingsUnit.pas"/>
         <DCCReference Include="..\forms\tasks\SelectTaskSourcesFormUnit.pas">
@@ -420,7 +428,9 @@
         <DCCReference Include="..\services\acl\entities\UserUnit.pas"/>
         <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\DsGroupUnit.pas"/>
-        <DCCReference Include="..\services\dataserver\entities\DataserieUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\DataseriesUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\brokers\DsGroupsHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -446,7 +456,7 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
-            <Deployment Version="5">
+            <Deployment Version="4">
                 <DeployFile LocalName="Linux64\Debug\frontDCC" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput">
@@ -465,6 +475,16 @@
                     </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidClasses">
+                    <Platform Name="Android">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
+                    </Platform>
+                    <Platform Name="Android64">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidFileProvider">
