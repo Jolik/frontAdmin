@@ -237,7 +237,7 @@ begin
   if (UserMenu = nil) or (UserNameLabel = nil) or (not UserNameLabel.Visible) then
     Exit;
 
-  ScreenPoint := UserNameLabel.ClientToScreen(Point(UserNameLabel.Parent.Left + UserNameLabel.Parent.Width - UserNameLabel.Width , UserNameLabel.Height));
+  ScreenPoint := Point(UserNameLabel.Parent.Left + UserNameLabel.Parent.Width - UserNameLabel.Width , UserNameLabel.Height);
   UserMenu.Popup(ScreenPoint.X, ScreenPoint.Y);
 end;
 
