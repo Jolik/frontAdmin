@@ -149,6 +149,7 @@ uses
   MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas',
   LogEntryViewFormUnit in '..\forms\logs\LogEntryViewFormUnit.pas' {LogEntryViewForm: TUniForm},
   LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
+  MSSDashboardFormUnit in '..\forms\dashboard\MSSDashboardFormUnit.pas' {MSSDashboardForm: TUniForm},
   LogUnit in '..\services\signals\entities\LogUnit.pas',
   LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas',
   LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas';

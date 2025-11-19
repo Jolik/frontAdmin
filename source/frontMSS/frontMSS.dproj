@@ -461,6 +461,11 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\dashboard\MSSDashboardFormUnit.pas">
+            <Form>MSSDashboardForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\services\signals\entities\LogUnit.pas"/>
         <DCCReference Include="..\services\signals\brokers\LogsHttpRequests.pas"/>
         <DCCReference Include="..\services\signals\brokers\LogsRestBrokerUnit.pas"/>

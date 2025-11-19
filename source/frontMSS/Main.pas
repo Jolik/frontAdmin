@@ -15,6 +15,7 @@ uses
 
 type
   TMainForm = class(TAuthMainForm)
+    btnDashboard: TUniButton;
     btnChannel: TUniButton;
     btnLinks: TUniButton;
     btnRouterSources: TUniButton;
@@ -34,6 +35,7 @@ type
     btnLogs: TUniButton;
     unlblName1: TUniLabel;
     uncntnrpnForms: TUniContainerPanel;
+    procedure btnDashboardClick(Sender: TObject);
     procedure btnAbonentsClick(Sender: TObject);
     procedure btnChannelClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
@@ -76,7 +78,7 @@ uses
   OperatorLinkContectFormUnit,
   SearchFormUnit,
   ContentStreamFormUnit, HandlersFormUnit, UsersFormUnit,
-  LogViewFormUnit;
+  LogViewFormUnit, MSSDashboardFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -140,6 +142,11 @@ end;
 procedure TMainForm.btnAliasesClick(Sender: TObject);
 begin
   AliasesForm.Show();
+end;
+
+procedure TMainForm.btnDashboardClick(Sender: TObject);
+begin
+  MSSDashboardForm.Show();
 end;
 
 procedure TMainForm.btnRouterSourcesClick(Sender: TObject);
