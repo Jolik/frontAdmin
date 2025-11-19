@@ -102,6 +102,7 @@ object ContentFrame: TContentFrame
         Size = 255
       end>
     IndexDefs = <>
+    IndexFieldNames = 'n:D'
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]

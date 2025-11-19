@@ -45,6 +45,10 @@ object LogsFrame: TLogsFrame
     Active = True
     FieldDefs = <
       item
+        Name = 'timestamp'
+        DataType = ftLargeint
+      end
+      item
         Name = 'display_time'
         DataType = ftWideString
         Size = 64
@@ -55,6 +59,7 @@ object LogsFrame: TLogsFrame
         Size = 8192
       end>
     IndexDefs = <>
+    IndexFieldNames = 'timestamp:D'
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]
@@ -70,6 +75,9 @@ object LogsFrame: TLogsFrame
     object mtLogspayload: TWideStringField
       FieldName = 'payload'
       Size = 8192
+    end
+    object mtLogstimestamp: TLargeintField
+      FieldName = 'timestamp'
     end
   end
   object LogTimer: TUniTimer

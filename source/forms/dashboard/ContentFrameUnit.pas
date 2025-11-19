@@ -257,9 +257,11 @@ begin
 
   mtContent.DisableControls;
   try
-    mtContent.First;
     while (mtContent.RecordCount > ContentMaxRecords) and (not mtContent.IsEmpty) do
+    begin
+      mtContent.Last;
       mtContent.Delete;
+    end;
   finally
     mtContent.EnableControls;
   end;

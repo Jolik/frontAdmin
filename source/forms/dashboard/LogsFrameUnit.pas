@@ -22,6 +22,7 @@ type
     mtLogs: TFDMemTable;
     mtLogsdisplay_time: TWideStringField;
     mtLogspayload: TWideStringField;
+    mtLogstimestamp: TLargeintField;
     LogTimer: TUniTimer;
     procedure UniFrameCreate(Sender: TObject);
     procedure UniFrameDestroy(Sender: TObject);
@@ -121,6 +122,7 @@ begin
       begin
         Item := Items[I];
         mtLogs.Append;
+        mtLogstimestamp.AsLargeInt := Item.Timestamp;
         mtLogsdisplay_time.AsString := FormatTimestampIso8601(Item.TimestampRaw);
         mtLogspayload.AsString := Item.Payload;
         mtLogs.Post;
@@ -255,9 +257,11 @@ begin
 
   mtLogs.DisableControls;
   try
-    mtLogs.First;
     while (mtLogs.RecordCount > LogMaxRecords) and (not mtLogs.IsEmpty) do
+    begin
+      mtLogs.Last;
       mtLogs.Delete;
+    end;
   finally
     mtLogs.EnableControls;
   end;
