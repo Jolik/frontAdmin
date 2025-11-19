@@ -12,15 +12,15 @@ type
   private
     function GetLinkList: TOperatorLinkList;
   public
-    constructor Create;
+    constructor Create; override;
     property LinkList: TOperatorLinkList read GetLinkList;
   end;
 
-  TOperatorLinkInfoResponse = class(TEntityResponse)
+  TOperatorLinkInfoResponse = class(TResponse)
   private
     function GetLink: TOperatorLink;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Link: TOperatorLink read GetLink;
   end;
 
@@ -73,7 +73,7 @@ end;
 
 function TOperatorLinkListResponse.GetLinkList: TOperatorLinkList;
 begin
-  Result := EntityList as TOperatorLinkList;
+  Result := FieldSetList as TOperatorLinkList;
 end;
 
 { TOperatorLinkInfoResponse }
@@ -85,7 +85,7 @@ end;
 
 function TOperatorLinkInfoResponse.GetLink: TOperatorLink;
 begin
-  Result := Entity as TOperatorLink;
+  Result := FieldSet as TOperatorLink;
 end;
 
 { Requests }

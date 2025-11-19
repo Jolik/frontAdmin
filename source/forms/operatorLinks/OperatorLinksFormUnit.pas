@@ -11,14 +11,14 @@ uses
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
   ParentEditFormUnit,
-  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestEntityBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestBrokerUnit,
   OperatorLinksRestBrokerUnit, uniPanel, uniLabel;
 
 type
   TOperatorLinksForm = class(TListParentForm)
   protected
     procedure Refresh(const AId: String = ''); override;
-    function CreateRestBroker: TRestEntityBroker; override;
+    function CreateRestBroker: TRestBroker; override;
     function CreateEditForm: TParentEditForm; override;
   end;
 
@@ -43,7 +43,7 @@ begin
   Result := OperatorLinkEditForm();
 end;
 
-function TOperatorLinksForm.CreateRestBroker: TRestEntityBroker;
+function TOperatorLinksForm.CreateRestBroker: TRestBroker;
 begin
   Result := TOperatorLinksRestBroker.Create(UniMainModule.XTicket);
 end;

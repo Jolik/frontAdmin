@@ -6,6 +6,9 @@
         <Projects Include="BrokerTestProj\BrokerTestProj.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="UnitTestProj\UnitTestProj.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="CommonUnitTest\CommonUnitTestProject.dproj">
             <Dependencies/>
         </Projects>
@@ -26,6 +29,15 @@
     <Target Name="BrokerTestProj:Make">
         <MSBuild Projects="BrokerTestProj\BrokerTestProj.dproj" Targets="Make"/>
     </Target>
+    <Target Name="UnitTestProj">
+        <MSBuild Projects="UnitTestProj\UnitTestProj.dproj"/>
+    </Target>
+    <Target Name="UnitTestProj:Clean">
+        <MSBuild Projects="UnitTestProj\UnitTestProj.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="UnitTestProj:Make">
+        <MSBuild Projects="UnitTestProj\UnitTestProj.dproj" Targets="Make"/>
+    </Target>
     <Target Name="CommonUnitTestProject">
         <MSBuild Projects="CommonUnitTest\CommonUnitTestProject.dproj"/>
     </Target>
@@ -36,13 +48,13 @@
         <MSBuild Projects="CommonUnitTest\CommonUnitTestProject.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="BrokerTestProj;CommonUnitTestProject"/>
+        <CallTarget Targets="BrokerTestProj;UnitTestProj;CommonUnitTestProject"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="BrokerTestProj:Clean;CommonUnitTestProject:Clean"/>
+        <CallTarget Targets="BrokerTestProj:Clean;UnitTestProj:Clean;CommonUnitTestProject:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="BrokerTestProj:Make;CommonUnitTestProject:Make"/>
+        <CallTarget Targets="BrokerTestProj:Make;UnitTestProj:Make;CommonUnitTestProject:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

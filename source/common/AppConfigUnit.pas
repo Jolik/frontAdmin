@@ -51,6 +51,7 @@ type
     FLogging: TLoggingConfig;
     FURLPath: string;
     FUseEmbedLogin: Boolean;
+    FBasePath: string;
     FServices: TObjectDictionary<string, TServiceConfig>;
     FServiceName: string;
     procedure Clear;
@@ -60,6 +61,7 @@ type
     procedure ApplyLoggingOverride(const PropertyName, Value: string);
     procedure ApplyServiceOverride(const ServiceName, PropertyName, Value: string);
     procedure ApplyPortOverride(const Value: string);
+    procedure ApplyBasePathToHttpClient;
     function GetServiceInstance(const ServiceName: string): TServiceConfig;
     function NormalizeServiceName(const Name: string): string;
   public
@@ -74,12 +76,14 @@ type
     property Port: Integer read FPort;
     property Logging: TLoggingConfig read FLogging;
     property URLPath: string read FURLPath;
+    property BasePath: string read FBasePath;
     property Services: TObjectDictionary<string, TServiceConfig> read FServices;
     property UseEmbedLogin: Boolean read FUseEmbedLogin;
     property ServiceName: string read FServiceName;
   end;
 
 procedure LoadAppConfig(const ServiceName: string = ''; const FileName: string = 'config.json');
+function ResolveServiceBasePath(const ServiceName: string): string;
 
 var
   AppConfig: TAppConfig;
@@ -90,7 +94,10 @@ uses
   System.Classes,
   System.IOUtils,
   {$IFDEF MSWINDOWS}Winapi.Windows,{$ENDIF}
-  FuncUnit;
+  FuncUnit,
+  System.Net.URLClient,
+  HttpClientUnit,
+  DefualtConfig;
 
 { TLoggingConfig }
 
@@ -159,6 +166,7 @@ begin
   FPort := 0;
   FURLPath := '';
   FUseEmbedLogin := False;
+  FBasePath := '';
   FLogging.Clear;
   FServices.Clear;
 end;
@@ -193,7 +201,10 @@ var
   FileContent: string;
 begin
   if not TFile.Exists(FileName) then
-    raise EAppConfigError.CreateFmt('Config file "%s" not found', [FileName]);
+  begin
+    LoadFromJSON(DEFAULT_CONFIG_JSON, ServiceName);
+    Exit;
+  end;
 
   FileContent := TFile.ReadAllText(FileName, TEncoding.UTF8);
   LoadFromJSON(FileContent, ServiceName);
@@ -216,6 +227,7 @@ begin
     JSONObject := JSONValue as TJSONObject;
     LoadFromJSONObject(JSONObject);
     ApplyEnvironmentOverrides;
+    ApplyBasePathToHttpClient;
   finally
     JSONValue.Free;
   end;
@@ -234,6 +246,7 @@ begin
 
   FPort := GetValueIntDef(JSONObject, 'port', 0);
   FURLPath := GetValueStrDef(JSONObject, 'url_path', '');
+  FBasePath := GetValueStrDef(JSONObject, 'base_path', '').Trim;
   FUseEmbedLogin := GetValueBool(JSONObject, 'use_embed_login');
 
   if JSONObject.TryGetValue<TJSONObject>('logging', LoggingJson) then
@@ -397,6 +410,8 @@ begin
       ApplyPortOverride(Value)
     else if Parts[0] = 'url_path' then
       FURLPath := Value
+    else if Parts[0] = 'base_path' then
+      FBasePath := Value.Trim
     else if Parts[0] = 'use_embed_login' then
     begin
       if TryParseBoolEnv(Value, BoolValue) then
@@ -494,6 +509,38 @@ begin
     FPort := IntValue;
 end;
 
+procedure TAppConfig.ApplyBasePathToHttpClient;
+var
+  Uri: TURI;
+  Host: string;
+  Port: Integer;
+begin
+  if (HttpClient = nil) or FBasePath.Trim.IsEmpty then
+    Exit;
+
+  try
+    Uri := TURI.Create(FBasePath.Trim);
+  except
+    Exit;
+  end;
+
+  Host := Uri.Host;
+  if Host = '' then
+    Exit;
+
+  Port := Uri.Port;
+  if Port <= 0 then
+  begin
+    if SameText(Uri.Scheme, 'https') then
+      Port := 443
+    else
+      Port := 80;
+  end;
+
+  HttpClient.Addr := Host;
+  HttpClient.Port := Port;
+end;
+
 function TAppConfig.GetServiceInstance(const ServiceName: string): TServiceConfig;
 begin
   if ServiceName = '' then
@@ -533,6 +580,60 @@ begin
     AppConfig := TAppConfig.Create;
 
   AppConfig.LoadFromFile(ConfigPath, ServiceName);
+end;
+
+function ResolveServiceBasePath(const ServiceName: string): string;
+  function CombineBase(const BaseUrl, Relative: string): string;
+  var
+    CleanBase: string;
+    CleanRelative: string;
+  begin
+    CleanBase := BaseUrl.Trim;
+    CleanRelative := Relative.Trim;
+
+    while (CleanBase <> '') and CleanBase.EndsWith('/') do
+      CleanBase := CleanBase.Substring(0, CleanBase.Length - 1);
+    while (CleanRelative <> '') and CleanRelative.StartsWith('/') do
+      CleanRelative := CleanRelative.Substring(1);
+
+    if CleanBase.IsEmpty then
+    begin
+      if CleanRelative.IsEmpty then
+        Exit('');
+      Exit('/' + CleanRelative);
+    end;
+
+    if CleanRelative.IsEmpty then
+      Exit(CleanBase);
+
+    Result := CleanBase + '/' + CleanRelative;
+  end;
+var
+  Service: TServiceConfig;
+  HostValue: string;
+begin
+  Result := '';
+  if (ServiceName = '') or (AppConfig = nil) then
+    Exit;
+
+  if not AppConfig.TryGetService(ServiceName, Service) then
+    Exit;
+
+  HostValue := Service.Host.Trim;
+  if HostValue = '' then
+    Exit;
+
+  if HostValue.Contains('://') then
+    Result := HostValue
+  else if not AppConfig.BasePath.Trim.IsEmpty then
+    Result := CombineBase(AppConfig.BasePath, HostValue)
+  else if HostValue.StartsWith('/') then
+    Result := HostValue
+  else
+    Result := '/' + HostValue;
+
+  while (Result <> '') and Result.EndsWith('/') do
+    Result := Result.Substring(0, Result.Length - 1);
 end;
 
 initialization

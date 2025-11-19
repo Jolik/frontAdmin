@@ -12,7 +12,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPanel, uniPageControl, uniSplitter, uniBasicGrid,
   uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  EntityUnit,   ParentFormUnit, ParentEditFormUnit, uniLabel, StrUtils,
+  EntityUnit, ParentFormUnit, ParentEditFormUnit, uniLabel, StrUtils,
   RestBrokerBaseUnit, BaseRequests, BaseResponses, HttpClientUnit;
 
 type
@@ -60,11 +60,11 @@ type
     procedure dbgEntitySelectionChange(Sender: TObject);
   protected
     FID: string;
-    FSelectedEntity: TEntity;
-    procedure OnAddListItem(item: TEntity);virtual;
+    FSelectedEntity: TFieldSet;
+    procedure OnAddListItem(item: TFieldSet);virtual;
     procedure Refresh(const AId: String = ''); override;
-    function UpdateCallback(const AID: string; AEntity: TFieldSet):Boolean;
-    procedure OnInfoUpdated(AEntity: TEntity);virtual;
+    function UpdateCallback(const AID: string; AFieldSet: TFieldSet):Boolean;
+    procedure OnInfoUpdated(AFieldSet: TFieldSet);virtual;
   end;
 
 function ListParentForm: TListParentForm;
@@ -74,13 +74,13 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, IdHTTP, LoggingUnit;
+  MainModule, uniGUIApplication, IdHTTP, LoggingUnit, HttpProtocolExceptionHelper;
 
 {  TListParentForm  }
 
 procedure TListParentForm.btnUpdateClick(Sender: TObject);
 var
-  LEntity: TEntity;
+  LFieldSet: TFieldSet;
   //LId : string;
 
 begin
@@ -94,57 +94,98 @@ begin
   Req.Id := FId;
   var Resp := RestBroker.Info(Req);
   ///  устанавлаием сущность в окно редактирования
-  EditForm.Entity := Resp.Entity;
+  EditForm.Entity := Resp.FieldSet;
   EditForm.Id := FId;
 
   try
     EditForm.ShowModalEx(UpdateCallback);
   finally
 ///  удалять нельзя потому что класс переходит под управление форму редактирования
-///    LEntity.Free;
+///    LFieldSet.Free;
   end;
 end;
 
 procedure TListParentForm.dbgEntitySelectionChange(Sender: TObject);
 var
   LId     : string;
+  req :  TReqInfo;
+  resp : TResponse;
+  ErrMsg: string;
 begin
+  req := nil; resp:= nil;
   FSelectedEntity.Free;
   LId := FDMemTableEntity.FieldByName('Id').AsString;
   if Assigned(RestBroker) then
   begin
-    var Resp := RestBroker.Info(RestBroker.CreateReqInfo(LId));
-    FSelectedEntity := Resp.Entity as TEntity;
-    if not Assigned(FSelectedEntity) then Exit;
-    OnInfoUpdated(FSelectedEntity);
+    try
+      req := RestBroker.CreateReqInfo(LId);
+      Resp := RestBroker.Info(req);
+      FSelectedEntity:= Resp.FieldSet;
+//      FSelectedEntity := TFieldSet.Create;
+//      FSelectedEntity.Assign(Resp.FieldSet);
+      if not Assigned(FSelectedEntity) then Exit;
+      OnInfoUpdated(FSelectedEntity);
+    except
+      on E: EIdHTTPProtocolException do
+      begin
+        var Code: Integer;
+        var ServerMessage: string;
+        if E.TryParseError(Code, ServerMessage) then
+        begin
+            if ServerMessage <> '' then
+              ErrMsg := ServerMessage
+            else
+              ErrMsg := Format('Ошибка. HTTP %d', [E.ErrorCode]);
+        end
+        else
+          ErrMsg := Format('Ошибка %S. HTTP %d: %s', [Resp.ClassName, E.ErrorCode, E.ErrorMessage]);
+          MessageDlg(ErrMsg, mtWarning, [mbOK],nil);
+          Log(ErrMsg, lrtError);
+      end;
+    end;
+    req.Free;
+//    resp.Free;
   end;
 end;
 
-procedure TListParentForm.OnAddListItem(item: TEntity);
+procedure TListParentForm.OnAddListItem(item: TFieldSet);
 begin
-  FDMemTableEntity.FieldByName('Id').AsString := item.Id;
-  FDMemTableEntity.FieldByName('Name').AsString := item.Name;
-  FDMemTableEntity.FieldByName('def').AsString := item.Def;
-  FDMemTableEntity.FieldByName('Created').AsDateTime := item.Created;
-  FDMemTableEntity.FieldByName('Updated').AsDateTime := item.Updated;
+  if item is TEntity then begin
+    var ient:=item as TEntity;
+    FDMemTableEntity.FieldByName('Id').AsString := ient.Id;
+    FDMemTableEntity.FieldByName('Name').AsString := ient.Name;
+    FDMemTableEntity.FieldByName('def').AsString := ient.Def;
+    FDMemTableEntity.FieldByName('Created').AsDateTime := ient.Created;
+    FDMemTableEntity.FieldByName('Updated').AsDateTime := ient.Updated;
+  end else
+    FDMemTableEntity.FieldByName('Id').AsString := item.GetID;
+  // FDMemTableEntity.FieldByName('Name').AsString := item.Name;
+  // FDMemTableEntity.FieldByName('def').AsString := item.Def;
+  // FDMemTableEntity.FieldByName('Created').AsDateTime := item.Created;
+  // FDMemTableEntity.FieldByName('Updated').AsDateTime := item.Updated;
 end;
 
-procedure TListParentForm.OnInfoUpdated(AEntity: TEntity);
+procedure TListParentForm.OnInfoUpdated(AFieldSet: TFieldSet);
 var
    DT      : string;
 begin
-  lTaskInfoIDValue.Caption      := AEntity.ID;
-  lTaskInfoNameValue.Caption    := AEntity.Name;
-  DateTimeToString(DT, 'dd.mm.yyyy HH:nn', AEntity.Created);
-  lTaskInfoCreatedValue.Caption := DT;
-  DateTimeToString(DT, 'dd.mm.yyyy HH:nn', AEntity.Updated);
-  lTaskInfoUpdatedValue.Caption := DT;
+
+  if AFieldSet is TEntity then begin
+    var ient:=AFieldSet as TEntity;
+    lTaskInfoNameValue.Caption    := ient.Name;
+    DateTimeToString(DT, 'dd.mm.yyyy HH:nn', ient.Created);
+    lTaskInfoCreatedValue.Caption := DT;
+    DateTimeToString(DT, 'dd.mm.yyyy HH:nn', ient.Updated);
+    lTaskInfoUpdatedValue.Caption := DT;
+  end else begin
+    lTaskInfoIDValue.Caption      := AFieldSet.GetID;
+  end;
   tsTaskInfo.TabVisible := True;
 end;
 
 procedure TListParentForm.btnNewClick(Sender: TObject);
 var
-  LEntity: TEntity;
+  LFieldSet: TFieldSet;
 
 begin
   PrepareEditForm;
@@ -158,7 +199,7 @@ begin
     EditForm.ShowModalEx(NewCallback);
   finally
 ///  удалять нельзя потому что класс переходит под управление форму редактирования
-///    LEntity.Free;
+///    LFieldSet.Free;
   end;
 end;
 
@@ -204,14 +245,14 @@ end;
 
 procedure TListParentForm.Refresh(const AId: String = '');
 var
-  EntityList: TEntityList;
+  FieldSetList: TFieldSetList;
   PageCount: Integer;
   Resp: TListResponse;
 
 begin
   FDMemTableEntity.Active := True;
   Resp := nil;
-  EntityList := nil;
+  FieldSetList := nil;
   if not Assigned(RestBroker) then exit;
   var Req := RestBroker.CreateReqList();
   try
@@ -219,14 +260,14 @@ begin
       Resp := RestBroker.List(Req);
       if not  Assigned(Resp) then exit;
 
-      EntityList := Resp.EntityList;
+      FieldSetList := Resp.FieldSetList;
       FDMemTableEntity.EmptyDataSet;
 
-      if Assigned(EntityList) then
-      for var Entity in EntityList do
+      if Assigned(FieldSetList) then
+      for var FieldSet in FieldSetList do
       begin
         FDMemTableEntity.Append;
-        OnAddListItem(Entity);
+        OnAddListItem(FieldSet);
         FDMemTableEntity.Post;
       end;
 
@@ -251,12 +292,13 @@ begin
   finally
     if Assigned(Resp) then
       Resp.Free
-    else if Assigned(EntityList) then
-      EntityList.Free;
+      
+    else if Assigned(FieldSetList) then
+      FieldSetList.Free;
   end;
 end;
 
-function TListParentForm.UpdateCallback(const AID: string; AEntity: TFieldSet):boolean;
+function TListParentForm.UpdateCallback(const AID: string; AFieldSet: TFieldSet):boolean;
 begin
   inherited;
 

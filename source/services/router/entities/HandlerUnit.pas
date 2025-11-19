@@ -33,9 +33,9 @@ type
   /// <summary>
   ///   List of router handler entities.
   /// </summary>
-  THandlerList = class(TEntityList)
+  THandlerList = class(TFieldSetList)
   public
-    class function ItemClassType: TEntityClass; override;
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 implementation
@@ -140,7 +140,7 @@ end;
 
 { THandlerList }
 
-class function THandlerList.ItemClassType: TEntityClass;
+class function THandlerList.ItemClassType: TFieldSetClass;
 begin
   Result := THandler;
 end;

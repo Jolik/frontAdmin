@@ -13,8 +13,10 @@ type
   protected
     FTicket: string;
     procedure ApplyTicket(const Req: THttpRequest);
+    procedure SetPath(const AServiceName: string; var ABasePath: string);
   public
     constructor Create(const ATicket: string = ''); virtual;
+    class function ServiceName: string; virtual;
     property Ticket: string read FTicket write FTicket;
 
     // фабрика базовых запросов (универсальные и безопасные)
@@ -36,14 +38,29 @@ type
 
 implementation
 
-uses System.Math;
+uses System.Math, System.SysUtils, AppConfigUnit;
 
 { TRestBrokerBase }
+
+class function TRestBrokerBase.ServiceName: string;
+begin
+  Result := '';
+end;
 
 procedure TRestBrokerBase.ApplyTicket(const Req: THttpRequest);
 begin
   if Assigned(Req) and (FTicket <> '') then
     Req.Headers.AddOrSetValue('X-Ticket', FTicket);
+end;
+
+
+procedure TRestBrokerBase.SetPath(const AServiceName: string; var ABasePath: string);
+var
+  ResolvedPath: string;
+begin
+  ResolvedPath := ResolveServiceBasePath(AServiceName);
+  if ResolvedPath <> '' then
+    ABasePath := ResolvedPath;
 end;
 
 

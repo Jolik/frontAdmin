@@ -81,7 +81,7 @@ begin
   for var p in FProfiles do
     if (p as TProfile).Description = '' then
     begin
-      MessageDlg(Format('неn описания профиля %s', [p.Id]), TMsgDlgType.mtError, [mbOK], nil);
+      MessageDlg(Format('неn описания профиля %s', [(p as TProfile).Id]), TMsgDlgType.mtError, [mbOK], nil);
       exit;
     end;
   result := true;
@@ -171,7 +171,7 @@ procedure TProfilesFrame.FillProfilesCombobox;
 begin
   profilesComboBox.Clear;
   for var i := 0 to FProfiles.Count-1 do
-    profilesComboBox.Items.AddObject(FProfiles[i].Id, FProfiles[i]);
+    profilesComboBox.Items.AddObject((FProfiles[i] as TProfile).Id, FProfiles[i]);
 end;
 
 

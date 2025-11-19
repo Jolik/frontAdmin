@@ -35,8 +35,10 @@ type
     function Serialize(const APropertyNames: TArray<string> = nil): TJSONObject; overload;
     function JSON(const APropertyNames: TArray<string> = nil): string;
 
+    function GetID:String;virtual;
     ///  Object name from JSON (if is)
     property ObjectName : string read FObjectName write FObjectName;
+
   end;
 
   // Class reference to any TFieldSetList descendant
@@ -1000,6 +1002,11 @@ begin
       FreeAndNil(result);
     end;
   end;
+end;
+
+function TFieldSet.GetID: String;
+begin
+  result:= ''; 
 end;
 
 end.

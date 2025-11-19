@@ -15,8 +15,6 @@ uses
   HttpClientUnit in '..\..\services\common\brokers\HttpClientUnit.pas',
   BaseRequests in '..\..\services\common\brokers\BaseRequests.pas',
   BaseResponses in '..\..\services\common\brokers\BaseResponses.pas',
-  RestEntityBrokerUnit in '..\..\services\common\brokers\RestEntityBrokerUnit.pas',
-  APIConst in '..\..\services\common\brokers\APIConst.pas',
   OperatorLinksRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
   OperatorLinksHttpRequests in '..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
   OperatorLinksContentRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas',
@@ -42,12 +40,24 @@ uses
   OperatorRequestsUnit in 'OperatorRequestsUnit.pas',
   OperatorLinksContentRequestsUnit in 'OperatorLinksContentRequestsUnit.pas',
   AbonentsRequestsUnit in 'AbonentsRequestsUnit.pas',
+  RulesRestBrokerUnit in '..\..\services\router\brokers\RulesRestBrokerUnit.pas',
+  RuleHttpRequests in '..\..\services\router\brokers\RuleHttpRequests.pas',
+  RuleUnit in '..\..\services\router\entities\RuleUnit.pas',
+  SmallRuleUnit in '..\..\services\router\entities\SmallRuleUnit.pas',
+  ConditionUnit in '..\..\services\common\entities\ConditionUnit.pas',
+  FilterUnit in '..\..\services\common\entities\FilterUnit.pas',
+  ChannelUnit in '..\..\services\router\entities\ChannelUnit.pas',
+  HandlerUnit in '..\..\services\router\entities\HandlerUnit.pas',
+  RouterSourceUnit in '..\..\services\router\entities\RouterSourceUnit.pas',
+  AliasUnit in '..\..\services\router\entities\AliasUnit.pas',
+  QueueUnit in '..\..\services\router\entities\QueueUnit.pas',
+  RulesRequestsUnit in 'RulesRequestsUnit.pas',
   CompaniesRequestsUnit in 'CompaniesRequestsUnit.pas',
   SearchRequestUnit in 'SearchRequestUnit.pas',
   GUIDListUnit in '..\..\common\GUIDListUnit.pas',
   JournalRecordsAttrsUnit in '..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
   RestBrokerBaseUnit in '..\..\services\common\brokers\RestBrokerBaseUnit.pas',
-  RestFieldSetBrokerUnit in '..\..\services\common\brokers\RestFieldSetBrokerUnit.pas',
+  RestBrokerUnit in '..\..\services\common\brokers\RestBrokerUnit.pas',
   SearchRestBrokerUnit in '..\..\services\dataspace\brokers\SearchRestBrokerUnit.pas',
   SearchHttpRequests in '..\..\services\dataspace\brokers\SearchHttpRequests.pas',
   SearchUnit in '..\..\services\dataspace\entities\SearchUnit.pas',
@@ -55,14 +65,29 @@ uses
   CompanyHttpRequests in '..\..\services\acl\brokers\CompanyHttpRequests.pas',
   CompanyUnit in '..\..\services\acl\entities\CompanyUnit.pas',
   StorageHttpRequests in '..\..\services\dataspace\brokers\StorageHttpRequests.pas',
-  StorageRestBrokerUnit in '..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas';
+  StorageRestBrokerUnit in '..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas',
+  ObservationsRequestsUnit in 'ObservationsRequestsUnit.pas',
+  ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
+  TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
+  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
+  DsGroupsRequestsUnit in 'DsGroupsRequestsUnit.pas',
+  DsGroupUnit in '..\..\services\dataserver\entities\DsGroupUnit.pas',
+  DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
+  DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
+  DataseriesUnit in '..\..\services\dataserver\entities\DataseriesUnit.pas',
+  LogsHttpRequests in '..\..\services\signals\brokers\LogsHttpRequests.pas',
+  LogsRestBrokerUnit in '..\..\services\signals\brokers\LogsRestBrokerUnit.pas',
+  LogUnit in '..\..\services\signals\entities\LogUnit.pas',
+  LogsRequestsUnit in 'LogsRequestsUnit.pas',
+  AppConfigUnit in '..\..\common\AppConfigUnit.pas',
+  DefualtConfig in '..\..\common\DefualtConfig.pas';
 
 procedure TestAbonentListRequest;
 var
   Broker: TAbonentsRestBroker;
   Request: TAbonentReqList;
   Response: TAbonentListResponse;
-  Abonent: TEntity;
+  Abonent: TFieldSet;
   ChannelsText: string;
 begin
   try
@@ -99,8 +124,8 @@ begin
         if ChannelsText.IsEmpty then
           ChannelsText := '(no channels)';
 
-        Writeln(Format(' - %s (%s)', [Abonent.Name, TAbonent(Abonent).Abid]));
-        Writeln(Format('   Caption: %s', [Abonent.Caption]));
+        Writeln(Format(' - %s (%s)', [TAbonent(Abonent).Name, TAbonent(Abonent).Abid]));
+        Writeln(Format('   Caption: %s', [TAbonent(Abonent).Caption]));
         // Output the channels for each abonent retrieved in the list response.
         Writeln('   Channels: ' + ChannelsText);
       end;
@@ -120,9 +145,13 @@ begin
 //    ExecuteOperatorLinkRequest;
 //    ExecuteJournalRecordRequest;
 //    ExecuteCompaniesRequests;
-//    ExecuteAbonentsRequest;
+    ExecuteAbonentsRequest;
+//    ExecuteRulesRequest;
+//    ExecuteObservationRequests;
+//    ExecuteDsGroupsRequests;
+//    ExecuteLogsRequests;
 //    ExecuteOperatorLinksContentRequests;
-    ExecuteReadContentStream;
+//    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
     Readln;
   except

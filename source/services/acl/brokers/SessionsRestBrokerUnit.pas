@@ -5,15 +5,16 @@ interface
 uses
   System.SysUtils,
   RestBrokerBaseUnit,
-  RestEntityBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   SessionHttpRequests;
 
 type
-  TSessionsRestBroker = class(TRestEntityBroker)
+  TSessionsRestBroker = class(TRestBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function CreateReqInfo(id: string = ''): TReqInfo; override;
     function CreateInfoReq: TSessionReqInfo;
@@ -24,15 +25,17 @@ type
 
 implementation
 
-uses
-  APIConst;
-
 { TSessionsRestBroker }
 
 constructor TSessionsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLAclBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TSessionsRestBroker.ServiceName: string;
+begin
+  Result := 'acl';
 end;
 
 function TSessionsRestBroker.CreateInfoReq: TSessionReqInfo;

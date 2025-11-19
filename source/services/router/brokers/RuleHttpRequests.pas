@@ -22,32 +22,34 @@ type
   private
     function GetRuleList: TRuleList;
   public
-    constructor Create;
+    constructor Create; override;
     property RuleList: TRuleList read GetRuleList;
   end;
 
   // Response: rule info
-  TRuleInfoResponse = class(TEntityResponse)
+  TRuleInfoResponse = class(TResponse)
   private
     function GetRule: TRule;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Rule: TRule read GetRule;
   end;
 
   // Create: response for new rule (server may return payload without dedicated id wrapper)
-  TRuleNewResponse = class(TFieldSetResponse)
+  TRuleNewResponse = class(TResponse)
   public
     constructor Create; virtual;
   end;
 
   // Requests
   TRuleReqList = class(TReqList)
+  private
+    function GetBody: TRuleReqListBody;
   protected
     class function BodyClassType: TFieldSetClass; override;
   public
     constructor Create; override;
-    function Body: TRuleReqListBody;
+    property Body: TRuleReqListBody read GetBody;
   end;
 
   TRuleReqInfo = class(TReqInfo)
@@ -79,8 +81,7 @@ type
 
 implementation
 
-uses
-  APIConst;
+
 
 { TRuleListResponse }
 
@@ -91,7 +92,7 @@ end;
 
 function TRuleListResponse.GetRuleList: TRuleList;
 begin
-  Result := EntityList as TRuleList;
+  Result := FieldSetList as TRuleList;
 end;
 
 { TRuleInfoResponse }
@@ -103,7 +104,7 @@ end;
 
 function TRuleInfoResponse.GetRule: TRule;
 begin
-  Result := Entity as TRule;
+  Result := FieldSet as TRule;
 end;
 
 { TRuleNewResponse }
@@ -126,7 +127,7 @@ begin
   SetEndpoint('rules/list');
 end;
 
-function TRuleReqList.Body: TRuleReqListBody;
+function TRuleReqList.GetBody: TRuleReqListBody;
 begin
   if ReqBody is TRuleReqListBody then
     Result := TRuleReqListBody(ReqBody)

@@ -5,50 +5,51 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ParentEditFormUnit, uniEdit, uniLabel, uniButton,
-  uniGUIBaseClasses, uniPanel, uniMemo, uniScrollBox, uniCheckBox,
-  System.Generics.Collections,
+  uniGUIClasses, uniGUIForm, ParentEditFormUnit, uniButton, uniBitBtn,
+  uniGUIBaseClasses, uniPanel, uniGroupBox, uniTreeView, uniSplitter,
   LoggingUnit,
-  EntityUnit, FilterUnit, RuleUnit, uniTimer;
+  EntityUnit, FilterUnit, ConditionUnit, RuleUnit, SmallRuleUnit,
+  SharedFrameBoolInput, SharedFrameTextInput, RouterFrameRuleConditionUnit,
+  LinkUnit, uniGUIFrame, uniTimer, uniEdit, uniLabel;
 
 type
-  TFilterListKind = (fkInclude, fkExclude);
-
   TRuleEditForm = class(TParentEditForm)
-    lRuid: TUniLabel;
-    teRuid: TUniEdit;
-    lPosition: TUniLabel;
-    tePosition: TUniEdit;
-    lPriority: TUniLabel;
-    tePriority: TUniEdit;
-    chkDoubles: TUniCheckBox;
-    chkBreakRule: TUniCheckBox;
-    lHandlers: TUniLabel;
-    meHandlers: TUniMemo;
-    lChannels: TUniLabel;
-    meChannels: TUniMemo;
-    lIncFilters: TUniLabel;
-    lExcFilters: TUniLabel;
-    sbIncFilters: TUniScrollBox;
-    sbExcFilters: TUniScrollBox;
-    btnAddIncFilter: TUniButton;
-    btnAddExcFilter: TUniButton;
-    procedure btnAddIncFilterClick(Sender: TObject);
-    procedure btnAddExcFilterClick(Sender: TObject);
+    RuleGroupBox: TUniGroupBox;
+    RuleHeaderPanel: TUniPanel;
+    FrameRuleEnabled: TFrameBoolInput;
+    FrameRulePosition: TFrameTextInput;
+    RuleTreePanel: TUniPanel;
+    RuleTreeSplitter: TUniSplitter;
+    RuleConditionsPanel: TUniPanel;
+    RuleTreeLeftPanel: TUniPanel;
+    RuleTreeView: TUniTreeView;
+    RuleTreeToolbar: TUniPanel;
+    RuleTreeAddPanel: TUniPanel;
+    btnRuleAdd: TUniBitBtn;
+    RuleTreeRemovePanel: TUniPanel;
+    btnRuleRemove: TUniBitBtn;
+    procedure RuleTreeViewChange(Sender: TObject; Node: TUniTreeNode);
+    procedure btnRuleAddClick(Sender: TObject);
+    procedure btnRuleRemoveClick(Sender: TObject);
   private
-    FIncFilterEditors: TObjectList<TObject>;
-    FExcFilterEditors: TObjectList<TObject>;
+    FConditionFrame: TRouteFrameRuleCondition;
+    FSelectedRuleItem: TObject;
+    FSelectedNode: TUniTreeNode;
+    FFirstSelectedNode: TUniTreeNode;
     function GetRule: TRule;
-    procedure FilterRemoveButtonClick(Sender: TObject);
-    procedure ClearFilterEditors(AEditors: TObjectList<TObject>);
-    procedure AddFilterEditor(AEditors: TObjectList<TObject>; AScrollBox: TUniScrollBox;
-      const ACaptionBase: string; AKind: TFilterListKind; AFilter: TProfileFilter = nil);
-    procedure UpdateFilterCaptions(AEditors: TObjectList<TObject>; const ACaptionBase: string);
+    function CurrentRule: TSmallRule;
+    procedure RuleToTreeView(const ARule: TSmallRule);
+    procedure FiltersToTreeViewNode(AFilters: TProfileFilterList; Node: TUniTreeNode);
+    procedure ConditionToFrame(C: TCondition);
+    procedure TidyRuleControls;
+    procedure DrawRules;
+    function DeleteObject(List: TFieldSetList; Item: TObject): Boolean;
+    procedure OnConditionChange(Sender: TObject);
   protected
-    procedure AfterConstruction; override;
-    function Apply: boolean; override;
+    function Apply: Boolean; override;
     function DoCheck: Boolean; override;
     procedure SetEntity(AEntity: TFieldSet); override;
+    procedure SelectFirstLevelTwoNode;
   public
     destructor Destroy; override;
     property RuleEntity: TRule read GetRule;
@@ -61,369 +62,11 @@ implementation
 {$R *.dfm}
 
 uses
-  System.JSON,
-  MainModule, uniGUIApplication, ConstsUnit,
-  SmallRuleUnit;
-
-type
-  TFilterEditorItem = class
-  private
-    FKind: TFilterListKind;
-    FPanel: TUniContainerPanel;
-    FHeaderPanel: TUniContainerPanel;
-    FTitleLabel: TUniLabel;
-    FDisableCheck: TUniCheckBox;
-    FMemo: TUniMemo;
-    FRemoveButton: TUniButton;
-  public
-    constructor Create(AOwnerForm: TRuleEditForm; AParent: TUniScrollBox;
-      const ACaption: string; AKind: TFilterListKind; AFilter: TProfileFilter = nil);
-    destructor Destroy; override;
-    function FillFilter(AFilter: TProfileFilter; out AErrorMessage: string): Boolean;
-    procedure UpdateCaption(const ACaption: string);
-    property Kind: TFilterListKind read FKind;
-    property Panel: TUniContainerPanel read FPanel;
-    property RemoveButton: TUniButton read FRemoveButton;
-  end;
-
-resourcestring
-  rsInvalidChannelsJSON =
-    #1053#1077#1082#1086#1088#1088#1077#1082#1090#1085#1099#1081' JSON '#1082#1072#1085#1072#1083#1086#1074'. '#1054#1078#1080#1076#1072#1077#1090#1089#1103' JSON '#1086#1073#1098#1077#1082#1090' '#1080#1083#1080' '#1084#1072#1089#1089#1080#1074'.';
-  rsInvalidFilterJSON =
-    #1053#1077#1082#1086#1088#1088#1077#1082#1090#1085#1099#1081' JSON '#1091#1089#1083#1086#1074' '#1092#1080#1083#1100#1090#1088#1072'. '#1054#1078#1080#1076#1072#1077#1090#1089#1103' JSON '#1084#1072#1089#1089#1080#1074'.';
-  rsFilterParseError = #1054#1096#1080#1073#1082#1072' '#1088#1072#1079#1073#1086#1088#1072' '#1091#1089#1083#1086#1074' '#1092#1080#1083#1100#1090#1088#1072': %s';
-
-const
-  IncFilterCaptionBase = #1060#1080#1083#1100#1090#1088' '#1074#1082#1083#1102#1095#1077#1085#1080#1103;
-  ExcFilterCaptionBase = #1060#1080#1083#1100#1090#1088' '#1080#1089#1082#1083#1102#1095#1077#1085#1080#1103;
-
-{ TFilterEditorItem }
-
-constructor TFilterEditorItem.Create(AOwnerForm: TRuleEditForm; AParent: TUniScrollBox;
-  const ACaption: string; AKind: TFilterListKind; AFilter: TProfileFilter);
-var
-  ConditionsArray: TJSONArray;
-begin
-  inherited Create;
-
-  FKind := AKind;
-
-  FPanel := TUniContainerPanel.Create(AOwnerForm);
-  FPanel.Parent := AParent;
-  FPanel.AlignWithMargins := True;
-  FPanel.Margins.Bottom := 6;
-  FPanel.Align := alTop;
-  FPanel.Height := 180;
-
-  FHeaderPanel := TUniContainerPanel.Create(AOwnerForm);
-  FHeaderPanel.Parent := FPanel;
-  FHeaderPanel.Align := alTop;
-  FHeaderPanel.Height := 32;
-
-  FTitleLabel := TUniLabel.Create(AOwnerForm);
-  FTitleLabel.Parent := FHeaderPanel;
-  FTitleLabel.AlignWithMargins := True;
-  FTitleLabel.Margins.Left := 8;
-  FTitleLabel.Margins.Top := 8;
-  FTitleLabel.Margins.Right := 8;
-  FTitleLabel.Align := alClient;
-  FTitleLabel.Caption := ACaption;
-
-  FRemoveButton := TUniButton.Create(AOwnerForm);
-  FRemoveButton.Parent := FHeaderPanel;
-  FRemoveButton.AlignWithMargins := True;
-  FRemoveButton.Margins.Top := 4;
-  FRemoveButton.Margins.Right := 4;
-  FRemoveButton.Align := alRight;
-  FRemoveButton.Width := 90;
-  FRemoveButton.Caption := #1059#1076#1072#1083#1080#1090#1100;
-  FRemoveButton.Tag := NativeInt(Self);
-  FRemoveButton.OnClick := AOwnerForm.FilterRemoveButtonClick;
-
-  FDisableCheck := TUniCheckBox.Create(AOwnerForm);
-  FDisableCheck.Parent := FPanel;
-  FDisableCheck.AlignWithMargins := True;
-  FDisableCheck.Margins.Left := 8;
-  FDisableCheck.Margins.Top := 4;
-  FDisableCheck.Margins.Right := 8;
-  FDisableCheck.Align := alTop;
-  FDisableCheck.Caption := #1054#1090#1082#1083#1102#1095#1080#1090#1100' '#1092#1080#1083#1100#1090#1088;
-
-  FMemo := TUniMemo.Create(AOwnerForm);
-  FMemo.Parent := FPanel;
-  FMemo.AlignWithMargins := True;
-  FMemo.Margins.Left := 8;
-  FMemo.Margins.Top := 4;
-  FMemo.Margins.Right := 8;
-  FMemo.Margins.Bottom := 8;
-  FMemo.Align := alClient;
-//!!!  FMemo.ScrollBars := ssVertical;
-
-  FPanel.SendToBack;
-
-  if Assigned(AFilter) then
-  begin
-    FDisableCheck.Checked := AFilter.Disable;
-    ConditionsArray := AFilter.Conditions.SerializeList;
-    try
-      if Assigned(ConditionsArray) then
-        FMemo.Text := ConditionsArray.ToJSON
-      else
-        FMemo.Text := '[]';
-    finally
-      ConditionsArray.Free;
-    end;
-  end
-  else
-    FMemo.Text := '[]';
-
-  UpdateCaption(ACaption);
-end;
-
-destructor TFilterEditorItem.Destroy;
-begin
-  if Assigned(FPanel) then
-  begin
-    FPanel.Parent := nil;
-    FPanel.Free;
-  end;
-  inherited;
-end;
-
-function TFilterEditorItem.FillFilter(AFilter: TProfileFilter; out AErrorMessage: string): Boolean;
-var
-  JSONValue: TJSONValue;
-  JSONArray: TJSONArray;
-begin
-  Result := False;
-  AErrorMessage := '';
-
-  if not Assigned(AFilter) then
-    Exit;
-
-  AFilter.Disable := FDisableCheck.Checked;
-  AFilter.Conditions.Clear;
-
-  if Trim(FMemo.Text) = '' then
-  begin
-    Result := True;
-    Exit;
-  end;
-
-  JSONValue := TJSONObject.ParseJSONValue(FMemo.Text);
-  try
-    if not (JSONValue is TJSONArray) then
-    begin
-      AErrorMessage := rsInvalidFilterJSON;
-      Exit;
-    end;
-
-    JSONArray := TJSONArray(JSONValue);
-    try
-      AFilter.Conditions.ParseList(JSONArray);
-    except
-      on E: Exception do
-      begin
-        AErrorMessage := Format(rsFilterParseError, [E.Message]);
-        Exit;
-      end;
-    end;
-  finally
-    JSONValue.Free;
-  end;
-
-  Result := True;
-end;
-
-procedure TFilterEditorItem.UpdateCaption(const ACaption: string);
-begin
-  if Assigned(FTitleLabel) then
-    FTitleLabel.Caption := ACaption;
-end;
-
-{ TRuleEditForm }
-
-procedure TRuleEditForm.AfterConstruction;
-begin
-  inherited;
-
-  FIncFilterEditors := TObjectList<TObject>.Create(True);
-  FExcFilterEditors := TObjectList<TObject>.Create(True);
-end;
+  MainModule, uniGUIApplication, ConstsUnit;
 
 function RuleEditForm: TRuleEditForm;
 begin
   Result := TRuleEditForm(UniMainModule.GetFormInstance(TRuleEditForm));
-end;
-
-function TRuleEditForm.Apply: boolean;
-var
-  Rule: TRule;
-  SmallRule: TSmallRule;
-  ChannelsText: string;
-  ChannelsValue: TJSONValue;
-  Filter: TProfileFilter;
-  ErrorMessage: string;
-  EditorObj: TObject;
-  Editor: TFilterEditorItem;
-  Handler: string;
-begin
-  Result := inherited Apply();
-
-  if not Result then
-    Exit;
-
-  Rule := GetRule;
-  if not Assigned(Rule) then
-    Exit(False);
-
-  Rule.Ruid := teRuid.Text;
-
-//!!!  SmallRule := Rule.Rule;
-  SmallRule.Position := StrToIntDef(tePosition.Text, 0);
-  SmallRule.Priority := StrToIntDef(tePriority.Text, 0);
-  SmallRule.Doubles := chkDoubles.Checked;
-  SmallRule.BreakRule := chkBreakRule.Checked;
-
-  SmallRule.Handlers.ClearStrings;
-  for Handler in meHandlers.Lines do
-  begin
-//!!!    Handler := Trim(Handler);
-    if Handler <> '' then
-      SmallRule.Handlers.AddString(Handler);
-  end;
-
-  ChannelsText := Trim(meChannels.Text);
-  SmallRule.Channels.Clear;
-  if ChannelsText <> '' then
-  begin
-    ChannelsValue := TJSONObject.ParseJSONValue(ChannelsText);
-    if not Assigned(ChannelsValue) then
-    begin
-      MessageDlg(rsInvalidChannelsJSON, TMsgDlgType.mtError, [mbOK], nil);
-      Exit(False);
-    end;
-    try
-      if ChannelsValue is TJSONObject then
-        SmallRule.Channels.Parse(TJSONObject(ChannelsValue))
-      else if ChannelsValue is TJSONArray then
-        SmallRule.Channels.ParseList(TJSONArray(ChannelsValue))
-      else
-      begin
-        MessageDlg(rsInvalidChannelsJSON, TMsgDlgType.mtError, [mbOK], nil);
-        Exit(False);
-      end;
-    finally
-      ChannelsValue.Free;
-    end;
-  end;
-
-  SmallRule.IncFilters.Clear;
-  for EditorObj in FIncFilterEditors do
-  begin
-    Editor := TFilterEditorItem(EditorObj);
-    Filter := TProfileFilter.Create;
-    if not Editor.FillFilter(Filter, ErrorMessage) then
-    begin
-      Filter.Free;
-      if ErrorMessage <> '' then
-        MessageDlg(ErrorMessage, TMsgDlgType.mtError, [mbOK], nil);
-      Exit(False);
-    end;
-    SmallRule.IncFilters.Add(Filter);
-  end;
-
-  SmallRule.ExcFilters.Clear;
-  for EditorObj in FExcFilterEditors do
-  begin
-    Editor := TFilterEditorItem(EditorObj);
-    Filter := TProfileFilter.Create;
-    if not Editor.FillFilter(Filter, ErrorMessage) then
-    begin
-      Filter.Free;
-      if ErrorMessage <> '' then
-        MessageDlg(ErrorMessage, TMsgDlgType.mtError, [mbOK], nil);
-      Exit(False);
-    end;
-    SmallRule.ExcFilters.Add(Filter);
-  end;
-
-  Result := True;
-end;
-
-procedure TRuleEditForm.btnAddExcFilterClick(Sender: TObject);
-begin
-  AddFilterEditor(FExcFilterEditors, sbExcFilters, ExcFilterCaptionBase, fkExclude);
-  UpdateFilterCaptions(FExcFilterEditors, ExcFilterCaptionBase);
-end;
-
-procedure TRuleEditForm.btnAddIncFilterClick(Sender: TObject);
-begin
-  AddFilterEditor(FIncFilterEditors, sbIncFilters, IncFilterCaptionBase, fkInclude);
-  UpdateFilterCaptions(FIncFilterEditors, IncFilterCaptionBase);
-end;
-
-procedure TRuleEditForm.ClearFilterEditors(AEditors: TObjectList<TObject>);
-begin
-  if not Assigned(AEditors) then
-    Exit;
-
-  AEditors.Clear;
-end;
-
-destructor TRuleEditForm.Destroy;
-begin
-  FIncFilterEditors.Free;
-  FExcFilterEditors.Free;
-  inherited;
-end;
-
-function TRuleEditForm.DoCheck: Boolean;
-begin
-  Result := inherited DoCheck();
-
-  if not Result then
-    Exit;
-
-  if teRuid.Text = '' then
-  begin
-    MessageDlg(Format(rsWarningValueNotSetInField, [lRuid.Caption]), TMsgDlgType.mtWarning, [mbOK], nil);
-    Exit(False);
-  end;
-
-  Result := True;
-end;
-
-procedure TRuleEditForm.FilterRemoveButtonClick(Sender: TObject);
-var
-  Button: TUniButton;
-  Editor: TFilterEditorItem;
-  Index: Integer;
-begin
-  if not (Sender is TUniButton) then
-    Exit;
-
-  Button := TUniButton(Sender);
-  Editor := TFilterEditorItem(Pointer(Button.Tag));
-  if not Assigned(Editor) then
-    Exit;
-
-  case Editor.Kind of
-    fkInclude:
-      begin
-        Index := FIncFilterEditors.IndexOf(Editor);
-        if Index >= 0 then
-          FIncFilterEditors.Delete(Index);
-        UpdateFilterCaptions(FIncFilterEditors, IncFilterCaptionBase);
-      end;
-    fkExclude:
-      begin
-        Index := FExcFilterEditors.IndexOf(Editor);
-        if Index >= 0 then
-          FExcFilterEditors.Delete(Index);
-        UpdateFilterCaptions(FExcFilterEditors, ExcFilterCaptionBase);
-      end;
-  end;
 end;
 
 function TRuleEditForm.GetRule: TRule;
@@ -431,105 +74,347 @@ begin
   Result := nil;
   if not (FEntity is TRule) then
   begin
-    Log('TRuleEditForm.GetRule error in FEntity type', lrtError);
+    Log('TRuleEditForm.GetRule invalid entity type', lrtError);
     Exit;
   end;
-
   Result := TRule(FEntity);
+end;
+
+function TRuleEditForm.CurrentRule: TSmallRule;
+var
+  Entity: TRule;
+begin
+  Entity := GetRule;
+  if Assigned(Entity) then
+    Result := Entity.Rule
+  else
+    Result := nil;
+end;
+
+destructor TRuleEditForm.Destroy;
+begin
+  FreeAndNil(FConditionFrame);
+  inherited;
+end;
+
+function TRuleEditForm.DoCheck: Boolean;
+begin
+  Result := False;
+  if teCaption.Text = '' then
+    MessageDlg(Format(rsWarningValueNotSetInField, [lName.Caption]), TMsgDlgType.mtWarning, [mbOK], nil)
+  else
+   Result := True;
 end;
 
 procedure TRuleEditForm.SetEntity(AEntity: TFieldSet);
 var
   Rule: TRule;
   SmallRule: TSmallRule;
-  Value: string;
-  ChannelsObject: TJSONObject;
-  Filter: TProfileFilter;
-  I: Integer;
 begin
-  if not (AEntity is TRule) then
+  inherited SetEntity(AEntity);
+
+  Rule := GetRule;
+  if not Assigned(Rule) then
+    Exit;
+
+  SmallRule := Rule.Rule;
+  FrameRuleEnabled.SetData(SmallRule.Enabled);
+  FrameRulePosition.SetData(SmallRule.Position);
+  DrawRules;
+end;
+
+function TRuleEditForm.Apply: Boolean;
+var
+  Rule: TRule;
+  SmallRule: TSmallRule;
+begin
+  Result := inherited Apply;
+  if not Result then
+    Exit;
+
+  Rule := GetRule;
+  if not Assigned(Rule) then
+    Exit(False);
+
+  SmallRule := Rule.Rule;
+  SmallRule.Enabled := FrameRuleEnabled.GetData;
+  SmallRule.Position := FrameRulePosition.GetDataInt(0);
+  Result := True;
+end;
+
+procedure TRuleEditForm.DrawRules;
+begin
+  FSelectedRuleItem := nil;
+  FSelectedNode := nil;
+  ConditionToFrame(nil);
+  RuleToTreeView(CurrentRule);
+  if Assigned(RuleTreeView) then
   begin
-    Log('TRuleEditForm.SetEntity error in AEntity type', lrtError);
+    RuleTreeView.FullExpand;
+    SelectFirstLevelTwoNode;
+  end;
+  TidyRuleControls;
+end;
+
+procedure TRuleEditForm.RuleToTreeView(const ARule: TSmallRule);
+var
+  RootNode, IncludeNode, ExcludeNode: TUniTreeNode;
+begin
+  if not Assigned(RuleTreeView) then
+    Exit;
+
+  RuleTreeView.Items.Clear;
+  FFirstSelectedNode := nil;
+
+  if not Assigned(ARule) then
+    Exit;
+
+  RootNode := RuleTreeView.Items.AddChildObject(nil, #1055#1088#1072#1074#1080#1083#1086, nil);
+  RootNode.CheckboxVisible := False;
+
+  IncludeNode := RuleTreeView.Items.AddChildObject(RootNode, #1042#1082#1083#1102#1095#1072#1102#1097#1080#1077, ARule.IncFilters);
+  IncludeNode.CheckboxVisible := False;
+
+  ExcludeNode := RuleTreeView.Items.AddChildObject(RootNode, #1048#1089#1082#1083#1102#1095#1072#1102#1097#1080#1077, ARule.ExcFilters);
+  ExcludeNode.CheckboxVisible := False;
+
+  FiltersToTreeViewNode(ARule.IncFilters, IncludeNode);
+  FiltersToTreeViewNode(ARule.ExcFilters, ExcludeNode);
+
+end;
+
+procedure TRuleEditForm.FiltersToTreeViewNode(AFilters: TProfileFilterList; Node: TUniTreeNode);
+var
+  Filter: TProfileFilter;
+  Condition: TCondition;
+  FilterNode, ConditionNode: TUniTreeNode;
+  I, J: Integer;
+begin
+  if (AFilters = nil) or (Node = nil) then
+    Exit;
+
+  for I := 0 to AFilters.Count - 1 do
+  begin
+    Filter := TProfileFilter(AFilters[I]);
+    FilterNode := RuleTreeView.Items.AddChildObject(Node, Format(#1060#1080#1083#1100#1090#1088'-%d', [I + 1]), Filter);
+    FilterNode.CheckboxVisible := True;
+    FilterNode.Checked := not Filter.Disable;
+
+    for J := 0 to Filter.Conditions.Count - 1 do
+    begin
+      Condition := Filter.Conditions[J] as TCondition;
+      ConditionNode := RuleTreeView.Items.AddChildObject(FilterNode, Condition.Caption, Condition);
+      ConditionNode.CheckboxVisible := False;
+      if not Assigned(FFirstSelectedNode) then
+        FFirstSelectedNode := ConditionNode;
+    end;
+  end;
+end;
+
+procedure TRuleEditForm.RuleTreeViewChange(Sender: TObject; Node: TUniTreeNode);
+begin
+  FSelectedNode := Node;
+  if not Assigned(Node) then
+  begin
+    FSelectedRuleItem := nil;
+    ConditionToFrame(nil);
+    TidyRuleControls;
     Exit;
   end;
 
-  try
-    inherited SetEntity(AEntity);
+  FSelectedRuleItem := TObject(Node.Data);
+  if FSelectedRuleItem is TCondition then
+    ConditionToFrame(TCondition(FSelectedRuleItem))
+  else
+    ConditionToFrame(nil);
 
-    Rule := GetRule;
-    if not Assigned(Rule) then
+  TidyRuleControls;
+end;
+
+procedure TRuleEditForm.ConditionToFrame(C: TCondition);
+begin
+  FreeAndNil(FConditionFrame);
+  if not Assigned(C) then
+    Exit;
+  FConditionFrame := TRouteFrameRuleCondition.Create(Self);
+  FConditionFrame.Parent := RuleConditionsPanel;
+  FConditionFrame.Align := alClient;
+  FConditionFrame.SetData(C);
+  FConditionFrame.OnOk := OnConditionChange;
+end;
+
+procedure TRuleEditForm.OnConditionChange(Sender: TObject);
+begin
+  if not (FSelectedRuleItem is TCondition) then
+    Exit;
+  if not Assigned(FConditionFrame) then
+    Exit;
+
+  FConditionFrame.GetData(TCondition(FSelectedRuleItem));
+  DrawRules;
+end;
+
+procedure TRuleEditForm.TidyRuleControls;
+begin
+  if Assigned(btnRuleAdd) then
+    btnRuleAdd.Visible := False;
+  if Assigned(btnRuleRemove) then
+    btnRuleRemove.Visible := False;
+
+  if not Assigned(FSelectedRuleItem) then
+    Exit;
+
+  if FSelectedRuleItem is TCondition then
+  begin
+    if Assigned(btnRuleRemove) then
+    begin
+      btnRuleRemove.Visible := True;
+      btnRuleRemove.Hint := 'Удалить условие';
+    end;
+    Exit;
+  end;
+
+  if FSelectedRuleItem is TProfileFilter then
+  begin
+    if Assigned(btnRuleAdd) then
+    begin
+      btnRuleAdd.Visible := True;
+      btnRuleAdd.Hint := 'Добавить условие'
+    end;
+    if Assigned(btnRuleRemove) then
+    begin
+      btnRuleRemove.Visible := True;
+      btnRuleRemove.Hint :='Удалить фильтр'
+    end;
+    Exit;
+  end;
+
+  if FSelectedRuleItem is TProfileFilterList then
+  begin
+    if Assigned(btnRuleAdd) then
+    begin
+      btnRuleAdd.Visible := True;
+      btnRuleAdd.Hint := 'Добавить фильтр';
+    end;
+    Exit;
+  end;
+end;
+
+function TRuleEditForm.DeleteObject(List: TFieldSetList; Item: TObject): Boolean;
+var
+  I: Integer;
+begin
+  Result := False;
+  if not Assigned(List) then
+    Exit;
+
+  for I := 0 to List.Count - 1 do
+    if List[I] = Item then
+    begin
+      List.Delete(I);
+      Exit(True);
+    end;
+end;
+
+
+procedure TRuleEditForm.btnRuleAddClick(Sender: TObject);
+var
+  Filters: TProfileFilterList;
+begin
+  if not Assigned(FSelectedRuleItem) then
+    Exit;
+
+  if FSelectedRuleItem is TProfileFilter then
+  begin
+    (FSelectedRuleItem as TProfileFilter).Conditions.Add(TCondition.Create);
+    DrawRules;
+    Exit;
+  end;
+
+  if FSelectedRuleItem is TProfileFilterList then
+  begin
+    Filters := TProfileFilterList(FSelectedRuleItem);
+    Filters.Add(TProfileFilter.Create);
+    DrawRules;
+    Exit;
+  end;
+end;
+
+procedure TRuleEditForm.btnRuleRemoveClick(Sender: TObject);
+var
+  ParentNode: TUniTreeNode;
+  FilterList: TProfileFilterList;
+begin
+  if FSelectedRuleItem = nil then
+    Exit;
+
+  if FSelectedRuleItem is TCondition then
+  begin
+    if not Assigned(FSelectedNode) then
       Exit;
 
-    teRuid.Text := Rule.Ruid;
+    ParentNode := FSelectedNode.Parent;
 
-//!!!    SmallRule := Rule.Rule;
-    tePosition.Text := IntToStr(SmallRule.Position);
-    tePriority.Text := IntToStr(SmallRule.Priority);
-    chkDoubles.Checked := SmallRule.Doubles;
-    chkBreakRule.Checked := SmallRule.BreakRule;
+    if not Assigned(ParentNode) or not (TObject(ParentNode.Data) is TProfileFilter) then
+      Exit;
 
-    meHandlers.Lines.Clear;
-    for Value in SmallRule.Handlers.ToStringArray do
-      meHandlers.Lines.Add(Value);
-
-    ChannelsObject := TJSONObject.Create;
-    try
-      SmallRule.Channels.Serialize(ChannelsObject);
-      if ChannelsObject.Count > 0 then
-        meChannels.Text := ChannelsObject.ToJSON
-      else
-        meChannels.Text := '';
-    finally
-      ChannelsObject.Free;
-    end;
-
-    ClearFilterEditors(FIncFilterEditors);
-    for I := 0 to SmallRule.IncFilters.Count - 1 do
+    MessageDlg(Format('Удалить %s?', [(FSelectedRuleItem as TCondition).Caption]),
+    mtConfirmation, [mbYes, mbNo],
+    procedure(Sender: TComponent; Res: Integer)
     begin
-      Filter := SmallRule.IncFilters.Filters[I];
-      AddFilterEditor(FIncFilterEditors, sbIncFilters, IncFilterCaptionBase, fkInclude, Filter);
-    end;
-    if FIncFilterEditors.Count = 0 then
-      AddFilterEditor(FIncFilterEditors, sbIncFilters, IncFilterCaptionBase, fkInclude);
-    UpdateFilterCaptions(FIncFilterEditors, IncFilterCaptionBase);
+      if Res = mrYes then
+      begin
+        if DeleteObject(((TObject(ParentNode.Data) as TProfileFilter).Conditions), FSelectedRuleItem) then
+         DrawRules;
 
-    ClearFilterEditors(FExcFilterEditors);
-    for I := 0 to SmallRule.ExcFilters.Count - 1 do
-    begin
-      Filter := SmallRule.ExcFilters.Filters[I];
-      AddFilterEditor(FExcFilterEditors, sbExcFilters, ExcFilterCaptionBase, fkExclude, Filter);
-    end;
-    if FExcFilterEditors.Count = 0 then
-      AddFilterEditor(FExcFilterEditors, sbExcFilters, ExcFilterCaptionBase, fkExclude);
-    UpdateFilterCaptions(FExcFilterEditors, ExcFilterCaptionBase);
+      end;
+    end
+    );
 
-  except
-    Log('TRuleEditForm.SetEntity error', lrtError);
+    Exit;
   end;
-end;
 
-procedure TRuleEditForm.AddFilterEditor(AEditors: TObjectList<TObject>; AScrollBox: TUniScrollBox;
-  const ACaptionBase: string; AKind: TFilterListKind; AFilter: TProfileFilter);
-var
-  Caption: string;
-  Editor: TFilterEditorItem;
-begin
-  Caption := Format('%s %d', [ACaptionBase, AEditors.Count + 1]);
-  Editor := TFilterEditorItem.Create(Self, AScrollBox, Caption, AKind, AFilter);
-  AEditors.Add(Editor);
-end;
-
-procedure TRuleEditForm.UpdateFilterCaptions(AEditors: TObjectList<TObject>;
-  const ACaptionBase: string);
-var
-  Index: Integer;
-  Editor: TFilterEditorItem;
-begin
-  for Index := 0 to AEditors.Count - 1 do
+  if FSelectedRuleItem is TProfileFilter then
   begin
-    Editor := TFilterEditorItem(AEditors[Index]);
-    Editor.UpdateCaption(Format('%s %d', [ACaptionBase, Index + 1]));
+    if not Assigned(FSelectedNode) then
+      Exit;
+
+    ParentNode := FSelectedNode.Parent;
+    if not Assigned(ParentNode) or not (TObject(ParentNode.Data) is TProfileFilterList) then
+      Exit;
+
+    MessageDlg(Format('Удалить фильтр (%d)?',[(FSelectedRuleItem as TProfileFilter).Conditions.Count] ),
+    mtConfirmation, [mbYes, mbNo],
+    procedure(Sender: TComponent; Res: Integer)
+    begin
+      if Res = mrYes then
+      begin
+        FilterList := TObject(ParentNode.Data) as TProfileFilterList;
+        if DeleteObject(FilterList, FSelectedRuleItem) then
+          DrawRules;
+      end;
+    end
+    );
+
   end;
+end;
+
+procedure TRuleEditForm.SelectFirstLevelTwoNode;
+begin
+  if not Assigned(RuleTreeView) then
+    Exit;
+
+  if not Assigned(FSelectedRuleItem) then
+  begin
+    if Assigned(FFirstSelectedNode) then
+    begin
+      RuleTreeView.Selected := FFirstSelectedNode;
+      RuleTreeViewChange(RuleTreeView, FFirstSelectedNode);
+      FFirstSelectedNode.MakeVisible;
+      FFirstSelectedNode := nil;
+    end;
+  end;
+
 end;
 
 end.

@@ -7,16 +7,11 @@
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectName Condition="'$(ProjectName)'==''">UnitTestProj</ProjectName>
-        <TargetedPlatforms>131</TargetedPlatforms>
+        <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Console</AppType>
         <MainSource>UnitTestProj.dpr</MainSource>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
-        <Base>true</Base>
-    </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='Linux64' and '$(Base)'=='true') or '$(Base_Linux64)'!=''">
-        <Base_Linux64>true</Base_Linux64>
-        <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
@@ -55,9 +50,6 @@
         <DCC_K>false</DCC_K>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
         <SanitizedProjectName>UnitTestProj</SanitizedProjectName>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_Linux64)'!=''">
-        <DCC_UsePackage>DataSnapServer;fmx;emshosting;DbxCommonDriver;bindengine;FireDACCommonODBC;emsclient;FireDACCommonDriver;IndyProtocols;dbxcds;emsedge;bindcompfmx;inetdb;FireDACSqliteDriver;DbxClientDriver;FireDACASADriver;soapmidas;fmxFireDAC;dbexpress;FireDACInfxDriver;inet;DataSnapCommon;dbrtl;FireDACOracleDriver;CustomIPTransport;FireDACMSSQLDriver;DataSnapIndy10ServerTransport;DataSnapConnectors;FireDACMongoDBDriver;IndySystem;FireDACTDataDriver;bindcomp;FireDACCommon;DataSnapServerMidas;FireDACODBCDriver;emsserverresource;inetstn;IndyCore;RESTBackendComponents;FireDACMySQLDriver;FireDACADSDriver;RESTComponents;dsnapxml;DataSnapClient;DataSnapFireDAC;emsclientfiredac;FireDACPgDriver;FireDAC;xmlrtl;dsnap;CloudService;FireDACDb2Driver;DataSnapNativeClient;DatasnapConnectorsFreePascal;soaprtl;soapserver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>vclwinx;DataSnapServer;fmx;emshosting;vclie;DbxCommonDriver;bindengine;IndyIPCommon;VCLRESTComponents;DBXMSSQLDriver;FireDACCommonODBC;emsclient;FireDACCommonDriver;IndyProtocols;vclx;Skia.Package.RTL;IndyIPClient;dbxcds;vcledge;bindcompvclwinx;emsedge;bindcompfmx;DBXFirebirdDriver;inetdb;FireDACSqliteDriver;DbxClientDriver;FireDACASADriver;soapmidas;vclactnband;fmxFireDAC;dbexpress;FireDACInfxDriver;DBXMySQLDriver;VclSmp;inet;DataSnapCommon;fmxase;vcltouch;DBXOdbcDriver;dbrtl;FireDACDBXDriver;Skia.Package.FMX;FireDACOracleDriver;fmxdae;FireDACMSAccDriver;uSynEdit_R2026;CustomIPTransport;FireDACMSSQLDriver;DataSnapIndy10ServerTransport;DataSnapConnectors;vcldsnap;DBXInterBaseDriver;FireDACMongoDBDriver;IndySystem;FireDACTDataDriver;Skia.Package.VCL;uniGUI30VCL;vcldb;vclFireDAC;bindcomp;FireDACCommon;DataSnapServerMidas;FireDACODBCDriver;emsserverresource;inetstn;IndyCore;RESTBackendComponents;bindcompdbx;rtl;FireDACMySQLDriver;FireDACADSDriver;RESTComponents;DBXSqliteDriver;vcl;IndyIPServer;dsnapxml;dsnapcon;DataSnapClient;DataSnapProviderClient;adortl;DBXSybaseASEDriver;DBXDb2Driver;vclimg;DataSnapFireDAC;emsclientfiredac;FireDACPgDriver;FireDAC;FireDACDSDriver;inetdbxpress;xmlrtl;tethering;bindcompvcl;dsnap;CloudService;DBXSybaseASADriver;DBXOracleDriver;FireDACDb2Driver;DBXInformixDriver;fmxobj;bindcompvclsmp;DataSnapNativeClient;DatasnapConnectorsFreePascal;soaprtl;soapserver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
@@ -103,6 +95,13 @@
         <DCCReference Include="JournalRecordsUnitTest.pas"/>
         <DCCReference Include="SearchUnitTests.pas"/>
         <DCCReference Include="OperatorLinksContentRestBrokerUnitTest.pas"/>
+        <DCCReference Include="DsTypesUnitTest.pas"/>
+        <DCCReference Include="ObservationsUnitTest.pas"/>
+        <DCCReference Include="ObservationsRestBrokerUnitTest.pas"/>
+        <DCCReference Include="LogUnitTest.pas"/>
+        <DCCReference Include="LogsRestBrokerUnitTest.pas"/>
+        <DCCReference Include="DsGroupTestsUnit.pas"/>
+        <DCCReference Include="DsGroupRestBrokerTestsUnit.pas"/>
         <DCCReference Include="..\..\common\FuncUnit.pas"/>
         <DCCReference Include="..\..\services\common\entities\EntityUnit.pas"/>
         <DCCReference Include="..\..\logging\LoggingUnit.pas"/>
@@ -116,14 +115,25 @@
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\..\services\common\brokers\BaseRequests.pas"/>
         <DCCReference Include="..\..\services\common\brokers\BaseResponses.pas"/>
         <DCCReference Include="..\..\services\common\brokers\HttpClientUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\RestBrokerBaseUnit.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\RestEntityBrokerUnit.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\RestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\linkop\entities\OperatorLinkUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\ObservationUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\TDsTypesUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\DsGroupUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas"/>
+        <DCCReference Include="DataseriesUnitTest.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\DataseriesUnit.pas"/>
+        <DCCReference Include="..\..\services\signals\entities\LogUnit.pas"/>
+        <DCCReference Include="..\..\services\signals\brokers\LogsHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\common\AppConfigUnit.pas"/>
+        <DCCReference Include="..\..\common\DefualtConfig.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -162,12 +172,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win32\Debug\UnitTestProj.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>UnitTestProj.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\UnitTestProj.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>
@@ -1120,7 +1125,7 @@
                 <ProjectRoot Platform="Win64x" Name="$(PROJECTNAME)"/>
             </Deployment>
             <Platforms>
-                <Platform value="Linux64">True</Platform>
+                <Platform value="Linux64">False</Platform>
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">True</Platform>
             </Platforms>

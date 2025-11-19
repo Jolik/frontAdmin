@@ -1,19 +1,19 @@
-﻿unit AliasesFormUnit;
+unit AliasesFormUnit;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
   ParentEditFormUnit,
-  RestBrokerBaseUnit, RestEntityBrokerUnit,
+  RestBrokerBaseUnit, RestBrokerUnit,
   AliasesRestBrokerUnit,
-  APIConst, uniPanel, uniLabel;
+   uniPanel, uniLabel, ListParentFormUnit;
 
 type
   TAliasesForm = class(TListParentForm)
@@ -27,7 +27,7 @@ type
     procedure Refresh(const AId: String = ''); override;
 
     // REST broker for HTTP-based API
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
 
     ///
     function CreateEditForm(): TParentEditForm; override;
@@ -53,7 +53,7 @@ end;
 
 { TAliasesForm }
 
-function TAliasesForm.CreateRestBroker: TRestEntityBroker;
+function TAliasesForm.CreateRestBroker: TRestBroker;
 begin
   Result := TAliasesRestBroker.Create(UniMainModule.XTicket);
 end;
@@ -78,22 +78,13 @@ begin
 end;
 
 procedure TAliasesForm.btnNewClick(Sender: TObject);
-var
-  LEntity: TEntity;
 begin
   PrepareEditForm;
-  LEntity := TAlias.Create; // create empty alias entity without legacy broker
-  EditForm.Entity := LEntity;
-  try
-    EditForm.ShowModalEx(NewCallback);
-  finally
-    // entity lifetime is managed by form after modal; do not free here
-  end;
+  EditForm.Entity := TAlias.Create; // create empty alias entity without legacy broker
+  EditForm.ShowModalEx(NewCallback);
 end;
 
 procedure TAliasesForm.btnUpdateClick(Sender: TObject);
-var
-  LEntity: TEntity;
 begin
   PrepareEditForm(true);
   FId := FDMemTableEntity.FieldByName('Id').AsString;
@@ -104,19 +95,17 @@ begin
     Req.Id := FId;
     var Resp := RestBroker.Info(Req);
     try
-      LEntity := Resp.Entity as TEntity;
-      EditForm.Entity := LEntity;
+      EditForm.Entity := Resp.FieldSet;
     finally
-      // LEntity is owned by form during editing; response can be freed now
       Resp.Free;
     end;
   end;
 
-  try
-    EditForm.ShowModalEx(UpdateCallback);
-  finally
-  end;
+  EditForm.ShowModalEx(UpdateCallback);
 end;
 
 end.
+
+
+
 

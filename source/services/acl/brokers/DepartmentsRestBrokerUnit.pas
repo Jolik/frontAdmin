@@ -4,17 +4,18 @@ interface
 
 uses
   RestBrokerBaseUnit, BaseRequests, BaseResponses,
-  DepartmentHttpRequests, HttpClientUnit, RestEntityBrokerUnit;
+  DepartmentHttpRequests, HttpClientUnit, RestBrokerUnit;
 
 type
-  TDepartmentsRestBroker = class(TRestEntityBroker)
+  TDepartmentsRestBroker = class(TRestBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TDepartmentReqList): TDepartmentListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TDepartmentReqInfo): TDepartmentInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TDepartmentReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload;
     function Update(AReq: TDepartmentReqUpdate): TJSONResponse; overload;
@@ -30,12 +31,15 @@ type
 
 implementation
 
-uses APIConst;
-
 constructor TDepartmentsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLAclBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TDepartmentsRestBroker.ServiceName: string;
+begin
+  Result := 'acl';
 end;
 
 function TDepartmentsRestBroker.List(AReq: TReqList): TListResponse;
@@ -52,7 +56,7 @@ end;
 function TDepartmentsRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
   Result := TIdNewResponse.Create('depid');
-  Result := inherited New(AReq, Result);
+  inherited New(AReq, Result as TIdNewResponse);
 end;
 
 function TDepartmentsRestBroker.New(AReq: TDepartmentReqNew): TIdNewResponse;
@@ -105,7 +109,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TDepartmentsRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TDepartmentsRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TDepartmentInfoResponse.Create;
   inherited Info(AReq, Result);

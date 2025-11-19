@@ -26,6 +26,12 @@ var
   MetaObj: TJSONObject;
   NamesArr: TJSONArray;
   Url: string;
+
+  procedure EnsureEndsWith(const Actual, ExpectedSuffix, Context: string);
+  begin
+    if not Actual.ToLower.EndsWith(ExpectedSuffix.ToLower) then
+      raise Exception.Create(Format('%s URL mismatch: %s', [Context, Actual]));
+  end;
 begin
   Writeln('--- Operator links content broker test ---');
   Broker := TOperatorLinksContentRestBroker.Create('TEST-TICKET');
@@ -37,8 +43,7 @@ begin
       ListReq.Body.StartAt := 1000;
       ListReq.Body.SetFlags(['forward', 'body']);
       Url := ListReq.GetURLWithParams;
-      if Url <> '/linkop/api/v1/content/link-123/list' then
-        raise Exception.Create('List request URL mismatch: ' + Url);
+      EnsureEndsWith(Url, '/linkop/api/v1/content/link-123/list', 'List');
       Writeln('List request URL: ' + Url);
       Writeln('List request body: ' + ListReq.ReqBodyContent);
     finally
@@ -51,8 +56,7 @@ begin
       InfoReq.JournalRecordId := 'jrec-001';
       InfoReq.SetFlags(['body']);
       Url := InfoReq.GetURLWithParams;
-      if Url <> '/linkop/api/v1/content/link-123/jrec-001?flag=body' then
-        raise Exception.Create('Info request URL mismatch: ' + Url);
+      EnsureEndsWith(Url, '/linkop/api/v1/content/link-123/jrec-001?flag=body', 'Info');
       Writeln('Info request URL: ' + Url);
     finally
       InfoReq.Free;
@@ -63,8 +67,7 @@ begin
       RemoveReq.Id := 'link-123';
       RemoveReq.JournalRecordId := 'jrec-001';
       Url := RemoveReq.GetURLWithParams;
-      if Url <> '/linkop/api/v1/content/link-123/jrec-001/remove' then
-        raise Exception.Create('Remove request URL mismatch: ' + Url);
+      EnsureEndsWith(Url, '/linkop/api/v1/content/link-123/jrec-001/remove', 'Remove');
       Writeln('Remove request URL: ' + Url);
     finally
       RemoveReq.Free;
@@ -86,8 +89,7 @@ begin
       DataObj.AddPair('body', 'AQ==');
       RecordObj.AddPair('data', DataObj);
       Url := InputReq.GetURLWithParams;
-      if Url <> '/linkop/api/v1/content/link-123/input' then
-        raise Exception.Create('Input request URL mismatch: ' + Url);
+      EnsureEndsWith(Url, '/linkop/api/v1/content/link-123/input', 'Input');
       Writeln('Input request URL: ' + Url);
       Writeln('Input request body: ' + InputReq.ReqBodyContent);
     finally

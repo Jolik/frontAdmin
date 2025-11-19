@@ -121,16 +121,16 @@
         <DCCReference Include="..\services\dataserver\entities\ContextUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\LocationUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\SourceUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\ObservationUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\TDsTypesUnit.pas"/>
         <DCCReference Include="..\services\acl\entities\DepartmentUnit.pas"/>
         <DCCReference Include="..\common\FuncUnit.pas"/>
         <DCCReference Include="..\common\GUIDListUnit.pas"/>
         <DCCReference Include="..\common\StringListUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseRequests.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseResponses.pas"/>
         <DCCReference Include="..\services\common\brokers\HttpClientUnit.pas"/>
         <DCCReference Include="..\services\common\brokers\RestBrokerBaseUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\RestEntityBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\brokers\CompaniesRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\brokers\CompanyHttpRequests.pas"/>
         <DCCReference Include="..\services\acl\brokers\DepartmentsRestBrokerUnit.pas"/>
@@ -141,7 +141,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\common\ParentFormUnit.pas">
             <Form>ParentForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\common\ConstsUnit.pas"/>
@@ -158,7 +157,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\common\ListParentFormUnit.pas">
             <Form>ListParentForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFormUnit.pas">
@@ -263,6 +261,11 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\observation\ObservationFormUnit.pas">
+            <Form>ObservationForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\SourceCredsUnit.pas"/>
         <DCCReference Include="..\forms\sources\ContextCreateFormUnit.pas">
             <Form>ContextCreateForm</Form>
@@ -354,6 +357,14 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\dsgroups\DSGroupEditFormUnit.pas">
+            <Form>DsGroupEditForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dsgroups\DSGroupsFormUnit.pas">
+            <Form>DsGroupsForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\services\summary\entities\SummaryTaskUnit.pas"/>
         <DCCReference Include="..\services\summary\entities\SummaryTaskCustomSettingsUnit.pas"/>
         <DCCReference Include="..\forms\tasks\SelectTaskSourcesFormUnit.pas">
@@ -380,26 +391,80 @@
         <DCCReference Include="..\services\common\entities\StringUnit.pas"/>
         <DCCReference Include="..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas">
             <Form>DirDownSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas">
             <Form>FTPServerDownLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas">
             <Form>SMTPSrvDownLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\RestBrokerUnit.pas"/>
         <DCCReference Include="..\common\UniStorageHelpers.pas"/>
         <DCCReference Include="..\forms\common\AuthMainFormUnit.pas">
             <Form>AuthMainForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\common\EmbedLoginFormUnit.pas"/>
+        <DCCReference Include="..\forms\common\FormLayoutFormUnit.pas"/>
+        <DCCReference Include="..\common\AppConfigUnit.pas"/>
+        <DCCReference Include="..\services\acl\cas\brokers\CasHttpRequests.pas"/>
+        <DCCReference Include="..\services\acl\cas\brokers\CasRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\HttpProtocolExceptionHelper.pas"/>
+        <DCCReference Include="..\services\acl\brokers\SessionHttpRequests.pas"/>
+        <DCCReference Include="..\services\acl\brokers\SessionsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\acl\entities\SessionUnit.pas"/>
+        <DCCReference Include="..\services\acl\entities\UserUnit.pas"/>
+        <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\DsGroupUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\DataseriesUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\brokers\DsGroupsHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\forms\logs\LogEntryViewFormUnit.pas">
+            <Form>LogEntryViewForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\logs\LogViewFormUnit.pas">
+            <Form>LogViewForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\signals\entities\LogUnit.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsHttpRequests.pas"/>
+        <DCCReference Include="..\forms\dashboard\ContentFrameUnit.pas">
+            <Form>ContentFrame</Form>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\LogsFrameUnit.pas">
+            <Form>LogsFrame</Form>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\SourcesFrameUnit.pas">
+            <Form>SourcesFrame</Form>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\LinksFrameUnit.pas">
+            <Form>LinksFrame</Form>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\DCCDashboardFormUnit.pas">
+            <Form>DCCDashboardForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\dataspace\entities\HistoryRecordUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\entities\JournalRecordUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\HistoryRecordHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\StorageHttpRequests.pas"/>
+        <DCCReference Include="..\services\dataspace\brokers\StorageRestBrokerUnit.pas"/>
+        <DCCReference Include="..\forms\contentView\ContentViewFormUnit.pas">
+            <Form>ContentViewForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\common\DefualtConfig.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -428,12 +493,6 @@
             <Deployment Version="5">
                 <DeployFile LocalName="Linux64\Debug\frontDCC" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>frontDCC.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

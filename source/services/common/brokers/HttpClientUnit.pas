@@ -161,14 +161,37 @@ var
   HeaderPair: TPair<string, string>;
   ReqBodyString: string;
   EffectiveUrl: string;
+  BaseUrl: string;
+  Protocol: string;
 begin
   Builder := TStringBuilder.Create;
   try
     Builder.Append('curl ');
     Builder.Append('--request ').Append(MethodToCurlOption(FMethod)).Append(' ');
+
     EffectiveUrl := GetURLWithParams;
     if not EffectiveUrl.IsEmpty then
+    begin
+      if (not EffectiveUrl.StartsWith('http://', True)) and
+         (not EffectiveUrl.StartsWith('https://', True)) and
+         Assigned(HttpClient) and (HttpClient.Addr <> '') then
+      begin
+        Protocol := 'http://';
+        if HttpClient.Port = 443 then
+          Protocol := 'https://';
+
+        BaseUrl := Protocol + HttpClient.Addr;
+        if HttpClient.Port > 0 then
+          BaseUrl := BaseUrl + ':' + IntToStr(HttpClient.Port);
+
+        if not EffectiveUrl.StartsWith('/') then
+          EffectiveUrl := '/' + EffectiveUrl;
+
+        EffectiveUrl := BaseUrl + EffectiveUrl;
+      end;
+
       Builder.Append('''').Append(EffectiveUrl).Append('''');
+    end;
 
     for HeaderPair in FHeaders do
     begin

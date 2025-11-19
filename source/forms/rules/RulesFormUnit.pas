@@ -5,26 +5,29 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
   ParentEditFormUnit,
   uniPanel, uniLabel,
-  RestBrokerBaseUnit, RestEntityBrokerUnit,
-  RulesRestBrokerUnit;
+  EntityUnit, RestBrokerBaseUnit, RestBrokerUnit,
+  RulesRestBrokerUnit, ListParentFormUnit;
 
 type
   TRulesForm = class(TListParentForm)
+    CredMemFDMemTableEntityCaption2: TStringField;
   private
     procedure btnNewClick(Sender: TObject);
     procedure btnUpdateClick(Sender: TObject);
   protected
     procedure Refresh(const AId: String = ''); override;
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
     procedure UniFormCreate(Sender: TObject);
+    procedure OnAddListItem(item: TFieldSet); override;
+
   end;
 
 function RulesForm: TRulesForm;
@@ -34,7 +37,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, RuleEditFormUnit, RuleUnit, EntityUnit;
+  MainModule, uniGUIApplication, RuleEditFormUnit, RuleUnit;
 
 function RulesForm: TRulesForm;
 begin
@@ -53,9 +56,16 @@ begin
   inherited Refresh(AId)
 end;
 
-function TRulesForm.CreateRestBroker: TRestEntityBroker;
+function TRulesForm.CreateRestBroker: TRestBroker;
 begin
   Result := TRulesRestBroker.Create(UniMainModule.XTicket);
+end;
+
+procedure TRulesForm.OnAddListItem(item: TFieldSet);
+begin
+  inherited;
+  var src := item as TRule;
+  FDMemTableEntity.FieldByName('Caption').AsString := src.Caption;
 end;
 
 procedure TRulesForm.UniFormCreate(Sender: TObject);
@@ -87,7 +97,7 @@ begin
     Req.Id := FId;
     var Resp := RestBroker.Info(Req);
     try
-      EditForm.Entity := Resp.Entity as TEntity;
+      EditForm.Entity := Resp.FieldSet as TEntity;
     finally
       Resp.Free;
     end;

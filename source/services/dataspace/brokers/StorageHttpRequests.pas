@@ -15,7 +15,7 @@ uses
 
 type
   // List response for journal records
-  TStorageListResponse = class(TFieldSetListResponse)
+  TStorageListResponse = class(TListResponse)
   private
     function GetJournalRecords: TJournalRecordList;
   public
@@ -24,7 +24,7 @@ type
   end;
 
   // Info response for a single journal record
-  TStorageInfoResponse = class(TFieldSetResponse)
+  TStorageInfoResponse = class(TResponse)
   private
     function GetJournalRecord: TJournalRecord;
   public

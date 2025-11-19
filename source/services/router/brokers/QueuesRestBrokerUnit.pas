@@ -3,18 +3,19 @@ unit QueuesRestBrokerUnit;
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses,     RestEntityBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses,     RestBrokerUnit,
   QueueHttpRequests, HttpClientUnit;
 
 type
-  TQueuesRestBroker = class(TRestEntityBroker)
+  TQueuesRestBroker = class(TRestBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TQueueReqList): TQueueListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TQueueReqInfo): TQueueInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TQueueReqNew): TJSONResponse; overload;
 //!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
     function Update(AReq: TQueueReqUpdate): TJSONResponse; overload;
@@ -30,12 +31,15 @@ type
 
 implementation
 
-uses APIConst;
-
 constructor TQueuesRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLRouterBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TQueuesRestBroker.ServiceName: string;
+begin
+  Result := 'router';
 end;
 
 function TQueuesRestBroker.List(AReq: TReqList): TListResponse;
@@ -105,7 +109,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TQueuesRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TQueuesRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TQueueInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -122,4 +126,3 @@ begin
 end;
 
 end.
-

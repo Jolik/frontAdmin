@@ -13,7 +13,7 @@ uses
   EntityUnit, TaskUnit,
   TaskEditParentFormUnit, TaskSourceUnit, ParentEditFormUnit,
   TaskSourcesRestBrokerUnit, TaskSourceHttpRequests, TaskTypesUnit,
-  TasksRestBrokerUnit, TaskHttpRequests, BaseRequests, RestEntityBrokerUnit;
+  TasksRestBrokerUnit, TaskHttpRequests, BaseRequests, RestBrokerUnit;
 
 type
   TTaskParentForm = class(TListParentForm)
@@ -36,10 +36,10 @@ type
     function GetTaskBroker: TTasksRestBroker;
     procedure OnCreate; override;
     procedure UpdateTaskTypes;
-    procedure OnAddListItem(item: TEntity);override;
-    procedure OnInfoUpdated(AEntity: TEntity);override;
+    procedure OnAddListItem(item: TFieldSet);override;
+    procedure OnInfoUpdated(AFieldSet: TFieldSet);override;
     ///
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; virtual;
     function CreateEditForm(): TParentEditForm; override;
 
@@ -76,7 +76,7 @@ begin
 end;
 
 
-function TTaskParentForm.CreateRestBroker: TRestEntityBroker;
+function TTaskParentForm.CreateRestBroker: TRestBroker;
 begin
   Result := TTasksRestBroker.Create(UniMainModule.XTicket);
 end;
@@ -142,7 +142,7 @@ var
   EditParentForm: TTaskEditParentForm;
 begin
 
-  if not Assigned(FSelectedEntity) or (FSelectedEntity.Id='') then  Exit;
+  if not Assigned(FSelectedEntity) or ((FSelectedEntity as TTask).Id='') then  Exit;
 
   PrepareEditForm(true);
   TaskSourceList := nil;
@@ -208,7 +208,7 @@ begin
  result:=  SaveTaskCommon(False, AID, AEntity);
 end;
 
-procedure TTaskParentForm.OnAddListItem(item: TEntity);
+procedure TTaskParentForm.OnAddListItem(item: TFieldSet);
 begin
   inherited;
   with Item as TTask do
@@ -224,10 +224,10 @@ begin
     UpdateTaskTypes;
 end;
 
-procedure TTaskParentForm.OnInfoUpdated(AEntity: TEntity);
+procedure TTaskParentForm.OnInfoUpdated(AFieldSet: TFieldSet);
 begin
   inherited;
-  lTaskInfoModuleValue.Caption := (AEntity as TTask).Module;
+  lTaskInfoModuleValue.Caption := (AFieldSet as TTask).Module;
 end;
 
 function TTaskParentForm.SaveTaskCommon(IsNew: Boolean; const AID: string; AEntity: TFieldSet): Boolean;
@@ -241,7 +241,7 @@ begin
     Exit;
 
   try
-    // Создаём запрос
+    // ������ ������
     if IsNew then
       Req := RestBroker.CreateReqNew
     else
@@ -251,7 +251,7 @@ begin
       Exit;
 
 
-    // Заполняем ID, если есть
+    // ��������� ID, ���� ����
     if not IsNew then
     with (Req as TReqUpdate) do begin
       if EditForm.Id <> '' then
@@ -260,11 +260,11 @@ begin
         Id := TEntity(EditForm.Entity).Id;
     end;
 
-    // Копируем поля из формы в тело запроса
+    // �������� ���� �� ����� � ���� �������
     if Assigned(Req.ReqBody) and (AEntity is TFieldSet) then
       TFieldSet(Req.ReqBody).Assign(AEntity);
 
-    // Собираем sources[]
+    // �������� sources[]
     var taskBody := TTaskUpdateBody(Req.ReqBody);
     if Assigned(taskBody.Sources) then
     begin
@@ -274,7 +274,7 @@ begin
     end;
 
 
-    // Отправляем запрос
+    // ���������� ������
     if IsNew then
       JR := RestBroker.New(Req as TReqNew)
     else
@@ -296,6 +296,10 @@ begin
 end;
 
 end.
+
+
+
+
 
 
 

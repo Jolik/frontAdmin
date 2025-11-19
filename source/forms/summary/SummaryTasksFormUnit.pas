@@ -1,4 +1,4 @@
-﻿unit SummaryTasksFormUnit;
+unit SummaryTasksFormUnit;
 
 interface
 
@@ -12,8 +12,8 @@ uses
   uniToolBar, uniGUIBaseClasses,
    EntityUnit,
   ParentEditFormUnit,
-  TasksParentFormUnit, RestEntityBrokerUnit, RestBrokerBaseUnit, SummaryTasksRestBrokerUnit,
-  TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel, APIConst,
+  TasksParentFormUnit, RestBrokerUnit, RestBrokerBaseUnit, SummaryTasksRestBrokerUnit,
+  TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel, 
   uniMultiItem, uniListBox, SummaryTaskUnit;
 
 type
@@ -24,12 +24,12 @@ type
     procedure btnNewClick(Sender: TObject);
   protected
     procedure OnCreate; override;
-    procedure OnInfoUpdated(AEntity: TEntity);override;
+    procedure OnInfoUpdated(AFieldSet: TFieldSet);override;
     ///
 //    procedure Refresh(const AId: String = ''); override;
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
 
 //    procedure UpdateCallback(ASender: TComponent; AResult: Integer);
 
@@ -44,7 +44,8 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, SummaryTaskEditFormUnit, LoggingUnit, ParentFormUnit, TasksRestBrokerUnit, SummaryTasksHttpRequests;
+  MainModule, uniGUIApplication, SummaryTaskEditFormUnit, LoggingUnit, ParentFormUnit, TasksRestBrokerUnit,
+  SummaryTasksHttpRequests, AppConfigUnit;
 
 function SummaryTasksForm(): TSummaryTasksForm;
 begin
@@ -56,15 +57,15 @@ procedure TSummaryTasksForm.btnNewClick(Sender: TObject);
 begin
   PrepareEditForm;
 
-  ///  создаем класс сущности от брокера
+  ///  ������� ����� �������� �� �������
   var req := TSummaryTaskNewBody.Create;
-  ///  устанавлаием сущность в окно редактирования
+  ///  ������������ �������� � ���� ��������������
   EditForm.Entity := req;
 
   try
     EditForm.ShowModalEx(NewCallback);
   finally
-///  удалять нельзя потому что класс переходит под управление форму редактирования
+///  ������� ������ ������ ��� ����� ��������� ��� ���������� ����� ��������������
 ///    LEntity.Free;
   end;
 end;
@@ -76,14 +77,16 @@ begin
   Result:= res;
 end;
 
-function TSummaryTasksForm.CreateRestBroker: TRestEntityBroker;
+function TSummaryTasksForm.CreateRestBroker: TRestBroker;
 begin
   result:= TSummaryTasksRestBroker.Create(UniMainModule.XTicket);
 end;
 
 function TSummaryTasksForm.CreateTaskSourcesBroker: TTaskSourcesRestBroker;
 begin
-  Result := TTaskSourcesRestBroker.Create(UniMainModule.XTicket, APIConst.constURLSummaryBasePath);
+  Result := TTaskSourcesRestBroker.Create(
+    UniMainModule.XTicket,
+    ResolveServiceBasePath('summary'));
 end;
 
 procedure TSummaryTasksForm.OnCreate;
@@ -92,22 +95,26 @@ begin
   inherited;
 end;
 
-procedure TSummaryTasksForm.OnInfoUpdated(AEntity: TEntity);
+procedure TSummaryTasksForm.OnInfoUpdated(AFieldSet: TFieldSet);
 begin
   inherited;
   lbSettings.Items.Clear;
-  with FSelectedEntity as TSummaryTask do begin
-    lbSettings.Items.AddPair('Сокращенный заголовок', TaskSettings.Header);
-    lbSettings.Items.AddPair('Сокращенный заголовок 2', TaskSettings.Header2);
-    lbSettings.Items.AddPair('Корректировка времени сокращенного заголовка', IntToStr(TaskSettings.HeaderCorr));
-    lbSettings.Items.AddPair('Дни месяца', TaskSettings.MonthDays);
-    lbSettings.Items.AddPair('Сроки подачи', TaskSettings.Time);
-    lbSettings.Items.AddPair('Проверять опоздавшие наблюдения', BoolToStr(TaskSettings.CheckLate,true));
-    lbSettings.Items.AddPair('каждые X секунд:', IntToStr(TaskSettings.LateEvery));
-    lbSettings.Items.AddPair('каждые N минут:', IntToStr(TaskSettings.LatePeriod));
+  with AFieldSet as TSummaryTask do begin
+    lbSettings.Items.AddPair('����������� ���������', TaskSettings.Header);
+    lbSettings.Items.AddPair('����������� ��������� 2', TaskSettings.Header2);
+    lbSettings.Items.AddPair('������������� ������� ������������ ���������', IntToStr(TaskSettings.HeaderCorr));
+    lbSettings.Items.AddPair('��� ������', TaskSettings.MonthDays);
+    lbSettings.Items.AddPair('����� ������', TaskSettings.Time);
+    lbSettings.Items.AddPair('��������� ���������� ����������', BoolToStr(TaskSettings.CheckLate,true));
+    lbSettings.Items.AddPair('������ X ������:', IntToStr(TaskSettings.LateEvery));
+    lbSettings.Items.AddPair('������ N �����:', IntToStr(TaskSettings.LatePeriod));
     var Ex:= TaskSettings.ExcludeWeek;
 
   end;
 end;
 
 end.
+
+
+
+

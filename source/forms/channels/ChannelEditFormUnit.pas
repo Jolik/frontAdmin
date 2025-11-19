@@ -10,7 +10,7 @@ uses
   LoggingUnit, ParentLinkSettingEditFrameUnit,  LinkUnit,
   ProfilesRestBrokerUnit, ProfileUnit, common, ChannelsRestBrokerUnit,
   EntityUnit, ChannelUnit, uniSplitter, uniScrollBox, uniMultiItem, uniComboBox,
-  uniTimer, APIConst;
+  uniTimer;
 
 type
   TChannelEditForm = class(TParentEditForm)
@@ -61,7 +61,8 @@ uses
   HttpClientUnit,
   LinkFrameUtils,
   ProfileHttpRequests,
-  MainModule;
+  MainModule,
+  AppConfigUnit;
 
 resourcestring
   CreateCaption = 'Создание канала';
@@ -80,7 +81,8 @@ begin
   inherited;
   for var ls in LinkType2Str.Keys do
     comboLinkType.Items.Add(ls);
-  FProfilesBroker := TProfilesRestBroker.Create(UniMainModule.XTicket, constURLDatacommBasePath) ;
+  FProfilesBroker := TProfilesRestBroker.Create(UniMainModule.XTicket,
+    ResolveServiceBasePath('datacomm'));
   FProfiles := TProfileList.Create();
 end;
 
@@ -214,7 +216,7 @@ begin
     begin
        var remReq := FProfilesBroker.CreateReqRemove;
        try
-         remReq.Id := prof.Id;
+         remReq.Id := (prof as TProfile).Id;
          delresp := FProfilesBroker.Remove(remReq);
        finally
           delresp.Free;

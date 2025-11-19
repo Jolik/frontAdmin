@@ -7,20 +7,21 @@ uses
   BaseRequests,
   BaseResponses,
   HandlerHttpRequests,
-    RestEntityBrokerUnit,
+    RestBrokerUnit,
   HttpClientUnit;
 
 type
-  THandlersRestBroker = class(TRestEntityBroker)
+  THandlersRestBroker = class(TRestBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     function List(AReq: THandlerReqList): THandlerListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
 
     function Info(AReq: THandlerReqInfo): THandlerInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
 
     function New(AReq: THandlerReqNew): TJSONResponse; overload;
 ///!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
@@ -40,14 +41,12 @@ type
 
 implementation
 
-uses APIConst;
-
 { THandlersRestBroker }
 
 constructor THandlersRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLRouterBasePath;
+  SetPath(ServiceName, BasePath);
 end;
 
 function THandlersRestBroker.List(AReq: TReqList): TListResponse;
@@ -122,7 +121,7 @@ begin
   Result := Info(AReq as TReqInfo) as THandlerInfoResponse;
 end;
 
-function THandlersRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function THandlersRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := THandlerInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -133,5 +132,9 @@ begin
   Result := inherited Update(AReq);
 end;
 
-end.
+class function THandlersRestBroker.ServiceName: string;
+begin
+  Result := 'router';
+end;
 
+end.

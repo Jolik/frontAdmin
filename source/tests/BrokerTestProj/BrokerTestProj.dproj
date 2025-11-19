@@ -36,8 +36,6 @@
         <DCCReference Include="..\..\services\common\brokers\HttpClientUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\BaseRequests.pas"/>
         <DCCReference Include="..\..\services\common\brokers\BaseResponses.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\RestEntityBrokerUnit.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
@@ -63,12 +61,24 @@
         <DCCReference Include="OperatorRequestsUnit.pas"/>
         <DCCReference Include="OperatorLinksContentRequestsUnit.pas"/>
         <DCCReference Include="AbonentsRequestsUnit.pas"/>
+        <DCCReference Include="..\..\services\router\brokers\RulesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\router\brokers\RuleHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\router\entities\RuleUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\SmallRuleUnit.pas"/>
+        <DCCReference Include="..\..\services\common\entities\ConditionUnit.pas"/>
+        <DCCReference Include="..\..\services\common\entities\FilterUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\ChannelUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\HandlerUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\RouterSourceUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\AliasUnit.pas"/>
+        <DCCReference Include="..\..\services\router\entities\QueueUnit.pas"/>
+        <DCCReference Include="RulesRequestsUnit.pas"/>
         <DCCReference Include="CompaniesRequestsUnit.pas"/>
         <DCCReference Include="SearchRequestUnit.pas"/>
         <DCCReference Include="..\..\common\GUIDListUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\RestBrokerBaseUnit.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\RestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\SearchRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\SearchHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\SearchUnit.pas"/>
@@ -77,6 +87,21 @@
         <DCCReference Include="..\..\services\acl\entities\CompanyUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\StorageHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\StorageRestBrokerUnit.pas"/>
+        <DCCReference Include="ObservationsRequestsUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\ObservationUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\TDsTypesUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas"/>
+        <DCCReference Include="DsGroupsRequestsUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\DsGroupUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\DataseriesUnit.pas"/>
+        <DCCReference Include="..\..\services\signals\brokers\LogsHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\signals\entities\LogUnit.pas"/>
+        <DCCReference Include="LogsRequestsUnit.pas"/>
+        <DCCReference Include="..\..\common\AppConfigUnit.pas"/>
+        <DCCReference Include="..\..\common\DefualtConfig.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

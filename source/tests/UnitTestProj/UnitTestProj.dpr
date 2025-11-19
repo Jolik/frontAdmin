@@ -9,6 +9,13 @@ uses
   JournalRecordsUnitTest in 'JournalRecordsUnitTest.pas',
   SearchUnitTests in 'SearchUnitTests.pas',
   OperatorLinksContentRestBrokerUnitTest in 'OperatorLinksContentRestBrokerUnitTest.pas',
+  DsTypesUnitTest in 'DsTypesUnitTest.pas',
+  ObservationsUnitTest in 'ObservationsUnitTest.pas',
+  ObservationsRestBrokerUnitTest in 'ObservationsRestBrokerUnitTest.pas',
+  LogUnitTest in 'LogUnitTest.pas',
+  LogsRestBrokerUnitTest in 'LogsRestBrokerUnitTest.pas',
+  DsGroupTestsUnit in 'DsGroupTestsUnit.pas',
+  DsGroupRestBrokerTestsUnit in 'DsGroupRestBrokerTestsUnit.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
@@ -22,21 +29,41 @@ uses
   OperatorLinksContentRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas',
   OperatorLinksHttpRequests in '..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
   OperatorLinksRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
-  APIConst in '..\..\services\common\brokers\APIConst.pas',
   BaseRequests in '..\..\services\common\brokers\BaseRequests.pas',
   BaseResponses in '..\..\services\common\brokers\BaseResponses.pas',
   HttpClientUnit in '..\..\services\common\brokers\HttpClientUnit.pas',
   RestBrokerBaseUnit in '..\..\services\common\brokers\RestBrokerBaseUnit.pas',
-  RestEntityBrokerUnit in '..\..\services\common\brokers\RestEntityBrokerUnit.pas',
-  RestFieldSetBrokerUnit in '..\..\services\common\brokers\RestFieldSetBrokerUnit.pas',
-  OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas';
+  RestBrokerUnit in '..\..\services\common\brokers\RestBrokerUnit.pas',
+  OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
+  ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
+  TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
+  ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
+  DsGroupUnit in '..\..\services\dataserver\entities\DsGroupUnit.pas',
+  DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
+  DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
+  DataseriesUnitTest in 'DataseriesUnitTest.pas',
+  DataseriesUnit in '..\..\services\dataserver\entities\DataseriesUnit.pas',
+  LogUnit in '..\..\services\signals\entities\LogUnit.pas',
+  LogsHttpRequests in '..\..\services\signals\brokers\LogsHttpRequests.pas',
+  LogsRestBrokerUnit in '..\..\services\signals\brokers\LogsRestBrokerUnit.pas',
+  AppConfigUnit in '..\..\common\AppConfigUnit.pas',
+  DefualtConfig in '..\..\common\DefualtConfig.pas';
 
 begin
   try
+    LoadAppConfig;
     RunHistoryRecordTests;
     RunJournalRecordsAttrsTests;
     RunJournalRecordTests;
     TestOperatorLinksContentRestBroker;
+    RunDsTypesTests;
+    RunDataserieTests;    
+    RunObservationTests;
+    RunObservationsBrokerTests;
+    RunLogEntityTests;
+    RunLogsRestBrokerTests;
+    RunDsGroupTests;
+    RunDsGroupBrokerTests;
     RunSearchTests;
     Writeln('Все тесты пройдены успешно.');
     Readln;
@@ -44,6 +71,7 @@ begin
     on E: Exception do
     begin
       Writeln('Ошибка тестирования: ' + E.ClassName + ': ' + E.Message);
+      Readln;
       Halt(1);
     end;
   end;

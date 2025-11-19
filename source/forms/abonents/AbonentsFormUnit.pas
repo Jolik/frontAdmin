@@ -9,7 +9,7 @@ uses
    uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
    ParentEditFormUnit,
-  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestEntityBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestBrokerUnit,
   AbonentsRestBrokerUnit, uniPanel, uniLabel, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
@@ -19,7 +19,7 @@ type
   TAbonentsForm = class(TListParentForm)
   protected
     procedure Refresh(const AId: String = ''); override;
-    function CreateRestBroker: TRestEntityBroker; override;
+    function CreateRestBroker: TRestBroker; override;
     function CreateEditForm: TParentEditForm; override;
   end;
 
@@ -39,7 +39,7 @@ end;
 
 { TAbonentForm }
 
-function TAbonentsForm.CreateRestBroker: TRestEntityBroker;
+function TAbonentsForm.CreateRestBroker: TRestBroker;
 begin
   Result := TAbonentsRestBroker.Create(UniMainModule.XTicket);
 end;

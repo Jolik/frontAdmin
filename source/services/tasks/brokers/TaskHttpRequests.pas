@@ -1,4 +1,4 @@
-﻿unit TaskHttpRequests;
+unit TaskHttpRequests;
 
 interface
 
@@ -25,11 +25,11 @@ type
   private
     function GetTaskList: TTaskList;
   public
-    constructor Create(AListClass: TEntityListClass = nil); reintroduce; overload;
+    constructor Create(AListClass: TFieldSetListClass = nil); reintroduce; overload;
     property TaskList: TTaskList read GetTaskList;
   end;
 
-  TTaskTypesListResponse = class(TFieldSetListResponse)
+  TTaskTypesListResponse = class(TListResponse)
   private
     function GetTaskTypesList: TTaskTypesList;
   public
@@ -37,11 +37,11 @@ type
     property TaskTypesList: TTaskTypesList read GetTaskTypesList;
   end;
 
-  TTaskInfoResponse = class(TEntityResponse)
+  TTaskInfoResponse = class(TResponse)
   private
     function GetTask: TTask;
   public
-    constructor Create(AEntityClass: TEntityClass = nil); reintroduce; overload;
+    constructor Create(AEntityClass: TFieldSetClass = nil); reintroduce; overload;
     property Task: TTask read GetTask;
   end;
 
@@ -54,13 +54,6 @@ type
     property Tid: string read FTid write FTid;
   end;
 
-  TTaskNewResponse = class(TEntityResponse)
-  private
-    function GetTaskID: string;
-  public
-    constructor Create;
-    property ID: string read GetTaskID;
-  end;
 
   TTaskReqList = class(TReqList)
   protected
@@ -132,7 +125,7 @@ implementation
 
 { TTaskListResponse }
 
-constructor TTaskListResponse.Create(AListClass: TEntityListClass);
+constructor TTaskListResponse.Create(AListClass: TFieldSetListClass);
 begin
   if not Assigned(AListClass) then
     AListClass := TTaskList;
@@ -141,12 +134,12 @@ end;
 
 function TTaskListResponse.GetTaskList: TTaskList;
 begin
-  Result := EntityList as TTaskList;
+    Result := FieldSetList as TTaskList;
 end;
 
 { TTaskInfoResponse }
 
-constructor TTaskInfoResponse.Create(AEntityClass: TEntityClass);
+constructor TTaskInfoResponse.Create(AEntityClass: TFieldSetClass);
 begin
   if not Assigned(AEntityClass) then
     AEntityClass := TTask;
@@ -155,19 +148,7 @@ end;
 
 function TTaskInfoResponse.GetTask: TTask;
 begin
-  Result := Entity as TTask;
-end;
-
-{ TTaskNewResponse / TTaskNewResult }
-
-constructor TTaskNewResponse.Create;
-begin
-  inherited Create(TEntity, 'response', 'task');
-end;
-
-function TTaskNewResponse.GetTaskID: string;
-begin
- Result :=Entity.Id
+    Result := FieldSet as TTask;
 end;
 
 procedure TTaskNewResult.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
@@ -418,5 +399,7 @@ begin
 end;
 
 end.
+
+
 
 

@@ -1,22 +1,23 @@
-﻿unit OperatorLinksRestBrokerUnit;
+unit OperatorLinksRestBrokerUnit;
 
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestEntityBrokerUnit,
-  OperatorLinksHttpRequests, HttpClientUnit, APIConst;
+  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestBrokerUnit,
+  OperatorLinksHttpRequests, HttpClientUnit;
 
 type
-  TOperatorLinksRestBroker = class(TRestEntityBroker)
+  TOperatorLinksRestBroker = class(TRestBroker)
   private
     BasePath: string;
   public
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     function List(AReq: TOperatorLinkReqList): TOperatorLinkListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TOperatorLinkReqInfo): TOperatorLinkInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TOperatorLinkReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TOperatorLinkReqUpdate): TJSONResponse; overload;
@@ -37,9 +38,9 @@ implementation
 
 constructor TOperatorLinksRestBroker.Create(const ATicket: string);
 begin
-  inherited Create(ATicket);
-  // Çàäà¸ì ôèêñèðîâàííûé áàçîâûé ïóòü äëÿ ìàðøðóòèçàòîðà
-  BasePath := constURLLinkOpBasePath;
+  inherited Create(ATicket);// Caaa?i oeene?iaaiiue aaciaue ioou aey ia?o?ooecaoi?a
+  
+  SetPath(ServiceName, BasePath);
 end;
 
 function TOperatorLinksRestBroker.Archive(AReq: TReqInfo): TJSONResponse;
@@ -91,7 +92,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TOperatorLinksRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TOperatorLinksRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TOperatorLinkInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -118,7 +119,7 @@ end;
 function TOperatorLinksRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
   Result := TIdNewResponse.Create('lid');
-  Result := inherited New(AReq, Result);
+  inherited New(AReq, Result as TIdNewResponse);
 end;
 
 function TOperatorLinksRestBroker.New(AReq: TOperatorLinkReqNew)
@@ -147,6 +148,11 @@ end;
 function TOperatorLinksRestBroker.Update(AReq: TReqUpdate): TJSONResponse;
 begin
   Result := inherited Update(AReq);
+end;
+
+class function TOperatorLinksRestBroker.ServiceName: string;
+begin
+  Result := 'linkop';
 end;
 
 end.

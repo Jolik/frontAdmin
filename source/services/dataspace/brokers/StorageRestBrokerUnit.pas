@@ -4,25 +4,25 @@ interface
 
 uses
   System.SysUtils,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   StorageHttpRequests,
-  HttpClientUnit,
-  APIConst;
+  HttpClientUnit;
 
 type
-  TStorageRestBroker = class(TRestFieldSetBroker)
+  TStorageRestBroker = class(TRestBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); overload;
 
     function List(AReq: TStorageReqList): TStorageListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function ListByIds(AReq: TStorageReqListByIds): TStorageListResponse;
     function Info(AReq: TStorageReqInfo): TStorageInfoResponse; overload;
 
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
+    function Info(AReq: TReqInfo): TResponse; overload;
 
     function CreateReqList: TReqList; override;
     function CreateReqInfo(id: string = ''): TReqInfo; override;
@@ -36,7 +36,12 @@ implementation
 constructor TStorageRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLDataspaceBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TStorageRestBroker.ServiceName: string;
+begin
+  Result := 'dataspace';
 end;
 
 function TStorageRestBroker.CreateReqInfo(id: string): TReqInfo;
@@ -62,7 +67,7 @@ begin
   Result := Info(AReq as TReqInfo) as TStorageInfoResponse;
 end;
 
-function TStorageRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TStorageRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TStorageInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -73,7 +78,7 @@ begin
   Result := List(AReq as TReqList) as TStorageListResponse;
 end;
 
-function TStorageRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TStorageRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TStorageListResponse.Create;
   inherited List(AReq, Result);

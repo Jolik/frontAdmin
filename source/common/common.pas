@@ -125,22 +125,23 @@ type
 implementation
 
 uses
-Math;
-
+Math, System.RegularExpressions;
 
 function ValidateSID( ASid : string):Boolean;
 begin
+  result := TRegEx.IsMatch(ASid, '^\w{4}-\w{6}-\d{4}$');
 end;
 
 function ValidateUUID(AUUID: string): Boolean;
 begin
+ result := TRegEx.IsMatch(AUUID, '^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$')
 end;
 
 { TODO : сейчас только WMO}
 function ValidateAHD( ahd :string):boolean;
 begin
+  result := TRegEx.IsMatch(ahd, '^[A-Z]{4}\d{2}\s[A-Z]{4}$');
 end;
-
 
 function IndexOfString(arr: TArray<string>; val: string): integer;
 var

@@ -13,15 +13,15 @@ type
   private
     function GetProfileList: TProfileList;
   public
-    constructor Create;
+    constructor Create; override;
     property ProfileList: TProfileList read GetProfileList;
   end;
 
-  TProfileInfoResponse = class(TEntityResponse)
+  TProfileInfoResponse = class(TResponse)
   private
     function GetProfile: TProfile;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Profile: TProfile read GetProfile;
   end;
 
@@ -105,7 +105,7 @@ end;
 
 function TProfileListResponse.GetProfileList: TProfileList;
 begin
-  Result := EntityList as TProfileList;
+  Result := FieldSetList as TProfileList;
 end;
 
 { TProfileInfoResponse }
@@ -117,7 +117,7 @@ end;
 
 function TProfileInfoResponse.GetProfile: TProfile;
 begin
-  Result := Entity as TProfile;
+  Result := FieldSet as TProfile;
 end;
 
 function BuildLinksPath(const Lid, Suffix: string): string;

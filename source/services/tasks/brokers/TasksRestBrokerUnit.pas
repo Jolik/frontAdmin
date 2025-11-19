@@ -3,7 +3,7 @@
 interface
 
 uses
-  RestEntityBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   HttpClientUnit,
@@ -12,24 +12,24 @@ uses
   EntityUnit;
 
  type
-  TTasksRestBroker = class(TRestEntityBroker)
+  TTasksRestBroker = class(TRestBroker)
   private
-    FListClass: TEntityListClass;
-    FEntityClass: TEntityClass;
-    procedure SetEntityClass(const Value: TEntityClass);
-    procedure SetListClass(const Value: TEntityListClass);
+    FListClass: TFieldSetListClass;
+    FEntityClass: TFieldSetClass;
+    procedure SetEntityClass(const Value: TFieldSetClass);
+    procedure SetListClass(const Value: TFieldSetListClass);
   public
     BasePath: string;
     constructor Create(const ATicket: string = ''); overload; override;
-    constructor Create(const ATicket: string; AListClass: TEntityListClass;
-      AEntityClass: TEntityClass); reintroduce; overload;
-    property ListClass: TEntityListClass read FListClass write SetListClass;
-    property EntityClass: TEntityClass read FEntityClass write SetEntityClass;
+    constructor Create(const ATicket: string; AListClass: TFieldSetListClass;
+      AEntityClass: TFieldSetClass); reintroduce; overload;
+    property ListClass: TFieldSetListClass read FListClass write SetListClass;
+    property EntityClass: TFieldSetClass read FEntityClass write SetEntityClass;
     function List(AReq: TTaskReqList): TTaskListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
     function TypesList(AReq: TTaskTypesReqList): TTaskTypesListResponse;
     function Info(AReq: TTaskReqInfo): TTaskInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TTaskReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TTaskReqUpdate): TJSONResponse; overload;
@@ -50,20 +50,18 @@ implementation
 
 constructor TTasksRestBroker.Create(const ATicket: string);
 begin
-  inherited Create(ATicket);
-  SetListClass(nil);
+  inherited Create(ATicket);SetListClass(nil);
   SetEntityClass(nil);
 end;
 
 constructor TTasksRestBroker.Create(const ATicket: string;
-  AListClass: TEntityListClass; AEntityClass: TEntityClass);
+  AListClass: TFieldSetListClass; AEntityClass: TFieldSetClass);
 begin
-  inherited Create(ATicket);
-  SetListClass(AListClass);
+  inherited Create(ATicket);SetListClass(AListClass);
   SetEntityClass(AEntityClass);
 end;
 
-procedure TTasksRestBroker.SetEntityClass(const Value: TEntityClass);
+procedure TTasksRestBroker.SetEntityClass(const Value: TFieldSetClass);
 begin
   if Assigned(Value) then
     FEntityClass := Value
@@ -71,7 +69,7 @@ begin
     FEntityClass := TTask;
 end;
 
-procedure TTasksRestBroker.SetListClass(const Value: TEntityListClass);
+procedure TTasksRestBroker.SetListClass(const Value: TFieldSetListClass);
 begin
   if Assigned(Value) then
     FListClass := Value
@@ -93,7 +91,7 @@ end;
 function TTasksRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
   Result := TIdNewResponse.Create('tid');
-  Result := inherited New(AReq, Result);
+  inherited New(AReq, Result as TIdNewResponse);
 end;
 
 function TTasksRestBroker.New(AReq: TTaskReqNew): TIdNewResponse;
@@ -163,7 +161,7 @@ begin
   Result := Info(AReq as TReqInfo) as TTaskInfoResponse;
 end;
 
-function TTasksRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TTasksRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TTaskInfoResponse.Create(FEntityClass);
   inherited Info(AReq, Result);

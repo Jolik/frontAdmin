@@ -1,4 +1,4 @@
-﻿unit DSProcessorTaskUnit;
+unit DSProcessorTaskUnit;
 
 interface
 
@@ -22,10 +22,7 @@ type
   ///
   TDSProcessorTaskList = class (TTaskList)
   protected
-    ///
-    ///     ,
-    class function ItemClassType: TEntityClass; override;
-
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 type
@@ -39,9 +36,10 @@ implementation
 
 { TDSProcessorTaskList }
 
-class function TDSProcessorTaskList.ItemClassType: TEntityClass;
+class function TDSProcessorTaskList.ItemClassType: TFieldSetClass;
 begin
   Result := TDSProcessorTask;
 end;
 
 end.
+

@@ -385,21 +385,21 @@ end;
 procedure TestDataserie;
 var
   Source, LastDataValue: TJSONObject;
-  Entity: TDataserie;
+  Entity: TDataseries;
 begin
-  Writeln('--- Тест TDataserie ---');
+  Writeln('--- Тест TDataseries ---');
   Source := ParseJSONObject(DataserieJson);
   try
-    Entity := TDataserie.Create(Source);
+    Entity := TDataseries.Create(Source);
     try
-      AssertBaseScalars(Entity, Source, 'dsid', 'TDataserie');
-      Ensure(Entity.Mid = 'measure-1', 'TDataserie: неверное поле mid');
+      AssertBaseScalars(Entity, Source, 'dsid', 'TDataseries');
+      Ensure(Entity.Mid = 'measure-1', 'TDataseries: неверное поле mid');
       Ensure(Abs(Entity.LastInsert - UnixToDateTime(1700001111)) < (1 / 864000),
-        'TDataserie: неверное поле last_insert');
+        'TDataseries: неверное поле last_insert');
       LastDataValue := Source.GetValue('lastData') as TJSONObject;
-      Ensure(Assigned(LastDataValue), 'TDataserie: отсутствует поле lastData');
-      AssertJsonEqual(LastDataValue, Entity.LastData, 'TDataserie.lastData');
-      CompareSerialization('TDataserie', Source, Entity);
+      Ensure(Assigned(LastDataValue), 'TDataseries: отсутствует поле lastData');
+      AssertJsonEqual(LastDataValue, Entity.LastData, 'TDataseries.lastData');
+      CompareSerialization('TDataseries', Source, Entity);
     finally
       Entity.Free;
     end;
@@ -412,7 +412,7 @@ procedure TestDsGroup;
 var
   Source, MetadataValue, DataseriesValue: TJSONObject;
   Entity: TDsGroup;
-  Serie: TDataserie;
+  Serie: TDataseries;
 begin
   Writeln('--- Тест TDsGroup ---');
   Source := ParseJSONObject(DsGroupJson);
@@ -434,7 +434,7 @@ begin
       Ensure(Entity.Dataseries.Count = 1, 'TDsGroup: неверное количество элементов dataseries');
       if Entity.Dataseries.Count > 0 then
       begin
-        Serie := Entity.Dataseries.Items[0] as TDataserie;
+        Serie := Entity.Dataseries.Items[0] as TDataseries;
         Ensure(Assigned(Serie), 'TDsGroup: элемент dataseries[0] не загружен');
         Ensure(Serie.Dsid = 'ds-101', 'TDsGroup: неверное значение дочерней серии');
       end;

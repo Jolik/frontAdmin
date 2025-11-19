@@ -8,16 +8,17 @@ uses
   AbonentHttpRequests,
   BaseResponses,
   BaseRequests,
-  RestEntityBrokerUnit,
+  RestBrokerUnit,
   RestBrokerBaseUnit,
   EntityUnit,
   AbonentUnit;
 
 type
-  TAbonentsRestBroker = class(TRestEntityBroker)
+  TAbonentsRestBroker = class(TRestBroker)
   protected
     BasePath: string;
   public
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     // Фабрики базовых запросов
@@ -31,7 +32,7 @@ type
     function List(AReq: TReqList): TListResponse;overload;override;
 
     function Info(AReq: TAbonentReqInfo): TAbonentInfoResponse;overload;
-    function Info(AReq: TReqInfo): TEntityResponse;overload;override;
+    function Info(AReq: TReqInfo): TResponse;overload;override;
 
     function New(AReq: TAbonentReqNew): TIdNewResponse;overload;
     function New(AReq: TReqNew): TJSONResponse;overload;override;
@@ -43,7 +44,7 @@ type
 
 implementation
 
-uses APIConst;
+
 
 function TAbonentsRestBroker.List(AReq: TAbonentReqList): TAbonentListResponse;
 begin
@@ -59,7 +60,7 @@ end;
 function TAbonentsRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
   Result := TIdNewResponse.Create('abid');
-  inherited New(AReq, Result);
+  inherited New(AReq, Result as TIdNewResponse);
 end;
 
 function TAbonentsRestBroker.New(AReq: TAbonentReqNew): TIdNewResponse;
@@ -67,7 +68,7 @@ begin
   Result:= New(AReq as TReqNew) as TIdNewResponse;
 end;
 
-function TAbonentsRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TAbonentsRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TAbonentInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -92,8 +93,7 @@ end;
 constructor TAbonentsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  // Задаём фиксированный базовый путь для маршрутизатора
-  BasePath := constURLRouterBasePath;
+  SetPath(ServiceName, BasePath);
 end;
 
 function TAbonentsRestBroker.CreateReqList: TReqList;
@@ -125,6 +125,11 @@ function TAbonentsRestBroker.CreateReqRemove: TReqRemove;
 begin
   Result := TAbonentReqRemove.Create;
   Result.BasePath := BasePath;
+end;
+
+class function TAbonentsRestBroker.ServiceName: string;
+begin
+  Result := 'router';
 end;
 
 end.

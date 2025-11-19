@@ -21,7 +21,7 @@ type
   end;
 
   { Ответ со сведениями о поиске }
-  TSearchInfoResponse = class(TFieldSetResponse)
+  TSearchInfoResponse = class(TResponse)
   private
     function GetSearch: TSearch;
   public
@@ -30,7 +30,7 @@ type
   end;
 
   { Ответ со списком поисков }
-  TSearchListResponse = class(TFieldSetListResponse)
+  TSearchListResponse = class(TListResponse)
   private
     FCount: Integer;
     function GetSearches: TSearchList;
@@ -61,7 +61,7 @@ type
   end;
 
   { Ответ метода results }
-  TSearchResultsResponse = class(TFieldSetResponse)
+  TSearchResultsResponse = class(TResponse)
   private
     function GetSearchResult: TSearchResultsData;
   public

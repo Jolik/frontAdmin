@@ -78,9 +78,9 @@ type
     property OperatorData: TOperatorLinkData read GetOperatorData;
   end;
 
-  TOperatorLinkList = class(TEntityList)
+  TOperatorLinkList = class(TFieldSetList)
   public
-    class function ItemClassType: TEntityClass; override;
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 implementation
@@ -351,7 +351,7 @@ begin
   Id := Value;
 end;
 
-class function TOperatorLinkList.ItemClassType: TEntityClass;
+class function TOperatorLinkList.ItemClassType: TFieldSetClass;
 begin
   Result := TOperatorLink;
 end;

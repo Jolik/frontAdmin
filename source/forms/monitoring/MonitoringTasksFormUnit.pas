@@ -1,4 +1,4 @@
-﻿unit MonitoringTasksFormUnit;
+unit MonitoringTasksFormUnit;
 
 interface
 
@@ -12,15 +12,15 @@ uses
   uniToolBar, uniGUIBaseClasses,
   EntityUnit,
   ParentEditFormUnit,
-  TasksParentFormUnit, RestEntityBrokerUnit,
-  TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel, APIConst;
+  TasksParentFormUnit, RestBrokerUnit,
+  TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel;
 
 type
   TMonitoringTasksForm = class(TTaskParentForm)
   protected
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
 //    procedure UpdateCallback(ASender: TComponent; AResult: Integer);
 
   public
@@ -35,7 +35,7 @@ implementation
 
 uses
   MainModule, uniGUIApplication, MonitoringTaskEditFormUnit, MonitoringTaskUnit, LoggingUnit, ParentFormUnit,
-  TasksRestBrokerUnit;
+  TasksRestBrokerUnit, AppConfigUnit;
 
 function MonitoringTasksForm(): TMonitoringTasksForm;
 begin
@@ -49,15 +49,19 @@ begin
   Result := MonitoringTaskEditForm();
 end;
 
-function TMonitoringTasksForm.CreateRestBroker: TRestEntityBroker;
+function TMonitoringTasksForm.CreateRestBroker: TRestBroker;
 begin
   result := TTasksRestBroker.Create(UniMainModule.XTicket,TMonitoringTaskList,TMonitoringTask);
-  (result as TTasksRestBroker).BasePath:= APIConst.constURLMonitoringBasePath
+  (result as TTasksRestBroker).BasePath := ResolveServiceBasePath('dsmonitoring');
 end;
 
 function TMonitoringTasksForm.CreateTaskSourcesBroker: TTaskSourcesRestBroker;
 begin
-  Result := TTaskSourcesRestBroker.Create(UniMainModule.XTicket, APIConst.constURLMonitoringBasePath);
+  Result := TTaskSourcesRestBroker.Create(
+    UniMainModule.XTicket,
+    ResolveServiceBasePath('dsmonitoring'));
 end;
 
 end.
+
+

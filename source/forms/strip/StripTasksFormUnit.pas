@@ -1,4 +1,4 @@
-﻿unit StripTasksFormUnit;
+unit StripTasksFormUnit;
 
 interface
 
@@ -11,8 +11,8 @@ uses
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
   
-  ParentEditFormUnit, TasksParentFormUnit, RestEntityBrokerUnit, TasksRestBrokerUnit,
-  TaskSourcesRestBrokerUnit, uniPanel, uniLabel, APIConst;
+  ParentEditFormUnit, TasksParentFormUnit, RestBrokerUnit, TasksRestBrokerUnit,
+  TaskSourcesRestBrokerUnit, uniPanel, uniLabel;
 
 type
   TStripTasksForm = class(TTaskParentForm)
@@ -20,12 +20,12 @@ type
 
   protected
     procedure OnCreate; override;
-    ///  функция обновления компоннет на форме
+    ///  ������� ���������� ��������� �� �����
     procedure Refresh(const AId: String = ''); override;
 
-    ///  функция для создания нужного брокера потоком
-    function CreateRestBroker(): TRestEntityBroker; override;
-    ///  функиця для создания нужной формы редактирвоания
+    ///  ������� ��� �������� ������� ������� �������
+    function CreateRestBroker(): TRestBroker; override;
+    ///  ������� ��� �������� ������ ����� ��������������
     function CreateEditForm(): TParentEditForm; override;
 
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; override;
@@ -41,7 +41,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, StripTaskEditFormUnit, StripTaskUnit;
+  MainModule, uniGUIApplication, StripTaskEditFormUnit, StripTaskUnit, AppConfigUnit;
 
 function StripTasksForm: TStripTasksForm;
 begin
@@ -51,19 +51,21 @@ end;
 { TStripTasksForm }
 function TStripTasksForm.CreateEditForm: TParentEditForm;
 begin
-  ///  создаем "нашу" форму редактирования для Задач
+  ///  ������� "����" ����� �������������� ��� �����
   Result := StripTaskEditForm();
 end;
 
-function TStripTasksForm.CreateRestBroker: TRestEntityBroker;
+function TStripTasksForm.CreateRestBroker: TRestBroker;
 begin
    result:= inherited;
-  (result as TTasksRestBroker).BasePath:=  APIConst.constURLStripBasePath;
+  (result as TTasksRestBroker).BasePath := ResolveServiceBasePath('strip');
 end;
 
 function TStripTasksForm.CreateTaskSourcesBroker: TTaskSourcesRestBroker;
 begin
-Result := TTaskSourcesRestBroker.Create(UniMainModule.XTicket, APIConst.constURLStripBasePath);
+  Result := TTaskSourcesRestBroker.Create(
+    UniMainModule.XTicket,
+    ResolveServiceBasePath('strip'));
 end;
 
 procedure TStripTasksForm.OnCreate;
@@ -79,3 +81,5 @@ begin
 end;
 
 end.
+
+

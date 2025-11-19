@@ -1,4 +1,4 @@
-п»їunit MonitoringTaskUnit;
+unit MonitoringTaskUnit;
 
 interface
 
@@ -9,13 +9,13 @@ uses
   EntityUnit, TaskUnit;
 
 type
-  /// РљР»Р°СЃСЃ Р·Р°РґР°С‡Рё РїР°СЂСЃРµСЂР° (СЃРµСЂРІРёСЃ monitoring)
+  /// Класс задачи парсера (сервис monitoring)
   TMonitoringTask = class (TTask)
   private
 
   protected
-    ///  РјРµС‚РѕРґ РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕРЅРєСЂРµС‚РЅС‹Р№ С‚РёРї РѕР±СЉРµРєС‚Р° Settings
-    ///  РїРѕС‚РѕРјРєРё РґРѕР»Р¶РЅС‹ РїРµСЂРµРѕРїСЂРµРґРµР»РёС‚СЊ РµРіРѕ, РїРѕС‚РѕРјСѓ С‡С‚Рѕ РѕРЅ Сѓ РІСЃРµС… СЂР°Р·РЅС‹Р№
+    ///  метод возвращает конкретный тип объекта Settings
+    ///  потомки должны переопределить его, потому что он у всех разный
     class function SettingsClassType: TSettingsClass; override;
 
   public
@@ -23,17 +23,17 @@ type
   end;
 
 type
-  ///  СЃРїРёСЃРѕРє Р·Р°РґР°С‡ РґР»СЏ СЃРµСЂРІРёСЃР° monitoring
+  ///  список задач для сервиса monitoring
   TMonitoringTaskList = class (TTaskList)
   protected
-    ///  РјРµС‚РѕРґ РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕРЅРєСЂРµС‚РЅС‹Р№ С‚РёРї РѕР±СЉРµРєС‚Р° СЌР»РµРјРµРЅС‚Р° СЃРїРёСЃРєР°
-    ///  РїРѕС‚РѕРјРєРё РґРѕР»Р¶РЅС‹ РїРµСЂРµРѕРїСЂРµРґРµР»РёС‚СЊ РµРіРѕ, РїРѕС‚РѕРјСѓ С‡С‚Рѕ РѕРЅ Сѓ РІСЃРµС… СЂР°Р·РЅС‹Р№
-    class function ItemClassType: TEntityClass; override;
+    ///  метод возвращает конкретный тип объекта элемента списка
+    ///  потомки должны переопределить его, потому что он у всех разный
+    class function ItemClassType: TFieldSetClass; override;
 
   end;
 
 type
-  ///  РЅР°СЃС‚СЂРѕР№РєРё СЃСѓС‰РЅРѕСЃС‚Рё MonitoringTask
+  ///  настройки сущности MonitoringTask
   TMonitoringTaskSettings = class (TSettings)
   private
     FLateSec: integer;
@@ -41,12 +41,12 @@ type
     FTime: string;
 
   public
-    // СЌС‚Рё С‚СЂРµР±СѓСЋС‚ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РµРіРѕ РїСЂР°РІРёР»СЊРЅРѕРіРѕ СЌРєР·РµРјРїР»СЏСЂР° РѕР±СЉРµРєС‚Р°. РЅР° РѕС€РёР±РєРё - СЌРєСЃРµС€Р°РЅ
-    ///  РІ РјР°СЃСЃРёРІРµ const APropertyNames РїРµСЂРµРґР°СЋС‚СЃСЏ РїРѕР»СЏ, РєРѕС‚РѕСЂС‹Рµ РЅРµРѕР±С…РѕРґРёРјРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+    // эти требуют существующего правильного экземпляра объекта. на ошибки - эксешан
+    ///  в массиве const APropertyNames передаются поля, которые необходимо использовать
     procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
     procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); overload; override;
 
-    // РґР»СЏ РїРѕР»СЏ module - С‚РёРїР° Р—Р°РґР°С‡Рё
+    // для поля module - типа Задачи
     property Time: string read FTime write FTime;
     property LateSec: integer read FLateSec write FLateSec;
 //    property MonthDays: integer read FMonthDays write FMonthDays;
@@ -64,14 +64,14 @@ const
 
 { TMonitoringTaskList }
 
-class function TMonitoringTaskList.ItemClassType: TEntityClass;
+class function TMonitoringTaskList.ItemClassType: TFieldSetClass;
 begin
   Result := TMonitoringTask;
 end;
 
 { TMonitoringTaskSettings }
 
-(* С„РѕСЂРјР°С‚ settings
+(* формат settings
 
   "settings": {
       "Time": "00:00/+15 03:00/* 06:00/* 09:00/* 12:00/* 15:00/* 18:00/* 21:00/*",
@@ -87,11 +87,11 @@ procedure TMonitoringTaskSettings.Parse(src: TJSONObject;
 begin
   inherited;
 
-  ///  С‡РёС‚Р°РµРј РїРѕР»Рµ Time
+  ///  читаем поле Time
   Time := GetValueStrDef(src, TimeKey, '');
-  ///  С‡РёС‚Р°РµРј РїРѕР»Рµ LateSec
+  ///  читаем поле LateSec
   LateSec := GetValueIntDef(src, LateSecKey, 0);
-  ///  С‡РёС‚Р°РµРј РїРѕР»Рµ PeriodSec
+  ///  читаем поле PeriodSec
   PeriodSec := GetValueIntDef(src, PeriodSecKey, 0);
 
 end;
@@ -117,3 +117,4 @@ begin
 end;
 
 end.
+

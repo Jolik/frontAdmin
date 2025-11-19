@@ -18,8 +18,6 @@ object ContentStreamForm: TContentStreamForm
     ParentColor = False
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 1092
-    ExplicitHeight = 575
     object cpLeft: TUniContainerPanel
       Left = 0
       Top = 0
@@ -29,8 +27,6 @@ object ContentStreamForm: TContentStreamForm
       ParentColor = False
       Align = alClient
       TabOrder = 1
-      ExplicitWidth = 752
-      ExplicitHeight = 575
       object gridContent: TUniDBGrid
         Left = 0
         Top = 0
@@ -39,6 +35,7 @@ object ContentStreamForm: TContentStreamForm
         Hint = ''
         DataSource = dsContent
         ReadOnly = True
+        WebOptions.Paged = False
         LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072'...'
         ForceFit = True
         Align = alClient
@@ -97,8 +94,6 @@ object ContentStreamForm: TContentStreamForm
         ParentColor = False
         Align = alBottom
         TabOrder = 2
-        ExplicitTop = 455
-        ExplicitWidth = 752
         object lTotalRecords: TUniLabel
           Left = 16
           Top = 16
@@ -170,8 +165,6 @@ object ContentStreamForm: TContentStreamForm
       Align = alRight
       ParentColor = False
       Color = clBtnFace
-      ExplicitLeft = 752
-      ExplicitHeight = 575
     end
     object cpInfo: TUniContainerPanel
       Left = 766
@@ -182,8 +175,6 @@ object ContentStreamForm: TContentStreamForm
       ParentColor = False
       Align = alRight
       TabOrder = 2
-      ExplicitLeft = 758
-      ExplicitHeight = 575
       object pcInfo: TUniPageControl
         Left = 0
         Top = 0
@@ -194,11 +185,9 @@ object ContentStreamForm: TContentStreamForm
         Align = alClient
         TabOrder = 1
         OnChange = pcInfoChange
-        ExplicitHeight = 575
         object tsInfo: TUniTabSheet
           Hint = ''
           Caption = 'Info'
-          ExplicitHeight = 547
           object cpInfoName: TUniContainerPanel
             Left = 0
             Top = 0
@@ -328,7 +317,6 @@ object ContentStreamForm: TContentStreamForm
             ParentColor = False
             Align = alClient
             TabOrder = 4
-            ExplicitHeight = 307
             object memoBody: TUniMemo
               Left = 0
               Top = 0
@@ -338,14 +326,12 @@ object ContentStreamForm: TContentStreamForm
               Align = alClient
               ReadOnly = True
               TabOrder = 1
-              ExplicitHeight = 307
             end
           end
         end
         object tsHistory: TUniTabSheet
           Hint = ''
           Caption = 'History'
-          ExplicitHeight = 547
           object cpHistoryToolbar: TUniContainerPanel
             Left = 0
             Top = 0

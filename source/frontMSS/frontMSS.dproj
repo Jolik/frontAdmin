@@ -6,9 +6,9 @@
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
-        <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>frontMSS.dpr</MainSource>
+        <TargetedPlatforms>3</TargetedPlatforms>
         <ProjectName Condition="'$(ProjectName)'==''">frontMSS</ProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -31,6 +31,12 @@
     </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
         <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win64)'!=''">
+        <Cfg_1_Win64>true</Cfg_1_Win64>
         <CfgParent>Cfg_1</CfgParent>
         <Cfg_1>true</Cfg_1>
         <Base>true</Base>
@@ -88,6 +94,9 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
+        <BT_BuildType>Debug</BT_BuildType>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
@@ -133,12 +142,10 @@
         <DCCReference Include="..\services\acl\brokers\DepartmentsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\brokers\SessionHttpRequests.pas"/>
         <DCCReference Include="..\services\acl\brokers\SessionsRestBrokerUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseRequests.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseResponses.pas"/>
         <DCCReference Include="..\services\common\brokers\HttpClientUnit.pas"/>
         <DCCReference Include="..\services\common\brokers\RestBrokerBaseUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\RestEntityBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\cas\brokers\CasRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\cas\brokers\CasHttpRequests.pas"/>
         <DCCReference Include="..\services\common\brokers\HttpProtocolExceptionHelper.pas"/>
@@ -177,7 +184,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\operatorLinksContent\OperatorLinkContectFormUnit.pas">
             <Form>OperatorLinkContectForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\contentView\ContentViewFormUnit.pas">
@@ -327,6 +333,14 @@
             <Form>AbonentsForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\users\UserEditFormUnit.pas">
+            <Form>UserEditForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\users\UsersFormUnit.pas">
+            <Form>UsersForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\forms\aliases\AliasEditFormUnit.pas">
             <Form>AliasEditForm</Form>
             <DesignClass>TUniForm</DesignClass>
@@ -361,6 +375,8 @@
         </DCCReference>
         <DCCReference Include="..\services\router\brokers\AbonentHttpRequests.pas"/>
         <DCCReference Include="..\services\router\brokers\AbonentsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\acl\brokers\UserHttpRequests.pas"/>
+        <DCCReference Include="..\services\acl\brokers\UsersRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\router\brokers\AliasesRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\router\brokers\AliasHttpRequests.pas"/>
         <DCCReference Include="..\services\router\brokers\ChannelHttpRequests.pas"/>
@@ -388,7 +404,7 @@
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas"/>
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\RestBrokerUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\HistoryRecordUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\JournalRecordUnit.pas"/>
@@ -402,22 +418,14 @@
         <DCCReference Include="..\common\UniStorageHelpers.pas"/>
         <DCCReference Include="..\forms\common\AuthMainFormUnit.pas">
             <Form>AuthMainForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\common\EmbedLoginFormUnit.pas">
             <Form>EmbedLoginForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\common\FormLayoutFormUnit.pas">
             <Form>FormLayout</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="..\forms\common\ListParentFormUnit.pas">
-            <Form>ListParentForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\common\ParentEditFormUnit.pas">
@@ -425,11 +433,40 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
+        <DCCReference Include="..\forms\common\ListParentFormUnit.pas"/>
         <DCCReference Include="..\forms\common\ParentFormUnit.pas">
             <Form>ParentForm</Form>
-            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\forms\logs\LogEntryViewFormUnit.pas">
+            <Form>LogEntryViewForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\logs\LogViewFormUnit.pas">
+            <Form>LogViewForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\MSSDashboardFormUnit.pas">
+            <Form>MSSDashboardForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\ChannelsFrameUnit.pas">
+            <Form>ChannelsFrame</Form>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\ContentFrameUnit.pas">
+            <Form>ContentFrame</Form>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\LogsFrameUnit.pas">
+            <Form>LogsFrame</Form>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\signals\entities\LogUnit.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsHttpRequests.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\forms\rules\RouterFrameRuleConditionUnit.pas"/>
+        <DCCReference Include="..\common\DefualtConfig.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -458,12 +495,7 @@
             <Deployment Version="4">
                 <DeployFile LocalName="Linux64\Debug\frontMSS" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>frontMSS.exe</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>
@@ -1427,7 +1459,7 @@
             </Deployment>
             <Platforms>
                 <Platform value="Win32">True</Platform>
-                <Platform value="Win64">False</Platform>
+                <Platform value="Win64">True</Platform>
             </Platforms>
             <ModelSupport>False</ModelSupport>
         </BorlandProject>

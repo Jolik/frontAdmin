@@ -10,7 +10,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPanel, uniPageControl, uniSplitter, uniBasicGrid,
   uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  ParentEditFormUnit, EntityUnit,   RestEntityBrokerUnit ,
+  ParentEditFormUnit, EntityUnit,   RestBrokerUnit ,
   RestBrokerBaseUnit, QueuesRestBrokerUnit, uniLabel;
 
 type
@@ -37,8 +37,8 @@ type
   protected
     procedure Refresh(const AId: String = ''); override;
     function CreateEditForm(): TParentEditForm; override;
-    function CreateRestBroker(): TRestEntityBroker; override;
-    procedure OnInfoUpdated(AEntity: TEntity); override;
+    function CreateRestBroker(): TRestBroker; override;
+    procedure OnInfoUpdated(AFieldSet: TFieldSet); override;
   end;
 
 function QueuesForm: TQueuesForm;
@@ -67,21 +67,21 @@ begin
   inherited Refresh(AId);
 end;
 
-function TQueuesForm.CreateRestBroker: TRestEntityBroker;
+function TQueuesForm.CreateRestBroker: TRestBroker;
 begin
   Result := TQueuesRestBroker.Create(UniMainModule.XTicket);
 end;
 
-procedure TQueuesForm.OnInfoUpdated(AEntity: TEntity);
+procedure TQueuesForm.OnInfoUpdated(AFieldSet: TFieldSet);
 var
   Q: TQueue;
   countersText: string;
   limitsText: string;
 begin
-  inherited OnInfoUpdated(AEntity);
-  if not (AEntity is TQueue) then Exit;
+  inherited OnInfoUpdated(AFieldSet);
+  if not (AFieldSet is TQueue) then Exit;
 
-  Q := TQueue(AEntity);
+  Q := TQueue(AFieldSet);
   // for Name show Caption
   lTaskInfoNameValue.Caption := Q.Caption;
   lAllowPutValue.Caption := BoolToStr(Q.AllowPut, True);

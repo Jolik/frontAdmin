@@ -5,23 +5,24 @@ interface
 uses
   System.SysUtils,
   OperatorLinksContentHttpRequests,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   HttpClientUnit,
   BaseResponses;
 
 type
-  TOperatorLinksContentRestBroker = class(TRestFieldSetBroker)
+  TOperatorLinksContentRestBroker = class(TRestBroker)
   private
     FBasePath: string;
   public
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     function List(AReq: TOperatorLinkContentReqList): TOperatorLinkContentListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
 
     function Info(AReq: TOperatorLinkContentReqInfo): TOperatorLinkContentInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
+    function Info(AReq: TReqInfo): TResponse; overload;
 
     function Remove(AReq: TOperatorLinkContentReqRemove): TJSONResponse;
     function Input(AReq: TOperatorLinkContentReqInput): TOperatorLinkContentInputResponse;
@@ -36,18 +37,22 @@ type
 
 implementation
 
-uses
-  APIConst;
+
 
 { TOperatorLinksContentRestBroker }
 
 constructor TOperatorLinksContentRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  FBasePath := constURLLinkOpBasePath.Trim;
+  SetPath(ServiceName, FBasePath);
   while (FBasePath <> '') and FBasePath.EndsWith('/') do
     FBasePath := FBasePath.Substring(0, FBasePath.Length - 1);
   FBasePath := FBasePath + '/content';
+end;
+
+class function TOperatorLinksContentRestBroker.ServiceName: string;
+begin
+  Result := 'linkop';
 end;
 
 function TOperatorLinksContentRestBroker.CreateReqInfo(id: string): TReqInfo;
@@ -93,7 +98,7 @@ begin
   Result := Req;
 end;
 
-function TOperatorLinksContentRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TOperatorLinksContentRestBroker.Info(AReq: TReqInfo): TResponse;
 var
   Resp: TOperatorLinkContentInfoResponse;
 begin
@@ -128,7 +133,7 @@ begin
   end;
 end;
 
-function TOperatorLinksContentRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TOperatorLinksContentRestBroker.List(AReq: TReqList): TListResponse;
 var
   Resp: TOperatorLinkContentListResponse;
 begin

@@ -3,7 +3,7 @@ unit DepartmentHttpRequests;
 interface
 
 uses
-  System.SysUtils, System.JSON,
+  System.SysUtils,
   EntityUnit, HttpClientUnit, BaseRequests, BaseResponses,
   DepartmentUnit;
 
@@ -11,18 +11,16 @@ type
   TDepartmentListResponse = class(TListResponse)
   private
     function GetDepartmentList: TDepartmentList;
-  protected
-    procedure SetResponse(const Value: string); override;
   public
-    constructor Create;
+    constructor Create; override;
     property DepartmentList: TDepartmentList read GetDepartmentList;
   end;
 
-  TDepartmentInfoResponse = class(TEntityResponse)
+  TDepartmentInfoResponse = class(TResponse)
   private
     function GetDepartment: TDepartment;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Department: TDepartment read GetDepartment;
   end;
 
@@ -69,41 +67,7 @@ end;
 
 function TDepartmentListResponse.GetDepartmentList: TDepartmentList;
 begin
-  Result := EntityList as TDepartmentList;
-end;
-
-procedure TDepartmentListResponse.SetResponse(const Value: string);
-var
-  JSONResult: TJSONObject;
-  RootObject: TJSONObject;
-  DeptsValue: TJSONValue;
-  ItemsArray: TJSONArray;
-begin
-  inherited SetResponse(Value);
-  DepartmentList.Clear;
-
-  if Value.Trim.IsEmpty then Exit;
-
-  JSONResult := TJSONObject.ParseJSONValue(Value) as TJSONObject;
-  try
-    if not Assigned(JSONResult) then Exit;
-
-    RootObject := JSONResult.GetValue('response') as TJSONObject;
-    if not Assigned(RootObject) then Exit;
-
-    DeptsValue := RootObject.GetValue('departments');
-    ItemsArray := nil;
-
-    if DeptsValue is TJSONArray then
-      ItemsArray := TJSONArray(DeptsValue)
-    else if DeptsValue is TJSONObject then
-      ItemsArray := TJSONObject(DeptsValue).GetValue('items') as TJSONArray;
-
-    if Assigned(ItemsArray) then
-      DepartmentList.ParseList(ItemsArray);
-  finally
-    JSONResult.Free;
-  end;
+  Result := FieldSetList as TDepartmentList;
 end;
 
 { TDepartmentInfoResponse }
@@ -115,7 +79,7 @@ end;
 
 function TDepartmentInfoResponse.GetDepartment: TDepartment;
 begin
-  Result := Entity as TDepartment;
+  Result := FieldSet as TDepartment;
 end;
 
 { Requests }

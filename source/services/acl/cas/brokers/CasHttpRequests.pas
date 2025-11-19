@@ -37,16 +37,13 @@ type
 
 implementation
 
-uses
-  APIConst;
-
 { TCasLoginRequest }
 
 constructor TCasLoginRequest.Create;
 begin
   inherited Create;
   Method := mPOST;
-  BasePath := constURLAclBasePath;
+  
   SetEndpoint('cas/login');
   FNoRedirect := True;
   Params.AddOrSetValue('noredirect', 'true');

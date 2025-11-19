@@ -11,16 +11,18 @@ uses
   uniMultiItem, uniComboBox, EntityUnit,
   CompaniesRestBrokerUnit, DepartmentsRestBrokerUnit,
   RestBrokerBaseUnit, BaseRequests, BaseResponses, uniScreenMask, uniPanel,
-  AuthMainFormUnit, Vcl.Menus, uniMainMenu, uniTimer;
+  AuthMainFormUnit, Vcl.Menus, uniMainMenu, uniTimer, uniImage, uniImageList;
 
 type
   TMainForm = class(TAuthMainForm)
+    btnDashboard: TUniButton;
     btnChannel: TUniButton;
     btnLinks: TUniButton;
     btnRouterSources: TUniButton;
     btnAliases: TUniButton;
     btnQueues: TUniButton;
     btnAbonents: TUniButton;
+    btnUsers: TUniButton;
     btnOperatorLinks: TUniButton;
     btnRules: TUniButton;
     btnHandlers: TUniButton;
@@ -30,6 +32,10 @@ type
     btnOperatorLinksContent: TUniButton;
     btnSearch: TUniButton;
     btnContentStream: TUniButton;
+    btnLogs: TUniButton;
+    unlblName1: TUniLabel;
+    uncntnrpnForms: TUniContainerPanel;
+    procedure btnDashboardClick(Sender: TObject);
     procedure btnAbonentsClick(Sender: TObject);
     procedure btnChannelClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
@@ -39,10 +45,12 @@ type
     procedure UniFormCreate(Sender: TObject);
     procedure btnHandlersClick(Sender: TObject);
     procedure btnQueuesClick(Sender: TObject);
+    procedure btnUsersClick(Sender: TObject);
     procedure btnOperatorLinksClick(Sender: TObject);
     procedure btnOperatorLinksContentClick(Sender: TObject);
     procedure btnSearchClick(Sender: TObject);
     procedure btnContentStreamClick(Sender: TObject);
+    procedure btnLogsClick(Sender: TObject);
   private
   public
     { Public declarations }
@@ -69,7 +77,8 @@ uses
   OperatorLinksFormUnit,
   OperatorLinkContectFormUnit,
   SearchFormUnit,
-  ContentStreamFormUnit, HandlersFormUnit;
+  ContentStreamFormUnit, HandlersFormUnit, UsersFormUnit,
+  LogViewFormUnit, MSSDashboardFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -86,7 +95,8 @@ end;
 
 procedure TMainForm.btnHandlersClick(Sender: TObject);
 begin
-  HandlersForm.Show()
+  HandlersForm.Show();
+  HandlersForm.Parent:= uncntnrpnForms;
 end;
 
 procedure TMainForm.btnRulesClick(Sender: TObject);
@@ -97,6 +107,11 @@ end;
 procedure TMainForm.btnAbonentsClick(Sender: TObject);
 begin
   AbonentsForm.Show();
+end;
+
+procedure TMainForm.btnUsersClick(Sender: TObject);
+begin
+  UsersForm.Show();
 end;
 
 procedure TMainForm.btnOperatorLinksClick(Sender: TObject);
@@ -119,9 +134,19 @@ begin
   ContentStreamForm.Show();
 end;
 
+procedure TMainForm.btnLogsClick(Sender: TObject);
+begin
+  LogViewForm.Show();
+end;
+
 procedure TMainForm.btnAliasesClick(Sender: TObject);
 begin
   AliasesForm.Show();
+end;
+
+procedure TMainForm.btnDashboardClick(Sender: TObject);
+begin
+  MSSDashboardForm.Show();
 end;
 
 procedure TMainForm.btnRouterSourcesClick(Sender: TObject);
@@ -143,18 +168,7 @@ procedure TMainForm.UniFormCreate(Sender: TObject);
 begin
   inherited;
   OSLabel.Caption := 'Платформа: ' + TOSVersion.ToString;
-  UniMainModule.XTicket := 'ST-Test';
-
-  HttpClient.Addr := '213.167.42.170';
-  if GetEnvironmentVariable('ADDR') <> '' then
-    HttpClient.Addr := GetEnvironmentVariable('ADDR');
-
-  HttpClient.Port := 8088;
-  if GetEnvironmentVariable('PORT') <> '' then
-    HttpClient.Port := StrToInt(GetEnvironmentVariable('PORT'));
-
   URLLabel.Caption := 'Url:' + HttpClient.Addr + ' : ' + IntToStr(HttpClient.Port);
-  InitializeCompanyData;
 end;
 
 initialization

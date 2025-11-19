@@ -9,8 +9,7 @@ uses
   BaseResponses,
   SummaryTaskUnit,
   TaskHttpRequests,
-  TaskSourceUnit,
-  APIConst;
+  TaskSourceUnit;
 
 type
 
@@ -36,7 +35,7 @@ type
     constructor Create; reintroduce;
   end;
 
-  TSummaryTaskInfoResponse = class(TEntityResponse)
+  TSummaryTaskInfoResponse = class(TResponse)
   public
     constructor Create; reintroduce;
   end;
@@ -54,7 +53,7 @@ implementation
 constructor TSummaryTasksRequest.Create;
 begin
   inherited Create;
-  BasePath := constURLSummaryBasePath;
+  
   URL := BasePath;
 end;
 

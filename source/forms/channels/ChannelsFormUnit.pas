@@ -10,17 +10,17 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPanel, uniPageControl, uniSplitter, uniBasicGrid,
   uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  RestEntityBrokerUnit, ChannelsRestBrokerUnit,
+  RestBrokerUnit, ChannelsRestBrokerUnit,
   ParentEditFormUnit, uniLabel;
 
 type
   TChannelsForm = class(TListParentForm)
     procedure btnUpdateClick(Sender: TObject);
   protected
-    ///  функция для создания нужного брокера потомком
-    function CreateRestBroker(): TRestEntityBroker; override;
+    ///  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    function CreateRestBroker(): TRestBroker; override;
 
-    ///  функиця для создания нужной формы редактирвоания
+    ///  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     function CreateEditForm(): TParentEditForm; override;
 
   public
@@ -49,7 +49,7 @@ begin
   //
 end;
 
-function TChannelsForm.CreateRestBroker: TRestEntityBroker;
+function TChannelsForm.CreateRestBroker: TRestBroker;
 begin
   Result := TChannelsRestBroker.Create(UniMainModule.XTicket);
 end;

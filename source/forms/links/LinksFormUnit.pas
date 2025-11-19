@@ -9,9 +9,10 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
-  uniToolBar, uniGUIBaseClasses, RestBrokerBaseUnit,  RestEntityBrokerUnit,
+  uniToolBar, uniGUIBaseClasses, RestBrokerBaseUnit,  RestBrokerUnit,
   ParentEditFormUnit, uniPanel, uniLabel, BaseRequests, HttpClientUnit,
   BaseResponses, LinksRestBrokerUnit;
+
 
 type
   TLinksForm = class(TListParentForm)
@@ -20,7 +21,7 @@ type
     procedure btnRemoveClick(Sender: TObject);
   protected
     //  функция для создания нужного брокера потомком
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
     //  функиця для создания нужной формы редактирвоания
     function CreateEditForm(): TParentEditForm; override;
     procedure EditFormCallBack(Sender: TComponent; AResult: Integer);
@@ -36,7 +37,7 @@ implementation
 {$R *.dfm}
 
 uses
-  APIConst, MainModule, uniGUIApplication, LinkEditFormUnit;
+  MainModule, uniGUIApplication, LinkEditFormUnit, AppConfigUnit;
 
 function LinksForm: TLinksForm;
 begin
@@ -94,7 +95,7 @@ end;
 procedure TLinksForm.btnUpdateClick(Sender: TObject);
 var
   LId : string;
-  Resp: TEntityResponse;
+  Resp: TResponse;
 begin
   LId := FDMemTableEntity.FieldByName('Id').AsString;
   if LId = '' then
@@ -105,7 +106,7 @@ begin
     Resp := RestBroker.Info(R);
     EditForm := CreateEditForm();
     EditForm.IsEdit := true;
-    EditForm.Entity := Resp.Entity;
+    EditForm.Entity := Resp.FieldSet;
     EditForm.Id := LId;
     EditForm.ShowModal(EditFormCallBack);
   finally
@@ -116,13 +117,17 @@ end;
 
 
 function TLinksForm.CreateEditForm: TParentEditForm;
+var
+  BasePath: string;
 begin
-  Result := LinkEditForm(constURLDrvcommBasePath);
+  ///  создаем "нашу" форму редактирования для Абонентов
+  BasePath := ResolveServiceBasePath('drvcomm');
+  Result := LinkEditForm(BasePath);
 end;
 
-function TLinksForm.CreateRestBroker: TRestEntityBroker;
+function TLinksForm.CreateRestBroker: TRestBroker;
 begin
-  Result := TLinksRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath);
+  Result := TLinksRestBroker.Create(UniMainModule.XTicket,ResolveServiceBasePath('drvcomm'));
 end;
 
 procedure TLinksForm.EditFormCallBack(Sender: TComponent; AResult: Integer);

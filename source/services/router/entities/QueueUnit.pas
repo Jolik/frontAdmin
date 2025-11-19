@@ -64,10 +64,10 @@ type
 
 type
   ///  список задач
-  TQueueList = class (TEntityList)
+  TQueueList = class (TFieldSetList)
     ///  метод возвращает конкретный тип объекта элемента списка
     ///  потомки должны переопределить его, потому что он у всех разный
-    class function ItemClassType: TEntityClass; override;
+    class function ItemClassType: TFieldSetClass; override;
 
   end;
 
@@ -228,7 +228,7 @@ end;
 
 { TQueueList }
 
-class function TQueueList.ItemClassType: TEntityClass;
+class function TQueueList.ItemClassType: TFieldSetClass;
 begin
   Result := TQueue;
 end;

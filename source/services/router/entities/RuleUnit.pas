@@ -32,9 +32,9 @@ type
     property Rule: TSmallRule read FRule;
   end;
 
-  TRuleList = class(TEntityList)
+  TRuleList = class(TFieldSetList)
   public
-    class function ItemClassType: TEntityClass; override;
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 implementation
@@ -140,7 +140,7 @@ end;
 
 { TRuleList }
 
-class function TRuleList.ItemClassType: TEntityClass;
+class function TRuleList.ItemClassType: TFieldSetClass;
 begin
   Result := TRule;
 end;

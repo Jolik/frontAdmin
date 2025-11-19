@@ -1,22 +1,22 @@
-﻿unit ProfilesRestBrokerUnit;
+unit ProfilesRestBrokerUnit;
 
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses,RestEntityBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses,RestBrokerUnit,
   ProfileHttpRequests, HttpClientUnit;
 
 type
-  TProfilesRestBroker = class(TRestEntityBroker)
+  TProfilesRestBroker = class(TRestBroker)
   public
     BasePath: string;
-    constructor Create(const ATicket: string; const АBasePath:string);
+    constructor Create(const ATicket: string; const ABasePath:string);
     function List(AReq: TProfileReqList): TProfileListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TProfileReqInfo): TProfileInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TProfileReqNew): TJSONResponse; overload;
-    function New(AReq: TReqNew; AResp: TJSONResponse): TJSONResponse; overload; override;
+    function New(AReq: TReqNew; AResp: TIdNewResponse): TIdNewResponse; overload; override;
     function Update(AReq: TProfileReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload; override;
     function Remove(AReq: TProfileReqRemove): TJSONResponse; overload;
@@ -31,12 +31,12 @@ type
 
 implementation
 
-uses APIConst;
 
-constructor TProfilesRestBroker.Create(const ATicket: string; const АBasePath:string);
+
+constructor TProfilesRestBroker.Create(const ATicket: string; const ABasePath:string);
 begin
   inherited Create(ATicket);
-  BasePath := АBasePath;
+  BasePath := ABasePath;
 end;
 
 function TProfilesRestBroker.List(AReq: TReqList): TListResponse;
@@ -50,7 +50,7 @@ begin
   Result := List(AReq as TReqList) as TProfileListResponse;
 end;
 
-function TProfilesRestBroker.New(AReq: TReqNew; AResp: TJSONResponse): TJSONResponse;
+function TProfilesRestBroker.New(AReq: TReqNew; AResp: TIdNewResponse): TIdNewResponse;
 begin
   Result := inherited New(AReq, AResp);
 end;
@@ -113,7 +113,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TProfilesRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TProfilesRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TProfileInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -130,4 +130,5 @@ begin
 end;
 
 end.
+
 
