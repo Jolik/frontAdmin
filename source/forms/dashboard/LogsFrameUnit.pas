@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes, System.DateUtils,
-  System.Generics.Collections, System.Math,
+  System.Generics.Collections, System.Generics.Defaults, System.Math,
   Controls,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIFrame,
   uniGUIBaseClasses, uniPanel, uniBasicGrid, uniDBGrid, uniTimer,
@@ -12,7 +12,8 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  LogsRestBrokerUnit, LogsHttpRequests, LogUnit;
+  LogsRestBrokerUnit, LogsHttpRequests, LogUnit,
+  EntityUnit;
 
 type
   TLogsFrame = class(TUniFrame)

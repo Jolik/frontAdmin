@@ -35,7 +35,7 @@ object MSSDashboardForm: TMSSDashboardForm
         ParentColor = False
         Align = alTop
         TabOrder = 1
-        inline ChannelsFrame: TChannelsFrame
+        object ChannelsFrame: TChannelsFrame
           Left = 0
           Top = 0
           Width = 780
@@ -65,7 +65,7 @@ object MSSDashboardForm: TMSSDashboardForm
         ParentColor = False
         Align = alClient
         TabOrder = 2
-        inline ContentFrame: TContentFrame
+        object ContentFrame: TContentFrame
           Left = 0
           Top = 0
           Width = 780
@@ -96,7 +96,7 @@ object MSSDashboardForm: TMSSDashboardForm
       ParentColor = False
       Align = alRight
       TabOrder = 2
-      inline LogsFrame: TLogsFrame
+      object LogsFrame: TLogsFrame
         Left = 0
         Top = 0
         Width = 414

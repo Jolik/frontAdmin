@@ -18,9 +18,9 @@ type
     cpChannels: TUniContainerPanel;
     cpContent: TUniContainerPanel;
     splChannels: TUniSplitter;
-    inline ChannelsFrame: TChannelsFrame;
-    inline ContentFrame: TContentFrame;
-    inline LogsFrame: TLogsFrame;
+    ChannelsFrame: TChannelsFrame;
+    ContentFrame: TContentFrame;
+    LogsFrame: TLogsFrame;
   private
   public
   end;
