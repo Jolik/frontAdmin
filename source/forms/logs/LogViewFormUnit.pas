@@ -3,7 +3,7 @@ unit LogViewFormUnit;
 interface
 
 uses
-  System.SysUtils, System.Classes,
+  System.SysUtils, System.Classes, System.DateUtils,
   Data.DB,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
@@ -35,7 +35,7 @@ type
     dsLogs: TDataSource;
     mtLogs: TFDMemTable;
     mtLogstimestamp: TWideStringField;
-    mtLogspayload: TWideMemoField;
+    mtLogspayload: TWideStringField;
     mtLogscontainer_name: TWideStringField;
     mtLogsfilename: TWideStringField;
     mtLogshost: TWideStringField;
@@ -54,6 +54,7 @@ type
     procedure AppendLogEntry(const AResult: TLogResult; const AEntry: TLogEntry);
     procedure ClearFilters;
     function ParseInteger(const Value: string): Integer;
+    function FormatTimestampIso8601(const RawTimestamp: string): string;
   public
   end;
 
@@ -81,7 +82,7 @@ begin
     mtLogs.CreateDataSet;
 
   mtLogs.Append;
-  mtLogstimestamp.AsString := AEntry.Timestamp;
+  mtLogstimestamp.AsString := FormatTimestampIso8601(AEntry.Timestamp);
   mtLogspayload.AsString := AEntry.Payload;
   if Assigned(AResult) then
   begin
@@ -102,6 +103,27 @@ begin
     mtLogsswarm_stack.Clear;
   end;
   mtLogs.Post;
+end;
+
+function TLogViewForm.FormatTimestampIso8601(const RawTimestamp: string): string;
+const
+  NANOSECONDS_PER_SECOND = 1000000000.0;
+var
+  NanoValue: Int64;
+  SecondsSinceEpoch: Extended;
+  UtcDateTime: TDateTime;
+  FormatSettings: TFormatSettings;
+begin
+  Result := RawTimestamp;
+  if not TryStrToInt64(RawTimestamp, NanoValue) then
+    Exit;
+
+  SecondsSinceEpoch := NanoValue / NANOSECONDS_PER_SECOND;
+  UtcDateTime := UnixToDateTime(SecondsSinceEpoch, False);
+
+  FormatSettings := TFormatSettings.Create;
+  FormatSettings.DecimalSeparator := '.';
+  Result := FormatDateTime('yyyy"-"mm"-"dd"T"hh":"nn":"ss"."zzz', UtcDateTime, FormatSettings) + 'Z';
 end;
 
 procedure TLogViewForm.btnClearFiltersClick(Sender: TObject);

@@ -38,6 +38,17 @@ object LogViewForm: TLogViewForm
         Align = alClient
         TabOrder = 0
         OnDblClick = gridLogsDblClick
+        Columns = <
+          item
+            FieldName = 'timestamp'
+            Title.Caption = 'Timestamp'
+            Width = 200
+          end
+          item
+            FieldName = 'payload'
+            Title.Caption = 'Payload'
+            Width = 480
+          end>
       end
     end
     object splFilters: TUniSplitter
@@ -191,7 +202,8 @@ object LogViewForm: TLogViewForm
       end
       item
         Name = 'payload'
-        DataType = ftWideMemo
+        DataType = ftWideString
+        Size = 8192
       end
       item
         Name = 'container_name'
@@ -238,9 +250,9 @@ object LogViewForm: TLogViewForm
       FieldName = 'timestamp'
       Size = 64
     end
-    object mtLogspayload: TWideMemoField
+    object mtLogspayload: TWideStringField
       FieldName = 'payload'
-      BlobType = ftWideMemo
+      Size = 8192
     end
     object mtLogscontainer_name: TWideStringField
       FieldName = 'container_name'
