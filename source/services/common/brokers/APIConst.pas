@@ -38,6 +38,9 @@ const
 const
   constURLDataspaceBasePath = '/dataspace/api/v2';
 
+const
+  constURLSignalsBasePath = '/signals/api/v1';
+
 implementation
 
 end.
