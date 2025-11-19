@@ -15,6 +15,7 @@ type
   TRulesRestBroker = class(TRestEntityBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     function List(AReq: TRuleReqList): TRuleListResponse; overload;
@@ -49,7 +50,7 @@ uses
 constructor TRulesRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLRouterBasePath;
+  SetPath(ServiceName, BasePath);
 end;
 
 function TRulesRestBroker.List(AReq: TReqList): TListResponse;
@@ -136,5 +137,9 @@ begin
   Result := inherited Update(AReq);
 end;
 
-end.
+class function TRulesRestBroker.ServiceName: string;
+begin
+  Result := 'router';
+end;
 
+end.

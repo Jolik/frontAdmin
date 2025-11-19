@@ -431,6 +431,12 @@
         <DCCReference Include="..\services\dataserver\entities\DataseriesUnit.pas"/>
         <DCCReference Include="..\services\dataserver\brokers\DsGroupsHttpRequests.pas"/>
         <DCCReference Include="..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\forms\common\ListParentFieldSetFormUnit.pas">
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\forms\common\ParentFieldSetFormUnit.pas">
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

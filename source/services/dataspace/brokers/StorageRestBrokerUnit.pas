@@ -15,6 +15,7 @@ type
   TStorageRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); overload;
 
     function List(AReq: TStorageReqList): TStorageListResponse; overload;
@@ -36,7 +37,12 @@ implementation
 constructor TStorageRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLDataspaceBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TStorageRestBroker.ServiceName: string;
+begin
+  Result := 'dataspace';
 end;
 
 function TStorageRestBroker.CreateReqInfo(id: string): TReqInfo;

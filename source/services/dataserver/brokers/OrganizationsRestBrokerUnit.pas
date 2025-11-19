@@ -14,6 +14,7 @@ type
   TOrganizationsRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
 
     constructor Create(const ATicket: string = ''); overload;
 
@@ -39,7 +40,12 @@ uses
 constructor TOrganizationsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLManagementcommBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TOrganizationsRestBroker.ServiceName: string;
+begin
+  Result := 'management';
 end;
 
 

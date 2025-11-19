@@ -10,6 +10,7 @@ type
   TChannelsRestBroker = class(TRestEntityBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TChannelReqList): TChannelListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
@@ -35,7 +36,7 @@ uses APIConst;
 constructor TChannelsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLRouterBasePath;
+  SetPath(ServiceName, BasePath);
 end;
 
 function TChannelsRestBroker.List(AReq: TReqList): TListResponse;
@@ -121,5 +122,9 @@ begin
   Result := inherited Update(AReq);
 end;
 
-end.
+class function TChannelsRestBroker.ServiceName: string;
+begin
+  Result := 'router';
+end;
 
+end.

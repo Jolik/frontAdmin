@@ -46,8 +46,7 @@ uses StrUtils;
 
 constructor TTaskSourcesRestBroker.Create(const ATicket: string; const AServicePath: string);
 begin
-  inherited Create(ATicket);
-  ServicePath := AServicePath;
+  inherited Create(ATicket);ServicePath := AServicePath;
   BasePath := ServicePath.TrimRight(['/']) + '/tasks';
 end;
 

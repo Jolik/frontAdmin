@@ -44,7 +44,6 @@ type
   public
     constructor Create(AListClass: TFieldSetListClass; const ARootKey: string = 'response'; const AItemsKey: string = 'items');reintroduce;overload; virtual;
     constructor Create;overload;virtual;
-    function NewListInstance:TFieldSetListResponse;virtual;
     destructor Destroy; override;
     property FieldSetList: TFieldSetList read FList;
     property ItemsKey: string read FItemsKey write FItemsKey;
@@ -362,10 +361,6 @@ begin
   inherited;
 end;
 
-function TFieldSetListResponse.NewListInstance: TFieldSetListResponse;
-begin
-  Result:= TFieldSetListResponse.Create;
-end;
 
 procedure TFieldSetListResponse.SetResponse(const Value: string);
 var

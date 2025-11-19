@@ -14,6 +14,7 @@ type
   THandlersRestBroker = class(TRestEntityBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     function List(AReq: THandlerReqList): THandlerListResponse; overload;
@@ -47,7 +48,7 @@ uses APIConst;
 constructor THandlersRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLRouterBasePath;
+  SetPath(ServiceName, BasePath);
 end;
 
 function THandlersRestBroker.List(AReq: TReqList): TListResponse;
@@ -133,5 +134,9 @@ begin
   Result := inherited Update(AReq);
 end;
 
-end.
+class function THandlersRestBroker.ServiceName: string;
+begin
+  Result := 'router';
+end;
 
+end.

@@ -8,7 +8,7 @@
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <AppType>Application</AppType>
         <MainSource>frontMSS.dpr</MainSource>
-        <TargetedPlatforms>131</TargetedPlatforms>
+        <TargetedPlatforms>3</TargetedPlatforms>
         <ProjectName Condition="'$(ProjectName)'==''">frontMSS</ProjectName>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -340,6 +340,14 @@
             <Form>AbonentsForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\users\UserEditFormUnit.pas">
+            <Form>UserEditForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\users\UsersFormUnit.pas">
+            <Form>UsersForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\forms\aliases\AliasEditFormUnit.pas">
             <Form>AliasEditForm</Form>
             <DesignClass>TUniForm</DesignClass>
@@ -374,6 +382,8 @@
         </DCCReference>
         <DCCReference Include="..\services\router\brokers\AbonentHttpRequests.pas"/>
         <DCCReference Include="..\services\router\brokers\AbonentsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\acl\brokers\UserHttpRequests.pas"/>
+        <DCCReference Include="..\services\acl\brokers\UsersRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\router\brokers\AliasesRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\router\brokers\AliasHttpRequests.pas"/>
         <DCCReference Include="..\services\router\brokers\ChannelHttpRequests.pas"/>
@@ -441,6 +451,8 @@
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
+        <DCCReference Include="..\forms\common\ListParentFieldSetFormUnit.pas"/>
+        <DCCReference Include="..\forms\common\ParentFieldSetFormUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -466,9 +478,15 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
-            <Deployment Version="5">
+            <Deployment Version="4">
                 <DeployFile LocalName="Linux64\Debug\frontMSS" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>frontMSS.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>
@@ -479,6 +497,16 @@
                     </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidClasses">
+                    <Platform Name="Android">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
+                    </Platform>
+                    <Platform Name="Android64">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidFileProvider">
@@ -1421,7 +1449,6 @@
                 <ProjectRoot Platform="Win64x" Name="$(PROJECTNAME)"/>
             </Deployment>
             <Platforms>
-                <Platform value="Linux64">True</Platform>
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">True</Platform>
             </Platforms>

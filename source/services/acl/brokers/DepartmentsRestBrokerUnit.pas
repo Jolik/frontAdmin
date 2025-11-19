@@ -10,6 +10,7 @@ type
   TDepartmentsRestBroker = class(TRestEntityBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TDepartmentReqList): TDepartmentListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
@@ -35,7 +36,12 @@ uses APIConst;
 constructor TDepartmentsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLAclBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TDepartmentsRestBroker.ServiceName: string;
+begin
+  Result := 'acl';
 end;
 
 function TDepartmentsRestBroker.List(AReq: TReqList): TListResponse;

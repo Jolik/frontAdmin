@@ -17,6 +17,7 @@ type
   public
     ServicePath: string;
     BasePath: string;
+    class function ServiceName: string; override;
 
     constructor Create(const ATicket: string = ''); overload;
 
@@ -52,7 +53,12 @@ uses
 constructor TSourcesRestBroker.Create(const ATicket: string = '');
 begin
  inherited Create(ATicket);
-  BasePath := constURLDataserverBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TSourcesRestBroker.ServiceName: string;
+begin
+  Result := 'dataserver';
 end;
 
 function TSourcesRestBroker.CreateReqInfo(id: string): TReqInfo;

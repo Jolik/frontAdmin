@@ -62,6 +62,7 @@ type
   private
     FBasePath: string;
   public
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); overload;
 
     function CreateReqList: TReqList; override;
@@ -149,7 +150,12 @@ end;
 constructor TObservationsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  FBasePath := constURLDataserverBasePath;
+  SetPath(ServiceName, FBasePath);
+end;
+
+class function TObservationsRestBroker.ServiceName: string;
+begin
+  Result := 'dataserver';
 end;
 
 function TObservationsRestBroker.CreateReqDstTypeInfo(

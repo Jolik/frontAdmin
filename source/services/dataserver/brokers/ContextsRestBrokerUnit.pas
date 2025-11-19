@@ -14,6 +14,7 @@ type
   TContextsRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TContextReqList): TContextListResponse; overload;
     function List(AReq: TReqList): TFieldSetListResponse; overload; override;
@@ -64,7 +65,12 @@ uses APIConst, System.SysUtils;
 constructor TContextsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLDataserverBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TContextsRestBroker.ServiceName: string;
+begin
+  Result := 'dataserver';
 end;
 
 function TContextsRestBroker.List(AReq: TReqList): TFieldSetListResponse;

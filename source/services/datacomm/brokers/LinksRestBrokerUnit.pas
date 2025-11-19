@@ -32,8 +32,7 @@ implementation
 
 constructor TLinksRestBroker.Create(const ATicket: string; const ABasePath:string);
 begin
-  inherited Create(ATicket);
-  BasePath := ABasePath;
+  inherited Create(ATicket);BasePath := ABasePath;
 end;
 
 function TLinksRestBroker.List(AReq: TReqList): TListResponse;

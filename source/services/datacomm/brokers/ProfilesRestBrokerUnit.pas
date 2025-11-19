@@ -35,8 +35,7 @@ uses APIConst;
 
 constructor TProfilesRestBroker.Create(const ATicket: string; const АBasePath:string);
 begin
-  inherited Create(ATicket);
-  BasePath := АBasePath;
+  inherited Create(ATicket);BasePath := АBasePath;
 end;
 
 function TProfilesRestBroker.List(AReq: TReqList): TListResponse;

@@ -9,13 +9,18 @@ inherited AuthMainForm: TAuthMainForm
   TextHeight = 15
   inherited pnlTop: TUniPanel
     Width = 1227
-    ExplicitWidth = 1227
+    ExplicitWidth = 1225
     inherited lblUtcTime: TUniLabel
       Width = 599
-      ExplicitWidth = 599
+      ExplicitWidth = 597
     end
     inherited uncntnrpnLogo: TUniContainerPanel
       TabOrder = 3
+      inherited unmgLogo: TUniImage
+        ExplicitLeft = 5
+        ExplicitTop = 3
+        ExplicitHeight = 37
+      end
     end
     object uncntnrpnAuth: TUniContainerPanel
       Left = 720
@@ -26,6 +31,7 @@ inherited AuthMainForm: TAuthMainForm
       ParentColor = False
       Align = alRight
       TabOrder = 2
+      ExplicitLeft = 718
       DesignSize = (
         506
         43)
@@ -46,7 +52,6 @@ inherited AuthMainForm: TAuthMainForm
         Font.Height = -18
         TabOrder = 1
         OnClick = UserLabelClick
-        ExplicitLeft = 383
       end
       object cbCurComp: TUniComboBox
         Left = 65
@@ -91,7 +96,7 @@ inherited AuthMainForm: TAuthMainForm
   end
   inherited pnlRight: TUniPanel
     Height = 746
-    ExplicitHeight = 746
+    ExplicitHeight = 738
   end
   inherited tmUtc: TUniTimer
     Left = 280

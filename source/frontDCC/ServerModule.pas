@@ -1,4 +1,4 @@
-Ôªøunit ServerModule;
+unit ServerModule;
 
 interface
 
@@ -23,18 +23,36 @@ implementation
 {$R *.dfm}
 
 uses
+  AppConfigUnit,
   uniGUIVars;
 
 function UniServerModule: TUniServerModule;
 begin
   Result := TUniServerModule(UniGUIServerInstance);
-  Result.SetTcpPort(8080);
 end;
 
 procedure TUniServerModule.FirstInit;
+var
+  PathValue: string;
+  PortValue: Integer;
 begin
-  Self.Title := '–¶–°–î–ù - –ü–æ–¥—Å–∏—Å—Ç–µ–º–∞ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è –¥–∞–Ω–Ω—ã–º–∏';
-  URLPath := '/admin/dcc';
+  if AppConfig = nil then
+    LoadAppConfig('FRONTDCC');
+
+  if (AppConfig <> nil) and (AppConfig.Port > 0) then
+    PortValue := AppConfig.Port
+  else
+    PortValue := 8080;
+  SetTcpPort(PortValue);
+
+  PathValue := '/admin/dcc';
+  if (AppConfig <> nil) and (AppConfig.URLPath <> '') then
+    PathValue := AppConfig.URLPath;
+  if (PathValue <> '') and (PathValue[Low(PathValue)] <> '/') then
+    PathValue := '/' + PathValue;
+
+  Self.Title := '÷—ƒÕ - ÔÓ‰ÒËÒÚÂÏ‡ ‰‡ÌÌ˚ı';
+  URLPath := PathValue;
   InitServerModule(Self);
 end;
 

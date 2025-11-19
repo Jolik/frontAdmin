@@ -51,6 +51,7 @@ type
     FLogging: TLoggingConfig;
     FURLPath: string;
     FUseEmbedLogin: Boolean;
+    FBasePath: string;
     FServices: TObjectDictionary<string, TServiceConfig>;
     FServiceName: string;
     procedure Clear;
@@ -60,6 +61,7 @@ type
     procedure ApplyLoggingOverride(const PropertyName, Value: string);
     procedure ApplyServiceOverride(const ServiceName, PropertyName, Value: string);
     procedure ApplyPortOverride(const Value: string);
+    procedure ApplyBasePathToHttpClient;
     function GetServiceInstance(const ServiceName: string): TServiceConfig;
     function NormalizeServiceName(const Name: string): string;
   public
@@ -74,6 +76,7 @@ type
     property Port: Integer read FPort;
     property Logging: TLoggingConfig read FLogging;
     property URLPath: string read FURLPath;
+    property BasePath: string read FBasePath;
     property Services: TObjectDictionary<string, TServiceConfig> read FServices;
     property UseEmbedLogin: Boolean read FUseEmbedLogin;
     property ServiceName: string read FServiceName;
@@ -90,12 +93,15 @@ uses
   System.Classes,
   System.IOUtils,
   {$IFDEF MSWINDOWS}Winapi.Windows,{$ENDIF}
-  FuncUnit;
+  FuncUnit,
+  System.Net.URLClient,
+  HttpClientUnit;
 
 const
   DEFAULT_CONFIG_JSON = '''
 {
   "port": 8077,
+  "base_path": "http://213.167.42.170:8088",
   "logging": {
     "loglevel": "debug",
     "api_calls": false,
@@ -103,43 +109,43 @@ const
   },
   "services": {
     "objects": {
-      "host": "http://objects:8000/api/v1"
+      "host": "/objects/api/v1"
     },
     "acl": {
-      "host": "http://acl:8001/api/v1"
+      "host": "/acl/api/v1"
     },
     "strip": {
-      "host": "http://prsstrip:8050/api/v2"
+      "host": "/strip/api/v2"
     },
     "summary": {
-      "host": "http://summary:8052/api/v2"
+      "host": "/summary/api/v2"
     },
     "dsprocessor": {
-      "host": "http://dsprocessor:8042/api/v1"
+      "host": "/dsprocessor/api/v1"
     },
     "dsmonitoring": {
-      "host": "http://dsmonitoring:8043/api/v1"
+      "host": "/dsmonitoring/api/v1"
     },
     "router": {
-      "host": "http://router:8021/api/v2"
+      "host": "/router/api/v2"
     },
     "datacomm": {
-      "host": "http://datacomm:8022/api/v1"
+      "host": "/datacomm/api/v1"
     },
     "linkop": {
-      "host": "http://linkop:8023/api/v1"
+      "host": "/linkop/api/v1"
     },
     "drvcomm": {
-      "host": "http://drvcomm:8024/api/v1"
+      "host": "/drvcomm/api/v1"
     },
     "management": {
-      "host": "http://management:8004/api/v1"
+      "host": "/management/api/v1"
     },
     "dataserver": {
-      "host": "http://dataserver:8040/api/v2"
+      "host": "/dataserver/api/v2"
     },
     "dataspace": {
-      "host": "http://dataspace:8020/api/v2"
+      "host": "/dataspace/api/v2"
     },
     "redis": {
       "host": "tcp://redis:6379",
@@ -216,6 +222,7 @@ begin
   FPort := 0;
   FURLPath := '';
   FUseEmbedLogin := False;
+  FBasePath := '';
   FLogging.Clear;
   FServices.Clear;
 end;
@@ -276,6 +283,7 @@ begin
     JSONObject := JSONValue as TJSONObject;
     LoadFromJSONObject(JSONObject);
     ApplyEnvironmentOverrides;
+    ApplyBasePathToHttpClient;
   finally
     JSONValue.Free;
   end;
@@ -294,6 +302,7 @@ begin
 
   FPort := GetValueIntDef(JSONObject, 'port', 0);
   FURLPath := GetValueStrDef(JSONObject, 'url_path', '');
+  FBasePath := GetValueStrDef(JSONObject, 'base_path', '').Trim;
   FUseEmbedLogin := GetValueBool(JSONObject, 'use_embed_login');
 
   if JSONObject.TryGetValue<TJSONObject>('logging', LoggingJson) then
@@ -457,6 +466,8 @@ begin
       ApplyPortOverride(Value)
     else if Parts[0] = 'url_path' then
       FURLPath := Value
+    else if Parts[0] = 'base_path' then
+      FBasePath := Value.Trim
     else if Parts[0] = 'use_embed_login' then
     begin
       if TryParseBoolEnv(Value, BoolValue) then
@@ -552,6 +563,38 @@ var
 begin
   if TryStrToInt(Value, IntValue) then
     FPort := IntValue;
+end;
+
+procedure TAppConfig.ApplyBasePathToHttpClient;
+var
+  Uri: TURI;
+  Host: string;
+  Port: Integer;
+begin
+  if (HttpClient = nil) or FBasePath.Trim.IsEmpty then
+    Exit;
+
+  try
+    Uri := TURI.Create(FBasePath.Trim);
+  except
+    Exit;
+  end;
+
+  Host := Uri.Host;
+  if Host = '' then
+    Exit;
+
+  Port := Uri.Port;
+  if Port <= 0 then
+  begin
+    if SameText(Uri.Scheme, 'https') then
+      Port := 443
+    else
+      Port := 80;
+  end;
+
+  HttpClient.Addr := Host;
+  HttpClient.Port := Port;
 end;
 
 function TAppConfig.GetServiceInstance(const ServiceName: string): TServiceConfig;

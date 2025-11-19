@@ -70,8 +70,8 @@ type
 
 type
   ///
-  TCompanyList = class(TEntityList)
-    class function ItemClassType: TEntityClass; override;
+  TCompanyList = class(TFieldSetList)
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 implementation
@@ -244,7 +244,7 @@ end;
 
 { TCompanyList }
 
-class function TCompanyList.ItemClassType: TEntityClass;
+class function TCompanyList.ItemClassType: TFieldSetClass;
 begin
   Result := TCompany;
 end;

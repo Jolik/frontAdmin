@@ -9,6 +9,8 @@ inherited MainForm: TMainForm
   Movable = False
   Visible = True
   PageMode = True
+  ExplicitLeft = 4
+  ExplicitTop = 4
   ExplicitWidth = 798
   ExplicitHeight = 722
   TextHeight = 15
@@ -28,7 +30,7 @@ inherited MainForm: TMainForm
       inherited unlblName: TUniLabel
         Width = 92
         Anchors = [akLeft, akTop, akRight]
-        ExplicitWidth = 98
+        ExplicitWidth = 92
       end
       object unlblName1: TUniLabel
         Left = 40
@@ -88,19 +90,19 @@ inherited MainForm: TMainForm
     object btnAliases: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 128
+      Top = 159
       Width = 137
       Height = 25
       Hint = ''
       Caption = #1040#1083#1080#1072#1089#1099
       Align = alTop
-      TabOrder = 3
+      TabOrder = 5
       OnClick = btnAliasesClick
     end
     object btnChannel: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 221
+      Top = 252
       Width = 137
       Height = 25
       Hint = ''
@@ -112,7 +114,7 @@ inherited MainForm: TMainForm
     object btnHandlers: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 190
+      Top = 221
       Width = 137
       Height = 25
       Hint = ''
@@ -124,19 +126,19 @@ inherited MainForm: TMainForm
     object btnLinks: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 159
+      Top = 190
       Width = 137
       Height = 25
       Hint = ''
       Caption = #1051#1080#1085#1082#1080
       Align = alTop
-      TabOrder = 6
+      TabOrder = 7
       OnClick = btnLinksClick
     end
     object btnOperatorLinks: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 252
+      Top = 283
       Width = 137
       Height = 25
       Hint = ''
@@ -148,7 +150,7 @@ inherited MainForm: TMainForm
     object btnQueues: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 97
+      Top = 128
       Width = 137
       Height = 25
       Hint = ''
@@ -178,7 +180,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1055#1088#1072#1074#1080#1083#1072
       Align = alTop
-      TabOrder = 10
+      TabOrder = 11
       OnClick = btnRulesClick
     end
     object uncntnrpnInfo: TUniContainerPanel
@@ -220,7 +222,7 @@ inherited MainForm: TMainForm
     object btnOperatorLinksContent: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 283
+      Top = 314
       Width = 137
       Height = 25
       Hint = ''
@@ -232,7 +234,7 @@ inherited MainForm: TMainForm
     object btnSearch: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 314
+      Top = 345
       Width = 137
       Height = 25
       Hint = ''
@@ -244,7 +246,7 @@ inherited MainForm: TMainForm
     object btnContentStream: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 345
+      Top = 376
       Width = 137
       Height = 25
       Hint = ''
@@ -263,9 +265,5 @@ inherited MainForm: TMainForm
     ParentColor = False
     Align = alClient
     TabOrder = 2
-    ExplicitLeft = 151
-    ExplicitTop = 50
-    ExplicitWidth = 618
-    ExplicitHeight = 639
   end
 end

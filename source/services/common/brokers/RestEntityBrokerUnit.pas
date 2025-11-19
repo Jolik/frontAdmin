@@ -13,35 +13,27 @@ type
   // Base REST broker that operates on base request types
   TRestEntityBroker = class(TRestBrokerBase)
     function List(AReq: TReqList): TListResponse; overload; virtual;
-    function List(AReq: TReqList; AResp: TListResponse): TListResponse;
-      overload; virtual;
+    function List(AReq: TReqList; AResp: TListResponse): TListResponse;overload; virtual;
     // выборка сущностей с указанием типа списка и ключа массива
-    function List(AReq: TReqList; AListClass: TEntityListClass;
-      const AItemsKey: string = 'items'): TListResponse; overload; virtual;
+    function List(AReq: TReqList; AListClass: TEntityListClass;const AItemsKey: string = 'items'): TListResponse; overload; virtual;
     // выборка всех страниц с учетом info (page/pagecount/pagesize/total)
     function ListAll(AReq: TReqList): TListResponse; overload; virtual;
-    function ListAll(AReq: TReqList; AListClass: TEntityListClass;
-      const AItemsKey: string = 'items'): TListResponse; overload; virtual;
+    function ListAll(AReq: TReqList; AListClass: TEntityListClass;const AItemsKey: string = 'items'): TListResponse; overload; virtual;
     // прямая, принимающая любой THttpRequest; создает подходящий ответ
-    function ListRaw2(AReq: THttpRequest; AListClass: TEntityListClass;
-      const AItemsKey: string = 'items'): TListResponse; virtual;
+    function ListRaw2(AReq: THttpRequest; AListClass: TEntityListClass;const AItemsKey: string = 'items'): TListResponse; virtual;
     // получение info: одного объекта по идентификатору
-    function Info(AReq: TReqInfo; AResp: TEntityResponse): TEntityResponse;
-      overload; virtual;
+    function Info(AReq: TReqInfo; AResp: TEntityResponse): TEntityResponse;overload; virtual;
     function Info(AReq: TReqInfo): TEntityResponse; overload; virtual;
-    function InfoEntity(AReq: TReqInfo; AEntityClass: TEntityClass;
-      const AItemKey: string = 'item'): TEntityResponse; virtual;
+    function InfoEntity(AReq: TReqInfo; AEntityClass: TEntityClass;const AItemKey: string = 'item'): TEntityResponse; virtual;
 
-    function New(AReq: TReqNew; AResp: TJSONResponse): TJSONResponse;
-      overload; virtual;
+    function New(AReq: TReqNew; AResp: TJSONResponse): TJSONResponse; overload; virtual;
   end;
 
 implementation
 
 uses System.Math;
 
-function TRestEntityBroker.List(AReq: TReqList; AResp: TListResponse)
-  : TListResponse;
+function TRestEntityBroker.List(AReq: TReqList; AResp: TListResponse): TListResponse;
 begin
   Result := AResp;
   ApplyTicket(AReq);

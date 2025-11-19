@@ -14,6 +14,7 @@ type
   TUsersRestBroker = class(TRestEntityBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TUserReqList): TUserListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
@@ -43,7 +44,12 @@ uses
 constructor TUsersRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLAclBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TUsersRestBroker.ServiceName: string;
+begin
+  Result := 'acl';
 end;
 
 function TUsersRestBroker.CreateReqArchive: TUserReqArchive;

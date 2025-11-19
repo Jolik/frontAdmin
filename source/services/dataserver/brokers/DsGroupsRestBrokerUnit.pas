@@ -17,6 +17,7 @@ type
   private
     FBasePath: string;
   public
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); overload;
 
     function CreateReqList: TReqList; override;
@@ -31,7 +32,8 @@ type
     function List(AReq: TReqList): TFieldSetListResponse; overload; override;
 
     function Info(AReq: TDsGroupReqInfo): TDsGroupInfoResponse; reintroduce; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload;override;
+
 
     function New(AReq: TDsGroupReqNew): TDsGroupCreateResponse; reintroduce; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;
@@ -54,7 +56,12 @@ uses
 constructor TDsGroupsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  FBasePath := constURLDataserverBasePath;
+  SetPath(ServiceName, FBasePath);
+end;
+
+class function TDsGroupsRestBroker.ServiceName: string;
+begin
+  Result := 'dataserver';
 end;
 
 function TDsGroupsRestBroker.CreateReqExclude: TDsGroupReqExclude;

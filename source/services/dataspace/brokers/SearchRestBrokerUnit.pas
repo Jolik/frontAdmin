@@ -16,6 +16,7 @@ type
   TSearchRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); overload;
 
     function CreateNewRequest: TSearchNewRequest;
@@ -40,7 +41,12 @@ implementation
 constructor TSearchRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLDataspaceBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TSearchRestBroker.ServiceName: string;
+begin
+  Result := 'dataspace';
 end;
 
 function TSearchRestBroker.Abort(AReq: TSearchAbortRequest): TJSONResponse;

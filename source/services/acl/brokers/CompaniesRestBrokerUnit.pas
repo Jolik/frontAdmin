@@ -4,17 +4,18 @@ interface
 
 uses
   RestBrokerBaseUnit, BaseRequests, BaseResponses,
-  CompanyHttpRequests, HttpClientUnit, RestEntityBrokerUnit;
+  CompanyHttpRequests, HttpClientUnit, RestFieldSetBrokerUnit;
 
 type
-  TCompaniesRestBroker = class(TRestEntityBroker)
+  TCompaniesRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TCompanyReqList): TCompanyListResponse; overload;
-    function List(AReq: TReqList): TListResponse; overload; override;
+    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
     function Info(AReq: TCompanyReqInfo): TCompanyInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
     function New(AReq: TCompanyReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TCompanyReqUpdate): TJSONResponse; overload;
@@ -35,10 +36,15 @@ uses APIConst;
 constructor TCompaniesRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLAclBasePath;
+  SetPath(ServiceName, BasePath);
 end;
 
-function TCompaniesRestBroker.List(AReq: TReqList): TListResponse;
+class function TCompaniesRestBroker.ServiceName: string;
+begin
+  Result := 'acl';
+end;
+
+function TCompaniesRestBroker.List(AReq: TReqList): TFieldSetListResponse;
 begin
   Result := TCompanyListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -52,7 +58,7 @@ end;
 function TCompaniesRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
   Result:= TIdNewResponse.Create('compid');
-  Result := inherited New(AReq, Result);
+  inherited New(AReq, Result as TIdNewResponse);
 end;
 
 function TCompaniesRestBroker.New(AReq: TCompanyReqNew): TIdNewResponse;
@@ -105,7 +111,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TCompaniesRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TCompaniesRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
 begin
   Result := TCompanyInfoResponse.Create;
   inherited Info(AReq, Result);

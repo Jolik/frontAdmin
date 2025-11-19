@@ -29,21 +29,21 @@ uses
 function UniServerModule: TUniServerModule;
 begin
   Result := TUniServerModule(UniGUIServerInstance);
-  if AppConfig = nil then
-    LoadAppConfig('FRONTMSS');
-
-  if (AppConfig <> nil) and (AppConfig.Port > 0) then
-    Result.SetTcpPort(AppConfig.Port)
-  else
-    Result.SetTcpPort(8077);
 end;
 
 procedure TUniServerModule.FirstInit;
 var
   PathValue: string;
+  PortValue: Integer;
 begin
   if AppConfig = nil then
     LoadAppConfig('FRONTMSS');
+
+  if (AppConfig <> nil) and (AppConfig.Port > 0) then
+    PortValue := AppConfig.Port
+  else
+    PortValue := 8077;
+  SetTcpPort(PortValue);
 
   PathValue := '/admin/mss';
   if (AppConfig <> nil) and (AppConfig.URLPath <> '') then

@@ -8,7 +8,7 @@ uses
   CompanyUnit;
 
 type
-  TCompanyListResponse = class(TListResponse)
+  TCompanyListResponse = class(TFieldSetListResponse)
   private
     function GetCompanyList: TCompanyList;
   protected
@@ -18,7 +18,7 @@ type
     property CompanyList: TCompanyList read GetCompanyList;
   end;
 
-  TCompanyInfoResponse = class(TEntityResponse)
+  TCompanyInfoResponse = class(TFieldSetResponse)
   private
     function GetCompany: TCompany;
   public
@@ -69,7 +69,7 @@ end;
 
 function TCompanyListResponse.GetCompanyList: TCompanyList;
 begin
-  Result := EntityList as TCompanyList;
+  Result := FieldSetList as TCompanyList;
 end;
 
 procedure TCompanyListResponse.SetResponse(const Value: string);
@@ -115,7 +115,7 @@ end;
 
 function TCompanyInfoResponse.GetCompany: TCompany;
 begin
-  Result := Entity as TCompany;
+  Result := FFieldSet as TCompany;
 end;
 
 { Requests }

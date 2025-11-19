@@ -18,6 +18,7 @@ type
   protected
     BasePath: string;
   public
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     // Фабрики базовых запросов
@@ -92,8 +93,7 @@ end;
 constructor TAbonentsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  // Задаём фиксированный базовый путь для маршрутизатора
-  BasePath := constURLRouterBasePath;
+  SetPath(ServiceName, BasePath);
 end;
 
 function TAbonentsRestBroker.CreateReqList: TReqList;
@@ -125,6 +125,11 @@ function TAbonentsRestBroker.CreateReqRemove: TReqRemove;
 begin
   Result := TAbonentReqRemove.Create;
   Result.BasePath := BasePath;
+end;
+
+class function TAbonentsRestBroker.ServiceName: string;
+begin
+  Result := 'router';
 end;
 
 end.

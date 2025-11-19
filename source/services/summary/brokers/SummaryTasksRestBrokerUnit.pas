@@ -17,6 +17,7 @@ type
   // REST broker for Summary tasks; reuses Task requests with summary base path
   TSummaryTasksRestBroker = class(TTasksRestBroker)
   public
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); overload; override;
     function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TReqInfo): TEntityResponse; overload; override;
@@ -34,7 +35,12 @@ uses SummaryTasksHttpRequests, APIConst;
 constructor TSummaryTasksRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLSummaryBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TSummaryTasksRestBroker.ServiceName: string;
+begin
+  Result := 'summary';
 end;
 
 function TSummaryTasksRestBroker.Info(AReq: TReqInfo): TEntityResponse;

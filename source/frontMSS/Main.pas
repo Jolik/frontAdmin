@@ -153,18 +153,7 @@ procedure TMainForm.UniFormCreate(Sender: TObject);
 begin
   inherited;
   OSLabel.Caption := 'Платформа: ' + TOSVersion.ToString;
-  UniMainModule.XTicket := 'ST-Test';
-
-  HttpClient.Addr := '213.167.42.170';
-  if GetEnvironmentVariable('ADDR') <> '' then
-    HttpClient.Addr := GetEnvironmentVariable('ADDR');
-
-  HttpClient.Port := 8088;
-  if GetEnvironmentVariable('PORT') <> '' then
-    HttpClient.Port := StrToInt(GetEnvironmentVariable('PORT'));
-
   URLLabel.Caption := 'Url:' + HttpClient.Addr + ' : ' + IntToStr(HttpClient.Port);
-  InitializeCompanyData;
 end;
 
 initialization

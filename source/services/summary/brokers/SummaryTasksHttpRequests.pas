@@ -54,7 +54,7 @@ implementation
 constructor TSummaryTasksRequest.Create;
 begin
   inherited Create;
-  BasePath := constURLSummaryBasePath;
+  
   URL := BasePath;
 end;
 

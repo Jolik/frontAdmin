@@ -1,5 +1,9 @@
 program frontMSS;
 
+
+
+
+
 uses
   Forms,
   ServerModule in 'ServerModule.pas' {UniServerModule: TUniGUIServerModule},
@@ -146,7 +150,9 @@ uses
   ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas' {ListParentForm: TUniForm},
   ParentEditFormUnit in '..\forms\common\ParentEditFormUnit.pas' {ParentEditForm: TUniForm},
   ParentFormUnit in '..\forms\common\ParentFormUnit.pas' {ParentForm: TUniForm},
-  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas';
+  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas',
+  ListParentFieldSetFormUnit in '..\forms\common\ListParentFieldSetFormUnit.pas',
+  ParentFieldSetFormUnit in '..\forms\common\ParentFieldSetFormUnit.pas';
 
 {$R *.res}
 

@@ -7,22 +7,24 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
   ListParentFormUnit, Data.DB, uniPageControl, uniSplitter, uniBasicGrid,
-  uniDBGrid, uniToolBar, uniGUIBaseClasses, ParentEditFormUnit,
-  RestEntityBrokerUnit, BaseRequests, BaseResponses,
+  uniDBGrid, uniToolBar, uniGUIBaseClasses,
   uniPanel, uniLabel, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
+  ParentEditFormUnit, RestEntityBrokerUnit, BaseRequests, BaseResponses,
+  RestFieldSetBrokerUnit,
+  ListParentFieldSetFormUnit,
   EntityUnit;
 
 type
-  TDsGroupsForm = class(TListParentForm)
+  TDsGroupsForm = class(TListParentFieldSetForm)
     CredMemFDMemTableEntitysid: TStringField;
     CredMemFDMemTableEntitytype: TStringField;
   protected
-    function CreateRestBroker: TRestEntityBroker; override;
+    function CreateRestBroker: TRestFieldSetBroker; override;
     function CreateEditForm: TParentEditForm; override;
-    procedure OnAddListItem(item: TEntity); override;
-    procedure OnInfoUpdated(AEntity: TEntity); override;
+    procedure OnAddListItem(item: TFieldSet); override;
+    procedure OnInfoUpdated(AEntity: TFieldSet); override;
   end;
 
 function DsGroupsForm: TDsGroupsForm;
@@ -50,52 +52,49 @@ begin
   Result := DsGroupEditForm;
 end;
 
-function TDsGroupsForm.CreateRestBroker: TRestEntityBroker;
+function TDsGroupsForm.CreateRestBroker: TRestFieldSetBroker;
 begin
-   var br := TDsGroupsRestBroker.Create(UniMainModule.XTicket);
-   var req := br.CreateReqList();
-   var resp:=br.List(req);
-   for var i in resp.FieldSetList do
-   begin
-     var gr := i as TDsGroup;
-     var dsid := gr.Dsgid;
-   end;
-
-//  Result := TDsGroupsRestBroker.Create(UniMainModule.XTicket);
+  Result := TDsGroupsRestBroker.Create(UniMainModule.XTicket);
 end;
 
-procedure TDsGroupsForm.OnAddListItem(item: TEntity);
+procedure TDsGroupsForm.OnAddListItem(item: TFieldSet);
 var
   Group: TDsGroup;
 begin
-//  if item is TDsGroup then
-//  begin
-//    Group := TDsGroup(item);
-//    FDMemTableEntity.FieldByName('Id').AsString := Group.Id;
-//    FDMemTableEntity.FieldByName('Name').AsString := Group.Name;
-//    FDMemTableEntity.FieldByName('sid').AsString := Group.Sid;
-//    var dst := Group.Metadata['type'];
-//    if dst='data' then
-//      dst :=  Group.Metadata['format'];
-//    FDMemTableEntity.FieldByName('type').AsString := dst;
-//    FDMemTableEntity.FieldByName('Created').AsDateTime := Group.Created;
-//    FDMemTableEntity.FieldByName('Updated').AsDateTime := Group.Updated;
-//  end
-//  else
-//    inherited OnAddListItem(item);
+  inherited;
+  if item is TDsGroup then
+  begin
+    Group := TDsGroup(item);
+    FDMemTableEntity.FieldByName('Name').AsString := Group.Name;
+    FDMemTableEntity.FieldByName('sid').AsString := Group.Sid;
+    var dst := Group.Metadata['type'];
+    if dst='data' then
+      dst :=  Group.Metadata['format'];
+    FDMemTableEntity.FieldByName('type').AsString := dst;
+    FDMemTableEntity.FieldByName('Created').AsDateTime := Group.Created;
+    FDMemTableEntity.FieldByName('Updated').AsDateTime := Group.Updated;
+  end
+
 end;
 
-procedure TDsGroupsForm.OnInfoUpdated(AEntity: TEntity);
+procedure TDsGroupsForm.OnInfoUpdated(AEntity: TFieldSet);
 var
   Group: TDsGroup;
+  DT: string;
 begin
-//  inherited OnInfoUpdated(AEntity);
-//  if AEntity is TDsGroup then
-//  begin
-//    Group := TDsGroup(AEntity);
-//    lTaskCaption.Caption := #1043#1088#1091#1087#1087#1072' '#1076#1072#1090#1072#1089#1077#1088#1080#1081;
-//    lTaskInfoNameValue.Caption := Group.Name;
-//  end;
+  inherited;
+  if AEntity is TDsGroup then
+  begin
+    Group := TDsGroup(AEntity);
+    lTaskCaption.Caption := #1043#1088#1091#1087#1087#1072' '#1076#1072#1090#1072#1089#1077#1088#1080#1081;
+    DateTimeToString(DT, 'dd.mm.yyyy HH:nn', Group.Created);
+    lTaskInfoCreatedValue.Caption := DT;
+
+    DateTimeToString(DT, 'dd.mm.yyyy HH:nn', Group.Updated);
+    lTaskInfoUpdatedValue.Caption := DT;
+
+    lTaskInfoNameValue.Caption := Group.Name;
+  end;
 end;
 
 end.

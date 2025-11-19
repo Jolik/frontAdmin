@@ -50,16 +50,14 @@ implementation
 
 constructor TTasksRestBroker.Create(const ATicket: string);
 begin
-  inherited Create(ATicket);
-  SetListClass(nil);
+  inherited Create(ATicket);SetListClass(nil);
   SetEntityClass(nil);
 end;
 
 constructor TTasksRestBroker.Create(const ATicket: string;
   AListClass: TEntityListClass; AEntityClass: TEntityClass);
 begin
-  inherited Create(ATicket);
-  SetListClass(AListClass);
+  inherited Create(ATicket);SetListClass(AListClass);
   SetEntityClass(AEntityClass);
 end;
 

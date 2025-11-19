@@ -10,6 +10,7 @@ type
   TSourceCredsRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TSourceCredsReqList): TSourceCredsListResponse; overload;
     function List(AReq: TReqList): TFieldSetListResponse; overload; override;
@@ -34,7 +35,12 @@ uses APIConst;
 constructor TSourceCredsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLDataserverBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function TSourceCredsRestBroker.ServiceName: string;
+begin
+  Result := 'dataserver';
 end;
 
 function TSourceCredsRestBroker.List(AReq: TReqList): TFieldSetListResponse;

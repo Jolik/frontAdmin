@@ -122,28 +122,12 @@ begin
 end;
 
 procedure TMainForm.UniFormCreate(Sender: TObject);
-var
-  ind, page: integer;
-  Req: TReqList;
-  Resp: TListResponse;
 begin
   inherited;
-  OSLabel.Caption := '–ü–ª–∞—Ç—Ñ–æ—Ä–º–∞: ' + TOSVersion.ToString;
-  UniMainModule.XTicket := 'ST-Test';
-
-  HttpClient.Addr := '213.167.42.170';
-  if GetEnvironmentVariable('ADDR') <> '' then
-    HttpClient.Addr := GetEnvironmentVariable('ADDR');
-
-  HttpClient.Port := 8088;
-  if GetEnvironmentVariable('PORT') <> '' then
-    HttpClient.Port := StrToInt(GetEnvironmentVariable('PORT'));
-
+  OSLabel.Caption := 'œÎ‡ÚÙÓÏ‡: ' + TOSVersion.ToString;
   URLLabel.Caption := 'Url:' + HttpClient.Addr + ' : ' + IntToStr(HttpClient.Port);
-
-  InitializeCompanyData;
-
 end;
+
 
 initialization
   RegisterAppFormClass(TMainForm);

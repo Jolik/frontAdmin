@@ -10,6 +10,7 @@ type
   TRouterSourcesRestBroker = class(TRestEntityBroker)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TRouterSourceReqList): TRouterSourceListResponse; overload;
     function List(AReq: TReqList): TListResponse; overload; override;
@@ -35,7 +36,7 @@ uses APIConst;
 constructor TRouterSourcesRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLRouterBasePath;
+  SetPath(ServiceName, BasePath);
 end;
 
 function TRouterSourcesRestBroker.List(AReq: TReqList): TListResponse;
@@ -121,5 +122,9 @@ begin
   Result := inherited Update(AReq);
 end;
 
-end.
+class function TRouterSourcesRestBroker.ServiceName: string;
+begin
+  Result := 'router';
+end;
 
+end.

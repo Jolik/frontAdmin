@@ -24,6 +24,7 @@ type
     function ListRaw2(AReq: THttpRequest; AListClass: TFieldSetListClass; const AItemsKey: string = 'items'): TFieldSetListResponse; virtual;
     // получение info: одного объекта по идентификатору
     function Info(AReq: TReqInfo; AResp: TFieldSetResponse): TFieldSetResponse; overload; virtual;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload; virtual;
     function InfoRaw(AReq: TReqInfo; AFieldSetClass: TFieldSetClass; const AItemKey: string = 'item'): TFieldSetResponse; virtual;
     function New(AReq: TReqNew; AResp: TIdNewResponse): TIdNewResponse; overload; virtual;
 
@@ -57,6 +58,11 @@ begin
   HttpClient.Request(AReq, AResp);
 end;
 
+function TRestFieldSetBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+begin
+  Result := TFieldSetResponse.Create(TFieldSet);
+  Info(AReq, Result);
+end;
 
 function TRestFieldSetBroker.InfoRaw(AReq: TReqInfo; AFieldSetClass: TFieldSetClass; const AItemKey: string): TFieldSetResponse;
 begin

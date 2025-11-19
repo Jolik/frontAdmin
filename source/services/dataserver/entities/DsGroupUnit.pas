@@ -37,6 +37,7 @@ type
     procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
     procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
 
+    function GetID:string;override;
     property Dsgid: string read FDsgid write FDsgid;
     property Name: string read FName write FName;
     property Pdsgid: string read FPdsgid write FPdsgid;
@@ -186,6 +187,11 @@ begin
     Result := FDataseriesCount
   else
     Result := FDataseries.Count;
+end;
+
+function TDsGroup.GetID: string;
+begin
+  Result:= FDsgid;
 end;
 
 function TDsGroup.HasDataseries: Boolean;

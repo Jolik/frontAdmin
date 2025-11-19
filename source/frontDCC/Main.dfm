@@ -17,7 +17,8 @@ inherited MainForm: TMainForm
     inherited lblUtcTime: TUniLabel
       Left = 145
       Width = 639
-      ExplicitWidth = 663
+      ExplicitLeft = 145
+      ExplicitWidth = 639
     end
     inherited uncntnrpnLogo: TUniContainerPanel
       Width = 144
@@ -25,7 +26,7 @@ inherited MainForm: TMainForm
       inherited unlblName: TUniLabel
         Width = 101
         Anchors = [akLeft, akTop, akRight]
-        ExplicitWidth = 102
+        ExplicitWidth = 101
       end
       object unlblName1: TUniLabel
         AlignWithMargins = True
@@ -45,7 +46,6 @@ inherited MainForm: TMainForm
         ParentColor = False
         Color = 14273471
         TabOrder = 3
-        ExplicitWidth = 102
       end
     end
     inherited uncntnrpnAuth: TUniContainerPanel
@@ -75,7 +75,6 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 0
       OnClick = btnStripTasksClick
-      ExplicitWidth = 105
     end
     object btnLinks: TUniButton
       AlignWithMargins = True
@@ -88,7 +87,6 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 1
       OnClick = btnLinksClick
-      ExplicitWidth = 105
     end
     object btnSummTask: TUniButton
       AlignWithMargins = True
@@ -101,7 +99,6 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 2
       OnClick = btnSummTaskClick
-      ExplicitWidth = 105
     end
     object btnDSProcessorTasks: TUniButton
       AlignWithMargins = True
@@ -114,7 +111,6 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 3
       OnClick = btnDSProcessorTasksClick
-      ExplicitWidth = 105
     end
     object btnDsGroups: TUniButton
       AlignWithMargins = True
@@ -139,7 +135,6 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 4
       OnClick = unbtnMonitoringClick
-      ExplicitWidth = 105
     end
     object unbtnSources: TUniButton
       AlignWithMargins = True
@@ -152,12 +147,11 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 6
       OnClick = unbtnSourcesClick
-      ExplicitWidth = 105
     end
     object btnObservations: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 190
+      Top = 221
       Width = 137
       Height = 25
       Hint = ''
@@ -165,7 +159,6 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 7
       OnClick = btnObservationsClick
-      ExplicitWidth = 105
     end
     object uncntnrpnInfo: TUniContainerPanel
       Left = 1
@@ -176,7 +169,6 @@ inherited MainForm: TMainForm
       ParentColor = False
       Align = alBottom
       TabOrder = 8
-      ExplicitWidth = 111
       object URLLabel: TUniLabel
         AlignWithMargins = True
         Left = 3
@@ -189,7 +181,6 @@ inherited MainForm: TMainForm
         Caption = 'URL'
         Align = alTop
         TabOrder = 1
-        ExplicitWidth = 105
       end
       object OSLabel: TUniLabel
         AlignWithMargins = True
@@ -203,7 +194,6 @@ inherited MainForm: TMainForm
         Caption = 'OSLabel'
         Align = alTop
         TabOrder = 2
-        ExplicitWidth = 105
       end
     end
   end

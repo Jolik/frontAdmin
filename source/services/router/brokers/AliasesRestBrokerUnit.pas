@@ -17,6 +17,7 @@ type
   public
     // Базовый путь API (например, '/router/api/v2')
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     // Типизированные обертки
@@ -50,8 +51,7 @@ implementation
 constructor TAliasesRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  // Задаём фиксированный базовый путь для маршрутизатора
-  BasePath := constURLRouterBasePath;
+  SetPath(ServiceName, BasePath);
 end;
 
 function TAliasesRestBroker.List(AReq: TReqList): TListResponse;
@@ -136,6 +136,11 @@ end;
 function TAliasesRestBroker.Update(AReq: TReqUpdate): TJSONResponse;
 begin
   Result := inherited Update(AReq);
+end;
+
+class function TAliasesRestBroker.ServiceName: string;
+begin
+  Result := 'router';
 end;
 
 end.

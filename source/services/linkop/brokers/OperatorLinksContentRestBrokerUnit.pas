@@ -15,6 +15,7 @@ type
   private
     FBasePath: string;
   public
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     function List(AReq: TOperatorLinkContentReqList): TOperatorLinkContentListResponse; overload;
@@ -44,10 +45,15 @@ uses
 constructor TOperatorLinksContentRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  FBasePath := constURLLinkOpBasePath.Trim;
+  SetPath(ServiceName, FBasePath);
   while (FBasePath <> '') and FBasePath.EndsWith('/') do
     FBasePath := FBasePath.Substring(0, FBasePath.Length - 1);
   FBasePath := FBasePath + '/content';
+end;
+
+class function TOperatorLinksContentRestBroker.ServiceName: string;
+begin
+  Result := 'linkop';
 end;
 
 function TOperatorLinksContentRestBroker.CreateReqInfo(id: string): TReqInfo;

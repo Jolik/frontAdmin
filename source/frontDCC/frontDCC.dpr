@@ -1,5 +1,9 @@
 program frontDCC;
 
+
+
+
+
 uses
   Forms,
   ServerModule in 'ServerModule.pas' {UniServerModule: TUniGUIServerModule},
@@ -137,7 +141,9 @@ uses
   DsGroupUnit in '..\services\dataserver\entities\DsGroupUnit.pas',
   DataseriesUnit in '..\services\dataserver\entities\DataseriesUnit.pas',
   DsGroupsHttpRequests in '..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
-  DsGroupsRestBrokerUnit in '..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas';
+  DsGroupsRestBrokerUnit in '..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
+  ListParentFieldSetFormUnit in '..\forms\common\ListParentFieldSetFormUnit.pas',
+  ParentFieldSetFormUnit in '..\forms\common\ParentFieldSetFormUnit.pas';
 
 {$R *.res}
 

@@ -36,6 +36,7 @@ type
     procedure LogoutMenuClick(Sender: TObject);
     procedure cbCurCompChange(Sender: TObject);
     procedure cbCurDeptChange(Sender: TObject);
+    procedure UniFormCreate(Sender: TObject);
   protected
     FRedirectInitiated: Boolean;
     FDeps: TDepartmentList;
@@ -95,7 +96,8 @@ end;
 procedure TAuthMainForm.InitializeCompanyData;
 var
   Req: TReqList;
-  Resp: TListResponse;
+  Resp: TFieldSetListResponse;
+  Resp2: TListResponse;
   DefaultIndex: string;
   Ind: Integer;
 begin
@@ -117,8 +119,8 @@ begin
   Req := FCompanyBroker.CreateReqList;
   try
     Resp := FCompanyBroker.List(Req);
-    Resp.EntityList.OwnsObjects := false;
-    FComps.AddRange(Resp.EntityList);
+    Resp.FieldSetList.OwnsObjects := false;
+    FComps.AddRange(Resp.FieldSetList);
   finally
     FreeAndNil(Resp);
     FreeAndNil(Req);
@@ -127,9 +129,9 @@ begin
   FDeps := TDepartmentList.Create;
   Req := FDepartmentBroker.CreateReqList;
   try
-    Resp := FDepartmentBroker.List(Req);
-    Resp.EntityList.OwnsObjects := false;
-    FDeps.AddRange(Resp.EntityList);
+    Resp2 := FDepartmentBroker.List(Req);
+    Resp2.EntityList.OwnsObjects := false;
+    FDeps.AddRange(Resp2.EntityList);
   finally
     Resp.Free;
     Req.Free;
@@ -284,6 +286,7 @@ begin
 
   LoadSessionInfo(Ticket);
   UpdateUserDisplay;
+  InitializeCompanyData;
 end;
 
 procedure TAuthMainForm.LoadSessionInfo(const Ticket: string);
@@ -401,6 +404,12 @@ procedure TAuthMainForm.UniFormAjaxEvent(Sender: TComponent; EventName: string;
   Params: TUniStrings);
 begin
   TBaseStorageHelper.HandleAjax(Sender, EventName, Params);
+end;
+
+procedure TAuthMainForm.UniFormCreate(Sender: TObject);
+begin
+  inherited;
+//  InitializeCompanyData;
 end;
 
 end.

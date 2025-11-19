@@ -15,6 +15,7 @@ type
   THistoryRecordsRestBroker = class(TRestBrokerBase)
   public
     BasePath: string;
+    class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     function CreateJournalHistoryReq(const AJrid: string = ''): TJournalRecordHistoryReq;
@@ -31,7 +32,12 @@ implementation
 constructor THistoryRecordsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  BasePath := constURLDataspaceBasePath;
+  SetPath(ServiceName, BasePath);
+end;
+
+class function THistoryRecordsRestBroker.ServiceName: string;
+begin
+  Result := 'dataspace';
 end;
 
 function THistoryRecordsRestBroker.CreateHistoryListReq: THistoryRecordReqList;

@@ -68,6 +68,8 @@ end;
 { TFrameRuleCondition }
 
 procedure TFrameRuleCondition.SetData(src: TCondition);
+var
+  Fields: TArray<string>;
 begin
   if src = nil then
   begin
@@ -78,10 +80,16 @@ begin
   end;
 
   ComboBoxRuleField.Items.Clear;
-  for var s in LinkConditionFields.Items[FLinkType] do
-    ComboBoxRuleField.Items.Add(s);
+  if LinkConditionFields.TryGetValue(FLinkType, Fields) then
+    for var s in Fields do
+      ComboBoxRuleField.Items.Add(s);
+
+  if (src.Field <> '') and (ComboBoxRuleField.Items.IndexOf(src.Field) = -1) then
+    ComboBoxRuleField.Items.Add(src.Field);
 
   ComboBoxRuleField.ItemIndex := ComboBoxRuleField.Items.IndexOf(src.Field);
+  if (ComboBoxRuleField.ItemIndex = -1) and (src.Field <> '') then
+    ComboBoxRuleField.Text := src.Field;
   ComboBoxRuleType.ItemIndex := FRuleComboIndex.ValueByKey(src.&Type, -1);
   EditRuleText.Text := src.Text;
 end;
