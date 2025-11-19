@@ -5,7 +5,6 @@ interface
 uses
   System.SysUtils,
   RestBrokerBaseUnit,
-  HttpClientUnit,
   LogsHttpRequests;
 
 type
@@ -28,7 +27,8 @@ type
 implementation
 
 uses
-  APIConst;
+  APIConst,
+  HttpClientUnit;
 
 { TLogsRestBroker }
 
