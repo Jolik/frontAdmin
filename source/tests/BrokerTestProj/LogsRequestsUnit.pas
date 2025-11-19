@@ -8,11 +8,17 @@ implementation
 
 uses
   System.SysUtils,
+  System.DateUtils,
   LogsRestBrokerUnit,
   LogsHttpRequests,
   LogUnit;
 
 procedure ExecuteLogsRequests;
+const
+  CQuery = '{swarm_service="dcc7_agent"}';
+  CStepSeconds = 60;
+  CLimit = 1000;
+  CMaxEntriesToPrint = 3;
 var
   Broker: TLogsRestBroker;
   Req: TLogsReqQueryRange;
@@ -22,28 +28,36 @@ var
   LogResult: TLogResult;
   EntryIndex: Integer;
   EntriesToShow: Integer;
-const
-  CQuery = '{swarm_service="dcc7_agent"}';
-  CStartRfc3339 = '2025-01-30T00:00:00Z';
-  CEndRfc3339 = '2025-01-30T00:05:00Z';
-  CStepSeconds = 60;
-  CLimit = 1000;
-  CMaxEntriesToPrint = 3;
+  StartUtc: TDateTime;
+  EndUtc: TDateTime;
+  StartRfc3339: string;
+  EndRfc3339: string;
+
+  function DateTimeToRfc3339(const ADate: TDateTime): string;
+  begin
+    Result := FormatDateTime('yyyy"-"mm"-"dd"T"hh":"nn":"ss"Z"', ADate,
+      TFormatSettings.Invariant);
+  end;
 begin
   Broker := TLogsRestBroker.Create('ST-Test');
   try
     Req := Broker.CreateReqQueryRange;
     try
+      EndUtc := TTimeZone.Local.ToUniversalTime(Now);
+      StartUtc := IncHour(EndUtc, -12);
+      StartRfc3339 := DateTimeToRfc3339(StartUtc);
+      EndRfc3339 := DateTimeToRfc3339(EndUtc);
+
       Req.Query := CQuery;
-      Req.SetStartRfc3339(CStartRfc3339);
-      Req.SetEndRfc3339(CEndRfc3339);
+      Req.SetStartRfc3339(StartRfc3339);
+      Req.SetEndRfc3339(EndRfc3339);
       Req.SetStepSeconds(CStepSeconds);
       Req.SetLimit(CLimit);
 
       Writeln('-----------------------------------------------------------------');
       Writeln('Preparing logs query_range request:');
       Writeln('  Query: ' + CQuery);
-      Writeln(Format('  Time range: %s -> %s', [CStartRfc3339, CEndRfc3339]));
+      Writeln(Format('  Time range: %s -> %s', [StartRfc3339, EndRfc3339]));
       Writeln(Format('  Step (sec): %d', [CStepSeconds]));
       Writeln(Format('  Limit per stream: %d', [CLimit]));
       Writeln('  Optional parameters "timeout", "direction" and "regexp" are not set.');
