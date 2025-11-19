@@ -6,6 +6,8 @@ object LogsFrame: TLogsFrame
   Align = alClient
   ParentFont = False
   TabOrder = 0
+  OnCreate = UniFrameCreate
+  OnDestroy = UniFrameDestroy
   object gridLogs: TUniDBGrid
     Left = 0
     Top = 0

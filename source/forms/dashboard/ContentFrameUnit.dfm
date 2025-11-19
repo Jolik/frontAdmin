@@ -6,6 +6,8 @@ object ContentFrame: TContentFrame
   Align = alClient
   ParentFont = False
   TabOrder = 0
+  OnCreate = UniFrameCreate
+  OnDestroy = UniFrameDestroy
   object gridContent: TUniDBGrid
     Left = 0
     Top = 0

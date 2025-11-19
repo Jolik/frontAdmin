@@ -6,6 +6,8 @@ object ChannelsFrame: TChannelsFrame
   Align = alClient
   ParentFont = False
   TabOrder = 0
+  OnCreate = UniFrameCreate
+  OnDestroy = UniFrameDestroy
   object gridChannels: TUniDBGrid
     Left = 0
     Top = 0
