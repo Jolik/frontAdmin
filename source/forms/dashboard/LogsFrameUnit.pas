@@ -59,7 +59,7 @@ const
   LogInitialLimit = 200;
   LogPollBatch = 100;
   LogMaxRecords = 1000;
-  DefaultLogQuery = '{}';
+  DefaultLogQuery = '{level="error"}';
 
 type
   TLogDatasetItem = record
