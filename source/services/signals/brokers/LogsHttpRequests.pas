@@ -6,6 +6,7 @@ uses
   System.SysUtils,
   BaseRequests,
   BaseResponses,
+  HttpClientUnit,
   LogUnit;
 
 type

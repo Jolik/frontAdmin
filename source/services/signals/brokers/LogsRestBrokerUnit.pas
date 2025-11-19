@@ -15,8 +15,8 @@ type
   private
     FBasePath: string;
   public
-    constructor Create(const ATicket: string = ''); override;
-    constructor Create(const ATicket, ABasePath: string); reintroduce; overload;
+    constructor Create(const ATicket: string = ''); overload; override;
+    constructor Create(const ATicket, ABasePath: string); overload;
 
     function CreateReqQueryRange: TLogsReqQueryRange;
     function QueryRange(AReq: TLogsReqQueryRange): TLogsResponse;

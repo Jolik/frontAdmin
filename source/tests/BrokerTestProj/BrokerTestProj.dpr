@@ -147,8 +147,8 @@ begin
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
 //    ExecuteRulesRequest;
-    ExecuteObservationRequests;
-    ExecuteDsGroupsRequests;
+//    ExecuteObservationRequests;
+//    ExecuteDsGroupsRequests;
     ExecuteLogsRequests;
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;

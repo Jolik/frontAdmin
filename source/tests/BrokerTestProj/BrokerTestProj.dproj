@@ -98,6 +98,10 @@
         <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataserver\entities\DataseriesUnit.pas"/>
+        <DCCReference Include="..\..\services\signals\brokers\LogsHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\signals\entities\LogUnit.pas"/>
+        <DCCReference Include="LogsRequestsUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
