@@ -8,6 +8,7 @@ uses
   EntityUnit,
   FuncUnit,
   KeyValUnit,
+  Common,
   LinkSettingsUnit;
 
 type
@@ -91,7 +92,6 @@ type
     FLinkType: TLinkType;
     FSnapshot: string;
     procedure SetLinkType(const Value: TLinkType);
-
   public
     constructor Create(); override;
     destructor Destroy(); override;
@@ -100,6 +100,7 @@ type
     ///  в массиве const APropertyNames передаются поля, которые необходимо использовать
     procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
     procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); overload; override;
+    function Assign(ASource: TFieldSet): boolean; override;
 
     /// возвращает тип линка в виде строки
     function LinkTypeStr: string;
@@ -199,7 +200,8 @@ begin
   ///  читаем поле TypeStr
   var ts := GetValueStrDef(src, TypeStrKey, '');
 
-  (Data as TLinkData).LinkType := LinkType2Str.ValueByKey(ts, ltUnknown);
+  var lt :=  LinkType2Str.ValueByKey(ts, ltUnknown);
+  (Data as TLinkData).LinkType := lt;
 
   inherited Parse(src);
 
@@ -225,6 +227,19 @@ begin
 end;
 
 { TLinkData }
+
+function TLinkData.Assign(ASource: TFieldSet): boolean;
+begin
+  if not (ASource is TLinkData) then
+    exit;
+  inherited;
+  var src := ASource as TLinkData;
+  FAutostart := src.FAutostart;
+  SetLinkType(src.LinkType);
+  FDataSettings.Assign(src.FDataSettings);
+  FLinkType := src.FLinkType;
+  FSnapshot := src.FSnapshot;
+end;
 
 constructor TLinkData.Create;
 begin

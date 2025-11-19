@@ -2,7 +2,7 @@ inherited SMTPSrvDownLinkSettingEditFrame: TSMTPSrvDownLinkSettingEditFrame
   inherited SettingsPanel: TUniPanel
     inherited SettingsGroupBox: TUniGroupBox
       inherited SettingsParentPanel: TUniPanel
-        ScrollHeight = 341
+        ScrollHeight = 391
         ScrollWidth = 427
         inline FrameConnections1: TFrameConnections
           Left = 0
@@ -174,8 +174,8 @@ inherited SMTPSrvDownLinkSettingEditFrame: TSMTPSrvDownLinkSettingEditFrame
   end
   inherited ProfilesGroupBox: TUniGroupBox
     inherited ProfilesPanel: TUniPanel
-      ScrollHeight = 413
-      ScrollWidth = 410
+      ScrollHeight = 463
+      ScrollWidth = 323
     end
   end
 end

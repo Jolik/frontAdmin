@@ -23,6 +23,7 @@ type
     function CreateReqNew: TReqNew; virtual;
     function CreateReqUpdate: TReqUpdate; virtual;
     function CreateReqRemove: TReqRemove; virtual;
+    function CreateReqArchive: TReqArchive; virtual;
 
     function ExcuteRaw(AReq: THttpRequest; AResp: TJSONResponse)
       : integer; virtual;
@@ -30,7 +31,7 @@ type
     function New(AReq: TReqNew): TJSONResponse; virtual;
     function Update(AReq: TReqUpdate): TJSONResponse; virtual;
     function Remove(AReq: TReqRemove): TJSONResponse; virtual;
-
+    function Archive(AReq: TReqArchive): TJSONResponse; virtual;
   end;
 
 implementation
@@ -45,6 +46,7 @@ begin
     Req.Headers.AddOrSetValue('X-Ticket', FTicket);
 end;
 
+
 constructor TRestBrokerBase.Create(const ATicket: string);
 begin
   inherited Create;
@@ -57,6 +59,7 @@ begin
   ApplyTicket(AReq);
   Result := HttpClient.Request(AReq, AResp);
 end;
+
 
 { TRestBrokerBaseBase }
 
@@ -80,6 +83,12 @@ begin
   Result := TReqRemove.Create;
 end;
 
+function TRestBrokerBase.CreateReqArchive: TReqArchive;
+begin
+  Result := TReqArchive.Create;
+end;
+
+
 function TRestBrokerBase.CreateReqUpdate: TReqUpdate;
 begin
   Result := TReqUpdate.Create;
@@ -98,6 +107,14 @@ begin
   ApplyTicket(AReq);
   HttpClient.Request(AReq, Result);
 end;
+
+function TRestBrokerBase.Archive(AReq: TReqArchive): TJSONResponse;
+begin
+  Result := TJSONResponse.Create;
+  ApplyTicket(AReq);
+  HttpClient.Request(AReq, Result);
+end;
+
 
 function TRestBrokerBase.Update(AReq: TReqUpdate): TJSONResponse;
 begin

@@ -3,18 +3,14 @@ inherited FTPServerDownLinkSettingEditFrame: TFTPServerDownLinkSettingEditFrame
   ExplicitHeight = 522
   inherited SettingsPanel: TUniPanel
     Height = 522
-    ExplicitHeight = 522
     inherited SettingsGroupBox: TUniGroupBox
       Height = 520
-      ExplicitHeight = 520
       inherited UniPanel3: TUniPanel
         Top = 448
-        ExplicitTop = 448
       end
       inherited SettingsParentPanel: TUniPanel
         Height = 433
-        ExplicitHeight = 433
-        ScrollHeight = 341
+        ScrollHeight = 433
         ScrollWidth = 427
         inline FrameConnections1: TFrameConnections
           Left = 0
@@ -238,16 +234,13 @@ inherited FTPServerDownLinkSettingEditFrame: TFTPServerDownLinkSettingEditFrame
   end
   inherited ProfilesGroupBox: TUniGroupBox
     Height = 522
-    ExplicitHeight = 522
     inherited ProfilesPanel: TUniPanel
       Height = 505
-      ExplicitHeight = 505
-      ScrollHeight = 413
-      ScrollWidth = 410
+      ScrollHeight = 505
+      ScrollWidth = 323
     end
   end
   inherited UniSplitter1: TUniSplitter
     Height = 522
-    ExplicitHeight = 522
   end
 end

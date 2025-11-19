@@ -41,7 +41,6 @@ uses
   QueueUnit in '..\services\router\entities\QueueUnit.pas',
   RouterSourceUnit in '..\services\router\entities\RouterSourceUnit.pas',
   LinkEditFormUnit in '..\forms\links\LinkEditFormUnit.pas' {LinkEditForm: TUniForm},
-  LinkSettingsFormUnit in '..\forms\links\LinkSettingsFormUnit.pas' {LinkSettingsForm: TUniForm},
   LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
   OperatorLinkEditFormUnit in '..\forms\operatorLinks\OperatorLinkEditFormUnit.pas' {OperatorLinkEditForm: TUniForm},
   OperatorLinksFormUnit in '..\forms\operatorLinks\OperatorLinksFormUnit.pas' {OperatorLinksForm: TUniForm},

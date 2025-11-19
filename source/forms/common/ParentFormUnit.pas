@@ -41,7 +41,7 @@ type
   public
     ///  доступ к REST‑брокеру и форме редактирования
     property RestBroker: TRestEntityBroker read FRestBroker;
-    property EditForm: TParentEditForm read FEditForm;
+    property EditForm: TParentEditForm read FEditForm write FEditForm;
 
     ///  создать форму редактирования и задать режим
     procedure PrepareEditForm(isEditMode: boolean = false);

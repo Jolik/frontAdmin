@@ -1,4 +1,4 @@
-﻿unit ParentLinkSettingEditFrameUnit;
+unit ParentLinkSettingEditFrameUnit;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   uniGUIClasses, uniGUIFrame, LinkUnit,   ProfilesFrameUnit,
   LinkSettingsUnit, uniGUIBaseClasses, uniPanel, uniSplitter, uniEdit,
   uniCheckBox, uniGroupBox, uniButton, SharedFrameTextInput,
-  SharedFrameBoolInput, ProfileUnit, ProfilesRestBrokerUnit;
+  SharedFrameBoolInput, ProfileUnit;
 
 type
 
@@ -50,7 +50,8 @@ uses
 
 
 
-procedure TParentLinkSettingEditFrame.GetData(dstLink: TLink; dstProfiles: TProfileList);
+procedure TParentLinkSettingEditFrame.GetData(dstLink: TLink;
+  dstProfiles: TProfileList);
 begin
   Apply;
   FDataSettings.Dump := DumpFrame.GetData;
@@ -60,7 +61,8 @@ begin
 end;
 
 
-procedure TParentLinkSettingEditFrame.SetData(srcLink: TLink;srcProfiles: TProfileList);
+procedure TParentLinkSettingEditFrame.SetData(srcLink: TLink;
+  srcProfiles: TProfileList);
 begin
   FDataSettings := (srcLink.Data as TLinkData).DataSettings;
 

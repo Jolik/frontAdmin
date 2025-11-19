@@ -21,14 +21,19 @@ type
     function Update(AReq: TReqUpdate): TJSONResponse; overload; override;
     function Remove(AReq: TLinkReqRemove): TJSONResponse; overload;
     function Remove(AReq: TReqRemove): TJSONResponse; overload; override;
+    function Archive(AReq: TLinkReqArchive): TJSONResponse; overload;
+    function Archive(AReq: TReqArchive): TJSONResponse; overload; override;
     function CreateReqList: TReqList; override;
     function CreateReqInfo(id:string=''): TReqInfo; override;
     function CreateReqNew: TReqNew; override;
     function CreateReqUpdate: TReqUpdate; override;
     function CreateReqRemove: TReqRemove; override;
+    function CreateReqArchive: TReqArchive; override;
   end;
 
 implementation
+
+
 
 constructor TLinksRestBroker.Create(const ATicket: string; const ABasePath:string);
 begin
@@ -68,10 +73,22 @@ begin
   Result := Remove(AReq as TReqRemove);
 end;
 
+function TLinksRestBroker.Archive(AReq: TReqArchive): TJSONResponse;
+begin
+  Result := inherited Archive(AReq);
+end;
+
+function TLinksRestBroker.Archive(AReq: TLinkReqArchive): TJSONResponse;
+begin
+  Result := Archive(AReq as TReqArchive);
+end;
+
 function TLinksRestBroker.Update(AReq: TLinkReqUpdate): TJSONResponse;
 begin
   Result := Update(AReq as TReqUpdate);
 end;
+
+
 
 function TLinksRestBroker.CreateReqInfo(id:string=''): TReqInfo;
 begin
@@ -94,6 +111,13 @@ end;
 function TLinksRestBroker.CreateReqRemove: TReqRemove;
 begin
   Result := TLinkReqRemove.Create;
+  Result.BasePath := BasePath;
+end;
+
+
+function TLinksRestBroker.CreateReqArchive: TReqArchive;
+begin
+  Result := TLinkReqArchive.Create;
   Result.BasePath := BasePath;
 end;
 

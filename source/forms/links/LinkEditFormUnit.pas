@@ -7,13 +7,13 @@ uses
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,  EntityUnit,
   uniGUIClasses, uniGUIForm, ParentEditFormUnit, uniEdit, uniLabel, uniButton,
   uniGUIBaseClasses, uniPanel, ParentLinkSettingEditFrameUnit, uniMultiItem,
-  uniComboBox,  ProfileUnit, ProfilesRestBrokerUnit, LinkUnit, uniTimer;
+  uniComboBox,  ProfileUnit, ProfilesRestBrokerUnit, LinkUnit, uniTimer,
+  uniScrollBox;
 
 type
   TLinkEditForm = class(TParentEditForm)
     UniContainerPanel1: TUniContainerPanel;
     UniLabel2: TUniLabel;
-    teID: TUniEdit;
     comboLinkType: TUniComboBox;
     UniContainerPanel3: TUniContainerPanel;
     UniLabel4: TUniLabel;
@@ -21,6 +21,10 @@ type
     directionPanel: TUniContainerPanel;
     UniLabel5: TUniLabel;
     ComboBoxDirection: TUniComboBox;
+    pnID: TUniContainerPanel;
+    UniLabel1: TUniLabel;
+    teID: TUniEdit;
+    UniScrollBox1: TUniScrollBox;
     procedure btnOkClick(Sender: TObject);
     procedure comboLinkTypeChange(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
@@ -62,7 +66,6 @@ uses
 function LinkEditForm(AProfilesServicePath: string): TLinkEditForm;
 begin
   Result := TLinkEditForm(UniMainModule.GetFormInstance(TLinkEditForm));
-  Result.FProfilesBroker:=  TProfilesRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath) ;
 end;
 
 { TLinkEditForm }
@@ -73,6 +76,7 @@ begin
   inherited;
   for var ls in LinkType2Str.Keys do
     comboLinkType.Items.Add(ls);
+  FProfilesBroker :=  TProfilesRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath) ;
   FProfiles := TProfileList.Create();
 end;
 
@@ -106,8 +110,9 @@ end;
 
 procedure TLinkEditForm.btnOkClick(Sender: TObject);
 begin
-  inherited;
-  // не стрирать!
+  if DoCheck then
+    if Apply() then
+      ModalResult := mrOK;
 end;
 
 
@@ -151,10 +156,11 @@ function TLinkEditForm.SaveLink: boolean;
 var
   resp : TJSONResponse;
 begin
-  resp:= nil;
-  Result:=false;
-  var LinksBroker := TLinksRestBroker.Create();
+  resp := nil;
+  Result := false;
+  var LinksBroker := TLinksRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath);
   try
+
     try
       if IsEdit then
       begin
@@ -162,28 +168,37 @@ begin
         try
           req.ApplyFromEntity(Link);
           resp := LinksBroker.Update(req);
-          exit(true);
+          result := true;
         finally
            req.free;
         end;
       end
       else
       begin
-      var req := LinksBroker.CreateReqNew();
+        var req := LinksBroker.CreateReqNew();
         try
           req.ApplyBody(Link);
           resp := LinksBroker.New(req);
-          exit(true);
+          result := true;
         finally
           req.Free;
         end;
       end;
-    except on e: exception do begin
-      Log('TLinkEditForm.SaveLink ' + e.Message, lrtError);
-    end; end;
+    except
+      on E: EIdHTTPProtocolException do begin
+        Log('TLinkEditForm.SaveLink ' + E.ErrorMessage, lrtError);
+        MessageDlg(Format('Ошибка %d %s',
+          [E.ErrorCode, E.ErrorMessage]), mtError, [mbOK], nil);
+      end;
+      on E: Exception do begin
+        MessageDlg(E.Message, mtError, [mbOK], nil);
+        Log('TLinkEditForm.LoadProfiles ' + e.Message, lrtError);
+      end;
+    end;
+
   finally
     LinksBroker.Free;
-    resp.Free
+    freeAndNil(resp);
   end;
 end;
 
@@ -231,13 +246,13 @@ begin
       result := true;
     except
       on E: EIdHTTPProtocolException do begin
-        MessageDlg(Format('Ошибка получения спика профилей лика. HTTP %d'#13#10'%s',
+        MessageDlg(Format('Ошибка получения списка профилей лика. HTTP %d'#13#10'%s',
           [E.ErrorCode, E.ErrorMessage]), mtWarning, [mbOK], nil);
         Log('TLinkEditForm.LoadProfiles ' + e.Message+' '+E.ErrorMessage, lrtError);
         result := false;
       end;
       on E: Exception do begin
-        MessageDlg('Ошибка получения спика профилей лика: ' + E.Message, mtWarning, [mbOK], nil);
+        MessageDlg('Ошибка получения списка профилей лика: ' + E.Message, mtWarning, [mbOK], nil);
         Log('TLinkEditForm.LoadProfiles ' + e.Message, lrtError);
         result := false;
       end;
@@ -288,7 +303,6 @@ begin
   if not IsEdit then
     Link.id := GenerateGuid;
   teID.Text := Link.id;
-//  FProfilesBroker.Lid := Link.Id;
   ComboBoxDirection.ItemIndex := ComboBoxDirection.Items.IndexOf(Link.Dir);
   CreateFrame;
   comboLinkType.ItemIndex := comboLinkType.Items.IndexOf(Link.TypeStr);
@@ -305,9 +319,10 @@ begin
   var frameClass := LinkFrameByType(link.linkType);
   if frameClass = nil then
     exit;
+  FreeAndNil(FLinkSettingsEditFrame);
   FLinkSettingsEditFrame := frameClass.Create(LinkEditForm(FProfilesBroker.BasePath));
-  FLinkSettingsEditFrame.Parent := pnClient;
-  FLinkSettingsEditFrame.Align := alClient;
+  FLinkSettingsEditFrame.Parent :=UniScrollBox1;  //pnClient;
+  //FLinkSettingsEditFrame.Align := alClient;
   FLinkSettingsEditFrame.SetData(Link, FProfiles);
 end;
 

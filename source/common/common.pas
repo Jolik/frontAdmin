@@ -5,7 +5,7 @@ interface
 uses
   Classes,
   Windows,
-  StrUtils, DateUtils, SysUtils;
+  StrUtils, DateUtils, SysUtils, IOUtils;
 
 const
   // перевод строки независимо от ос
@@ -36,6 +36,7 @@ function LastError: string;
 function  Load(FileName: string): string;
 // сохранить строку в файл
 procedure Save(Data, FileName: string);
+procedure SaveUTF8(Data, FileName: string);
 // получить расширение файла без точки
 
 // проверяет формат идентификатора источника
@@ -345,6 +346,12 @@ begin
   finally
     FreeAndNil(Fs);
   end;
+end;
+
+
+procedure SaveUTF8(Data, FileName: string);
+begin
+   IOUtils.TFile.WriteAllText(FileName, Data, TEncoding.UTF8);
 end;
 
 

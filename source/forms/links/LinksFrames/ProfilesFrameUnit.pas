@@ -1,4 +1,4 @@
-п»їunit ProfilesFrameUnit;
+unit ProfilesFrameUnit;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses, LinkUnit,
   uniGUIClasses, uniGUIFrame, uniGUIBaseClasses, uniTabControl, uniPanel,
   uniButton, uniPageControl, ProfileUnit, uniBitBtn, uniMultiItem, uniListBox,
-  uniLabel, ProfileFrameUnit, uniComboBox, ProfilesRestBrokerUnit;
+  uniLabel, ProfileFrameUnit, uniComboBox;
 
 type
   TProfilesFrame = class(TUniFrame)
@@ -65,8 +65,6 @@ end;
 procedure TProfilesFrame.SetData(src: TProfileList; link: TLink);
 begin
   FProfiles.Assign(src);
-  var pf1 := TProfile(src[0]).ProfileBody <> nil;
-  var pf2 := TProfile(FProfiles[0]).ProfileBody <> nil;
   FLink := link;
   FillProfilesCombobox;
   if profilesComboBox.items.Count > 0 then
@@ -83,7 +81,7 @@ begin
   for var p in FProfiles do
     if (p as TProfile).Description = '' then
     begin
-      MessageDlg(Format('РЅРµn РѕРїРёСЃР°РЅРёСЏ РїСЂРѕС„РёР»СЏ %s', [p.Id]), TMsgDlgType.mtError, [mbOK], nil);
+      MessageDlg(Format('неn описания профиля %s', [p.Id]), TMsgDlgType.mtError, [mbOK], nil);
       exit;
     end;
   result := true;
@@ -116,7 +114,7 @@ begin
   if profilesComboBox.ItemIndex = -1 then
     exit;
   var p := TProfile(profilesComboBox.Items.Objects[profilesComboBox.ItemIndex]);
-  var q := Format('РЈРґР°Р»РёС‚СЊ РїСЂРѕС„РёР»СЊ "%s"?', [p.id]);
+  var q := Format('Удалить профиль "%s"?', [p.id]);
   if MessageDlg(q, mtConfirmation, mbYesNo) <> mrYes then
     exit;
   FProfiles.Remove(p);
@@ -163,7 +161,6 @@ begin
   var p := TProfile(profilesComboBox.Items.Objects[profilesComboBox.ItemIndex]);
   FProfileFrame := TProfileFrame.Create(Self);
   FProfileFrame.Parent := profilePanel;
-  FProfileFrame.Align:= TAlign.alClient;
   FProfileFrame.SetData(p, FLink);
   FProfileFrame.OnChange := OnFrameChange;
 end;

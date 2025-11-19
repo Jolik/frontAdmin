@@ -367,28 +367,19 @@ begin
     LSource := ASource as TEntity;
 
   try
-    Id := LSource.Id;
-    CompId := LSource.CompId;
-    Owner := LSource.Owner;
-    DepId := LSource.DepId;
-    Name := LSource.Name;
-    Caption := LSource.Caption;
-    Def := LSource.Def;
-    Enabled := LSource.Enabled;
-    Created := LSource.Created;
-    Updated := LSource.Updated;
-
-    FreeAndNil(FSettings);
-    FSettings := LSource.SettingsClassType.Create;
-    FSettings.Assign(LSource.Settings);
-
-    FreeAndNil(FData);
-    FData := LSource.DataClassType.Create;
-    FData.Assign(LSource.Data);
-
-    FreeAndNil(FBody);
-    FBody := LSource.BodyClassType.Create;
-    FBody.Assign(LSource.Body);
+    Self.Id := LSource.Id;
+    Self.CompId := LSource.CompId;
+    Self.Owner := LSource.Owner;
+    Self.DepId := LSource.DepId;
+    Self.Name := LSource.Name;
+    Self.Caption := LSource.Caption;
+    Self.Def := LSource.Def;
+    Self.Enabled := LSource.Enabled;
+    if not Self.Settings.Assign(LSource.Settings) then exit;
+    if not Self.Data.Assign(LSource.Data) then exit;
+    if not Self.Body.Assign(LSource.Body) then exit;
+    Self.Created := LSource.Created;
+    Self.Updated := LSource.Updated;
 
     Result := true;
   finally
@@ -445,29 +436,34 @@ end;
 
 procedure TEntity.Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil);
 begin
-  dst.AddPair(GetIdKey, Id);
-  dst.AddPair(NameKey, Name);
-  dst.AddPair(CaptionKey, Caption);
-  dst.AddPair(DefKey, Def);
-  dst.AddPair(CompIdKey, CompId);
-  dst.AddPair(OwnerKey, Owner);
-  dst.AddPair(DepIdKey, DepId);
-  dst.AddPair(EnabledKey, Enabled);
-  dst.AddPair(CreatedKey, DateTimeToUnix(Created));
-  dst.AddPair(UpdatedKey, DateTimeToUnix(Updated));
-  dst.AddPair(CommitedKey, DateTimeToUnix(Commited));
-  dst.AddPair(ArchivedKey, DateTimeToUnix(Archived));
-  ///  Append settings, body, and data
-  if Settings <> nil then
-    dst.AddPair(SettingsKey, Settings.Serialize());
-  if Data <> nil then
-    dst.AddPair(DataKey, Data.Serialize());
-  if Body <> nil then
-    dst.AddPair(BodyKey, Body.Serialize());
+  with dst do
+  begin
+    AddPair(GetIdKey, Id);
+    AddPair(NameKey, Name);
+    AddPair(CaptionKey, Caption);
+    AddPair(DefKey, Def);
+    AddPair(CompIdKey, CompId);
+    AddPair(OwnerKey, Owner);
+    AddPair(DepIdKey, DepId);
+    AddPair(EnabledKey, Enabled);
+    AddPair(CreatedKey, DateTimeToUnix(Created));
+    AddPair(UpdatedKey, DateTimeToUnix(Updated));
+    AddPair(CommitedKey, DateTimeToUnix(Commited));
+    AddPair(ArchivedKey, DateTimeToUnix(Archived));
+    ///  Append settings, body, and data
+    if Settings <> nil then
+      AddPair(SettingsKey, Settings.Serialize());
+    if Data <> nil then
+      AddPair(DataKey, Data.Serialize());
+    if Body <> nil then
+      AddPair(BodyKey, Body.Serialize());
+  end;
 end;
 
 constructor TEntity.Create;
 begin
+  Settings := nil; Data := nil; Body := nil;
+
   inherited Create();
 
   ///  Instantiate the class provided by descendants
@@ -499,17 +495,22 @@ end;
 
 function TEntityList.Assign(ASource: TEntityList): boolean;
 begin
-  result := false;
+  Result := False;
+
+  if not Assigned(ASource) then
+    Exit;
+
   Clear;
-  if ASource = nil then
-    exit;
+
+  ///  Instantiate objects, copy fields, and add them to the list
   for var i := 0 to ASource.Count-1 do
   begin
-    var es := ASource.ItemClassType.Create;
-     es.Assign(ASource.Items[i]);
+    var es := ItemClassType.Create();
+    es.Assign(ASource.Items[i]);
     inherited Add(es);
   end;
-  result := true;
+
+  Result := True;
 end;
 
 constructor TEntityList.Create(src: TJSONObject;
