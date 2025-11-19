@@ -3,7 +3,7 @@ object LogViewForm: TLogViewForm
   Top = 0
   ClientHeight = 600
   ClientWidth = 1000
-  Caption = 'Логи'
+  Caption = 'Logs'
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
   OnCreate = UniFormCreate
@@ -76,7 +76,7 @@ object LogViewForm: TLogViewForm
         Width = 196
         Height = 13
         Hint = ''
-        Caption = 'Параметры запроса'
+        Caption = 'Query parameters'
         ParentFont = False
         Font.Style = [fsBold]
         TabOrder = 6
@@ -172,7 +172,7 @@ object LogViewForm: TLogViewForm
         Width = 120
         Height = 25
         Hint = ''
-        Caption = 'Загрузить'
+        Caption = 'Load'
         TabOrder = 12
         OnClick = btnLoadLogsClick
       end
@@ -182,7 +182,7 @@ object LogViewForm: TLogViewForm
         Width = 120
         Height = 25
         Hint = ''
-        Caption = 'Очистить'
+        Caption = 'Clear'
         TabOrder = 13
         OnClick = btnClearFiltersClick
       end
