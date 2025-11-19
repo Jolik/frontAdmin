@@ -3,7 +3,7 @@ object LogViewForm: TLogViewForm
   Top = 0
   ClientHeight = 600
   ClientWidth = 1000
-  Caption = #1056#8250#1056#1109#1056#1110#1056#1105
+  Caption = 'Логи'
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
   OnCreate = UniFormCreate
@@ -38,6 +38,17 @@ object LogViewForm: TLogViewForm
         Align = alClient
         TabOrder = 0
         OnDblClick = gridLogsDblClick
+        Columns = <
+          item
+            FieldName = 'timestamp'
+            Title.Caption = 'Timestamp'
+            Width = 200
+          end
+          item
+            FieldName = 'payload'
+            Title.Caption = 'Payload'
+            Width = 480
+          end>
       end
     end
     object splFilters: TUniSplitter
@@ -65,7 +76,7 @@ object LogViewForm: TLogViewForm
         Width = 196
         Height = 13
         Hint = ''
-        Caption = #1056#1119#1056#176#1057#1026#1056#176#1056#1112#1056#181#1057#8218#1057#1026#1057#8249' '#1056#183#1056#176#1056#1111#1057#1026#1056#1109#1057#1027#1056#176
+        Caption = 'Параметры запроса'
         ParentFont = False
         Font.Style = [fsBold]
         TabOrder = 6
@@ -84,7 +95,7 @@ object LogViewForm: TLogViewForm
         Top = 64
         Width = 250
         Hint = ''
-        Text = ''
+        Text = '{level="error"}'
         TabOrder = 1
       end
       object lStart: TUniLabel
@@ -161,7 +172,7 @@ object LogViewForm: TLogViewForm
         Width = 120
         Height = 25
         Hint = ''
-        Caption = #1056#8212#1056#176#1056#1110#1057#1026#1057#1107#1056#183#1056#1105#1057#8218#1057#1034
+        Caption = 'Загрузить'
         TabOrder = 12
         OnClick = btnLoadLogsClick
       end
@@ -171,7 +182,7 @@ object LogViewForm: TLogViewForm
         Width = 120
         Height = 25
         Hint = ''
-        Caption = #1056#1115#1057#8225#1056#1105#1057#1027#1057#8218#1056#1105#1057#8218#1057#1034
+        Caption = 'Очистить'
         TabOrder = 13
         OnClick = btnClearFiltersClick
       end
@@ -186,41 +197,42 @@ object LogViewForm: TLogViewForm
     FieldDefs = <
       item
         Name = 'timestamp'
-        DataType = ftString
+        DataType = ftWideString
         Size = 64
       end
       item
         Name = 'payload'
-        DataType = ftMemo
+        DataType = ftWideString
+        Size = 8192
       end
       item
         Name = 'container_name'
-        DataType = ftString
+        DataType = ftWideString
         Size = 255
       end
       item
         Name = 'filename'
-        DataType = ftString
+        DataType = ftWideString
         Size = 255
       end
       item
         Name = 'host'
-        DataType = ftString
+        DataType = ftWideString
         Size = 128
       end
       item
         Name = 'source'
-        DataType = ftString
+        DataType = ftWideString
         Size = 128
       end
       item
         Name = 'swarm_service'
-        DataType = ftString
+        DataType = ftWideString
         Size = 255
       end
       item
         Name = 'swarm_stack'
-        DataType = ftString
+        DataType = ftWideString
         Size = 255
       end>
     IndexDefs = <>
@@ -234,35 +246,35 @@ object LogViewForm: TLogViewForm
     StoreDefs = True
     Left = 32
     Top = 88
-    object mtLogstimestamp: TStringField
+    object mtLogstimestamp: TWideStringField
       FieldName = 'timestamp'
       Size = 64
     end
-    object mtLogspayload: TMemoField
+    object mtLogspayload: TWideStringField
       FieldName = 'payload'
-      BlobType = ftMemo
+      Size = 8192
     end
-    object mtLogscontainer_name: TStringField
+    object mtLogscontainer_name: TWideStringField
       FieldName = 'container_name'
       Size = 255
     end
-    object mtLogsfilename: TStringField
+    object mtLogsfilename: TWideStringField
       FieldName = 'filename'
       Size = 255
     end
-    object mtLogshost: TStringField
+    object mtLogshost: TWideStringField
       FieldName = 'host'
       Size = 128
     end
-    object mtLogssource: TStringField
+    object mtLogssource: TWideStringField
       FieldName = 'source'
       Size = 128
     end
-    object mtLogsswarm_service: TStringField
+    object mtLogsswarm_service: TWideStringField
       FieldName = 'swarm_service'
       Size = 255
     end
-    object mtLogsswarm_stack: TStringField
+    object mtLogsswarm_stack: TWideStringField
       FieldName = 'swarm_stack'
       Size = 255
     end

@@ -34,6 +34,7 @@ end;
 procedure TUniServerModule.FirstInit;
 begin
   Self.Title := 'ЦСДН - Подсистема управления данными';
+  Self.Charset := 'utf-8';
   URLPath := '/admin/dcc';
   InitServerModule(Self);
 end;
