@@ -431,6 +431,19 @@
         <DCCReference Include="..\services\dataserver\entities\DataseriesUnit.pas"/>
         <DCCReference Include="..\services\dataserver\brokers\DsGroupsHttpRequests.pas"/>
         <DCCReference Include="..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\forms\logs\LogEntryViewFormUnit.pas">
+            <Form>LogEntryViewForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\logs\LogViewFormUnit.pas">
+            <Form>LogViewForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\signals\entities\LogUnit.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsHttpRequests.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -459,7 +472,12 @@
             <Deployment Version="5">
                 <DeployFile LocalName="Linux64\Debug\frontDCC" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>frontDCC.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

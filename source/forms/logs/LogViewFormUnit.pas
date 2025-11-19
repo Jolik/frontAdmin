@@ -10,7 +10,8 @@ uses
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm, uniGUIBaseClasses,
   uniPanel, uniButton, uniEdit, uniLabel, uniBasicGrid, uniDBGrid, uniSplitter,
-  LogUnit, LogsRestBrokerUnit;
+  LogUnit,
+  LogsHttpRequests, LogsRestBrokerUnit, Vcl.Controls, Vcl.Forms;
 
 type
   TLogViewForm = class(TUniForm)
@@ -110,32 +111,32 @@ end;
 
 procedure TLogViewForm.btnLoadLogsClick(Sender: TObject);
 var
-  Req: TLogsRequest;
+  Req: TLogsReqQueryRange;
   Resp: TLogsResponse;
   StepValue, LimitValue: Integer;
 begin
   if not Assigned(FLogsBroker) then
     Exit;
 
-  Req := FLogsBroker.CreateLogsRequest;
+  Req := FLogsBroker.CreateReqQueryRange;
   try
     Req.SetQuery(edQuery.Text);
 
-    if not edStart.Text.Trim.IsEmpty then
-      Req.SetStartRfc3339(edStart.Text.Trim);
+    if not Trim(edStart.Text).IsEmpty then
+      Req.SetStartRfc3339(Trim(edStart.Text));
 
-    if not edEnd.Text.Trim.IsEmpty then
-      Req.SetEndRfc3339(edEnd.Text.Trim);
+    if not Trim(edEnd.Text).IsEmpty then
+      Req.SetEndRfc3339(Trim(edEnd.Text));
 
-    StepValue := ParseInteger(edStep.Text.Trim);
+    StepValue := ParseInteger(Trim(edStep.Text));
     if StepValue > 0 then
       Req.SetStepSeconds(StepValue);
 
-    LimitValue := ParseInteger(edLimit.Text.Trim);
+    LimitValue := ParseInteger(Trim(edLimit.Text));
     if LimitValue > 0 then
       Req.SetLimit(LimitValue);
 
-    Resp := FLogsBroker.Execute(Req);
+    Resp := FLogsBroker.QueryRange(Req);
     try
       if Assigned(Resp) and Assigned(Resp.Logs) then
         FillLogsDataset(Resp.Logs)

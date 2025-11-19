@@ -340,6 +340,14 @@
             <Form>AbonentsForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\users\UserEditFormUnit.pas">
+            <Form>UserEditForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\users\UsersFormUnit.pas">
+            <Form>UsersForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\forms\aliases\AliasEditFormUnit.pas">
             <Form>AliasEditForm</Form>
             <DesignClass>TUniForm</DesignClass>
@@ -374,6 +382,8 @@
         </DCCReference>
         <DCCReference Include="..\services\router\brokers\AbonentHttpRequests.pas"/>
         <DCCReference Include="..\services\router\brokers\AbonentsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\acl\brokers\UserHttpRequests.pas"/>
+        <DCCReference Include="..\services\acl\brokers\UsersRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\router\brokers\AliasesRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\router\brokers\AliasHttpRequests.pas"/>
         <DCCReference Include="..\services\router\brokers\ChannelHttpRequests.pas"/>
@@ -441,6 +451,19 @@
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
+        <DCCReference Include="..\forms\logs\LogEntryViewFormUnit.pas">
+            <Form>LogEntryViewForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\logs\LogViewFormUnit.pas">
+            <Form>LogViewForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\signals\entities\LogUnit.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsHttpRequests.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -469,6 +492,12 @@
             <Deployment Version="5">
                 <DeployFile LocalName="Linux64\Debug\frontMSS" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>frontMSS.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

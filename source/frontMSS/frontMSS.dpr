@@ -146,7 +146,12 @@ uses
   ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas' {ListParentForm: TUniForm},
   ParentEditFormUnit in '..\forms\common\ParentEditFormUnit.pas' {ParentEditForm: TUniForm},
   ParentFormUnit in '..\forms\common\ParentFormUnit.pas' {ParentForm: TUniForm},
-  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas';
+  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas',
+  LogEntryViewFormUnit in '..\forms\logs\LogEntryViewFormUnit.pas' {LogEntryViewForm: TUniForm},
+  LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
+  LogUnit in '..\services\signals\entities\LogUnit.pas',
+  LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas',
+  LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas';
 
 {$R *.res}
 
