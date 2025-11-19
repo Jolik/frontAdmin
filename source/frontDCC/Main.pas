@@ -24,6 +24,7 @@ type
     unbtnSources: TUniButton;
     btnObservations: TUniButton;
     btnDsGroups: TUniButton;
+    btnLogs: TUniButton;
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
     unlblName1: TUniLabel;
@@ -36,6 +37,7 @@ type
     procedure unbtnMonitoringClick(Sender: TObject);
     procedure btnDsGroupsClick(Sender: TObject);
     procedure btnObservationsClick(Sender: TObject);
+    procedure btnLogsClick(Sender: TObject);
   private
   public
     { Public declarations }
@@ -64,7 +66,8 @@ uses
   SummaryTasksFormUnit,
   DSProcessorTasksFormUnit,
   DSGroupsFormUnit,
-  ObservationFormUnit
+  ObservationFormUnit,
+  LogViewFormUnit
 //  AliasesFormUnit,
 //  AbonentsFormUnit,
 //  RouterSourcesFormUnit,
@@ -95,6 +98,10 @@ begin
   ObservationForm.Show();
 end;
 
+procedure TMainForm.btnLogsClick(Sender: TObject);
+begin
+  LogViewForm.Show();
+end;
 
 procedure TMainForm.btnLinksClick(Sender: TObject);
 begin

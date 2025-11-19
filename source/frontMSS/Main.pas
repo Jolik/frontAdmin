@@ -31,6 +31,7 @@ type
     btnOperatorLinksContent: TUniButton;
     btnSearch: TUniButton;
     btnContentStream: TUniButton;
+    btnLogs: TUniButton;
     unlblName1: TUniLabel;
     uncntnrpnForms: TUniContainerPanel;
     procedure btnAbonentsClick(Sender: TObject);
@@ -47,6 +48,7 @@ type
     procedure btnOperatorLinksContentClick(Sender: TObject);
     procedure btnSearchClick(Sender: TObject);
     procedure btnContentStreamClick(Sender: TObject);
+    procedure btnLogsClick(Sender: TObject);
   private
   public
     { Public declarations }
@@ -73,7 +75,8 @@ uses
   OperatorLinksFormUnit,
   OperatorLinkContectFormUnit,
   SearchFormUnit,
-  ContentStreamFormUnit, HandlersFormUnit, UsersFormUnit;
+  ContentStreamFormUnit, HandlersFormUnit, UsersFormUnit,
+  LogViewFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -127,6 +130,11 @@ end;
 procedure TMainForm.btnContentStreamClick(Sender: TObject);
 begin
   ContentStreamForm.Show();
+end;
+
+procedure TMainForm.btnLogsClick(Sender: TObject);
+begin
+  LogViewForm.Show();
 end;
 
 procedure TMainForm.btnAliasesClick(Sender: TObject);

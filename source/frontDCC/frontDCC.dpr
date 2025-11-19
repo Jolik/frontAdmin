@@ -137,7 +137,12 @@ uses
   DsGroupUnit in '..\services\dataserver\entities\DsGroupUnit.pas',
   DataseriesUnit in '..\services\dataserver\entities\DataseriesUnit.pas',
   DsGroupsHttpRequests in '..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
-  DsGroupsRestBrokerUnit in '..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas';
+  DsGroupsRestBrokerUnit in '..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
+  LogEntryViewFormUnit in '..\forms\logs\LogEntryViewFormUnit.pas' {LogEntryViewForm: TUniForm},
+  LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
+  LogUnit in '..\services\signals\entities\LogUnit.pas',
+  LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas',
+  LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas';
 
 {$R *.res}
 
