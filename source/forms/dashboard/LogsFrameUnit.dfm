@@ -85,7 +85,8 @@ object LogsFrame: TLogsFrame
       end
       item
         Name = 'payload'
-        DataType = ftWideMemo
+        DataType = ftWideString
+        Size = 8192
       end
       item
         Name = 'container_name'
@@ -132,7 +133,7 @@ object LogsFrame: TLogsFrame
     end
     object mtLogspayload: TWideStringField
       FieldName = 'payload'
-      Size = 4000
+      Size = 8192
     end
     object mtLogscontainer_name: TWideStringField
       FieldName = 'container_name'
