@@ -16,6 +16,7 @@ uses
 
 type
   TMainForm = class(TAuthMainForm)
+    btnDashboard: TUniButton;
     btnStripTasks: TUniButton;
     btnLinks: TUniButton;
     btnSummTask: TUniButton;
@@ -33,6 +34,7 @@ type
     procedure btnSummTaskClick(Sender: TObject);
     procedure btnDSProcessorTasksClick(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
+    procedure btnDashboardClick(Sender: TObject);
     procedure unbtnSourcesClick(Sender: TObject);
     procedure unbtnMonitoringClick(Sender: TObject);
     procedure btnDsGroupsClick(Sender: TObject);
@@ -67,7 +69,8 @@ uses
   DSProcessorTasksFormUnit,
   DSGroupsFormUnit,
   ObservationFormUnit,
-  LogViewFormUnit
+  LogViewFormUnit,
+  DCCDashboardFormUnit
 //  AliasesFormUnit,
 //  AbonentsFormUnit,
 //  RouterSourcesFormUnit,
@@ -83,6 +86,11 @@ begin
 end;
 
 {  TMainForm  }
+
+procedure TMainForm.btnDashboardClick(Sender: TObject);
+begin
+  DCCDashboardForm.Show();
+end;
 
 procedure TMainForm.btnDSProcessorTasksClick(Sender: TObject);
 begin
