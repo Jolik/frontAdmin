@@ -60,6 +60,7 @@ end;
 procedure TestLogResultSerialization;
 var
   LogResult: TLogResult;
+  Entries: TArray<TLogEntry>;
   Serialized: TJSONObject;
   StreamObj: TJSONObject;
   ValuesArray: TJSONArray;
@@ -74,9 +75,10 @@ begin
     LogResult.Source := 'stderr';
     LogResult.SwarmService := 'svc-api';
     LogResult.SwarmStack := 'prod';
-    SetLength(LogResult.Entries, 1);
-    LogResult.Entries[0].Timestamp := '1710000000000000020';
-    LogResult.Entries[0].Payload := '{"msg":"payload"}';
+    SetLength(Entries, 1);
+    Entries[0].Timestamp := '1710000000000000020';
+    Entries[0].Payload := '{"msg":"payload"}';
+    LogResult.Entries := Entries;
 
     Serialized := TJSONObject.Create;
     try
@@ -147,6 +149,7 @@ var
   LimitValue: TJSONNumber;
   DirectionValue: TJSONValue;
   StatsValue: TJSONValue;
+  LogEntries: TArray<TLogEntry>;
 begin
   Logs := TLogs.Create;
   try
@@ -163,9 +166,10 @@ begin
 
     var LogResult := TLogResult.Create;
     LogResult.ContainerName := 'app';
-    SetLength(LogResult.Entries, 1);
-    LogResult.Entries[0].Timestamp := '1710000000000000100';
-    LogResult.Entries[0].Payload := '{"msg":"err"}';
+    SetLength(LogEntries, 1);
+    LogEntries[0].Timestamp := '1710000000000000100';
+    LogEntries[0].Payload := '{"msg":"err"}';
+    LogResult.Entries := LogEntries;
     Logs.Results.Add(LogResult);
 
     Serialized := TJSONObject.Create;
