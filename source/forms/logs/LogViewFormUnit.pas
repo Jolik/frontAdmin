@@ -114,13 +114,16 @@ var
   Req: TLogsReqQueryRange;
   Resp: TLogsResponse;
   StepValue, LimitValue: Integer;
+  QueryText: string;
 begin
   if not Assigned(FLogsBroker) then
     Exit;
 
   Req := FLogsBroker.CreateReqQueryRange;
   try
-    Req.SetQuery(edQuery.Text);
+    QueryText := Trim(edQuery.Text);
+    if not QueryText.IsEmpty then
+      Req.SetQuery(QueryText);
 
     if not Trim(edStart.Text).IsEmpty then
       Req.SetStartRfc3339(Trim(edStart.Text));
