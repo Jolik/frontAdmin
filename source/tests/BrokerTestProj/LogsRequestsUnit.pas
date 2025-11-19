@@ -15,7 +15,7 @@ uses
 
 procedure ExecuteLogsRequests;
 const
-  CQuery = '{swarm_service="dcc7_agent"}';
+  CQuery = '{level="error"}';
   CStepSeconds = 60;
   CLimit = 1000;
   CMaxEntriesToPrint = 3;
