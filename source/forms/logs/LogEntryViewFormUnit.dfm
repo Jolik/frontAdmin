@@ -3,7 +3,7 @@ object LogEntryViewForm: TLogEntryViewForm
   Top = 0
   ClientHeight = 420
   ClientWidth = 640
-  Caption = 'Просмотр лога'
+  Caption = 'View log'
   BorderStyle = bsDialog
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
@@ -21,7 +21,7 @@ object LogEntryViewForm: TLogEntryViewForm
       Top = 16
       Width = 83
       Height = 13
-      Caption = 'Время (ns)'
+      Caption = 'Time (ns)'
     end
     object lTimestampValue: TUniLabel
       Left = 120
@@ -35,7 +35,7 @@ object LogEntryViewForm: TLogEntryViewForm
       Top = 40
       Width = 86
       Height = 13
-      Caption = 'Контейнер'
+      Caption = 'Container'
     end
     object lContainerValue: TUniLabel
       Left = 120
@@ -49,7 +49,7 @@ object LogEntryViewForm: TLogEntryViewForm
       Top = 64
       Width = 64
       Height = 13
-      Caption = 'Хост'
+      Caption = 'Host'
     end
     object lHostValue: TUniLabel
       Left = 120
@@ -63,7 +63,7 @@ object LogEntryViewForm: TLogEntryViewForm
       Top = 88
       Width = 71
       Height = 13
-      Caption = 'Источник'
+      Caption = 'Source'
     end
     object lSourceValue: TUniLabel
       Left = 120
@@ -105,7 +105,7 @@ object LogEntryViewForm: TLogEntryViewForm
       Top = 64
       Width = 67
       Height = 13
-      Caption = 'Файл'
+      Caption = 'File'
     end
     object lFilenameValue: TUniLabel
       Left = 440
@@ -127,7 +127,7 @@ object LogEntryViewForm: TLogEntryViewForm
       Top = 12
       Width = 105
       Height = 25
-      Caption = 'Закрыть'
+      Caption = 'Close'
       OnClick = btnCloseClick
     end
   end
