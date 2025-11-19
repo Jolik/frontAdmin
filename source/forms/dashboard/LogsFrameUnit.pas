@@ -13,7 +13,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   LogsRestBrokerUnit, LogsHttpRequests, LogUnit,
-  EntityUnit;
+  EntityUnit, Vcl.Forms;
 
 type
   TLogsFrame = class(TUniFrame)

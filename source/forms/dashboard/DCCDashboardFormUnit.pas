@@ -7,7 +7,7 @@ uses
   Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm, uniGUIBaseClasses,
   uniPanel, uniSplitter,
-  SourcesFrameUnit, LinksFrameUnit, ContentFrameUnit, LogsFrameUnit;
+  SourcesFrameUnit, LinksFrameUnit, ContentFrameUnit, LogsFrameUnit, uniGUIFrame;
 
 type
   TDCCDashboardForm = class(TUniForm)
@@ -24,6 +24,7 @@ type
     LinksFrame: TLinksFrame;
     ContentFrame: TContentFrame;
     LogsFrame: TLogsFrame;
+    cpCenter: TUniContainerPanel;
   private
   public
   end;

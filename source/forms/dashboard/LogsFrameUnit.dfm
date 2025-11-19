@@ -3,11 +3,12 @@ object LogsFrame: TLogsFrame
   Top = 0
   Width = 414
   Height = 720
-  Align = alClient
-  ParentFont = False
-  TabOrder = 0
   OnCreate = UniFrameCreate
   OnDestroy = UniFrameDestroy
+  Align = alClient
+  Anchors = [akLeft, akTop, akRight, akBottom]
+  TabOrder = 0
+  ParentFont = False
   object gridLogs: TUniDBGrid
     Left = 0
     Top = 0
@@ -20,7 +21,7 @@ object LogsFrame: TLogsFrame
     LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072'...'
     ForceFit = True
     Align = alClient
-    TabOrder = 1
+    TabOrder = 0
     OnDblClick = gridLogsDblClick
     Columns = <
       item
@@ -43,22 +44,6 @@ object LogsFrame: TLogsFrame
   end
   object mtLogs: TFDMemTable
     Active = True
-    FieldDefs = <
-      item
-        Name = 'timestamp'
-        DataType = ftLargeint
-      end
-      item
-        Name = 'display_time'
-        DataType = ftWideString
-        Size = 64
-      end
-      item
-        Name = 'payload'
-        DataType = ftWideString
-        Size = 8192
-      end>
-    IndexDefs = <>
     IndexFieldNames = 'timestamp:D'
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -82,8 +67,11 @@ object LogsFrame: TLogsFrame
   end
   object LogTimer: TUniTimer
     Enabled = False
-    Interval = 1000
-    RunOnce = False
+    ClientEvent.Strings = (
+      'function(sender)'
+      '{'
+      ' '
+      '}')
     OnTimer = LogTimerTimer
     Left = 208
     Top = 104

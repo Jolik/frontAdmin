@@ -147,7 +147,15 @@ uses
   LogsFrameUnit in '..\forms\dashboard\LogsFrameUnit.pas' {LogsFrame: TUniFrame},
   SourcesFrameUnit in '..\forms\dashboard\SourcesFrameUnit.pas' {SourcesFrame: TUniFrame},
   LinksFrameUnit in '..\forms\dashboard\LinksFrameUnit.pas' {LinksFrame: TUniFrame},
-  DCCDashboardFormUnit in '..\forms\dashboard\DCCDashboardFormUnit.pas' {DCCDashboardForm: TUniForm};
+  DCCDashboardFormUnit in '..\forms\dashboard\DCCDashboardFormUnit.pas' {DCCDashboardForm: TUniForm},
+  HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
+  JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
+  JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas',
+  HistoryRecordHttpRequests in '..\services\dataspace\brokers\HistoryRecordHttpRequests.pas',
+  HistoryRecordsRestBrokerUnit in '..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
+  StorageHttpRequests in '..\services\dataspace\brokers\StorageHttpRequests.pas',
+  StorageRestBrokerUnit in '..\services\dataspace\brokers\StorageRestBrokerUnit.pas',
+  ContentViewFormUnit in '..\forms\contentView\ContentViewFormUnit.pas' {ContentViewForm: TUniForm};
 
 {$R *.res}
 
