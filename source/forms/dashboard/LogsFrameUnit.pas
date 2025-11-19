@@ -48,7 +48,7 @@ implementation
 
 uses
   MainModule, uniGUIApplication,
-  LogViewFormUnit;
+  LogEntryViewFormUnit;
 
 const
   LogInitialLimit = 200;
@@ -174,8 +174,15 @@ begin
 end;
 
 procedure TLogsFrame.gridLogsDblClick(Sender: TObject);
+var
+  ViewForm: TLogEntryViewForm;
 begin
-  LogViewForm.ShowModal;
+  if not Assigned(mtLogs) or mtLogs.IsEmpty then
+    Exit;
+
+  ViewForm := LogEntryViewForm;
+  ViewForm.LoadFromDataset(mtLogs);
+  ViewForm.ShowModal;
 end;
 
 procedure TLogsFrame.LoadInitialLogs;
