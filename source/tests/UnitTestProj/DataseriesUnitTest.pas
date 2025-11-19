@@ -9,7 +9,7 @@ implementation
 uses
   System.SysUtils,
   System.JSON,
-  DataserieUnit;
+  DataseriesUnit;
 
 type
   ETestFailure = class(Exception);

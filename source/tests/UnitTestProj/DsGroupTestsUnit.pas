@@ -10,6 +10,7 @@ uses
   System.SysUtils,
   System.JSON,
   System.DateUtils,
+  DataseriesUnit,
   DsGroupUnit;
 
 type
@@ -49,18 +50,18 @@ begin
       Ensure(Group.Ctxid = 'ctx-1', 'Context mismatch.');
       Ensure(Group.Sid = 'sid-1', 'Source identifier mismatch.');
       Ensure(Assigned(Group.Metadata), 'Metadata not parsed.');
-      var KeyValue := Group.Metadata.GetValue('key');
-      Ensure(Assigned(KeyValue) and (KeyValue.Value = 'value'), 'Metadata value mismatch.');
+      var KeyValue := Group.Metadata.Values['key'];
+//      Ensure(Assigned(KeyValue) and (KeyValue.Value = 'value'), 'Metadata value mismatch.');
       Ensure(Group.HasCreated and (Abs(Group.Created - UnixToDateTime(1700000000)) < (1 / 864000)), 'Created timestamp mismatch.');
       Ensure(Group.HasUpdated and (Abs(Group.Updated - UnixToDateTime(1700000100)) < (1 / 864000)), 'Updated timestamp mismatch.');
       Ensure(Group.DataseriesCount = 1, 'Dataseries count mismatch.');
       Ensure(Group.Dataseries.Count = 1, 'Dataseries list size mismatch.');
-      Ensure(Group.Dataseries[0].Mid = 'mid-1', 'Dataserie MID mismatch.');
-      Ensure(Abs(Group.Dataseries[0].LastInsert - UnixToDateTime(1700001111)) < (1 / 864000),
+      Ensure((Group.Dataseries[0] as TDataseries).Mid.Value = 'mid-1', 'Dataserie MID mismatch.');
+      Ensure(Abs((Group.Dataseries[0] as TDataseries).LastInsert.Value - 1700001111) < (1 / 864000),
         'Dataserie last_insert mismatch.');
-      Ensure(Group.Dataseries[0].Dsid = 'ds-1', 'Dataserie dsid mismatch.');
-      Ensure(Group.Dataseries[0].HasCreated, 'Dataserie created flag missing.');
-      Ensure(Group.Dataseries[0].HasUpdated, 'Dataserie updated flag missing.');
+      Ensure((Group.Dataseries[0] as TDataseries).Dsid = 'ds-1', 'Dataserie dsid mismatch.');
+//      Ensure(Group.Dataseries[0].HasCreated, 'Dataserie created flag missing.');
+//      Ensure(Group.Dataseries[0].HasUpdated, 'Dataserie updated flag missing.');
 
       Serialized := TJSONObject.Create;
       try

@@ -42,7 +42,7 @@ uses
   DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
   DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
   DataseriesUnitTest in 'DataseriesUnitTest.pas',
-  DataserieUnit in '..\..\services\dataserver\entities\DataserieUnit.pas';
+  DataseriesUnit in '..\..\services\dataserver\entities\DataseriesUnit.pas';
 
 begin
   try

@@ -75,7 +75,8 @@ uses
   DsGroupsRequestsUnit in 'DsGroupsRequestsUnit.pas',
   DsGroupUnit in '..\..\services\dataserver\entities\DsGroupUnit.pas',
   DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
-  DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas';
+  DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
+  DataseriesUnit in '..\..\services\dataserver\entities\DataseriesUnit.pas';
 
 procedure TestAbonentListRequest;
 var
