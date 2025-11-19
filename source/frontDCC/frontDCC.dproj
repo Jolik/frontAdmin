@@ -444,6 +444,21 @@
         <DCCReference Include="..\services\signals\entities\LogUnit.pas"/>
         <DCCReference Include="..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\signals\brokers\LogsHttpRequests.pas"/>
+        <DCCReference Include="..\forms\dashboard\MSSDashboardFormUnit.pas">
+            <Form>MSSDashboardForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\DCCDashboardFormUnit.pas">
+            <Form>DCCDashboardForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\SourcesFrameUnit.pas">
+            <Form>SourcesFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

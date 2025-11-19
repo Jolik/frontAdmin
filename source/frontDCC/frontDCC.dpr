@@ -142,7 +142,10 @@ uses
   LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
   LogUnit in '..\services\signals\entities\LogUnit.pas',
   LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas',
-  LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas';
+  LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas',
+  MSSDashboardFormUnit in '..\forms\dashboard\MSSDashboardFormUnit.pas' {MSSDashboardForm: TUniForm},
+  DCCDashboardFormUnit in '..\forms\dashboard\DCCDashboardFormUnit.pas' {DCCDashboardForm: TUniForm},
+  SourcesFrameUnit in '..\forms\dashboard\SourcesFrameUnit.pas' {SourcesFrame: TUniFrame};
 
 {$R *.res}
 

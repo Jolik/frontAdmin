@@ -64,23 +64,22 @@ inherited MainForm: TMainForm
     Color = 47871
     ExplicitWidth = 145
     ExplicitHeight = 677
-    object btnStripTasks: TUniButton
+    object btnDashboard: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 35
+      Top = 4
       Width = 137
       Height = 25
       Hint = ''
-      Caption = 'Strip '#1047#1072#1076#1072#1095#1080
+      Caption = 'Dashboard'
       Align = alTop
       TabOrder = 0
-      OnClick = btnStripTasksClick
-      ExplicitWidth = 105
+      OnClick = btnDashboardClick
     end
     object btnLinks: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 4
+      Top = 35
       Width = 137
       Height = 25
       Hint = ''
@@ -88,50 +87,35 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 1
       OnClick = btnLinksClick
-      ExplicitWidth = 105
     end
-    object btnSummTask: TUniButton
+    object btnStripTasks: TUniButton
       AlignWithMargins = True
       Left = 4
       Top = 66
       Width = 137
       Height = 25
       Hint = ''
-      Caption = 'Summary '#1047#1072#1076#1072#1095#1080
+      Caption = 'Strip '#1047#1072#1076#1072#1095#1080
       Align = alTop
       TabOrder = 2
-      OnClick = btnSummTaskClick
-      ExplicitWidth = 105
+      OnClick = btnStripTasksClick
     end
-    object btnDSProcessorTasks: TUniButton
+    object btnSummTask: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 128
+      Top = 97
       Width = 137
       Height = 25
       Hint = ''
-      Caption = 'DSProc '#1047#1072#1076#1072#1095#1080
+      Caption = 'Summary '#1047#1072#1076#1072#1095#1080
       Align = alTop
       TabOrder = 3
-      OnClick = btnDSProcessorTasksClick
-      ExplicitWidth = 105
-    end
-    object btnDsGroups: TUniButton
-      AlignWithMargins = True
-      Left = 4
-      Top = 159
-      Width = 137
-      Height = 25
-      Hint = ''
-      Caption = 'DS Groups'
-      Align = alTop
-      TabOrder = 5
-      OnClick = btnDsGroupsClick
+      OnClick = btnSummTaskClick
     end
     object unbtnMonitoring: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 97
+      Top = 128
       Width = 137
       Height = 25
       Hint = ''
@@ -139,44 +123,65 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 4
       OnClick = unbtnMonitoringClick
-      ExplicitWidth = 105
     end
-    object unbtnSources: TUniButton
+    object btnDSProcessorTasks: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 159
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = 'DSProc '#1047#1072#1076#1072#1095#1080
+      Align = alTop
+      TabOrder = 5
+      OnClick = btnDSProcessorTasksClick
+    end
+    object btnDsGroups: TUniButton
       AlignWithMargins = True
       Left = 4
       Top = 190
       Width = 137
       Height = 25
       Hint = ''
-      Caption = #1048#1089#1090#1086#1095#1085#1080#1082#1080
+      Caption = 'DS Groups'
       Align = alTop
       TabOrder = 6
-      OnClick = unbtnSourcesClick
-      ExplicitWidth = 105
+      OnClick = btnDsGroupsClick
     end
-    object btnObservations: TUniButton
-      AlignWithMargins = True
-      Left = 4
-      Top = 190
-      Width = 137
-      Height = 25
-      Hint = ''
-      Caption = #1053#1072#1073#1083#1102#1076#1077#1085#1080#1103
-      Align = alTop
-      TabOrder = 7
-      OnClick = btnObservationsClick
-      ExplicitWidth = 105
-    end
-    object btnLogs: TUniButton
+    object unbtnSources: TUniButton
       AlignWithMargins = True
       Left = 4
       Top = 221
       Width = 137
       Height = 25
       Hint = ''
-      Caption = #1051#1086#1075#1080
+      Caption = #1048#1089#1090#1086#1095#1085#1080#1082#1080
+      Align = alTop
+      TabOrder = 7
+      OnClick = unbtnSourcesClick
+    end
+    object btnObservations: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 252
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = #1053#1072#1073#1083#1102#1076#1077#1085#1080#1103
       Align = alTop
       TabOrder = 8
+      OnClick = btnObservationsClick
+    end
+    object btnLogs: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 283
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = #1051#1086#1075#1080
+      Align = alTop
+      TabOrder = 9
       OnClick = btnLogsClick
     end
     object uncntnrpnInfo: TUniContainerPanel
@@ -187,7 +192,7 @@ inherited MainForm: TMainForm
       Hint = ''
       ParentColor = False
       Align = alBottom
-      TabOrder = 9
+      TabOrder = 10
       ExplicitWidth = 111
       object URLLabel: TUniLabel
         AlignWithMargins = True
