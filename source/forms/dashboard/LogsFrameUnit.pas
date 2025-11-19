@@ -22,12 +22,6 @@ type
     mtLogs: TFDMemTable;
     mtLogsdisplay_time: TWideStringField;
     mtLogspayload: TWideStringField;
-    mtLogscontainer_name: TWideStringField;
-    mtLogssource: TWideStringField;
-    mtLogsswarm_service: TWideStringField;
-    mtLogsswarm_stack: TWideStringField;
-    mtLogshost: TWideStringField;
-    mtLogsfilename: TWideStringField;
     LogTimer: TUniTimer;
     procedure UniFrameCreate(Sender: TObject);
     procedure UniFrameDestroy(Sender: TObject);
@@ -129,24 +123,6 @@ begin
         mtLogs.Append;
         mtLogsdisplay_time.AsString := FormatTimestampIso8601(Item.TimestampRaw);
         mtLogspayload.AsString := Item.Payload;
-        if Assigned(Item.Result) then
-        begin
-          mtLogscontainer_name.AsString := Item.Result.ContainerName;
-          mtLogsfilename.AsString := Item.Result.Filename;
-          mtLogshost.AsString := Item.Result.Host;
-          mtLogssource.AsString := Item.Result.Source;
-          mtLogsswarm_service.AsString := Item.Result.SwarmService;
-          mtLogsswarm_stack.AsString := Item.Result.SwarmStack;
-        end
-        else
-        begin
-          mtLogscontainer_name.Clear;
-          mtLogsfilename.Clear;
-          mtLogshost.Clear;
-          mtLogssource.Clear;
-          mtLogsswarm_service.Clear;
-          mtLogsswarm_stack.Clear;
-        end;
         mtLogs.Post;
 
         if Item.Timestamp > FLogLastTimestamp then

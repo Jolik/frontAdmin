@@ -32,42 +32,6 @@ object LogsFrame: TLogsFrame
         Title.Caption = #1057#1086#1086#1073#1097#1077#1085#1080#1077
         Width = 280
         ReadOnly = True
-      end
-      item
-        FieldName = 'container_name'
-        Title.Caption = 'Container'
-        Width = 160
-        ReadOnly = True
-      end
-      item
-        FieldName = 'source'
-        Title.Caption = 'Source'
-        Width = 140
-        ReadOnly = True
-      end
-      item
-        FieldName = 'swarm_service'
-        Title.Caption = 'Service'
-        Width = 140
-        ReadOnly = True
-      end
-      item
-        FieldName = 'swarm_stack'
-        Title.Caption = 'Stack'
-        Width = 140
-        ReadOnly = True
-      end
-      item
-        FieldName = 'host'
-        Title.Caption = 'Host'
-        Width = 120
-        ReadOnly = True
-      end
-      item
-        FieldName = 'filename'
-        Title.Caption = 'File'
-        Width = 160
-        ReadOnly = True
       end>
   end
   object dsLogs: TDataSource
@@ -87,36 +51,6 @@ object LogsFrame: TLogsFrame
         Name = 'payload'
         DataType = ftWideString
         Size = 8192
-      end
-      item
-        Name = 'container_name'
-        DataType = ftWideString
-        Size = 128
-      end
-      item
-        Name = 'source'
-        DataType = ftWideString
-        Size = 128
-      end
-      item
-        Name = 'swarm_service'
-        DataType = ftWideString
-        Size = 128
-      end
-      item
-        Name = 'swarm_stack'
-        DataType = ftWideString
-        Size = 128
-      end
-      item
-        Name = 'host'
-        DataType = ftWideString
-        Size = 128
-      end
-      item
-        Name = 'filename'
-        DataType = ftWideString
-        Size = 255
       end>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
@@ -134,30 +68,6 @@ object LogsFrame: TLogsFrame
     object mtLogspayload: TWideStringField
       FieldName = 'payload'
       Size = 8192
-    end
-    object mtLogscontainer_name: TWideStringField
-      FieldName = 'container_name'
-      Size = 128
-    end
-    object mtLogssource: TWideStringField
-      FieldName = 'source'
-      Size = 128
-    end
-    object mtLogsswarm_service: TWideStringField
-      FieldName = 'swarm_service'
-      Size = 128
-    end
-    object mtLogsswarm_stack: TWideStringField
-      FieldName = 'swarm_stack'
-      Size = 128
-    end
-    object mtLogshost: TWideStringField
-      FieldName = 'host'
-      Size = 128
-    end
-    object mtLogsfilename: TWideStringField
-      FieldName = 'filename'
-      Size = 255
     end
   end
   object LogTimer: TUniTimer
