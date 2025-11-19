@@ -84,7 +84,7 @@ object LogViewForm: TLogViewForm
         Top = 64
         Width = 250
         Hint = ''
-        Text = ''
+        Text = '{level="error"}'
         TabOrder = 1
       end
       object lStart: TUniLabel
@@ -186,41 +186,41 @@ object LogViewForm: TLogViewForm
     FieldDefs = <
       item
         Name = 'timestamp'
-        DataType = ftString
+        DataType = ftWideString
         Size = 64
       end
       item
         Name = 'payload'
-        DataType = ftMemo
+        DataType = ftWideMemo
       end
       item
         Name = 'container_name'
-        DataType = ftString
+        DataType = ftWideString
         Size = 255
       end
       item
         Name = 'filename'
-        DataType = ftString
+        DataType = ftWideString
         Size = 255
       end
       item
         Name = 'host'
-        DataType = ftString
+        DataType = ftWideString
         Size = 128
       end
       item
         Name = 'source'
-        DataType = ftString
+        DataType = ftWideString
         Size = 128
       end
       item
         Name = 'swarm_service'
-        DataType = ftString
+        DataType = ftWideString
         Size = 255
       end
       item
         Name = 'swarm_stack'
-        DataType = ftString
+        DataType = ftWideString
         Size = 255
       end>
     IndexDefs = <>
@@ -234,35 +234,35 @@ object LogViewForm: TLogViewForm
     StoreDefs = True
     Left = 32
     Top = 88
-    object mtLogstimestamp: TStringField
+    object mtLogstimestamp: TWideStringField
       FieldName = 'timestamp'
       Size = 64
     end
-    object mtLogspayload: TMemoField
+    object mtLogspayload: TWideMemoField
       FieldName = 'payload'
-      BlobType = ftMemo
+      BlobType = ftWideMemo
     end
-    object mtLogscontainer_name: TStringField
+    object mtLogscontainer_name: TWideStringField
       FieldName = 'container_name'
       Size = 255
     end
-    object mtLogsfilename: TStringField
+    object mtLogsfilename: TWideStringField
       FieldName = 'filename'
       Size = 255
     end
-    object mtLogshost: TStringField
+    object mtLogshost: TWideStringField
       FieldName = 'host'
       Size = 128
     end
-    object mtLogssource: TStringField
+    object mtLogssource: TWideStringField
       FieldName = 'source'
       Size = 128
     end
-    object mtLogsswarm_service: TStringField
+    object mtLogsswarm_service: TWideStringField
       FieldName = 'swarm_service'
       Size = 255
     end
-    object mtLogsswarm_stack: TStringField
+    object mtLogsswarm_stack: TWideStringField
       FieldName = 'swarm_stack'
       Size = 255
     end

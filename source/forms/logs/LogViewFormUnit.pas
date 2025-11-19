@@ -34,14 +34,14 @@ type
     btnClearFilters: TUniButton;
     dsLogs: TDataSource;
     mtLogs: TFDMemTable;
-    mtLogstimestamp: TStringField;
-    mtLogspayload: TMemoField;
-    mtLogscontainer_name: TStringField;
-    mtLogsfilename: TStringField;
-    mtLogshost: TStringField;
-    mtLogssource: TStringField;
-    mtLogsswarm_service: TStringField;
-    mtLogsswarm_stack: TStringField;
+    mtLogstimestamp: TWideStringField;
+    mtLogspayload: TWideMemoField;
+    mtLogscontainer_name: TWideStringField;
+    mtLogsfilename: TWideStringField;
+    mtLogshost: TWideStringField;
+    mtLogssource: TWideStringField;
+    mtLogsswarm_service: TWideStringField;
+    mtLogsswarm_stack: TWideStringField;
     splFilters: TUniSplitter;
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
@@ -154,8 +154,10 @@ begin
 end;
 
 procedure TLogViewForm.ClearFilters;
+const
+  DEFAULT_QUERY = '{level="error"}';
 begin
-  edQuery.Clear;
+  edQuery.Text := DEFAULT_QUERY;
   edStart.Clear;
   edEnd.Clear;
   edStep.Clear;
