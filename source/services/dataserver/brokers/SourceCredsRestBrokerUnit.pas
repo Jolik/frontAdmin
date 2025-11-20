@@ -3,19 +3,19 @@ unit SourceCredsRestBrokerUnit;
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestFieldSetBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestBrokerUnit,
   SourceCredsHttpRequests, HttpClientUnit;
 
 type
-  TSourceCredsRestBroker = class(TRestFieldSetBroker)
+  TSourceCredsRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TSourceCredsReqList): TSourceCredsListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TSourceCredsReqInfo): TSourceCredsInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
+    function Info(AReq: TReqInfo): TResponse; overload;
     function New(AReq: TSourceCredsReqNew): TJSONResponse; overload;
     function Update(AReq: TSourceCredsReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload; override;
@@ -30,8 +30,6 @@ type
 
 implementation
 
-uses APIConst;
-
 constructor TSourceCredsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
@@ -43,7 +41,7 @@ begin
   Result := 'dataserver';
 end;
 
-function TSourceCredsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TSourceCredsRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TSourceCredsListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -105,7 +103,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TSourceCredsRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TSourceCredsRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TSourceCredsInfoResponse.Create;
   try

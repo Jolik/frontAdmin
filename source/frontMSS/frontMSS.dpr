@@ -22,7 +22,6 @@ uses
   DepartmentsRestBrokerUnit in '..\services\acl\brokers\DepartmentsRestBrokerUnit.pas',
   SessionHttpRequests in '..\services\acl\brokers\SessionHttpRequests.pas',
   SessionsRestBrokerUnit in '..\services\acl\brokers\SessionsRestBrokerUnit.pas',
-  APIConst in '..\services\common\brokers\APIConst.pas',
   BaseRequests in '..\services\common\brokers\BaseRequests.pas',
   BaseResponses in '..\services\common\brokers\BaseResponses.pas',
   HttpClientUnit in '..\services\common\brokers\HttpClientUnit.pas',
@@ -127,7 +126,7 @@ uses
   OperatorLinksRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
   OperatorLinksContentHttpRequests in '..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas',
   OperatorLinksContentRestBrokerUnit in '..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas',
-  RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas',
+  RestBrokerUnit in '..\services\common\brokers\RestBrokerUnit.pas',
   HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
   JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
   JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas',
@@ -155,7 +154,8 @@ uses
   LogUnit in '..\services\signals\entities\LogUnit.pas',
   LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas',
   LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas',
-  RouterFrameRuleConditionUnit in '..\forms\rules\RouterFrameRuleConditionUnit.pas';
+  RouterFrameRuleConditionUnit in '..\forms\rules\RouterFrameRuleConditionUnit.pas',
+  DefualtConfig in '..\common\DefualtConfig.pas';
 
 {$R *.res}
 

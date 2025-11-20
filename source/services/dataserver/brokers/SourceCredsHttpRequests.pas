@@ -8,7 +8,7 @@ uses
   SourceCredsUnit;
 
 type
-  TSourceCredsListResponse = class(TFieldSetListResponse)
+  TSourceCredsListResponse = class(TListResponse)
   private
     function GetSourceCredsList: TSourceCredsList;
   public
@@ -16,7 +16,7 @@ type
     property SourceCredsList: TSourceCredsList read GetSourceCredsList;
   end;
 
-  TSourceCredsInfoResponse = class(TFieldSetResponse)
+  TSourceCredsInfoResponse = class(TResponse)
   private
     function GetSourceCreds: TSourceCred;
   public

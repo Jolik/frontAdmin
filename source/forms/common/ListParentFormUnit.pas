@@ -109,7 +109,7 @@ procedure TListParentForm.dbgEntitySelectionChange(Sender: TObject);
 var
   LId     : string;
   req :  TReqInfo;
-  resp : TFieldSetResponse;
+  resp : TResponse;
   ErrMsg: string;
 begin
   req := nil; resp:= nil;
@@ -247,7 +247,7 @@ procedure TListParentForm.Refresh(const AId: String = '');
 var
   FieldSetList: TFieldSetList;
   PageCount: Integer;
-  Resp: TFieldSetListResponse;
+  Resp: TListResponse;
 
 begin
   FDMemTableEntity.Active := True;

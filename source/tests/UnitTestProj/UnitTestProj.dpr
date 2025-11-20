@@ -29,13 +29,11 @@ uses
   OperatorLinksContentRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas',
   OperatorLinksHttpRequests in '..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
   OperatorLinksRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
-  APIConst in '..\..\services\common\brokers\APIConst.pas',
   BaseRequests in '..\..\services\common\brokers\BaseRequests.pas',
   BaseResponses in '..\..\services\common\brokers\BaseResponses.pas',
   HttpClientUnit in '..\..\services\common\brokers\HttpClientUnit.pas',
   RestBrokerBaseUnit in '..\..\services\common\brokers\RestBrokerBaseUnit.pas',
-  RestEntityBrokerUnit in '..\..\services\common\brokers\RestEntityBrokerUnit.pas',
-  RestFieldSetBrokerUnit in '..\..\services\common\brokers\RestFieldSetBrokerUnit.pas',
+  RestBrokerUnit in '..\..\services\common\brokers\RestBrokerUnit.pas',
   OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
   ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
   TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
@@ -47,10 +45,13 @@ uses
   DataseriesUnit in '..\..\services\dataserver\entities\DataseriesUnit.pas',
   LogUnit in '..\..\services\signals\entities\LogUnit.pas',
   LogsHttpRequests in '..\..\services\signals\brokers\LogsHttpRequests.pas',
-  LogsRestBrokerUnit in '..\..\services\signals\brokers\LogsRestBrokerUnit.pas';
+  LogsRestBrokerUnit in '..\..\services\signals\brokers\LogsRestBrokerUnit.pas',
+  AppConfigUnit in '..\..\common\AppConfigUnit.pas',
+  DefualtConfig in '..\..\common\DefualtConfig.pas';
 
 begin
   try
+    LoadAppConfig;
     RunHistoryRecordTests;
     RunJournalRecordsAttrsTests;
     RunJournalRecordTests;

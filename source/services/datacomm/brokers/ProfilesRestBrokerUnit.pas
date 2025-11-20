@@ -3,18 +3,18 @@ unit ProfilesRestBrokerUnit;
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses,RestFieldSetBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses,RestBrokerUnit,
   ProfileHttpRequests, HttpClientUnit;
 
 type
-  TProfilesRestBroker = class(TRestFieldSetBroker)
+  TProfilesRestBroker = class(TRestBroker)
   public
     BasePath: string;
     constructor Create(const ATicket: string; const ABasePath:string);
     function List(AReq: TProfileReqList): TProfileListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TProfileReqInfo): TProfileInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TProfileReqNew): TJSONResponse; overload;
     function New(AReq: TReqNew; AResp: TIdNewResponse): TIdNewResponse; overload; override;
     function Update(AReq: TProfileReqUpdate): TJSONResponse; overload;
@@ -31,7 +31,7 @@ type
 
 implementation
 
-uses APIConst;
+
 
 constructor TProfilesRestBroker.Create(const ATicket: string; const ABasePath:string);
 begin
@@ -39,7 +39,7 @@ begin
   BasePath := ABasePath;
 end;
 
-function TProfilesRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TProfilesRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TProfileListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -113,7 +113,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TProfilesRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TProfilesRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TProfileInfoResponse.Create;
   inherited Info(AReq, Result);

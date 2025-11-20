@@ -4,18 +4,18 @@ interface
 
 uses
   RestBrokerBaseUnit, BaseRequests, BaseResponses,
-  ChannelHttpRequests, HttpClientUnit, RestFieldSetBrokerUnit;
+  ChannelHttpRequests, HttpClientUnit, RestBrokerUnit;
 
 type
-  TChannelsRestBroker = class(TRestFieldSetBroker)
+  TChannelsRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TChannelReqList): TChannelListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TChannelReqInfo): TChannelInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TChannelReqNew): TJSONResponse; overload;
 ///!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
     function Update(AReq: TChannelReqUpdate): TJSONResponse; overload;
@@ -31,15 +31,18 @@ type
 
 implementation
 
-uses APIConst;
-
 constructor TChannelsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
   SetPath(ServiceName, BasePath);
 end;
 
-function TChannelsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+class function TChannelsRestBroker.ServiceName: string;
+begin
+  Result := 'router';
+end;
+
+function TChannelsRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TChannelListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -106,7 +109,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TChannelsRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TChannelsRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TChannelInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -120,11 +123,6 @@ end;
 function TChannelsRestBroker.Update(AReq: TReqUpdate): TJSONResponse;
 begin
   Result := inherited Update(AReq);
-end;
-
-class function TChannelsRestBroker.ServiceName: string;
-begin
-  Result := 'router';
 end;
 
 end.

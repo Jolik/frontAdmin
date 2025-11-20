@@ -127,7 +127,6 @@
         <DCCReference Include="..\common\FuncUnit.pas"/>
         <DCCReference Include="..\common\GUIDListUnit.pas"/>
         <DCCReference Include="..\common\StringListUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseRequests.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseResponses.pas"/>
         <DCCReference Include="..\services\common\brokers\HttpClientUnit.pas"/>
@@ -392,29 +391,24 @@
         <DCCReference Include="..\services\common\entities\StringUnit.pas"/>
         <DCCReference Include="..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas">
             <Form>DirDownSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas">
             <Form>FTPServerDownLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas">
             <Form>SMTPSrvDownLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\RestBrokerUnit.pas"/>
         <DCCReference Include="..\common\UniStorageHelpers.pas"/>
         <DCCReference Include="..\forms\common\AuthMainFormUnit.pas">
             <Form>AuthMainForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\common\EmbedLoginFormUnit.pas"/>
-        <DCCReference Include="..\forms\common\FormLayoutFormUnit.pas">
-            <FormType>dfm</FormType>
-        </DCCReference>
+        <DCCReference Include="..\forms\common\FormLayoutFormUnit.pas"/>
         <DCCReference Include="..\common\AppConfigUnit.pas"/>
         <DCCReference Include="..\services\acl\cas\brokers\CasHttpRequests.pas"/>
         <DCCReference Include="..\services\acl\cas\brokers\CasRestBrokerUnit.pas"/>
@@ -470,6 +464,7 @@
             <Form>ContentViewForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\common\DefualtConfig.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

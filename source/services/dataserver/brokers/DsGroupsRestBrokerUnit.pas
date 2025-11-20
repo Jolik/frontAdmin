@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   HttpClientUnit,
   BaseRequests,
   BaseResponses,
@@ -13,7 +13,7 @@ uses
 
 type
   /// <summary>REST broker implementing the /dsgroups API.</summary>
-  TDsGroupsRestBroker = class(TRestFieldSetBroker)
+  TDsGroupsRestBroker = class(TRestBroker)
   private
     FBasePath: string;
   public
@@ -29,10 +29,10 @@ type
     function CreateReqExclude: TDsGroupReqExclude;
 
     function List(AReq: TDsGroupReqList): TDsGroupListResponse; reintroduce; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
 
     function Info(AReq: TDsGroupReqInfo): TDsGroupInfoResponse; reintroduce; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload;override;
+    function Info(AReq: TReqInfo): TResponse; overload;override;
 
 
     function New(AReq: TDsGroupReqNew): TDsGroupCreateResponse; reintroduce; overload;
@@ -47,9 +47,6 @@ type
   end;
 
 implementation
-
-uses
-  APIConst;
 
 { TDsGroupsRestBroker }
 
@@ -125,7 +122,7 @@ begin
   Result := Info(AReq as TReqInfo) as TDsGroupInfoResponse;
 end;
 
-function TDsGroupsRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TDsGroupsRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TDsGroupInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -136,7 +133,7 @@ begin
   Result := List(AReq as TReqList) as TDsGroupListResponse;
 end;
 
-function TDsGroupsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TDsGroupsRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TDsGroupListResponse.Create;
   inherited List(AReq, Result);

@@ -12,7 +12,7 @@ uses
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   SourceUnit, OrganizationUnit, ContextTypeUnit, SourceCredsUnit, LinksRestBrokerUnit,
   LocationUnit, ContextsRestBrokerUnit, ContextUnit, SourceCredsRestBrokerUnit,
-  LinkUnit, FuncUnit, IntefraceEditFormUnit;
+  LinkUnit, FuncUnit, IntefraceEditFormUnit, AppConfigUnit;
 
 type
   TSourceEditForm = class(TUniForm)
@@ -194,7 +194,7 @@ implementation
 uses
   IdHTTP, MainModule, SourcesRestBrokerUnit, OrganizationsRestBrokerUnit,
   OrganizationHttpRequests, LocationsRestBrokerUnit, LocationHttpRequests,
-  ContextsHttpRequests, APIConst,
+  ContextsHttpRequests, 
   HttpClientUnit, LoggingUnit, BaseResponses,
   LinksHttpRequests, ContextCreateFormUnit, SourceHttpRequests;
 
@@ -219,7 +219,7 @@ begin
   FSelectedCountryId := 'RU';
   FSelectedRegionId := '';
   FSelectedOwnerOrgId := 0;
-  FLinksBroker := TLinksRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath);
+  FLinksBroker := TLinksRestBroker.Create(UniMainModule.XTicket, ResolveServiceBasePath('drvcomm'));
   if not Assigned(FLinks) then
      FLinks:= TDictionary<String,TLink>.Create;
   FCredBroker:= TSourceCredsRestBroker.Create(UniMainModule.XTicket);

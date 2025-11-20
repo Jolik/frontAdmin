@@ -13,7 +13,7 @@ uses
   UserUnit;
 
 type
-  TUserListResponse = class(TFieldSetListResponse)
+  TUserListResponse = class(TListResponse)
   private
     function GetUsers: TUserList;
   public
@@ -21,7 +21,7 @@ type
     property Users: TUserList read GetUsers;
   end;
 
-  TUserInfoResponse = class(TFieldSetResponse)
+  TUserInfoResponse = class(TResponse)
   private
     function GetUser: TUser;
   public

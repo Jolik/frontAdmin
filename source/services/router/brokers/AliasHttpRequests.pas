@@ -21,7 +21,7 @@ type
   end;
 
   // Response: list of aliases
-  TAliasListResponse = class(TFieldSetListResponse)
+  TAliasListResponse = class(TListResponse)
   private
     function GetAliasList: TAliasList;
   public
@@ -30,7 +30,7 @@ type
   end;
 
   // Response: alias info
-  TAliasInfoResponse = class(TFieldSetResponse)
+  TAliasInfoResponse = class(TResponse)
   private
     function GetAlias: TAlias;
   public
@@ -48,7 +48,7 @@ type
     property Alid: string read FAlid write FAlid;
   end;
 
-  TAliasNewResponse = class(TFieldSetResponse)
+  TAliasNewResponse = class(TResponse)
   private
     function GetAliasNewRes: TAliasNewResult;
   public
@@ -94,8 +94,7 @@ type
 
 implementation
 
-uses
-  APIConst;
+
 
 { TAliasReqListBody }
 

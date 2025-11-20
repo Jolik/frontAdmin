@@ -59,7 +59,7 @@ uses
   GUIDListUnit in '..\..\common\GUIDListUnit.pas',
   JournalRecordsAttrsUnit in '..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
   RestBrokerBaseUnit in '..\..\services\common\brokers\RestBrokerBaseUnit.pas',
-  RestFieldSetBrokerUnit in '..\..\services\common\brokers\RestFieldSetBrokerUnit.pas',
+  RestBrokerUnit in '..\..\services\common\brokers\RestBrokerUnit.pas',
   SearchRestBrokerUnit in '..\..\services\dataspace\brokers\SearchRestBrokerUnit.pas',
   SearchHttpRequests in '..\..\services\dataspace\brokers\SearchHttpRequests.pas',
   SearchUnit in '..\..\services\dataspace\entities\SearchUnit.pas',

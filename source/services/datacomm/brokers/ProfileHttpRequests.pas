@@ -9,7 +9,7 @@ uses
 
 type
   // profiles are under datacomm + '/links/<lid>/profiles/...'
-  TProfileListResponse = class(TFieldSetListResponse)
+  TProfileListResponse = class(TListResponse)
   private
     function GetProfileList: TProfileList;
   public
@@ -17,7 +17,7 @@ type
     property ProfileList: TProfileList read GetProfileList;
   end;
 
-  TProfileInfoResponse = class(TFieldSetResponse)
+  TProfileInfoResponse = class(TResponse)
   private
     function GetProfile: TProfile;
   public

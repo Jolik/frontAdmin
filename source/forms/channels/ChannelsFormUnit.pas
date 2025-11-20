@@ -10,7 +10,7 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPanel, uniPageControl, uniSplitter, uniBasicGrid,
   uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  RestFieldSetBrokerUnit, ChannelsRestBrokerUnit,
+  RestBrokerUnit, ChannelsRestBrokerUnit,
   ParentEditFormUnit, uniLabel;
 
 type
@@ -18,7 +18,7 @@ type
     procedure btnUpdateClick(Sender: TObject);
   protected
     ///  ������� ��� �������� ������� ������� ��������
-    function CreateRestBroker(): TRestFieldSetBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
 
     ///  ������� ��� �������� ������ ����� ��������������
     function CreateEditForm(): TParentEditForm; override;
@@ -49,7 +49,7 @@ begin
   //
 end;
 
-function TChannelsForm.CreateRestBroker: TRestFieldSetBroker;
+function TChannelsForm.CreateRestBroker: TRestBroker;
 begin
   Result := TChannelsRestBroker.Create(UniMainModule.XTicket);
 end;

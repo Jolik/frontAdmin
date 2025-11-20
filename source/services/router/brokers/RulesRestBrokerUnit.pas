@@ -8,21 +8,21 @@ uses
   BaseResponses,
   HttpClientUnit,
   RuleHttpRequests,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   RuleUnit;
 
 type
-  TRulesRestBroker = class(TRestFieldSetBroker)
+  TRulesRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     function List(AReq: TRuleReqList): TRuleListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
 
     function Info(AReq: TRuleReqInfo): TRuleInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
 
     function New(AReq: TRuleReqNew): TRuleNewResponse; overload;
 ///!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
@@ -42,8 +42,7 @@ type
 
 implementation
 
-uses
-  APIConst;
+
 
 { TRulesRestBroker }
 
@@ -53,7 +52,7 @@ begin
   SetPath(ServiceName, BasePath);
 end;
 
-function TRulesRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TRulesRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TRuleListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -126,7 +125,7 @@ begin
   Result := Info(AReq as TReqInfo) as TRuleInfoResponse;
 end;
 
-function TRulesRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TRulesRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TRuleInfoResponse.Create;
   inherited Info(AReq, Result);

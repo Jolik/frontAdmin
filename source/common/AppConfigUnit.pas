@@ -83,6 +83,7 @@ type
   end;
 
 procedure LoadAppConfig(const ServiceName: string = ''; const FileName: string = 'config.json');
+function ResolveServiceBasePath(const ServiceName: string): string;
 
 var
   AppConfig: TAppConfig;
@@ -95,65 +96,8 @@ uses
   {$IFDEF MSWINDOWS}Winapi.Windows,{$ENDIF}
   FuncUnit,
   System.Net.URLClient,
-  HttpClientUnit;
-
-const
-  DEFAULT_CONFIG_JSON = '''
-{
-  "port": 8077,
-  "base_path": "http://213.167.42.170:8088",
-  "logging": {
-    "loglevel": "debug",
-    "api_calls": false,
-    "api_calls_response": false
-  },
-  "services": {
-    "objects": {
-      "host": "/objects/api/v1"
-    },
-    "acl": {
-      "host": "/acl/api/v1"
-    },
-    "strip": {
-      "host": "/strip/api/v2"
-    },
-    "summary": {
-      "host": "/summary/api/v2"
-    },
-    "dsprocessor": {
-      "host": "/dsprocessor/api/v1"
-    },
-    "dsmonitoring": {
-      "host": "/dsmonitoring/api/v1"
-    },
-    "router": {
-      "host": "/router/api/v2"
-    },
-    "datacomm": {
-      "host": "/datacomm/api/v1"
-    },
-    "linkop": {
-      "host": "/linkop/api/v1"
-    },
-    "drvcomm": {
-      "host": "/drvcomm/api/v1"
-    },
-    "management": {
-      "host": "/management/api/v1"
-    },
-    "dataserver": {
-      "host": "/dataserver/api/v2"
-    },
-    "dataspace": {
-      "host": "/dataspace/api/v2"
-    },
-    "redis": {
-      "host": "tcp://redis:6379",
-      "key_ttl": 3600
-    }
-  }
-}
-''';
+  HttpClientUnit,
+  DefualtConfig;
 
 { TLoggingConfig }
 
@@ -636,6 +580,60 @@ begin
     AppConfig := TAppConfig.Create;
 
   AppConfig.LoadFromFile(ConfigPath, ServiceName);
+end;
+
+function ResolveServiceBasePath(const ServiceName: string): string;
+  function CombineBase(const BaseUrl, Relative: string): string;
+  var
+    CleanBase: string;
+    CleanRelative: string;
+  begin
+    CleanBase := BaseUrl.Trim;
+    CleanRelative := Relative.Trim;
+
+    while (CleanBase <> '') and CleanBase.EndsWith('/') do
+      CleanBase := CleanBase.Substring(0, CleanBase.Length - 1);
+    while (CleanRelative <> '') and CleanRelative.StartsWith('/') do
+      CleanRelative := CleanRelative.Substring(1);
+
+    if CleanBase.IsEmpty then
+    begin
+      if CleanRelative.IsEmpty then
+        Exit('');
+      Exit('/' + CleanRelative);
+    end;
+
+    if CleanRelative.IsEmpty then
+      Exit(CleanBase);
+
+    Result := CleanBase + '/' + CleanRelative;
+  end;
+var
+  Service: TServiceConfig;
+  HostValue: string;
+begin
+  Result := '';
+  if (ServiceName = '') or (AppConfig = nil) then
+    Exit;
+
+  if not AppConfig.TryGetService(ServiceName, Service) then
+    Exit;
+
+  HostValue := Service.Host.Trim;
+  if HostValue = '' then
+    Exit;
+
+  if HostValue.Contains('://') then
+    Result := HostValue
+  else if not AppConfig.BasePath.Trim.IsEmpty then
+    Result := CombineBase(AppConfig.BasePath, HostValue)
+  else if HostValue.StartsWith('/') then
+    Result := HostValue
+  else
+    Result := '/' + HostValue;
+
+  while (Result <> '') and Result.EndsWith('/') do
+    Result := Result.Substring(0, Result.Length - 1);
 end;
 
 initialization

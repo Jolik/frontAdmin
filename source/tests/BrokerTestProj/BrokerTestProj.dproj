@@ -80,7 +80,7 @@
         <DCCReference Include="..\..\common\GUIDListUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\RestBrokerBaseUnit.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\common\brokers\RestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\SearchRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\dataspace\brokers\SearchHttpRequests.pas"/>
         <DCCReference Include="..\..\services\dataspace\entities\SearchUnit.pas"/>

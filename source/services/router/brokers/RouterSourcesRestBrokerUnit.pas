@@ -3,19 +3,19 @@ unit RouterSourcesRestBrokerUnit;
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses,  RestFieldSetBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses,  RestBrokerUnit,
   RouterSourceHttpRequests, HttpClientUnit;
 
 type
-  TRouterSourcesRestBroker = class(TRestFieldSetBroker)
+  TRouterSourcesRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TRouterSourceReqList): TRouterSourceListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TRouterSourceReqInfo): TRouterSourceInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TRouterSourceReqNew): TJSONResponse; overload;
 ///!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
     function Update(AReq: TRouterSourceReqUpdate): TJSONResponse; overload;
@@ -31,15 +31,18 @@ type
 
 implementation
 
-uses APIConst;
-
 constructor TRouterSourcesRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
   SetPath(ServiceName, BasePath);
 end;
 
-function TRouterSourcesRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+class function TRouterSourcesRestBroker.ServiceName: string;
+begin
+  Result := 'router';
+end;
+
+function TRouterSourcesRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TRouterSourceListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -106,7 +109,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TRouterSourcesRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TRouterSourcesRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TRouterSourceInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -120,11 +123,6 @@ end;
 function TRouterSourcesRestBroker.Update(AReq: TReqUpdate): TJSONResponse;
 begin
   Result := inherited Update(AReq);
-end;
-
-class function TRouterSourcesRestBroker.ServiceName: string;
-begin
-  Result := 'router';
 end;
 
 end.

@@ -11,13 +11,13 @@ uses
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
    EntityUnit,
-  ParentEditFormUnit, TasksParentFormUnit,  RestFieldSetBrokerUnit, TasksRestBrokerUnit,
-  TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel, APIConst;
+  ParentEditFormUnit, TasksParentFormUnit,  RestBrokerUnit, TasksRestBrokerUnit,
+  TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel;
 
 type
   TDSProcessorTasksForm = class(TTaskParentForm)
   protected
-    function CreateRestBroker(): TRestFieldSetBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
   public
@@ -31,7 +31,8 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, DSProcessorTaskEditFormUnit, DSProcessorTaskUnit, LoggingUnit, ParentFormUnit;
+  MainModule, uniGUIApplication, DSProcessorTaskEditFormUnit, DSProcessorTaskUnit, LoggingUnit, ParentFormUnit,
+  AppConfigUnit;
 
 function DSProcessorTasksForm(): TDSProcessorTasksForm;
 begin
@@ -45,15 +46,17 @@ begin
   Result := DSProcessorTaskEditForm();
 end;
 
-function TDSProcessorTasksForm.CreateRestBroker: TRestFieldSetBroker;
+function TDSProcessorTasksForm.CreateRestBroker: TRestBroker;
 begin
    result:= inherited;
-  (result as TTasksRestBroker).BasePath:=  APIConst.constURLDSProcessBasePath
+  (result as TTasksRestBroker).BasePath := ResolveServiceBasePath('dsprocessor');
 end;
 
 function TDSProcessorTasksForm.CreateTaskSourcesBroker: TTaskSourcesRestBroker;
 begin
-  Result := TTaskSourcesRestBroker.Create(UniMainModule.XTicket, APIConst.constURLDSProcessBasePath);
+  Result := TTaskSourcesRestBroker.Create(
+    UniMainModule.XTicket,
+    ResolveServiceBasePath('dsprocessor'));
 end;
 
 end.

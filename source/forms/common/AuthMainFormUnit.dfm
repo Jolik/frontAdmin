@@ -4,8 +4,8 @@ inherited AuthMainForm: TAuthMainForm
   Caption = 'AuthMainForm'
   OnAfterShow = UniFormAfterShow
   OnAjaxEvent = UniFormAjaxEvent
-  ExplicitWidth = 1243
-  ExplicitHeight = 830
+  ExplicitWidth = 1245
+  ExplicitHeight = 838
   TextHeight = 15
   inherited pnlTop: TUniPanel
     Width = 1227

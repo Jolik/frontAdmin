@@ -31,7 +31,7 @@ procedure TestLogResultParsing;
 const
   SampleJson =
     '{"stream":{"container_name":"agent","filename":"/var/log/app.log","host":"node-1","source":"stdout","swarm_service":"svc","swarm_stack":"stack"},' +
-    ' "values":[["1710000000000000000","{\\"msg\\":\\"error\\"}"],["1710000000000000001","second"]]}';
+    ' "values":[["1710000000000000000","{\"msg\":\"error\"}"],["1710000000000000001","second"]]}';
 var
   Obj: TJSONObject;
   LogResult: TLogResult;
@@ -110,9 +110,9 @@ const
   SampleJson =
     '{"status":"success","data":{"resultType":"streams","result":[' +
     '{"stream":{"container_name":"agent","filename":"/var/log/app.log","host":"node-1","source":"stdout","swarm_service":"svc","swarm_stack":"stack"},' +
-    ' "values":[["1710000000000000000","{\\"msg\\":\\"error\\"}"]]}' +
+    ' "values":[["1710000000000000000","{\"msg\":\"error\"}"]]}' +
     '],"stats":{"summary":{"bytesProcessedPerSecond":42}}},' +
-    '"request":{"query":"{level=\\"error\\"}","limit":100,"start":"2024-05-01T00:00:00Z","end":"2024-05-01T01:00:00Z","direction":"BACKWARD","regexp":"error.*","step":"60"}}';
+    '"request":{"query":"{level=\"error\"}","limit":100,"start":"2024-05-01T00:00:00Z","end":"2024-05-01T01:00:00Z","direction":"BACKWARD","regexp":"error.*","step":"60"}}';
 var
   Obj: TJSONObject;
   Logs: TLogs;

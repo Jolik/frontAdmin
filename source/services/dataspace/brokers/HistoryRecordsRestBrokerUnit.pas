@@ -8,8 +8,7 @@ uses
   BaseRequests,
   BaseResponses,
   HistoryRecordHttpRequests,
-  HttpClientUnit,
-  APIConst;
+  HttpClientUnit;
 
 type
   THistoryRecordsRestBroker = class(TRestBrokerBase)

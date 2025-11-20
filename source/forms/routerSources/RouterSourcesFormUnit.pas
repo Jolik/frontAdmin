@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, uniPageControl,
   uniSplitter, uniBasicGrid, uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  ParentEditFormUnit, RestBrokerBaseUnit, RestFieldSetBrokerUnit,
+  ParentEditFormUnit, RestBrokerBaseUnit, RestBrokerUnit,
   RouterSourcesRestBrokerUnit, uniPanel, uniLabel, EntityUnit;
 
 type
@@ -22,7 +22,7 @@ type
     procedure Refresh(const AId: string = ''); override;
 
     ///
-    function CreateRestBroker(): TRestFieldSetBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
 
     ///
     function CreateEditForm(): TParentEditForm; override;
@@ -53,7 +53,7 @@ begin
   Result := RouterSourceEditForm();
 end;
 
-function TRouterSourcesForm.CreateRestBroker: TRestFieldSetBroker;
+function TRouterSourcesForm.CreateRestBroker: TRestBroker;
 begin
   Result := TRouterSourcesRestBroker.Create(UniMainModule.XTicket);
 end;

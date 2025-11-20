@@ -11,9 +11,9 @@ uses
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
   ParentEditFormUnit,
-  RestBrokerBaseUnit, RestFieldSetBrokerUnit,
+  RestBrokerBaseUnit, RestBrokerUnit,
   AliasesRestBrokerUnit,
-  APIConst, uniPanel, uniLabel, ListParentFormUnit;
+   uniPanel, uniLabel, ListParentFormUnit;
 
 type
   TAliasesForm = class(TListParentForm)
@@ -27,7 +27,7 @@ type
     procedure Refresh(const AId: String = ''); override;
 
     // REST broker for HTTP-based API
-    function CreateRestBroker(): TRestFieldSetBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
 
     ///
     function CreateEditForm(): TParentEditForm; override;
@@ -53,7 +53,7 @@ end;
 
 { TAliasesForm }
 
-function TAliasesForm.CreateRestBroker: TRestFieldSetBroker;
+function TAliasesForm.CreateRestBroker: TRestBroker;
 begin
   Result := TAliasesRestBroker.Create(UniMainModule.XTicket);
 end;

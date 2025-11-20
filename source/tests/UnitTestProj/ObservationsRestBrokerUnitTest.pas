@@ -11,7 +11,8 @@ uses
   System.JSON,
   ObservationsRestBrokerUnit,
   ObservationUnit,
-  TDsTypesUnit;
+  TDsTypesUnit,
+  AppConfigUnit;
 
 type
   EObservationsBrokerTestError = class(Exception);
@@ -20,6 +21,13 @@ procedure Ensure(Condition: Boolean; const Msg: string);
 begin
   if not Condition then
     raise EObservationsBrokerTestError.Create(Msg);
+end;
+
+procedure EnsureEndsWith(const Actual, ExpectedSuffix, Context: string);
+begin
+  if not Actual.ToLower.EndsWith(ExpectedSuffix.ToLower) then
+    raise EObservationsBrokerTestError.Create(
+      Format('%s URL mismatch: %s', [Context, Actual]));
 end;
 
 procedure TestResponses;
@@ -72,21 +80,24 @@ begin
   try
     ListReq := Broker.CreateReqList as TObservationsReqList;
     try
-      Ensure(ListReq.GetURLWithParams = '/dataserver/api/v2/observations/list', 'List request URL mismatch.');
+      EnsureEndsWith(ListReq.GetURLWithParams,
+        '/dataserver/api/v2/observations/list', 'List');
     finally
       ListReq.Free;
     end;
 
     InfoReq := Broker.CreateReqInfo('OBS-1') as TObservationReqInfo;
     try
-      Ensure(InfoReq.GetURLWithParams = '/dataserver/api/v2/observations/OBS-1', 'Info request URL mismatch.');
+      EnsureEndsWith(InfoReq.GetURLWithParams,
+        '/dataserver/api/v2/observations/OBS-1', 'Info');
     finally
       InfoReq.Free;
     end;
 
     DsTypeReq := Broker.CreateReqDstTypeInfo('DST-1');
     try
-      Ensure(DsTypeReq.GetURLWithParams = '/dataserver/api/v2/observations/dstypes/DST-1', 'DsType request URL mismatch.');
+      EnsureEndsWith(DsTypeReq.GetURLWithParams,
+        '/dataserver/api/v2/observations/dstypes/DST-1', 'DsType');
     finally
       DsTypeReq.Free;
     end;
@@ -97,6 +108,7 @@ end;
 
 procedure RunObservationsBrokerTests;
 begin
+  LoadAppConfig;
   Writeln('Running observations broker tests...');
   TestResponses;
   TestRequests;

@@ -11,8 +11,8 @@ uses
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
   
-  ParentEditFormUnit, TasksParentFormUnit, RestFieldSetBrokerUnit, TasksRestBrokerUnit,
-  TaskSourcesRestBrokerUnit, uniPanel, uniLabel, APIConst;
+  ParentEditFormUnit, TasksParentFormUnit, RestBrokerUnit, TasksRestBrokerUnit,
+  TaskSourcesRestBrokerUnit, uniPanel, uniLabel;
 
 type
   TStripTasksForm = class(TTaskParentForm)
@@ -24,7 +24,7 @@ type
     procedure Refresh(const AId: String = ''); override;
 
     ///  ������� ��� �������� ������� ������� �������
-    function CreateRestBroker(): TRestFieldSetBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
     ///  ������� ��� �������� ������ ����� ��������������
     function CreateEditForm(): TParentEditForm; override;
 
@@ -41,7 +41,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, StripTaskEditFormUnit, StripTaskUnit;
+  MainModule, uniGUIApplication, StripTaskEditFormUnit, StripTaskUnit, AppConfigUnit;
 
 function StripTasksForm: TStripTasksForm;
 begin
@@ -55,15 +55,17 @@ begin
   Result := StripTaskEditForm();
 end;
 
-function TStripTasksForm.CreateRestBroker: TRestFieldSetBroker;
+function TStripTasksForm.CreateRestBroker: TRestBroker;
 begin
    result:= inherited;
-  (result as TTasksRestBroker).BasePath:=  APIConst.constURLStripBasePath;
+  (result as TTasksRestBroker).BasePath := ResolveServiceBasePath('strip');
 end;
 
 function TStripTasksForm.CreateTaskSourcesBroker: TTaskSourcesRestBroker;
 begin
-Result := TTaskSourcesRestBroker.Create(UniMainModule.XTicket, APIConst.constURLStripBasePath);
+  Result := TTaskSourcesRestBroker.Create(
+    UniMainModule.XTicket,
+    ResolveServiceBasePath('strip'));
 end;
 
 procedure TStripTasksForm.OnCreate;

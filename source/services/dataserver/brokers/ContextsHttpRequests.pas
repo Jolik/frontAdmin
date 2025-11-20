@@ -37,7 +37,7 @@ type
   end;
 
   // Response wrapper for /sources/contexts/list
-  TContextListResponse = class(TFieldSetListResponse)
+  TContextListResponse = class(TListResponse)
   private
     function GetContextList: TContextList;
   public
@@ -46,7 +46,7 @@ type
   end;
 
   // Response wrapper for /sources/contexts/types/list
-  TContextTypeListResponse = class(TFieldSetListResponse)
+  TContextTypeListResponse = class(TListResponse)
   private
     function GetContextTypes: TContextTypeList;
   public
@@ -55,7 +55,7 @@ type
   end;
 
   // Response wrapper for context credentials list
-  TContextCredsListResponse = class(TFieldSetListResponse)
+  TContextCredsListResponse = class(TListResponse)
   private
     function GetCredentialList: TSourceCredsList;
   public
@@ -64,7 +64,7 @@ type
   end;
 
   // Response wrapper for single credential
-  TContextCredInfoResponse = class(TFieldSetResponse)
+  TContextCredInfoResponse = class(TResponse)
   private
     function GetCredential: TSourceCred;
   public

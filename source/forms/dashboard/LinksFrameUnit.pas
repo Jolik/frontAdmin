@@ -40,7 +40,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, APIConst;
+  MainModule, uniGUIApplication, AppConfigUnit;
 
 procedure TLinksFrame.AppendLink(const ALink: TLink);
 begin
@@ -108,7 +108,9 @@ end;
 
 procedure TLinksFrame.UniFrameCreate(Sender: TObject);
 begin
-  FLinksBroker := TLinksRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath);
+  FLinksBroker := TLinksRestBroker.Create(
+    UniMainModule.XTicket,
+    ResolveServiceBasePath('drvcomm'));
   LoadLinks;
 end;
 

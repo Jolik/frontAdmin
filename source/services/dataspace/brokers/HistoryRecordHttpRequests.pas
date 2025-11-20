@@ -14,7 +14,7 @@ uses
 
 type
   // Response wrapper for history lists (both search and journal-specific)
-  THistoryRecordListResponse = class(TFieldSetListResponse)
+  THistoryRecordListResponse = class(TListResponse)
   private
     function GetHistoryRecords: THistoryRecordList;
   public

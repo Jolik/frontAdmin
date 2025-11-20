@@ -8,7 +8,7 @@ uses
   LinkUnit;
 
 type
-  TLinkListResponse = class(TFieldSetListResponse)
+  TLinkListResponse = class(TListResponse)
   private
     function GetLinkList: TLinkList;
   public
@@ -16,7 +16,7 @@ type
     property LinkList: TLinkList read GetLinkList;
   end;
 
-  TLinkInfoResponse = class(TFieldSetResponse)
+  TLinkInfoResponse = class(TResponse)
   private
     function GetLink: TLink;
   public

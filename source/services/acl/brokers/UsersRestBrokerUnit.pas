@@ -4,22 +4,22 @@ interface
 
 uses
   RestBrokerBaseUnit,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   HttpClientUnit,
   UserHttpRequests;
 
 type
-  TUsersRestBroker = class(TRestFieldSetBroker)
+  TUsersRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TUserReqList): TUserListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TUserReqInfo): TUserInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TUserReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TUserReqUpdate): TJSONResponse; overload;
@@ -39,17 +39,12 @@ type
 implementation
 
 uses
- System.SysUtils, APIConst;
+ System.SysUtils;
 
 constructor TUsersRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
   SetPath(ServiceName, BasePath);
-end;
-
-class function TUsersRestBroker.ServiceName: string;
-begin
-  Result := 'acl';
 end;
 
 function TUsersRestBroker.CreateReqArchive: TUserReqArchive;
@@ -116,7 +111,7 @@ begin
   Result := Info(AReq as TReqInfo) as TUserInfoResponse;
 end;
 
-function TUsersRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TUsersRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TUserInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -127,7 +122,7 @@ begin
   Result := List(AReq as TReqList) as TUserListResponse;
 end;
 
-function TUsersRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TUsersRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TUserListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -152,6 +147,11 @@ end;
 function TUsersRestBroker.Update(AReq: TUserReqUpdate): TJSONResponse;
 begin
   Result := Update(AReq as TReqUpdate);
+end;
+
+class function TUsersRestBroker.ServiceName: string;
+begin
+  Result := 'acl';
 end;
 
 function TUsersRestBroker.Archive(AReq: TUserReqArchive): TJSONResponse;

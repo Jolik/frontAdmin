@@ -9,8 +9,7 @@ uses
   BaseResponses,
   SummaryTaskUnit,
   TaskHttpRequests,
-  TaskSourceUnit,
-  APIConst;
+  TaskSourceUnit;
 
 type
 
@@ -31,12 +30,12 @@ type
   end;
 
   // Response wrappers for Summary tasks using TSummaryTask/TSummaryTaskList
-  TSummaryTaskListResponse = class(TFieldSetListResponse)
+  TSummaryTaskListResponse = class(TListResponse)
   public
     constructor Create; reintroduce;
   end;
 
-  TSummaryTaskInfoResponse = class(TFieldSetResponse)
+  TSummaryTaskInfoResponse = class(TResponse)
   public
     constructor Create; reintroduce;
   end;

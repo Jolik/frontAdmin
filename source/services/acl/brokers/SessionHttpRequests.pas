@@ -10,7 +10,7 @@ uses
   SessionUnit;
 
 type
-  TSessionInfoResponse = class(TFieldSetResponse)
+  TSessionInfoResponse = class(TResponse)
   private
     function GetSession: TSession;
   public

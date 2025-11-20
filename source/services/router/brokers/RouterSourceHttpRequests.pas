@@ -8,7 +8,7 @@ uses
   RouterSourceUnit;
 
 type
-  TRouterSourceListResponse = class(TFieldSetListResponse)
+  TRouterSourceListResponse = class(TListResponse)
   private
     function GetSourceList: TRouterSourceList;
   public
@@ -16,7 +16,7 @@ type
     property SourceList: TRouterSourceList read GetSourceList;
   end;
 
-  TRouterSourceInfoResponse = class(TFieldSetResponse)
+  TRouterSourceInfoResponse = class(TResponse)
   private
     function GetSource: TRouterSource;
   public

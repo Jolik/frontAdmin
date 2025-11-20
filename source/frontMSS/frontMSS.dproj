@@ -142,7 +142,6 @@
         <DCCReference Include="..\services\acl\brokers\DepartmentsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\brokers\SessionHttpRequests.pas"/>
         <DCCReference Include="..\services\acl\brokers\SessionsRestBrokerUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseRequests.pas"/>
         <DCCReference Include="..\services\common\brokers\BaseResponses.pas"/>
         <DCCReference Include="..\services\common\brokers\HttpClientUnit.pas"/>
@@ -410,7 +409,7 @@
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentHttpRequests.pas"/>
         <DCCReference Include="..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\RestFieldSetBrokerUnit.pas"/>
+        <DCCReference Include="..\services\common\brokers\RestBrokerUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\HistoryRecordUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\JournalRecordsAttrsUnit.pas"/>
         <DCCReference Include="..\services\dataspace\entities\JournalRecordUnit.pas"/>
@@ -472,6 +471,7 @@
         <DCCReference Include="..\services\signals\brokers\LogsHttpRequests.pas"/>
         <DCCReference Include="..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
         <DCCReference Include="..\forms\rules\RouterFrameRuleConditionUnit.pas"/>
+        <DCCReference Include="..\common\DefualtConfig.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

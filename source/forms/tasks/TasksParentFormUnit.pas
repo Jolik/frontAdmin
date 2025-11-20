@@ -13,7 +13,7 @@ uses
   EntityUnit, TaskUnit,
   TaskEditParentFormUnit, TaskSourceUnit, ParentEditFormUnit,
   TaskSourcesRestBrokerUnit, TaskSourceHttpRequests, TaskTypesUnit,
-  TasksRestBrokerUnit, TaskHttpRequests, BaseRequests, RestFieldSetBrokerUnit;
+  TasksRestBrokerUnit, TaskHttpRequests, BaseRequests, RestBrokerUnit;
 
 type
   TTaskParentForm = class(TListParentForm)
@@ -39,7 +39,7 @@ type
     procedure OnAddListItem(item: TFieldSet);override;
     procedure OnInfoUpdated(AFieldSet: TFieldSet);override;
     ///
-    function CreateRestBroker(): TRestFieldSetBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; virtual;
     function CreateEditForm(): TParentEditForm; override;
 
@@ -76,7 +76,7 @@ begin
 end;
 
 
-function TTaskParentForm.CreateRestBroker: TRestFieldSetBroker;
+function TTaskParentForm.CreateRestBroker: TRestBroker;
 begin
   Result := TTasksRestBroker.Create(UniMainModule.XTicket);
 end;

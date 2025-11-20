@@ -8,7 +8,7 @@ uses
   CompanyUnit;
 
 type
-  TCompanyListResponse = class(TFieldSetListResponse)
+  TCompanyListResponse = class(TListResponse)
   private
     function GetCompanyList: TCompanyList;
   protected
@@ -18,7 +18,7 @@ type
     property CompanyList: TCompanyList read GetCompanyList;
   end;
 
-  TCompanyInfoResponse = class(TFieldSetResponse)
+  TCompanyInfoResponse = class(TResponse)
   private
     function GetCompany: TCompany;
   public

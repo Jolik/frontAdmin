@@ -12,8 +12,8 @@ uses
   uniToolBar, uniGUIBaseClasses,
    EntityUnit,
   ParentEditFormUnit,
-  TasksParentFormUnit, RestFieldSetBrokerUnit, RestBrokerBaseUnit, SummaryTasksRestBrokerUnit,
-  TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel, APIConst,
+  TasksParentFormUnit, RestBrokerUnit, RestBrokerBaseUnit, SummaryTasksRestBrokerUnit,
+  TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel, 
   uniMultiItem, uniListBox, SummaryTaskUnit;
 
 type
@@ -29,7 +29,7 @@ type
 //    procedure Refresh(const AId: String = ''); override;
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
-    function CreateRestBroker(): TRestFieldSetBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
 
 //    procedure UpdateCallback(ASender: TComponent; AResult: Integer);
 
@@ -44,7 +44,8 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, SummaryTaskEditFormUnit, LoggingUnit, ParentFormUnit, TasksRestBrokerUnit, SummaryTasksHttpRequests;
+  MainModule, uniGUIApplication, SummaryTaskEditFormUnit, LoggingUnit, ParentFormUnit, TasksRestBrokerUnit,
+  SummaryTasksHttpRequests, AppConfigUnit;
 
 function SummaryTasksForm(): TSummaryTasksForm;
 begin
@@ -76,14 +77,16 @@ begin
   Result:= res;
 end;
 
-function TSummaryTasksForm.CreateRestBroker: TRestFieldSetBroker;
+function TSummaryTasksForm.CreateRestBroker: TRestBroker;
 begin
   result:= TSummaryTasksRestBroker.Create(UniMainModule.XTicket);
 end;
 
 function TSummaryTasksForm.CreateTaskSourcesBroker: TTaskSourcesRestBroker;
 begin
-  Result := TTaskSourcesRestBroker.Create(UniMainModule.XTicket, APIConst.constURLSummaryBasePath);
+  Result := TTaskSourcesRestBroker.Create(
+    UniMainModule.XTicket,
+    ResolveServiceBasePath('summary'));
 end;
 
 procedure TSummaryTasksForm.OnCreate;

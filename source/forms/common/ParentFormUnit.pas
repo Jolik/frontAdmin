@@ -8,7 +8,7 @@ uses
   uniGUIClasses, uniGUIForm,
   EntityUnit,
   ParentEditFormUnit,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests, BaseResponses;
 
 type
@@ -18,7 +18,7 @@ type
     procedure UniFormDestroy(Sender: TObject);
   private
     ///  REST‑брокер для доступа к API
-    FRestBroker: TRestFieldSetBroker;
+    FRestBroker: TRestBroker;
     ///  форма для редактирования сущности — потомок должен создать функциональный класс
     FEditForm: TParentEditForm;
 
@@ -34,14 +34,14 @@ type
     procedure Refresh(const AId: String = ''); virtual; abstract;
 
     // фабрика REST брокера (запросы создаёт брокер)
-    function CreateRestBroker(): TRestFieldSetBroker; virtual;
+    function CreateRestBroker(): TRestBroker; virtual;
 
     ///  функция для создания нужной формы редактирования
     function CreateEditForm(): TParentEditForm; virtual; abstract;
 
   public
     ///  доступ к REST‑брокеру и форме редактирования
-    property RestBroker: TRestFieldSetBroker read FRestBroker;
+    property RestBroker: TRestBroker read FRestBroker;
     property EditForm: TParentEditForm read FEditForm;
 
     ///  создать форму редактирования и задать режим
@@ -226,7 +226,7 @@ end;
 
 { Default implementations for REST factories }
 
-function TParentForm.CreateRestBroker: TRestFieldSetBroker;
+function TParentForm.CreateRestBroker: TRestBroker;
 begin
   Result := nil;
 end;

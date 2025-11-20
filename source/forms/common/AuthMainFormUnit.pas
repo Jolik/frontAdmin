@@ -48,6 +48,8 @@ type
     procedure LoadSessionInfo(const Ticket: string);
     procedure RedirectToAuthPage;
     function BuildApiRoot: string;
+    function GetServiceBasePath(const ServiceName: string): string;
+    function ResolveServiceUrl(const ServiceName: string): string;
     procedure UpdateUserDisplay;
     procedure ShowEmbedLogin;
     procedure SetCasCookie(const TGT: string);
@@ -74,7 +76,7 @@ uses
   AppConfigUnit,
   CasRestBrokerUnit,
   HttpClientUnit,
-  APIConst,
+  
   SessionsRestBrokerUnit,
   SessionHttpRequests,
   EmbedLoginFormUnit,
@@ -96,7 +98,7 @@ end;
 procedure TAuthMainForm.InitializeCompanyData;
 var
   Req: TReqList;
-  Resp: TFieldSetListResponse;
+  Resp: TListResponse;
   DefaultIndex: string;
   Ind: Integer;
 begin
@@ -317,7 +319,7 @@ end;
 
 procedure TAuthMainForm.RedirectToAuthPage;
 var
-  ApiRoot: string;
+  LoginBaseUrl: string;
   Script: string;
 begin
   if FRedirectInitiated then
@@ -329,14 +331,14 @@ begin
     Exit;
   end;
 
-  ApiRoot := BuildApiRoot;
-  if ApiRoot = '' then
+  LoginBaseUrl := ResolveServiceUrl('acl');
+  if LoginBaseUrl = '' then
     Exit;
 
   Script := Format(
     'var service = encodeURIComponent(window.location.href);' +
-    'window.location = "%s%s/cas/login?service=" + service;',
-    [ApiRoot, constURLAclBasePath]);
+    'window.location = "%s/cas/login?service=" + service;',
+    [LoginBaseUrl]);
   UniSession.AddJS(Script);
   FRedirectInitiated := True;
 end;
@@ -379,6 +381,86 @@ begin
 
   if HttpClient.Port > 0 then
     Result := Result + ':' + IntToStr(HttpClient.Port);
+end;
+
+function TAuthMainForm.GetServiceBasePath(const ServiceName: string): string;
+var
+  Service: TServiceConfig;
+  HostValue: string;
+
+  function CombineBase(const BaseUrl, Relative: string): string;
+  var
+    CleanBase: string;
+    CleanRelative: string;
+  begin
+    CleanBase := BaseUrl.Trim;
+    CleanRelative := Relative.Trim;
+    while (CleanBase <> '') and CleanBase.EndsWith('/') do
+      CleanBase := CleanBase.Substring(0, CleanBase.Length - 1);
+    while (CleanRelative <> '') and CleanRelative.StartsWith('/') do
+      CleanRelative := CleanRelative.Substring(1);
+
+    if CleanBase.IsEmpty then
+    begin
+      if CleanRelative.IsEmpty then
+        Exit('');
+      Result := '/' + CleanRelative;
+      Exit;
+    end;
+
+    if CleanRelative.IsEmpty then
+      Result := CleanBase
+    else
+      Result := CleanBase + '/' + CleanRelative;
+  end;
+
+begin
+  Result := '';
+  if (AppConfig = nil) or not AppConfig.TryGetService(ServiceName, Service) then
+    Exit;
+
+  HostValue := Service.Host.Trim;
+  if HostValue.IsEmpty then
+    Exit;
+
+  if HostValue.Contains('://') then
+  begin
+    Result := HostValue;
+    Exit;
+  end;
+
+  if not AppConfig.BasePath.Trim.IsEmpty then
+    Result := CombineBase(AppConfig.BasePath, HostValue)
+  else if HostValue.StartsWith('/') then
+    Result := HostValue
+  else
+    Result := '/' + HostValue;
+end;
+
+function TAuthMainForm.ResolveServiceUrl(const ServiceName: string): string;
+var
+  BasePath: string;
+  ApiRoot: string;
+begin
+  Result := '';
+  BasePath := GetServiceBasePath(ServiceName);
+  if BasePath = '' then
+    Exit;
+
+  if BasePath.Contains('://') then
+    Result := BasePath
+  else
+  begin
+    ApiRoot := BuildApiRoot;
+    if ApiRoot = '' then
+      Exit;
+    if not BasePath.StartsWith('/') then
+      BasePath := '/' + BasePath;
+    Result := ApiRoot + BasePath;
+  end;
+
+  while (Result <> '') and Result.EndsWith('/') do
+    Result := Result.Substring(0, Result.Length - 1);
 end;
 
 procedure TAuthMainForm.UniFormAfterShow(Sender: TObject);

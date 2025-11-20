@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
-  uniToolBar, uniGUIBaseClasses, RestBrokerBaseUnit,  RestFieldSetBrokerUnit,
+  uniToolBar, uniGUIBaseClasses, RestBrokerBaseUnit,  RestBrokerUnit,
   ParentEditFormUnit, uniPanel, uniLabel,
   LinksRestBrokerUnit;
 
@@ -17,7 +17,7 @@ type
   TLinksForm = class(TListParentForm)
   protected
       ///  функция для создания нужного брокера потомком
-    function CreateRestBroker(): TRestFieldSetBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
 
      ///  функция обновления компоннет на форме
     procedure Refresh(const AId: String = ''); override;
@@ -36,7 +36,7 @@ implementation
 {$R *.dfm}
 
 uses
-  APIConst, MainModule, uniGUIApplication, LinkEditFormUnit;
+  MainModule, uniGUIApplication, LinkEditFormUnit, AppConfigUnit;
 
 function LinksForm: TLinksForm;
 begin
@@ -46,15 +46,17 @@ end;
 { TChannelsForm }
 
 function TLinksForm.CreateEditForm: TParentEditForm;
+var
+  BasePath: string;
 begin
   ///  создаем "нашу" форму редактирования для Абонентов
-  Result := LinkEditForm(constURLDrvcommBasePath);
-
+  BasePath := ResolveServiceBasePath('drvcomm');
+  Result := LinkEditForm(BasePath);
 end;
 
-function TLinksForm.CreateRestBroker: TRestFieldSetBroker;
+function TLinksForm.CreateRestBroker: TRestBroker;
 begin
-  Result := TLinksRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath);
+  Result := TLinksRestBroker.Create(UniMainModule.XTicket,ResolveServiceBasePath('drvcomm'));
 end;
 
 procedure TLinksForm.Refresh(const AId: String = '');

@@ -50,19 +50,25 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, IdHTTP, APIConst,
+  MainModule, uniGUIApplication, IdHTTP, 
   LinkFrameUtils,
   LoggingUnit,
   common,
   BaseResponses,
   ProfileHttpRequests,
   HttpClientUnit,
-  LinksRestBrokerUnit;
+  LinksRestBrokerUnit,
+  AppConfigUnit;
 
 function LinkEditForm(AProfilesServicePath: string): TLinkEditForm;
+var
+  ProfilesPath: string;
 begin
   Result := TLinkEditForm(UniMainModule.GetFormInstance(TLinkEditForm));
-  Result.FProfilesBroker:=  TProfilesRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath) ;
+  ProfilesPath := AProfilesServicePath.Trim;
+  if ProfilesPath = '' then
+    ProfilesPath := ResolveServiceBasePath('drvcomm');
+  Result.FProfilesBroker := TProfilesRestBroker.Create(UniMainModule.XTicket, ProfilesPath);
 end;
 
 { TLinkEditForm }
@@ -192,7 +198,7 @@ function TLinkEditForm.LoadProfiles: boolean;
 var
   Pages : integer;
   resp: TProfileListResponse;
-  infoResp : TFieldSetResponse;
+  infoResp : TResponse;
   req: TProfileReqList;
 begin
   if not IsEdit then

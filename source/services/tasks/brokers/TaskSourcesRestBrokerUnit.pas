@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   HttpClientUnit,
@@ -13,7 +13,7 @@ uses
 
 type
   // REST broker for task sources API
-  TTaskSourcesRestBroker = class(TRestFieldSetBroker)
+  TTaskSourcesRestBroker = class(TRestBroker)
   public
     // Base service path (e.g. '/api/v2'); final base path is ServicePath + '/tasks'
     ServicePath: string;
@@ -21,9 +21,9 @@ type
     constructor Create(const ATicket: string = ''; const AServicePath: string = '/api/v2'); reintroduce; overload;
 
     function List(AReq: TTaskSourceReqList): TTaskSourceListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload;
+    function List(AReq: TReqList): TListResponse; overload;
     function Info(AReq: TTaskSourceReqInfo): TTaskSourceInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse;overload;
+    function Info(AReq: TReqInfo): TResponse;overload;
     function New(AReq: TTaskSourceReqNew; const AIdFieldName: string): TIdNewResponse; overload;
     function Update(AReq: TTaskSourceReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload;
@@ -56,7 +56,7 @@ begin
   Result := List(AReq as TReqList) as TTaskSourceListResponse;
 end;
 
-function TTaskSourcesRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TTaskSourcesRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TTaskSourceListResponse.Create;
   List(AReq, result);
@@ -120,7 +120,7 @@ begin
   Result := Info(AReq as TReqInfo) as TTaskSourceInfoResponse;
 end;
 
-function TTaskSourcesRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TTaskSourcesRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   inherited Info(AReq, Result);
 end;

@@ -1,4 +1,4 @@
-﻿unit RestFieldSetBrokerUnit;
+﻿unit RestBrokerUnit;
 
 interface
 
@@ -11,21 +11,21 @@ uses
 
 type
       // Base REST broker that operates on base request types
-  TRestFieldSetBroker = class(TRestBrokerBase)
-    function List(AReq: TReqList): TFieldSetListResponse; overload; virtual;
-    function List(AReq: TReqList; AResp: TFieldSetListResponse): TFieldSetListResponse; overload; virtual;
+  TRestBroker = class(TRestBrokerBase)
+    function List(AReq: TReqList): TListResponse; overload; virtual;
+    function List(AReq: TReqList; AResp: TListResponse): TListResponse; overload; virtual;
     // выборка сущностей с указанием типа списка и ключа массива
-    function List(AReq: TReqList; AListClass: TFieldSetListClass; const AItemsKey: string = 'items'): TFieldSetListResponse; overload; virtual;
+    function List(AReq: TReqList; AListClass: TFieldSetListClass; const AItemsKey: string = 'items'): TListResponse; overload; virtual;
     // выборка всех страниц с учетом info (page/pagecount/pagesize/total)
-    function ListAll(AReq: TReqList; AResp: TFieldSetListResponse):TFieldSetListResponse;overload; virtual;
-    function ListAll(AReq: TReqList): TFieldSetListResponse;overload; virtual;
-    function ListAll(AReq: TReqList; AListClass: TFieldSetListClass; const AItemsKey: string = 'items'): TFieldSetListResponse; overload; virtual;
+    function ListAll(AReq: TReqList; AResp: TListResponse):TListResponse;overload; virtual;
+    function ListAll(AReq: TReqList): TListResponse;overload; virtual;
+    function ListAll(AReq: TReqList; AListClass: TFieldSetListClass; const AItemsKey: string = 'items'): TListResponse; overload; virtual;
     // прямая, принимающая любой THttpRequest; создает подходящий ответ
-    function ListRaw2(AReq: THttpRequest; AListClass: TFieldSetListClass; const AItemsKey: string = 'items'): TFieldSetListResponse; virtual;
+    function ListRaw2(AReq: THttpRequest; AListClass: TFieldSetListClass; const AItemsKey: string = 'items'): TListResponse; virtual;
     // получение info: одного объекта по идентификатору
-    function Info(AReq: TReqInfo; AResp: TFieldSetResponse): TFieldSetResponse; overload; virtual;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; virtual;
-    function InfoRaw(AReq: TReqInfo; AFieldSetClass: TFieldSetClass; const AItemKey: string = 'item'): TFieldSetResponse; virtual;
+    function Info(AReq: TReqInfo; AResp: TResponse): TResponse; overload; virtual;
+    function Info(AReq: TReqInfo): TResponse; overload; virtual;
+    function InfoRaw(AReq: TReqInfo; AFieldSetClass: TFieldSetClass; const AItemKey: string = 'item'): TResponse; virtual;
     function New(AReq: TReqNew; AResp: TIdNewResponse): TIdNewResponse; overload; virtual;
 
   end;
@@ -35,57 +35,57 @@ implementation
 uses System.Math, System.SysUtils;
 
 
-function TRestFieldSetBroker.List(AReq: TReqList; AResp: TFieldSetListResponse): TFieldSetListResponse;
+function TRestBroker.List(AReq: TReqList; AResp: TListResponse): TListResponse;
 begin
   Result := AResp;
   ApplyTicket(AReq);
   HttpClient.Request(AReq, AResp);
 end;
 
-function TRestFieldSetBroker.List(AReq: TReqList; AListClass: TFieldSetListClass; const AItemsKey: string): TFieldSetListResponse;
+function TRestBroker.List(AReq: TReqList; AListClass: TFieldSetListClass; const AItemsKey: string): TListResponse;
 begin
-  Result := TFieldSetListResponse.Create(AListClass);
+  Result := TListResponse.Create(AListClass);
   ApplyTicket(AReq);
   Result.ItemsKey := AItemsKey;
   // выполняем запрос в HttpClient; разбор произойдет в SetResponse
   HttpClient.Request(AReq, Result);
 end;
 
-function TRestFieldSetBroker.Info(AReq: TReqInfo; AResp: TFieldSetResponse): TFieldSetResponse;
+function TRestBroker.Info(AReq: TReqInfo; AResp: TResponse): TResponse;
 begin
   Result := AResp;
   ApplyTicket(AReq);
   HttpClient.Request(AReq, AResp);
 end;
 
-function TRestFieldSetBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
-  Result := TFieldSetResponse.Create(TFieldSet);
+  Result := TResponse.Create(TFieldSet);
   Info(AReq, Result);
 end;
 
-function TRestFieldSetBroker.InfoRaw(AReq: TReqInfo; AFieldSetClass: TFieldSetClass; const AItemKey: string): TFieldSetResponse;
+function TRestBroker.InfoRaw(AReq: TReqInfo; AFieldSetClass: TFieldSetClass; const AItemKey: string): TResponse;
 begin
-  Result := TFieldSetResponse.Create(AFieldSetClass, 'response', AItemKey);
+  Result := TResponse.Create(AFieldSetClass, 'response', AItemKey);
   ApplyTicket(AReq);
   HttpClient.Request(AReq, Result);
 end;
 
-function TRestFieldSetBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TRestBroker.List(AReq: TReqList): TListResponse;
 begin
-  Result := TFieldSetListResponse.Create(TFieldSetList, 'response', 'items');
+  Result := TListResponse.Create(TFieldSetList, 'response', 'items');
   ApplyTicket(AReq);
   HttpClient.Request(AReq, Result);
 end;
 
-function TRestFieldSetBroker.ListRaw2(AReq: THttpRequest; AListClass: TFieldSetListClass; const AItemsKey: string): TFieldSetListResponse;
+function TRestBroker.ListRaw2(AReq: THttpRequest; AListClass: TFieldSetListClass; const AItemsKey: string): TListResponse;
 begin
-  Result := TFieldSetListResponse.Create(AListClass);
+  Result := TListResponse.Create(AListClass);
   ApplyTicket(AReq);
   HttpClient.Request(AReq, Result);
 end;
 
-function TRestFieldSetBroker.New(AReq: TReqNew; AResp: TIdNewResponse): TIdNewResponse;
+function TRestBroker.New(AReq: TReqNew; AResp: TIdNewResponse): TIdNewResponse;
 begin
   Result := AResp;
   ApplyTicket(AReq);
@@ -93,9 +93,9 @@ begin
 end;
 
 
-function TRestFieldSetBroker.ListAll(AReq: TReqList): TFieldSetListResponse;
+function TRestBroker.ListAll(AReq: TReqList): TListResponse;
 var
-  First: TFieldSetListResponse;
+  First: TListResponse;
   Body: TReqListBody;
   OrigPage: Integer;
   ListCls: TFieldSetListClass;
@@ -103,12 +103,12 @@ begin
   raise Exception.Create('Not Implemented');
 end;
 
-function TRestFieldSetBroker.ListAll(AReq: TReqList; AListClass: TFieldSetListClass; const AItemsKey: string): TFieldSetListResponse;
+function TRestBroker.ListAll(AReq: TReqList; AListClass: TFieldSetListClass; const AItemsKey: string): TListResponse;
 var
-  Next: TFieldSetListResponse;
+  Next: TListResponse;
   Body: TReqListBody;
   startPage: Integer;
-  First: TFieldSetListResponse;
+  First: TListResponse;
 begin
   startPage := 1;
   if Assigned(Body) then
@@ -129,11 +129,11 @@ begin
   end;
 end;
 
-function TRestFieldSetBroker.ListAll(AReq: TReqList; AResp: TFieldSetListResponse): TFieldSetListResponse;
+function TRestBroker.ListAll(AReq: TReqList; AResp: TListResponse): TListResponse;
 var
   Body: TReqListBody;
   startPage: Integer;
-  Next: TFieldSetListResponse;
+  Next: TListResponse;
   ListClass: TFieldSetListClass;
 begin
   Result := AResp;

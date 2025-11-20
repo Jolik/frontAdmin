@@ -8,7 +8,7 @@ uses
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
   ListParentFormUnit, Data.DB, uniPageControl, uniSplitter, uniBasicGrid,
   uniDBGrid, uniToolBar, uniGUIBaseClasses, ParentEditFormUnit,
-  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestFieldSetBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestBrokerUnit,
   uniPanel, uniLabel, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
@@ -17,7 +17,7 @@ uses
 type
   TUsersForm = class(TListParentForm)
   protected
-    function CreateRestBroker: TRestFieldSetBroker; override;
+    function CreateRestBroker: TRestBroker; override;
     function CreateEditForm: TParentEditForm; override;
     procedure OnAddListItem(item: TFieldSet); override;
     procedure OnInfoUpdated(AFieldSet: TFieldSet); override;
@@ -45,7 +45,7 @@ begin
   Result := UserEditForm;
 end;
 
-function TUsersForm.CreateRestBroker: TRestFieldSetBroker;
+function TUsersForm.CreateRestBroker: TRestBroker;
 begin
   Result := TUsersRestBroker.Create(UniMainModule.XTicket);
 end;

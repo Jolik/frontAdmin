@@ -12,7 +12,7 @@ uses
 
 type
   // Response for /organizations/list
-  TOrganizationListResponse = class(TFieldSetListResponse)
+  TOrganizationListResponse = class(TListResponse)
   private
     function GetOrganizationList: TOrganizationList;
   public
@@ -21,7 +21,7 @@ type
   end;
 
   // Response for /organizations/types/list or /orgTypes/list
-  TOrgTypeListResponse = class(TFieldSetListResponse)
+  TOrgTypeListResponse = class(TListResponse)
   private
     function GetOrgTypeList: TOrgTypeList;
   public

@@ -8,7 +8,7 @@ uses
   OperatorLinkUnit;
 
 type
-  TOperatorLinkListResponse = class(TFieldSetListResponse)
+  TOperatorLinkListResponse = class(TListResponse)
   private
     function GetLinkList: TOperatorLinkList;
   public
@@ -16,7 +16,7 @@ type
     property LinkList: TOperatorLinkList read GetLinkList;
   end;
 
-  TOperatorLinkInfoResponse = class(TFieldSetResponse)
+  TOperatorLinkInfoResponse = class(TResponse)
   private
     function GetLink: TOperatorLink;
   public

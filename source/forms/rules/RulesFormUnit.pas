@@ -12,7 +12,7 @@ uses
   uniToolBar, uniGUIBaseClasses,
   ParentEditFormUnit,
   uniPanel, uniLabel,
-  EntityUnit, RestBrokerBaseUnit, RestFieldSetBrokerUnit,
+  EntityUnit, RestBrokerBaseUnit, RestBrokerUnit,
   RulesRestBrokerUnit, ListParentFormUnit;
 
 type
@@ -23,7 +23,7 @@ type
     procedure btnUpdateClick(Sender: TObject);
   protected
     procedure Refresh(const AId: String = ''); override;
-    function CreateRestBroker(): TRestFieldSetBroker; override;
+    function CreateRestBroker(): TRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
     procedure UniFormCreate(Sender: TObject);
     procedure OnAddListItem(item: TFieldSet); override;
@@ -56,7 +56,7 @@ begin
   inherited Refresh(AId)
 end;
 
-function TRulesForm.CreateRestBroker: TRestFieldSetBroker;
+function TRulesForm.CreateRestBroker: TRestBroker;
 begin
   Result := TRulesRestBroker.Create(UniMainModule.XTicket);
 end;

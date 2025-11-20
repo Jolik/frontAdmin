@@ -7,21 +7,21 @@ uses
   BaseRequests,
   BaseResponses,
   HandlerHttpRequests,
-    RestFieldSetBrokerUnit,
+    RestBrokerUnit,
   HttpClientUnit;
 
 type
-  THandlersRestBroker = class(TRestFieldSetBroker)
+  THandlersRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
 
     function List(AReq: THandlerReqList): THandlerListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
 
     function Info(AReq: THandlerReqInfo): THandlerInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
 
     function New(AReq: THandlerReqNew): TJSONResponse; overload;
 ///!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
@@ -41,8 +41,6 @@ type
 
 implementation
 
-uses APIConst;
-
 { THandlersRestBroker }
 
 constructor THandlersRestBroker.Create(const ATicket: string);
@@ -51,7 +49,7 @@ begin
   SetPath(ServiceName, BasePath);
 end;
 
-function THandlersRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function THandlersRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := THandlerListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -123,7 +121,7 @@ begin
   Result := Info(AReq as TReqInfo) as THandlerInfoResponse;
 end;
 
-function THandlersRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function THandlersRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := THandlerInfoResponse.Create;
   inherited Info(AReq, Result);

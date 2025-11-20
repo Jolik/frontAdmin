@@ -37,9 +37,6 @@ type
 
 implementation
 
-uses
-  APIConst;
-
 { TCasLoginRequest }
 
 constructor TCasLoginRequest.Create;

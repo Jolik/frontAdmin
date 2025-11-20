@@ -59,7 +59,7 @@ type
     property Body: TOperatorLinkContentReqListBody read GetBody;
   end;
 
-  TOperatorLinkContentListResponse = class(TFieldSetListResponse)
+  TOperatorLinkContentListResponse = class(TListResponse)
   private
     function GetRecords: TJournalRecordList;
   public
@@ -78,7 +78,7 @@ type
     property JournalRecordId: string read GetJournalRecordId write SetJournalRecordId;
   end;
 
-  TOperatorLinkContentInfoResponse = class(TFieldSetResponse)
+  TOperatorLinkContentInfoResponse = class(TResponse)
   private
     function GetRecord: TJournalRecord;
   public

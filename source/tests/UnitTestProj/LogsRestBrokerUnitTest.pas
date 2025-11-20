@@ -10,7 +10,7 @@ uses
   System.SysUtils,
   LogsRestBrokerUnit,
   LogsHttpRequests,
-  APIConst;
+  AppConfigUnit;
 
 type
   ELogsRestBrokerTestError = class(Exception);
@@ -25,17 +25,25 @@ procedure TestDefaultBasePath;
 var
   Broker: TLogsRestBroker;
   Req: TLogsReqQueryRange;
+  ExpectedBase: string;
+  ExpectedUrl: string;
 begin
   Broker := TLogsRestBroker.Create('TEST');
   try
-    Ensure(Broker.BasePath = constURLSignalsBasePath, 'Default base path mismatch.');
+    ExpectedBase := ResolveServiceBasePath('signals');
+    Ensure(Broker.BasePath = ExpectedBase, 'Default base path mismatch.');
     Ensure(Broker.Ticket = 'TEST', 'Ticket not stored.');
     Req := Broker.CreateReqQueryRange;
     try
       Ensure(Assigned(Req), 'CreateReqQueryRange returned nil.');
-      Ensure(Req.BasePath = constURLSignalsBasePath, 'Request base path mismatch.');
-      Ensure(Req.GetURLWithParams = constURLSignalsBasePath + '/logs/query_range',
-        'Request URL mismatch.');
+      Ensure(Req.BasePath = ExpectedBase, 'Request base path mismatch.');
+      if ExpectedBase.IsEmpty then
+        ExpectedUrl := '/logs/query_range'
+      else if ExpectedBase.EndsWith('/') then
+        ExpectedUrl := ExpectedBase + 'logs/query_range'
+      else
+        ExpectedUrl := ExpectedBase + '/logs/query_range';
+      Ensure(Req.GetURLWithParams = ExpectedUrl, 'Request URL mismatch.');
     finally
       Req.Free;
     end;

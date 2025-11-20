@@ -124,9 +124,6 @@ type
 
 implementation
 
-uses
-  APIConst;
-
 { TBaseRouterRequest }
 
 function TBaseServiceRequest.CombinePaths(const BasePath,

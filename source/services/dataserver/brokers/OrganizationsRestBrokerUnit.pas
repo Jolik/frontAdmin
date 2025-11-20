@@ -3,7 +3,7 @@ unit OrganizationsRestBrokerUnit;
 interface
 
 uses
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   OrganizationHttpRequests,
@@ -11,7 +11,7 @@ uses
 
 type
   // Broker for /organizations related endpoints
-  TOrganizationsRestBroker = class(TRestFieldSetBroker)
+  TOrganizationsRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
@@ -19,9 +19,9 @@ type
     constructor Create(const ATicket: string = ''); overload;
 
     function List(AReq: TOrganizationReqList): TOrganizationListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function ListAll(AReq: TOrganizationReqList): TOrganizationListResponse; overload;
-    function ListAll(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function ListAll(AReq: TReqList): TListResponse; overload; override;
 
     function ListTypes(AReq: TOrganizationTypesReqList): TOrgTypeListResponse; overload;
     function ListTypesAll(AReq: TOrganizationTypesReqList): TOrgTypeListResponse; overload;
@@ -31,9 +31,6 @@ type
   end;
 
 implementation
-
-uses
-  APIConst;
 
 { TOrganizationsRestBroker }
 
@@ -66,7 +63,7 @@ begin
   Result := List(AReq as TReqList) as TOrganizationListResponse;
 end;
 
-function TOrganizationsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TOrganizationsRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TOrganizationListResponse.Create;
   inherited List(AReq, Result);
@@ -77,7 +74,7 @@ begin
   Result := ListAll(AReq as TReqList) as TOrganizationListResponse;
 end;
 
-function TOrganizationsRestBroker.ListAll(AReq: TReqList): TFieldSetListResponse;
+function TOrganizationsRestBroker.ListAll(AReq: TReqList): TListResponse;
 begin
   Result := TOrganizationListResponse.Create;
   inherited ListAll(AReq, Result);

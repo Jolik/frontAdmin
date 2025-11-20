@@ -21,7 +21,7 @@ type
     procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
   end;
 
-  TTaskListResponse = class(TFieldSetListResponse)
+  TTaskListResponse = class(TListResponse)
   private
     function GetTaskList: TTaskList;
   public
@@ -29,7 +29,7 @@ type
     property TaskList: TTaskList read GetTaskList;
   end;
 
-  TTaskTypesListResponse = class(TFieldSetListResponse)
+  TTaskTypesListResponse = class(TListResponse)
   private
     function GetTaskTypesList: TTaskTypesList;
   public
@@ -37,7 +37,7 @@ type
     property TaskTypesList: TTaskTypesList read GetTaskTypesList;
   end;
 
-  TTaskInfoResponse = class(TFieldSetResponse)
+  TTaskInfoResponse = class(TResponse)
   private
     function GetTask: TTask;
   public
@@ -54,13 +54,6 @@ type
     property Tid: string read FTid write FTid;
   end;
 
-  TTaskNewResponse = class(TEntityResponse)
-  private
-    function GetTaskID: string;
-  public
-    constructor Create;
-    property ID: string read GetTaskID;
-  end;
 
   TTaskReqList = class(TReqList)
   protected
@@ -156,18 +149,6 @@ end;
 function TTaskInfoResponse.GetTask: TTask;
 begin
     Result := FieldSet as TTask;
-end;
-
-{ TTaskNewResponse / TTaskNewResult }
-
-constructor TTaskNewResponse.Create;
-begin
-  inherited Create(TEntity, 'response', 'task');
-end;
-
-function TTaskNewResponse.GetTaskID: string;
-begin
- Result :=Entity.Id
 end;
 
 procedure TTaskNewResult.Parse(src: TJSONObject; const APropertyNames: TArray<string>);

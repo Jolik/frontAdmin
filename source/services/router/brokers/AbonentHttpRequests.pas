@@ -36,7 +36,7 @@ type
   /// <summary>
   /// Response wrapper that parses abonent list payloads.
   /// </summary>
-  TAbonentListResponse = class(TFieldSetListResponse)
+  TAbonentListResponse = class(TListResponse)
   private
     function GetAbonentList: TAbonentList;
   public
@@ -47,7 +47,7 @@ type
   /// <summary>
   /// Response wrapper that parses abonent info payloads.
   /// </summary>
-  TAbonentInfoResponse = class(TFieldSetResponse)
+  TAbonentInfoResponse = class(TResponse)
   private
     function GetAbonent: TAbonent;
   public
@@ -88,7 +88,7 @@ type
   /// Response wrapper that parses abonent creation payloads.
   /// Inherits common FieldSet-based response.
   /// </summary>
-  TAbonentNewResponse = class(TFieldSetResponse)
+  TAbonentNewResponse = class(TResponse)
   private
     function GetAbonentNewRes: TAbonentNewResult;
   public
@@ -156,7 +156,7 @@ type
 implementation
 
 uses
-  LoggingUnit, APIConst;
+  LoggingUnit;
 
 const
 

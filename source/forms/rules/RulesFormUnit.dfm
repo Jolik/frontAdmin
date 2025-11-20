@@ -29,11 +29,6 @@ inherited RulesForm: TRulesForm
         Width = 112
       end>
   end
-  inherited pcEntityInfo: TUniPageControl
-    inherited tsTaskInfo: TUniTabSheet
-      ExplicitHeight = 502
-    end
-  end
   inherited DatasourceEntity: TDataSource
     Left = 270
     Top = 84

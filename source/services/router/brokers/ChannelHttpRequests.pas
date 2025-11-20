@@ -8,7 +8,7 @@ uses
   ChannelUnit;
 
 type
-  TChannelListResponse = class(TFieldSetListResponse)
+  TChannelListResponse = class(TListResponse)
   private
     function GetChannelList: TChannelList;
   public
@@ -16,7 +16,7 @@ type
     property ChannelList: TChannelList read GetChannelList;
   end;
 
-  TChannelInfoResponse = class(TFieldSetResponse)
+  TChannelInfoResponse = class(TResponse)
   private
     function GetChannel: TChannel;
   public

@@ -3,7 +3,7 @@
 interface
 
 uses
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   HttpClientUnit,
@@ -12,7 +12,7 @@ uses
   EntityUnit;
 
  type
-  TTasksRestBroker = class(TRestFieldSetBroker)
+  TTasksRestBroker = class(TRestBroker)
   private
     FListClass: TFieldSetListClass;
     FEntityClass: TFieldSetClass;
@@ -26,10 +26,10 @@ uses
     property ListClass: TFieldSetListClass read FListClass write SetListClass;
     property EntityClass: TFieldSetClass read FEntityClass write SetEntityClass;
     function List(AReq: TTaskReqList): TTaskListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function TypesList(AReq: TTaskTypesReqList): TTaskTypesListResponse;
     function Info(AReq: TTaskReqInfo): TTaskInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TTaskReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TTaskReqUpdate): TJSONResponse; overload;
@@ -77,7 +77,7 @@ begin
     FListClass := TTaskList;
 end;
 
-function TTasksRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TTasksRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TTaskListResponse.Create(FListClass);
   Result := inherited List(AReq, Result);
@@ -161,7 +161,7 @@ begin
   Result := Info(AReq as TReqInfo) as TTaskInfoResponse;
 end;
 
-function TTasksRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TTasksRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TTaskInfoResponse.Create(FEntityClass);
   inherited Info(AReq, Result);

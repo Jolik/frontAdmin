@@ -45,6 +45,9 @@
 		"dataspace": {
 			"host": "http://dataspace:8020/api/v2"
 		},
+		"signals": {
+			"host": "http://signals:8025/api/v1"
+		},
 		"redis": {
 			"host": "tcp://redis:6379",
 			"key_ttl": 3600

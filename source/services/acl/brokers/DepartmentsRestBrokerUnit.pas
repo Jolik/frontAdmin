@@ -4,18 +4,18 @@ interface
 
 uses
   RestBrokerBaseUnit, BaseRequests, BaseResponses,
-  DepartmentHttpRequests, HttpClientUnit, RestFieldSetBrokerUnit;
+  DepartmentHttpRequests, HttpClientUnit, RestBrokerUnit;
 
 type
-  TDepartmentsRestBroker = class(TRestFieldSetBroker)
+  TDepartmentsRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TDepartmentReqList): TDepartmentListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TDepartmentReqInfo): TDepartmentInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TDepartmentReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload;
     function Update(AReq: TDepartmentReqUpdate): TJSONResponse; overload;
@@ -31,8 +31,6 @@ type
 
 implementation
 
-uses APIConst;
-
 constructor TDepartmentsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
@@ -44,7 +42,7 @@ begin
   Result := 'acl';
 end;
 
-function TDepartmentsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TDepartmentsRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TDepartmentListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -111,7 +109,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TDepartmentsRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TDepartmentsRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TDepartmentInfoResponse.Create;
   inherited Info(AReq, Result);

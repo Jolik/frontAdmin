@@ -15,7 +15,7 @@ uses
 
 type
   /// <summary>Response wrapper for /dsgroups/list.</summary>
-  TDsGroupListResponse = class(TFieldSetListResponse)
+  TDsGroupListResponse = class(TListResponse)
   private
     function GetDsGroups: TDsGroupList;
   public
@@ -24,7 +24,7 @@ type
   end;
 
   /// <summary>Response wrapper for single group info.</summary>
-  TDsGroupInfoResponse = class(TFieldSetResponse)
+  TDsGroupInfoResponse = class(TResponse)
   private
     function GetGroup: TDsGroup;
   protected

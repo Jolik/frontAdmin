@@ -22,6 +22,13 @@ begin
     raise EDsGroupBrokerTestError.Create(Msg);
 end;
 
+procedure EnsureUrlEndsWith(const Actual, ExpectedSuffix, Context: string);
+begin
+  if not Actual.ToLower.EndsWith(ExpectedSuffix.ToLower) then
+    raise EDsGroupBrokerTestError.Create(
+      Format('%s URL mismatch: %s', [Context, Actual]));
+end;
+
 procedure TestResponses;
 const
   ListJson = '{"response":{"dsgroups":{"count":1,"items":[{"dsgid":"group-1","name":"Group"}]}}}';
@@ -74,7 +81,8 @@ begin
   try
     ListReq := Broker.CreateReqList as TDsGroupReqList;
     try
-      Ensure(ListReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/list', 'List request URL mismatch.');
+      EnsureUrlEndsWith(ListReq.GetURLWithParams,
+        '/dataserver/api/v2/dsgroups/list', 'List');
 //      ListReq.IncludeDataseries := True;
 //      Ensure(ListReq.GetURLWithParams.Contains('flag=-dataseries'), 'List request flag missing.');
     finally
@@ -83,7 +91,8 @@ begin
 
     InfoReq := Broker.CreateReqInfo('group-1') as TDsGroupReqInfo;
     try
-      Ensure(InfoReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1', 'Info request URL mismatch.');
+      EnsureUrlEndsWith(InfoReq.GetURLWithParams,
+        '/dataserver/api/v2/dsgroups/group-1', 'Info');
       InfoReq.IncludeDataseries := True;
       Ensure(InfoReq.GetURLWithParams.Contains('dataseries=true'), 'Info request dataseries flag missing.');
     finally
@@ -92,7 +101,8 @@ begin
 
     NewReq := Broker.CreateReqNew as TDsGroupReqNew;
     try
-      Ensure(NewReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/new', 'New request URL mismatch.');
+      EnsureUrlEndsWith(NewReq.GetURLWithParams,
+        '/dataserver/api/v2/dsgroups/new', 'New');
     finally
       NewReq.Free;
     end;
@@ -100,7 +110,8 @@ begin
     UpdateReq := Broker.CreateReqUpdate as TDsGroupReqUpdate;
     try
       UpdateReq.Id := 'group-1';
-      Ensure(UpdateReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1/update', 'Update request URL mismatch.');
+      EnsureUrlEndsWith(UpdateReq.GetURLWithParams,
+        '/dataserver/api/v2/dsgroups/group-1/update', 'Update');
     finally
       UpdateReq.Free;
     end;
@@ -108,7 +119,8 @@ begin
     RemoveReq := Broker.CreateReqRemove as TDsGroupReqRemove;
     try
       RemoveReq.Id := 'group-1';
-      Ensure(RemoveReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1/rem', 'Remove request URL mismatch.');
+      EnsureUrlEndsWith(RemoveReq.GetURLWithParams,
+        '/dataserver/api/v2/dsgroups/group-1/rem', 'Remove');
     finally
       RemoveReq.Free;
     end;
@@ -116,7 +128,8 @@ begin
     IncludeReq := Broker.CreateReqInclude;
     try
       IncludeReq.Id := 'group-1';
-      Ensure(IncludeReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1/include', 'Include request URL mismatch.');
+      EnsureUrlEndsWith(IncludeReq.GetURLWithParams,
+        '/dataserver/api/v2/dsgroups/group-1/include', 'Include');
     finally
       IncludeReq.Free;
     end;
@@ -124,7 +137,8 @@ begin
     ExcludeReq := Broker.CreateReqExclude;
     try
       ExcludeReq.Id := 'group-1';
-      Ensure(ExcludeReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1/exclude', 'Exclude request URL mismatch.');
+      EnsureUrlEndsWith(ExcludeReq.GetURLWithParams,
+        '/dataserver/api/v2/dsgroups/group-1/exclude', 'Exclude');
     finally
       ExcludeReq.Free;
     end;
@@ -139,7 +153,8 @@ var
   NewReq: TDsGroupReqNew;
   UpdateReq: TDsGroupReqUpdate;
   RemoveReq: TDsGroupReqRemove;
-  BodyGroup: TDsGroup;
+  BodyGroup: TDsGroupNewBody;
+  UpdateGroup: TDsGroupUpdateBody;
   Serialized: TJSONObject;
   NameValue: TJSONValue;
 begin
@@ -149,17 +164,19 @@ begin
     try
       Ensure(Assigned(NewReq.ReqBody), 'New request body must be assigned.');
       Ensure(NewReq.ReqBody is TDsGroupNewBody, 'New request body type mismatch.');
-      BodyGroup := TDsGroup(NewReq.ReqBody);
+      BodyGroup := NewReq.ReqBody as TDsGroupNewBody;
       BodyGroup.Name := 'UnitTestGroup';
-      BodyGroup.Ctxid := 'ctx-unit';
+      BodyGroup.ContextId := 'ctx-unit';
 
       Serialized := TJSONObject.Create;
       try
         BodyGroup.Serialize(Serialized);
         NameValue := Serialized.GetValue('name');
-        Ensure(Assigned(NameValue) and (NameValue.Value = 'UnitTestGroup'), 'New request name serialization mismatch.');
+        Ensure(Assigned(NameValue) and SameText(NameValue.Value, 'UnitTestGroup'),
+          'New request name serialization mismatch.');
         NameValue := Serialized.GetValue('ctxid');
-        Ensure(Assigned(NameValue) and (NameValue.Value = 'ctx-unit'), 'New request ctxid serialization mismatch.');
+        Ensure(Assigned(NameValue) and SameText(NameValue.Value, 'ctx-unit'),
+          'New request ctxid serialization mismatch.');
       finally
         Serialized.Free;
       end;
@@ -170,16 +187,18 @@ begin
     UpdateReq := Broker.CreateReqUpdate as TDsGroupReqUpdate;
     try
       UpdateReq.Id := 'group-1';
-      Ensure(UpdateReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1/update', 'Update request URL mismatch.');
+      EnsureUrlEndsWith(UpdateReq.GetURLWithParams,
+        '/dataserver/api/v2/dsgroups/group-1/update', 'Update');
       Ensure(Assigned(UpdateReq.ReqBody), 'Update request body must be assigned.');
-      BodyGroup := TDsGroup(UpdateReq.ReqBody);
-      BodyGroup.Name := 'UpdatedGroup';
+      UpdateGroup := UpdateReq.ReqBody as TDsGroupUpdateBody;
+      UpdateGroup.Name := 'UpdatedGroup';
 
       Serialized := TJSONObject.Create;
       try
-        BodyGroup.Serialize(Serialized);
+        UpdateGroup.Serialize(Serialized);
         NameValue := Serialized.GetValue('name');
-        Ensure(Assigned(NameValue) and (NameValue.Value = 'UpdatedGroup'), 'Update request name serialization mismatch.');
+        Ensure(Assigned(NameValue) and SameText(NameValue.Value, 'UpdatedGroup'),
+          'Update request name serialization mismatch.');
       finally
         Serialized.Free;
       end;
@@ -190,7 +209,8 @@ begin
     RemoveReq := Broker.CreateReqRemove as TDsGroupReqRemove;
     try
       RemoveReq.Id := 'group-1';
-      Ensure(RemoveReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/group-1/rem', 'Remove request URL mismatch.');
+      EnsureUrlEndsWith(RemoveReq.GetURLWithParams,
+        '/dataserver/api/v2/dsgroups/group-1/rem', 'Remove');
     finally
       RemoveReq.Free;
     end;

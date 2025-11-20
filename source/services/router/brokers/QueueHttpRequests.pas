@@ -8,7 +8,7 @@ uses
   QueueUnit;
 
 type
-  TQueueListResponse = class(TFieldSetListResponse)
+  TQueueListResponse = class(TListResponse)
   private
     function GetQueueList: TQueueList;
   public
@@ -16,7 +16,7 @@ type
     property QueueList: TQueueList read GetQueueList;
   end;
 
-  TQueueInfoResponse = class(TFieldSetResponse)
+  TQueueInfoResponse = class(TResponse)
   private
     function GetQueue: TQueue;
   public

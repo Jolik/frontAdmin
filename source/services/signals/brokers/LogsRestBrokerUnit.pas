@@ -27,7 +27,7 @@ type
 implementation
 
 uses
-  APIConst,
+  AppConfigUnit,
   HttpClientUnit;
 
 { TLogsRestBroker }
@@ -35,7 +35,7 @@ uses
 constructor TLogsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  FBasePath := constURLSignalsBasePath;
+  FBasePath := ResolveServiceBasePath('signals');
 end;
 
 constructor TLogsRestBroker.Create(const ATicket, ABasePath: string);

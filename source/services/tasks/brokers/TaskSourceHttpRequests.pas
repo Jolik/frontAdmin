@@ -14,7 +14,7 @@ uses
 
 type
   // List response for task sources
-  TTaskSourceListResponse = class(TFieldSetListResponse)
+  TTaskSourceListResponse = class(TListResponse)
   private
     function GetTaskSourceList: TTaskSourceList;
   public
@@ -23,7 +23,7 @@ type
   end;
 
   // Info response for a single task source
-  TTaskSourceInfoResponse = class(TFieldSetResponse)
+  TTaskSourceInfoResponse = class(TResponse)
   private
     function GetTaskSource: TTaskSource;
   public

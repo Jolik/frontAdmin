@@ -8,7 +8,7 @@ uses
   DepartmentUnit;
 
 type
-  TDepartmentListResponse = class(TFieldSetListResponse)
+  TDepartmentListResponse = class(TListResponse)
   private
     function GetDepartmentList: TDepartmentList;
   public
@@ -16,7 +16,7 @@ type
     property DepartmentList: TDepartmentList read GetDepartmentList;
   end;
 
-  TDepartmentInfoResponse = class(TFieldSetResponse)
+  TDepartmentInfoResponse = class(TResponse)
   private
     function GetDepartment: TDepartment;
   public

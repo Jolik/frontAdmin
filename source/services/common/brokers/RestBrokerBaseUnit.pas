@@ -54,56 +54,11 @@ end;
 
 procedure TRestBrokerBase.SetPath(const AServiceName: string; var ABasePath: string);
 var
-  ServiceConfig: TServiceConfig;
-  HostValue: string;
-
-  function CombineBase(const BaseUrl, Relative: string): string;
-  var
-    CleanBase: string;
-    CleanRelative: string;
-  begin
-    CleanBase := BaseUrl.Trim;
-    CleanRelative := Relative.Trim;
-    while (CleanBase <> '') and CleanBase.EndsWith('/') do
-      CleanBase := CleanBase.Substring(0, CleanBase.Length - 1);
-    while (CleanRelative <> '') and CleanRelative.StartsWith('/') do
-      CleanRelative := CleanRelative.Substring(1);
-
-    if CleanBase.IsEmpty then
-    begin
-      if Relative.StartsWith('/') then
-        Result := '/' + CleanRelative
-      else
-        Result := CleanRelative;
-      Exit;
-    end;
-
-    if CleanRelative.IsEmpty then
-    begin
-      Result := CleanBase;
-      Exit;
-    end;
-
-    Result := CleanBase + '/' + CleanRelative;
-  end;
-
+  ResolvedPath: string;
 begin
-  if (AServiceName = '') or (AppConfig = nil) then
-    Exit;
-
-  if not AppConfig.TryGetService(AServiceName, ServiceConfig) then
-    Exit;
-
-  HostValue := ServiceConfig.Host.Trim;
-  if HostValue = '' then
-    Exit;
-
-  if HostValue.Contains('://') then
-    ABasePath := HostValue
-  else if not AppConfig.BasePath.Trim.IsEmpty then
-    ABasePath := CombineBase(AppConfig.BasePath, HostValue)
-  else
-    ABasePath := HostValue;
+  ResolvedPath := ResolveServiceBasePath(AServiceName);
+  if ResolvedPath <> '' then
+    ABasePath := ResolvedPath;
 end;
 
 constructor TRestBrokerBase.Create(const ATicket: string);

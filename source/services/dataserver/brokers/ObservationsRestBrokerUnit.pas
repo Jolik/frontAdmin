@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   HttpClientUnit,
   BaseRequests,
   BaseResponses,
@@ -13,7 +13,7 @@ uses
 
 type
   /// <summary>Response wrapper for /observations/list.</summary>
-  TObservationsListResponse = class(TFieldSetListResponse)
+  TObservationsListResponse = class(TListResponse)
   private
     function GetObservationList: TObservationsList;
   public
@@ -22,7 +22,7 @@ type
   end;
 
   /// <summary>Response wrapper for /observations/&lt;oid&gt;.</summary>
-  TObservationInfoResponse = class(TFieldSetResponse)
+  TObservationInfoResponse = class(TResponse)
   private
     function GetObservation: TObservation;
   public
@@ -31,7 +31,7 @@ type
   end;
 
   /// <summary>Response wrapper for /observations/dstypes/&lt;dstid&gt;.</summary>
-  TDsTypeInfoResponse = class(TFieldSetResponse)
+  TDsTypeInfoResponse = class(TResponse)
   private
     function GetDsType: TDsType;
   public
@@ -58,7 +58,7 @@ type
   end;
 
   /// <summary>REST broker for dataserver observations.</summary>
-  TObservationsRestBroker = class(TRestFieldSetBroker)
+  TObservationsRestBroker = class(TRestBroker)
   private
     FBasePath: string;
   public
@@ -70,21 +70,18 @@ type
     function CreateReqDstTypeInfo(const ADstId: string = ''): TObservationReqDsTypeInfo;
 
     function List(AReq: TObservationsReqList): TObservationsListResponse; reintroduce; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
 
     function Info(AReq: TObservationReqInfo): TObservationInfoResponse; reintroduce; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
+    function Info(AReq: TReqInfo): TResponse; overload;
 
     function DsTypeInfo(AReq: TObservationReqDsTypeInfo): TDsTypeInfoResponse; overload;
-    function DsTypeInfo(AReq: TReqInfo): TFieldSetResponse; overload;
+    function DsTypeInfo(AReq: TReqInfo): TResponse; overload;
 
     property BasePath: string read FBasePath write FBasePath;
   end;
 
 implementation
-
-uses
-  APIConst;
 
 { TObservationsListResponse }
 
@@ -188,7 +185,7 @@ begin
   Result := DsTypeInfo(AReq as TReqInfo) as TDsTypeInfoResponse;
 end;
 
-function TObservationsRestBroker.DsTypeInfo(AReq: TReqInfo): TFieldSetResponse;
+function TObservationsRestBroker.DsTypeInfo(AReq: TReqInfo): TResponse;
 begin
   Result := TDsTypeInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -199,7 +196,7 @@ begin
   Result := Info(AReq as TReqInfo) as TObservationInfoResponse;
 end;
 
-function TObservationsRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TObservationsRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TObservationInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -210,7 +207,7 @@ begin
   Result := List(AReq as TReqList) as TObservationsListResponse;
 end;
 
-function TObservationsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TObservationsRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TObservationsListResponse.Create;
   inherited List(AReq, Result);

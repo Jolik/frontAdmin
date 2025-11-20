@@ -14,7 +14,7 @@ uses
 
 type
   // List response for sources
-  TSourceListResponse = class(TFieldSetListResponse)
+  TSourceListResponse = class(TListResponse)
   private
     function GetSourceList: TSourceList;
   public
@@ -23,7 +23,7 @@ type
   end;
 
   // Info response for a single source
-  TSourceInfoResponse = class(TFieldSetResponse)
+  TSourceInfoResponse = class(TResponse)
   private
     function GetSource: TSource;
   public

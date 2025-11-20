@@ -8,13 +8,13 @@ uses
   AbonentHttpRequests,
   BaseResponses,
   BaseRequests,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   RestBrokerBaseUnit,
   EntityUnit,
   AbonentUnit;
 
 type
-  TAbonentsRestBroker = class(TRestFieldSetBroker)
+  TAbonentsRestBroker = class(TRestBroker)
   protected
     BasePath: string;
   public
@@ -29,10 +29,10 @@ type
     function CreateReqRemove: TReqRemove; override;
 
     function List(AReq: TAbonentReqList): TAbonentListResponse;overload;
-    function List(AReq: TReqList): TFieldSetListResponse;overload;override;
+    function List(AReq: TReqList): TListResponse;overload;override;
 
     function Info(AReq: TAbonentReqInfo): TAbonentInfoResponse;overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse;overload;override;
+    function Info(AReq: TReqInfo): TResponse;overload;override;
 
     function New(AReq: TAbonentReqNew): TIdNewResponse;overload;
     function New(AReq: TReqNew): TJSONResponse;overload;override;
@@ -44,14 +44,14 @@ type
 
 implementation
 
-uses APIConst;
+
 
 function TAbonentsRestBroker.List(AReq: TAbonentReqList): TAbonentListResponse;
 begin
   result:= List(AReq as TReqList) as TAbonentListResponse;
 end;
 
-function TAbonentsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TAbonentsRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TAbonentListResponse.Create;
   inherited List(AReq,Result);
@@ -68,7 +68,7 @@ begin
   Result:= New(AReq as TReqNew) as TIdNewResponse;
 end;
 
-function TAbonentsRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TAbonentsRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TAbonentInfoResponse.Create;
   inherited Info(AReq, Result);

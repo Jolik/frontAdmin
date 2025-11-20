@@ -3,11 +3,11 @@ unit OperatorLinksRestBrokerUnit;
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestFieldSetBrokerUnit,
-  OperatorLinksHttpRequests, HttpClientUnit, APIConst;
+  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestBrokerUnit,
+  OperatorLinksHttpRequests, HttpClientUnit;
 
 type
-  TOperatorLinksRestBroker = class(TRestFieldSetBroker)
+  TOperatorLinksRestBroker = class(TRestBroker)
   private
     BasePath: string;
   public
@@ -15,9 +15,9 @@ type
     constructor Create(const ATicket: string = ''); override;
 
     function List(AReq: TOperatorLinkReqList): TOperatorLinkListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function Info(AReq: TOperatorLinkReqInfo): TOperatorLinkInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function New(AReq: TOperatorLinkReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TOperatorLinkReqUpdate): TJSONResponse; overload;
@@ -92,7 +92,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TOperatorLinksRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TOperatorLinksRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TOperatorLinkInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -104,7 +104,7 @@ begin
   Result := Info(AReq as TReqInfo) as TOperatorLinkInfoResponse;
 end;
 
-function TOperatorLinksRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TOperatorLinksRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TOperatorLinkListResponse.Create;
   Result := inherited List(AReq, Result);

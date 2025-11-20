@@ -13,7 +13,7 @@ uses
 
 type
   // List response for handlers
-  THandlerListResponse = class(TFieldSetListResponse)
+  THandlerListResponse = class(TListResponse)
   private
     function GetHandlerList: THandlerList;
   public
@@ -22,7 +22,7 @@ type
   end;
 
   // Info response for a single handler
-  THandlerInfoResponse = class(TFieldSetResponse)
+  THandlerInfoResponse = class(TResponse)
   private
     function GetHandler: THandler;
   public

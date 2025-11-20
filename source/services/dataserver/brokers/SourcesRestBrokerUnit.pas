@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   HttpClientUnit,
@@ -13,7 +13,7 @@ uses
 
 type
   // REST broker for /sources API
-  TSourcesRestBroker = class(TRestFieldSetBroker)
+  TSourcesRestBroker = class(TRestBroker)
   public
     ServicePath: string;
     BasePath: string;
@@ -22,11 +22,11 @@ type
     constructor Create(const ATicket: string = ''); overload;
 
     function ListAll(AReq: TSourceReqList): TSourceListResponse; overload;
-    function ListAll(AReq: TReqList): TFieldSetListResponse; overload;override;
+    function ListAll(AReq: TReqList): TListResponse; overload;override;
     function List(AReq: TSourceReqList): TSourceListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload;override;
+    function List(AReq: TReqList): TListResponse; overload;override;
     function Info(AReq: TSourceReqInfo): TSourceInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
+    function Info(AReq: TReqInfo): TResponse; overload;
     function New(AReq: TSourceReqNew): TIdNewResponse; overload;
     function Update(AReq: TSourceReqUpdate): TJSONResponse; overload;
     function Update(AReq: TReqUpdate): TJSONResponse; overload;
@@ -46,7 +46,7 @@ type
 implementation
 
 uses
-  StrUtils, APIConst;
+  StrUtils;
 
 { TSourcesRestBroker }
 
@@ -103,7 +103,7 @@ begin
   Result := Info(AReq as TReqInfo) as TSourceInfoResponse;
 end;
 
-function TSourcesRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TSourcesRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   result:=  TSourceInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -114,13 +114,13 @@ begin
   Result := List(AReq as TReqList) as TSourceListResponse;
 end;
 
-function TSourcesRestBroker.ListAll(AReq: TReqList): TFieldSetListResponse;
+function TSourcesRestBroker.ListAll(AReq: TReqList): TListResponse;
 begin
   Result := TSourceListResponse.Create;
   ListAll(AReq, Result);
 end;
 
-function TSourcesRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TSourcesRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TSourceListResponse.Create;
   ListAll(AReq, Result);

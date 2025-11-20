@@ -12,7 +12,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   ParentEditFormUnit, BaseRequests, BaseResponses,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   ListParentFormUnit,
   EntityUnit;
 
@@ -21,7 +21,7 @@ type
     CredMemFDMemTableEntitysid: TStringField;
     CredMemFDMemTableEntitytype: TStringField;
   protected
-    function CreateRestBroker: TRestFieldSetBroker; override;
+    function CreateRestBroker: TRestBroker; override;
     function CreateEditForm: TParentEditForm; override;
     procedure OnAddListItem(item: TFieldSet); override;
     procedure OnInfoUpdated(AEntity: TFieldSet); override;
@@ -52,7 +52,7 @@ begin
   Result := DsGroupEditForm;
 end;
 
-function TDsGroupsForm.CreateRestBroker: TRestFieldSetBroker;
+function TDsGroupsForm.CreateRestBroker: TRestBroker;
 begin
   Result := TDsGroupsRestBroker.Create(UniMainModule.XTicket);
 end;

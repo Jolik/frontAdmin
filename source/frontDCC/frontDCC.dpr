@@ -16,12 +16,10 @@ uses
   FuncUnit in '..\common\FuncUnit.pas',
   GUIDListUnit in '..\common\GUIDListUnit.pas',
   StringListUnit in '..\common\StringListUnit.pas',
-  APIConst in '..\services\common\brokers\APIConst.pas',
   BaseRequests in '..\services\common\brokers\BaseRequests.pas',
   BaseResponses in '..\services\common\brokers\BaseResponses.pas',
   HttpClientUnit in '..\services\common\brokers\HttpClientUnit.pas',
   RestBrokerBaseUnit in '..\services\common\brokers\RestBrokerBaseUnit.pas',
-  RestEntityBrokerUnit in '..\services\common\brokers\RestEntityBrokerUnit.pas',
   CompaniesRestBrokerUnit in '..\services\acl\brokers\CompaniesRestBrokerUnit.pas',
   CompanyHttpRequests in '..\services\acl\brokers\CompanyHttpRequests.pas',
   DepartmentsRestBrokerUnit in '..\services\acl\brokers\DepartmentsRestBrokerUnit.pas',
@@ -120,7 +118,7 @@ uses
   DirDownSettingEditFrameUnit in '..\forms\links\LinksFrames\DirDownSettingEditFrameUnit.pas' {DirDownSettingEditFrame: TUniFrame},
   FTPServerDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\FTPServerDownLinkSettingEditFrameUnit.pas' {FTPServerDownLinkSettingEditFrame: TUniFrame},
   SMTPSrvDownLinkSettingEditFrameUnit in '..\forms\links\LinksFrames\SMTPSrvDownLinkSettingEditFrameUnit.pas' {SMTPSrvDownLinkSettingEditFrame: TUniFrame},
-  RestFieldSetBrokerUnit in '..\services\common\brokers\RestFieldSetBrokerUnit.pas',
+  RestBrokerUnit in '..\services\common\brokers\RestBrokerUnit.pas',
   UniStorageHelpers in '..\common\UniStorageHelpers.pas',
   AuthMainFormUnit in '..\forms\common\AuthMainFormUnit.pas' {AuthMainForm: TUniForm},
   EmbedLoginFormUnit in '..\forms\common\EmbedLoginFormUnit.pas',
@@ -137,9 +135,7 @@ uses
   DsGroupUnit in '..\services\dataserver\entities\DsGroupUnit.pas',
   DataseriesUnit in '..\services\dataserver\entities\DataseriesUnit.pas',
   DsGroupsHttpRequests in '..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
-  DsGroupsRestBrokerUnit in '..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas';
-  ListParentFieldSetFormUnit in '..\forms\common\ListParentFieldSetFormUnit.pas',
-  ParentFieldSetFormUnit in '..\forms\common\ParentFieldSetFormUnit.pas';
+  DsGroupsRestBrokerUnit in '..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
   LogEntryViewFormUnit in '..\forms\logs\LogEntryViewFormUnit.pas' {LogEntryViewForm: TUniForm},
   LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
   LogUnit in '..\services\signals\entities\LogUnit.pas',
@@ -157,7 +153,8 @@ uses
   HistoryRecordsRestBrokerUnit in '..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
   StorageHttpRequests in '..\services\dataspace\brokers\StorageHttpRequests.pas',
   StorageRestBrokerUnit in '..\services\dataspace\brokers\StorageRestBrokerUnit.pas',
-  ContentViewFormUnit in '..\forms\contentView\ContentViewFormUnit.pas' {ContentViewForm: TUniForm};
+  ContentViewFormUnit in '..\forms\contentView\ContentViewFormUnit.pas' {ContentViewForm: TUniForm},
+  DefualtConfig in '..\common\DefualtConfig.pas';
 
 {$R *.res}
 

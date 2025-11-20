@@ -19,8 +19,8 @@ type
   public
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); overload; override;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
+    function Info(AReq: TReqInfo): TResponse; overload; override;
     function CreateReqList: TReqList; override;
 //    function CreateReqNew: TReqNew; override;
     function CreateReqInfo(id:string=''): TReqInfo; override;
@@ -28,7 +28,7 @@ type
 
 implementation
 
-uses SummaryTasksHttpRequests, APIConst;
+uses SummaryTasksHttpRequests;
 
 { TSummaryTasksRestBroker }
 
@@ -43,13 +43,13 @@ begin
   Result := 'summary';
 end;
 
-function TSummaryTasksRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TSummaryTasksRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TSummaryTaskInfoResponse.Create;
   inherited Info(AReq, Result);
 end;
 
-function TSummaryTasksRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TSummaryTasksRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TSummaryTaskListResponse.Create;
   Result := inherited List(AReq, Result);

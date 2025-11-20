@@ -4,16 +4,15 @@ interface
 
 uses
   System.SysUtils,
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   SearchHttpRequests,
-  HttpClientUnit,
-  APIConst;
+  HttpClientUnit;
 
 type
   { Брокер работы с ресурсом поиска }
-  TSearchRestBroker = class(TRestFieldSetBroker)
+  TSearchRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
@@ -27,9 +26,9 @@ type
 
     function Start(AReq: TSearchNewRequest): TSearchNewResponse;
     function Info(AReq: TSearchReqInfo): TSearchInfoResponse; overload;
-    function Info(AReq: TReqInfo): TFieldSetResponse; overload;
+    function Info(AReq: TReqInfo): TResponse; overload;
     function List(AReq: TSearchListRequest): TSearchListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function Abort(AReq: TSearchAbortRequest): TJSONResponse;
     function Results(AReq: TSearchResultsRequest): TSearchResultsResponse;
   end;
@@ -93,7 +92,7 @@ begin
     Result.ID := ASearchId;
 end;
 
-function TSearchRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
+function TSearchRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TSearchInfoResponse.Create;
   AReq.BasePath := BasePath;
@@ -110,7 +109,7 @@ begin
   Result := List(TReqList(AReq)) as TSearchListResponse;
 end;
 
-function TSearchRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TSearchRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TSearchListResponse.Create;
   AReq.BasePath := BasePath;

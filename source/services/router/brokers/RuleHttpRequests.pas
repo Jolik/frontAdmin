@@ -18,7 +18,7 @@ type
   end;
 
   // Response: list of rules
-  TRuleListResponse = class(TFieldSetListResponse)
+  TRuleListResponse = class(TListResponse)
   private
     function GetRuleList: TRuleList;
   public
@@ -27,7 +27,7 @@ type
   end;
 
   // Response: rule info
-  TRuleInfoResponse = class(TFieldSetResponse)
+  TRuleInfoResponse = class(TResponse)
   private
     function GetRule: TRule;
   public
@@ -36,7 +36,7 @@ type
   end;
 
   // Create: response for new rule (server may return payload without dedicated id wrapper)
-  TRuleNewResponse = class(TFieldSetResponse)
+  TRuleNewResponse = class(TResponse)
   public
     constructor Create; virtual;
   end;
@@ -81,8 +81,7 @@ type
 
 implementation
 
-uses
-  APIConst;
+
 
 { TRuleListResponse }
 

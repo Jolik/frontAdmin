@@ -12,7 +12,7 @@ uses
 
 type
   // Response wrapper for /locations/list
-  TLocationListResponse = class(TFieldSetListResponse)
+  TLocationListResponse = class(TListResponse)
   private
     function GetLocationList: TLocationList;
   public

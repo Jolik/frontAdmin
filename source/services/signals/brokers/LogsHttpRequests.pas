@@ -13,7 +13,7 @@ type
   /// <summary>
   ///   Response wrapper for the logs query_range endpoint.
   /// </summary>
-  TLogsResponse = class(TFieldSetResponse)
+  TLogsResponse = class(TResponse)
   private
     function GetLogs: TLogs;
   public

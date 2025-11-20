@@ -3,7 +3,7 @@ unit LocationsRestBrokerUnit;
 interface
 
 uses
-  RestFieldSetBrokerUnit,
+  RestBrokerUnit,
   BaseRequests,
   BaseResponses,
   LocationHttpRequests,
@@ -11,7 +11,7 @@ uses
 
 type
   // Broker for /locations endpoints
-  TLocationsRestBroker = class(TRestFieldSetBroker)
+  TLocationsRestBroker = class(TRestBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
@@ -19,17 +19,14 @@ type
     constructor Create(const ATicket: string = ''); overload;
 
     function List(AReq: TLocationReqList): TLocationListResponse; overload;
-    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; overload; override;
     function ListAll(AReq: TLocationReqList): TLocationListResponse; overload;
-    function ListAll(AReq: TReqList): TFieldSetListResponse; overload; override;
+    function ListAll(AReq: TReqList): TListResponse; overload; override;
 
     function CreateReqList: TReqList; override;
   end;
 
 implementation
-
-uses
-  APIConst;
 
 { TLocationsRestBroker }
 
@@ -55,7 +52,7 @@ begin
   Result := List(AReq as TReqList) as TLocationListResponse;
 end;
 
-function TLocationsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
+function TLocationsRestBroker.List(AReq: TReqList): TListResponse;
 begin
   Result := TLocationListResponse.Create;
   inherited List(AReq, Result);
@@ -67,7 +64,7 @@ begin
   ListAll(AReq, Result);
 end;
 
-function TLocationsRestBroker.ListAll(AReq: TReqList): TFieldSetListResponse;
+function TLocationsRestBroker.ListAll(AReq: TReqList): TListResponse;
 begin
   Result := TLocationListResponse.Create;
   inherited ListAll(AReq, Result);
