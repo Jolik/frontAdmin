@@ -73,10 +73,10 @@ type
   /// <summary>
   ///   Список профилей маршрутизатора.
   /// </summary>
-  TProfileList = class(TEntityList)
-  public
-    class function ItemClassType: TEntityClass; override;
-  end;
+  TProfileList = class(TFieldSetList)
+    public
+      class function ItemClassType: TFieldSetClass; override;
+    end;
 
 implementation
 
@@ -311,7 +311,7 @@ end;
 
 { TProfileList }
 
-class function TProfileList.ItemClassType: TEntityClass;
+class function TProfileList.ItemClassType: TFieldSetClass;
 begin
   Result := TProfile;
 end;

@@ -31,12 +31,12 @@ type
   end;
 
   // Response wrappers for Summary tasks using TSummaryTask/TSummaryTaskList
-  TSummaryTaskListResponse = class(TListResponse)
+  TSummaryTaskListResponse = class(TFieldSetListResponse)
   public
     constructor Create; reintroduce;
   end;
 
-  TSummaryTaskInfoResponse = class(TEntityResponse)
+  TSummaryTaskInfoResponse = class(TFieldSetResponse)
   public
     constructor Create; reintroduce;
   end;

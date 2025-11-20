@@ -192,7 +192,7 @@ function TLinkEditForm.LoadProfiles: boolean;
 var
   Pages : integer;
   resp: TProfileListResponse;
-  infoResp : TEntityResponse;
+  infoResp : TFieldSetResponse;
   req: TProfileReqList;
 begin
   if not IsEdit then
@@ -213,16 +213,16 @@ begin
       for var p in resp.ProfileList do
       begin
         infoResp:= nil;
-        var reqInfo := FProfilesBroker.CreateReqInfo(Link.Id, p.Id);
+        var reqInfo := FProfilesBroker.CreateReqInfo(Link.Id, (p as TProfile).Id);
         try
-          infoResp := FProfilesBroker.Info(reqInfo);
-          if infoResp.Entity <> nil then
-          begin
-            var ec := TProfile.Create;
-            ec.Assign(infoResp.Entity);
-            var pb2 := ec.ProfileBody;
-            FProfiles.Add(ec);
-          end;
+        infoResp := FProfilesBroker.Info(reqInfo);
+        if infoResp.FieldSet <> nil then
+        begin
+          var ec := TProfile.Create;
+          ec.Assign(infoResp.FieldSet);
+          var pb2 := ec.ProfileBody;
+          FProfiles.Add(ec);
+        end;
         finally
           reqInfo.Free;
           infoResp.Free;
@@ -258,7 +258,7 @@ begin
     begin
        var remReq := FProfilesBroker.CreateReqRemove;
        try
-         remReq.Id := prof.Id;
+         remReq.Id := (prof as TProfile).Id;
          delresp := FProfilesBroker.Remove(remReq);
        finally
           delresp.Free;

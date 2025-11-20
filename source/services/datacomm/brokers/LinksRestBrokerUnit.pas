@@ -3,18 +3,18 @@ unit LinksRestBrokerUnit;
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestEntityBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestFieldSetBrokerUnit,
   LinksHttpRequests, HttpClientUnit, APIConst;
 
 type
-  TLinksRestBroker = class(TRestEntityBroker)
+  TLinksRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
     constructor Create(const ATicket: string; const ABasePath:string);overload;
     function List(AReq: TLinkReqList): TLinkListResponse; overload;
-    function List(AReq: TReqList): TListResponse; overload; override;
+    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
     function Info(AReq: TLinkReqInfo): TLinkInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
     function New(AReq: TLinkReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TLinkReqUpdate): TJSONResponse; overload;
@@ -35,7 +35,7 @@ begin
   inherited Create(ATicket);BasePath := ABasePath;
 end;
 
-function TLinksRestBroker.List(AReq: TReqList): TListResponse;
+function TLinksRestBroker.List(AReq: TReqList): TFieldSetListResponse;
 begin
   Result := TLinkListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -49,7 +49,7 @@ end;
 function TLinksRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
   Result := TIdNewResponse.Create('lid');
-  Result := inherited New(AReq, Result);
+  inherited New(AReq, Result as TIdNewResponse);
 end;
 
 function TLinksRestBroker.New(AReq: TLinkReqNew): TIdNewResponse;
@@ -102,7 +102,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TLinksRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TLinksRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
 begin
   Result := TLinkInfoResponse.Create;
   inherited Info(AReq, Result);

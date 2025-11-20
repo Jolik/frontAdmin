@@ -5,19 +5,19 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses, RestBrokerBaseUnit,
-  ParentEditFormUnit, uniPanel, uniLabel,  RestEntityBrokerUnit ,
-  HandlersRestBrokerUnit;
+  ParentEditFormUnit, uniPanel, uniLabel,  RestFieldSetBrokerUnit ,
+  HandlersRestBrokerUnit, ListParentFormUnit;
 
 type
-  THandlersForm = class(TListParentForm)
+  THandlersForm = class(TListParentFieldSetForm)
   protected
     procedure Refresh(const AId: String = ''); override;
-    function  CreateRestBroker(): TRestEntityBroker; override;
+    function  CreateRestBroker(): TRestFieldSetBroker; override;
     function CreateEditForm: TParentEditForm; override;
   end;
 
@@ -42,7 +42,7 @@ begin
   Result := HandlerEditForm();
 end;
 
-function THandlersForm.CreateRestBroker: TRestEntityBroker;
+function THandlersForm.CreateRestBroker: TRestFieldSetBroker;
 begin
   Result := THandlersRestBroker.Create(UniMainModule.XTicket);
 end;

@@ -4,18 +4,18 @@ interface
 
 uses
   RestBrokerBaseUnit, BaseRequests, BaseResponses,
-  DepartmentHttpRequests, HttpClientUnit, RestEntityBrokerUnit;
+  DepartmentHttpRequests, HttpClientUnit, RestFieldSetBrokerUnit;
 
 type
-  TDepartmentsRestBroker = class(TRestEntityBroker)
+  TDepartmentsRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TDepartmentReqList): TDepartmentListResponse; overload;
-    function List(AReq: TReqList): TListResponse; overload; override;
+    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
     function Info(AReq: TDepartmentReqInfo): TDepartmentInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
     function New(AReq: TDepartmentReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload;
     function Update(AReq: TDepartmentReqUpdate): TJSONResponse; overload;
@@ -44,7 +44,7 @@ begin
   Result := 'acl';
 end;
 
-function TDepartmentsRestBroker.List(AReq: TReqList): TListResponse;
+function TDepartmentsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
 begin
   Result := TDepartmentListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -58,7 +58,7 @@ end;
 function TDepartmentsRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
   Result := TIdNewResponse.Create('depid');
-  Result := inherited New(AReq, Result);
+  inherited New(AReq, Result as TIdNewResponse);
 end;
 
 function TDepartmentsRestBroker.New(AReq: TDepartmentReqNew): TIdNewResponse;
@@ -111,7 +111,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TDepartmentsRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TDepartmentsRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
 begin
   Result := TDepartmentInfoResponse.Create;
   inherited Info(AReq, Result);

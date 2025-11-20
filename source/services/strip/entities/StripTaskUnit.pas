@@ -1,4 +1,4 @@
-п»їunit StripTaskUnit;
+unit StripTaskUnit;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   EntityUnit, TaskUnit;
 
 type
-  /// РљР»Р°СЃСЃ Р·Р°РґР°С‡Рё РїР°СЂСЃРµСЂР° (СЃРµСЂРІРёСЃ strip)
+  /// Класс задачи парсера (сервис strip)
   TStripTask = class (TTask)
   private
 
@@ -19,17 +19,17 @@ type
   end;
 
 type
-  ///  СЃРїРёСЃРѕРє Р·Р°РґР°С‡ РґР»СЏ СЃРµСЂРІРёСЃР° СЃС‚СЂРёРї
+  ///  список задач для сервиса стрип
   TStripTaskList = class (TTaskList)
   protected
-    ///  РјРµС‚РѕРґ РІРѕР·РІСЂР°С‰Р°РµС‚ РєРѕРЅРєСЂРµС‚РЅС‹Р№ С‚РёРї РѕР±СЉРµРєС‚Р° СЌР»РµРјРµРЅС‚Р° СЃРїРёСЃРєР°
-    ///  РїРѕС‚РѕРјРєРё РґРѕР»Р¶РЅС‹ РїРµСЂРµРѕРїСЂРµРґРµР»РёС‚СЊ РµРіРѕ, РїРѕС‚РѕРјСѓ С‡С‚Рѕ РѕРЅ Сѓ РІСЃРµС… СЂР°Р·РЅС‹Р№
+    ///  метод возвращает конкретный тип объекта элемента списка
+    ///  потомки должны переопределить его, потому что он у всех разный
     class function ItemClassType: TEntityClass; override;
 
   end;
 
 type
-  ///  РЅР°СЃС‚СЂРѕР№РєРё СЃСѓС‰РЅРѕСЃС‚Рё StripTask
+  ///  настройки сущности StripTask
   TStripTaskSettings = class (TSettings)
 
   end;
@@ -39,9 +39,10 @@ implementation
 
 { TStripTaskList }
 
-class function TStripTaskList.ItemClassType: TEntityClass;
+class function TStripTaskList.ItemClassType: TFieldSetClass;
 begin
   Result := TStripTask;
 end;
 
 end.
+

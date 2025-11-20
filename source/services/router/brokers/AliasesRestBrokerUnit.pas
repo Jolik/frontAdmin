@@ -9,11 +9,11 @@ uses
   HttpClientUnit,
   AliasHttpRequests,
   AliasUnit,
-  RestEntityBrokerUnit,
+  RestFieldSetBrokerUnit,
   APIConst;
 
 type
-  TAliasesRestBroker = class(TRestEntityBroker)
+  TAliasesRestBroker = class(TRestFieldSetBroker)
   public
     // Базовый путь API (например, '/router/api/v2')
     BasePath: string;
@@ -22,10 +22,10 @@ type
 
     // Типизированные обертки
     function List(AReq: TAliasReqList): TAliasListResponse; overload;
-    function List(AReq: TReqList): TListResponse; overload; override;
+    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
 
     function Info(AReq: TAliasReqInfo): TAliasInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
 
     function New(AReq: TAliasReqNew): TAliasNewResponse; overload;
 //!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
@@ -54,7 +54,7 @@ begin
   SetPath(ServiceName, BasePath);
 end;
 
-function TAliasesRestBroker.List(AReq: TReqList): TListResponse;
+function TAliasesRestBroker.List(AReq: TReqList): TFieldSetListResponse;
 begin
   Result := TAliasListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -127,7 +127,7 @@ begin
   Result := Info(AReq as TReqInfo) as TAliasInfoResponse;
 end;
 
-function TAliasesRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TAliasesRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
 begin
   Result := TAliasInfoResponse.Create;
   inherited Info(AReq, Result);

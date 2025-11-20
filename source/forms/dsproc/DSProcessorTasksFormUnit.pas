@@ -1,23 +1,23 @@
-﻿unit DSProcessorTasksFormUnit;
+unit DSProcessorTasksFormUnit;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
    EntityUnit,
-  ParentEditFormUnit, TasksParentFormUnit,  RestEntityBrokerUnit, TasksRestBrokerUnit,
+  ParentEditFormUnit, TasksParentFormUnit,  RestFieldSetBrokerUnit, TasksRestBrokerUnit,
   TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel, APIConst;
 
 type
   TDSProcessorTasksForm = class(TTaskParentForm)
   protected
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestFieldSetBroker; override;
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
   public
@@ -45,7 +45,7 @@ begin
   Result := DSProcessorTaskEditForm();
 end;
 
-function TDSProcessorTasksForm.CreateRestBroker: TRestEntityBroker;
+function TDSProcessorTasksForm.CreateRestBroker: TRestFieldSetBroker;
 begin
    result:= inherited;
   (result as TTasksRestBroker).BasePath:=  APIConst.constURLDSProcessBasePath
@@ -57,3 +57,5 @@ begin
 end;
 
 end.
+
+

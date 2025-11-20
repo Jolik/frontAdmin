@@ -13,20 +13,20 @@ uses
 
 type
   // List response for handlers
-  THandlerListResponse = class(TListResponse)
+  THandlerListResponse = class(TFieldSetListResponse)
   private
     function GetHandlerList: THandlerList;
   public
-    constructor Create;
+    constructor Create; override;
     property HandlerList: THandlerList read GetHandlerList;
   end;
 
   // Info response for a single handler
-  THandlerInfoResponse = class(TEntityResponse)
+  THandlerInfoResponse = class(TFieldSetResponse)
   private
     function GetHandler: THandler;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Handler: THandler read GetHandler;
   end;
 
@@ -76,7 +76,7 @@ end;
 
 function THandlerListResponse.GetHandlerList: THandlerList;
 begin
-  Result := EntityList as THandlerList;
+  Result := FieldSetList as THandlerList;
 end;
 
 { THandlerInfoResponse }
@@ -88,7 +88,7 @@ end;
 
 function THandlerInfoResponse.GetHandler: THandler;
 begin
-  Result := Entity as THandler;
+  Result := FieldSet as THandler;
 end;
 
 { Requests }

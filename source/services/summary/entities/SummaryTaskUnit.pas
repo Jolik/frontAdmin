@@ -1,4 +1,4 @@
-﻿unit SummaryTaskUnit;
+unit SummaryTaskUnit;
 
 interface
 
@@ -20,7 +20,7 @@ type
     );
 
 type
-    ///  íàñòðîéêè ñóùíîñòè SummaryTask
+    ///  iano?ieee nouiinoe SummaryTask
   TSummaryTaskSettings = class (TTaskSettings)
   private
     FSummaryTaskType: TSummaryTaskType;
@@ -38,21 +38,21 @@ type
     // SummaryTaskType example SummarySynop
     property SummaryTaskType: TSummaryTaskType read FSummaryTaskType write SetSummaryTaskType;
 
-    ///  çíà÷åíèå MonthDays èç Settings
+    ///  cia?aiea MonthDays ec Settings
     property MonthDays: string read FMonthDays write FMonthDays;
-    ///  çíà÷åíèå Header2 èç Settings
+    ///  cia?aiea Header2 ec Settings
     property Header2: string read FHeader2 write FHeader2;
-    ///  çíà÷åíèå Local èç Settings
+    ///  cia?aiea Local ec Settings
     property Local: Boolean read FLocal write FLocal;
-    ///  çíà÷åíèå CheckLate èç Settings
+    ///  cia?aiea CheckLate ec Settings
     property CheckLate: Boolean read FCheckLate write FCheckLate;
-    ///  çíà÷åíèå HeaderCorr èç Settings
+    ///  cia?aiea HeaderCorr ec Settings
     property HeaderCorr: Integer read FHeaderCorr write FHeaderCorr;
-    ///  çíà÷åíèå LateEvery èç Settings
+    ///  cia?aiea LateEvery ec Settings
     property LateEvery: Integer read FLateEvery write FLateEvery;
-    ///  çíà÷åíèå Time èç Settings
+    ///  cia?aiea Time ec Settings
     property Time: string read FTime write FTime;
-    ///  çíà÷åíèå Header èç Settings
+    ///  cia?aiea Header ec Settings
     property Header: string read FHeader write FHeader;
 
     procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
@@ -61,26 +61,26 @@ type
   end;
 
 type
-  /// Êëàññ çàäà÷è ïàðñåðà (ñåðâèñ summary)
+  /// Eeann caaa?e ia?na?a (na?aen summary)
   TSummaryTask = class (TTask)
   private
 
   protected
     procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
 
-    ///  ìåòîä âîçâðàùàåò êîíêðåòíûé òèï îáúåêòà Settings
-    ///  ïîòîìêè äîëæíû ïåðåîïðåäåëèòü åãî, ïîòîìó ÷òî îí ó âñåõ ðàçíûé
+    ///  iaoia aica?auaao eiie?aoiue oei iauaeoa Settings
+    ///  iioiiee aie?iu ia?aii?aaaeeou aai, iioiio ?oi ii o anao ?aciue
     class function SettingsClassType: TSettingsClass; override;
   public
     function TaskSettings:TSummaryTaskSettings;
   end;
 
 type
-  ///  ñïèñîê çàäà÷ äëÿ ñåðâèñà ñàììàðè
+  ///  nienie caaa? aey na?aena naiia?e
   TSummaryTaskList = class (TTaskList)
   protected
-    ///  ìåòîä âîçâðàùàåò êîíêðåòíûé òèï îáúåêòà ýëåìåíòà ñïèñêà
-    ///  ïîòîìêè äîëæíû ïåðåîïðåäåëèòü åãî, ïîòîìó ÷òî îí ó âñåõ ðàçíûé
+    ///  iaoia aica?auaao eiie?aoiue oei iauaeoa yeaiaioa nienea
+    ///  iioiiee aie?iu ia?aii?aaaeeou aai, iioiio ?oi ii o anao ?aciue
     class function ItemClassType: TEntityClass; override;
 
   end;
@@ -89,12 +89,12 @@ type
 implementation
 
 var
-  // SummaryTaskType2Str строка = TSummaryTaskType
+  // SummaryTaskType2Str ������ = TSummaryTaskType
   SummaryTaskType2Str: TKeyValue<TSummaryTaskType>;
 
 { TSummaryTaskList }
 
-class function TSummaryTaskList.ItemClassType: TEntityClass;
+class function TSummaryTaskList.ItemClassType: TFieldSetClass;
 begin
   Result := TSummaryTask;
 end;
@@ -107,7 +107,7 @@ begin
     FreeAndNil(FTaskCustomSettings);
 
   FSummaryTaskType := Value;
-  ///  в зависимости от типа устанавливаем различные настройки
+  ///  � ����������� �� ���� ������������� ��������� ���������
   case Value of
     sttTaskSummaryCXML: FTaskCustomSettings := TSummaryCXMLCustomSettings.Create();
     sttTaskSummarySEBA: FTaskCustomSettings := TSummarySEBACustomSettings.Create();
@@ -182,14 +182,14 @@ end;
 
 procedure TSummaryTask.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
 begin
-  ///  определяем тип задачи до разбора настроек
+  ///  ���������� ��� ������ �� ������� ��������
   var ModuleName := GetValueStrDef(src, 'module', '');
   (Settings as TSummaryTaskSettings).SummaryTaskType := SummaryTaskType2Str.ValueByKey(ModuleName, sttUnknown);
 
-  ///  сохраняем module до вызова базового парсера
+  ///  ��������� module �� ������ �������� �������
   Module := ModuleName;
 
-  ///  заполняем базовые поля задачи
+  ///  ��������� ������� ���� ������
   inherited Parse(src, APropertyNames);
 end;
 
@@ -214,3 +214,5 @@ finalization
   SummaryTaskType2Str.Free;
 
 end.
+
+

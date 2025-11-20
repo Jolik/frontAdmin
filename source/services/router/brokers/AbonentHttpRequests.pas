@@ -36,22 +36,22 @@ type
   /// <summary>
   /// Response wrapper that parses abonent list payloads.
   /// </summary>
-  TAbonentListResponse = class(TListResponse)
+  TAbonentListResponse = class(TFieldSetListResponse)
   private
     function GetAbonentList: TAbonentList;
   public
-    constructor Create;
+    constructor Create; override;
     property AbonentList: TAbonentList read GetAbonentList;
   end;
 
   /// <summary>
   /// Response wrapper that parses abonent info payloads.
   /// </summary>
-  TAbonentInfoResponse = class(TEntityResponse)
+  TAbonentInfoResponse = class(TFieldSetResponse)
   private
     function GetAbonent: TAbonent;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Abonent: TAbonent read GetAbonent;
   end;
 
@@ -207,7 +207,7 @@ end;
 
 function TAbonentListResponse.GetAbonentList: TAbonentList;
 begin
-  Result := EntityList as TAbonentList;
+  Result := FieldSetList as TAbonentList;
 end;
 { TAbonentReqNewUpdateBody }
 
@@ -358,7 +358,7 @@ end;
 
 function TAbonentInfoResponse.GetAbonent: TAbonent;
 begin
-  Result := Entity as TAbonent;
+  Result := FieldSet as TAbonent;
 end;
 
 { TAbonentReqNew }

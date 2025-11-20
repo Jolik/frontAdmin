@@ -8,19 +8,19 @@ uses
   ChannelUnit;
 
 type
-  TChannelListResponse = class(TListResponse)
+  TChannelListResponse = class(TFieldSetListResponse)
   private
     function GetChannelList: TChannelList;
   public
-    constructor Create;
+    constructor Create; override;
     property ChannelList: TChannelList read GetChannelList;
   end;
 
-  TChannelInfoResponse = class(TEntityResponse)
+  TChannelInfoResponse = class(TFieldSetResponse)
   private
     function GetChannel: TChannel;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Channel: TChannel read GetChannel;
   end;
 
@@ -69,7 +69,7 @@ end;
 
 function TChannelListResponse.GetChannelList: TChannelList;
 begin
-  Result := EntityList as TChannelList;
+  Result := FieldSetList as TChannelList;
 end;
 
 { TChannelInfoResponse }
@@ -81,7 +81,7 @@ end;
 
 function TChannelInfoResponse.GetChannel: TChannel;
 begin
-  Result := Entity as TChannel;
+  Result := FieldSet as TChannel;
 end;
 
 { Requests }

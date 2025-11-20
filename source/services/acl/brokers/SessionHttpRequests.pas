@@ -10,11 +10,11 @@ uses
   SessionUnit;
 
 type
-  TSessionInfoResponse = class(TEntityResponse)
+  TSessionInfoResponse = class(TFieldSetResponse)
   private
     function GetSession: TSession;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Session: TSession read GetSession;
   end;
 
@@ -41,7 +41,7 @@ end;
 
 function TSessionInfoResponse.GetSession: TSession;
 begin
-  Result := Entity as TSession;
+  Result := FieldSet as TSession;
 end;
 
 { TSessionReqInfo }

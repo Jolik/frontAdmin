@@ -5,13 +5,13 @@ interface
 uses
   System.SysUtils,
   RestBrokerBaseUnit,
-  RestEntityBrokerUnit,
+  RestFieldSetBrokerUnit,
   BaseRequests,
   BaseResponses,
   SessionHttpRequests;
 
 type
-  TSessionsRestBroker = class(TRestEntityBroker)
+  TSessionsRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;

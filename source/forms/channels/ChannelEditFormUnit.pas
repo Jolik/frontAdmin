@@ -214,7 +214,7 @@ begin
     begin
        var remReq := FProfilesBroker.CreateReqRemove;
        try
-         remReq.Id := prof.Id;
+         remReq.Id := (prof as TProfile).Id;
          delresp := FProfilesBroker.Remove(remReq);
        finally
           delresp.Free;

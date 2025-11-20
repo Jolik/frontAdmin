@@ -3,19 +3,19 @@ unit QueuesRestBrokerUnit;
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses,     RestEntityBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses,     RestFieldSetBrokerUnit,
   QueueHttpRequests, HttpClientUnit;
 
 type
-  TQueuesRestBroker = class(TRestEntityBroker)
+  TQueuesRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TQueueReqList): TQueueListResponse; overload;
-    function List(AReq: TReqList): TListResponse; overload; override;
+    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
     function Info(AReq: TQueueReqInfo): TQueueInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
     function New(AReq: TQueueReqNew): TJSONResponse; overload;
 //!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
     function Update(AReq: TQueueReqUpdate): TJSONResponse; overload;
@@ -39,7 +39,7 @@ begin
   SetPath(ServiceName, BasePath);
 end;
 
-function TQueuesRestBroker.List(AReq: TReqList): TListResponse;
+function TQueuesRestBroker.List(AReq: TReqList): TFieldSetListResponse;
 begin
   Result := TQueueListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -106,7 +106,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TQueuesRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TQueuesRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
 begin
   Result := TQueueInfoResponse.Create;
   inherited Info(AReq, Result);

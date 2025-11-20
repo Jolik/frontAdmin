@@ -1,4 +1,4 @@
-﻿unit AliasHttpRequests;
+unit AliasHttpRequests;
 
 interface
 
@@ -21,20 +21,20 @@ type
   end;
 
   // Response: list of aliases
-  TAliasListResponse = class(TListResponse)
+  TAliasListResponse = class(TFieldSetListResponse)
   private
     function GetAliasList: TAliasList;
   public
-    constructor Create;
+    constructor Create; override;
     property AliasList: TAliasList read GetAliasList;
   end;
 
   // Response: alias info
-  TAliasInfoResponse = class(TEntityResponse)
+  TAliasInfoResponse = class(TFieldSetResponse)
   private
     function GetAlias: TAlias;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Alias: TAlias read GetAlias;
   end;
 
@@ -120,7 +120,7 @@ end;
 
 function TAliasListResponse.GetAliasList: TAliasList;
 begin
-  Result := EntityList as TAliasList;
+  Result := FieldSetList as TAliasList;
 end;
 
 { TAliasInfoResponse }
@@ -132,7 +132,7 @@ end;
 
 function TAliasInfoResponse.GetAlias: TAlias;
 begin
-  Result := Entity as TAlias;
+  Result := FieldSet as TAlias;
 end;
 
 { TAliasNewResult / TAliasNewResponse }
@@ -252,3 +252,6 @@ begin
 end;
 
 end.
+
+
+

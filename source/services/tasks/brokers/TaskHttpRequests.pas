@@ -1,4 +1,4 @@
-﻿unit TaskHttpRequests;
+unit TaskHttpRequests;
 
 interface
 
@@ -21,11 +21,11 @@ type
     procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
   end;
 
-  TTaskListResponse = class(TListResponse)
+  TTaskListResponse = class(TFieldSetListResponse)
   private
     function GetTaskList: TTaskList;
   public
-    constructor Create(AListClass: TEntityListClass = nil); reintroduce; overload;
+    constructor Create(AListClass: TFieldSetListClass = nil); reintroduce; overload;
     property TaskList: TTaskList read GetTaskList;
   end;
 
@@ -37,11 +37,11 @@ type
     property TaskTypesList: TTaskTypesList read GetTaskTypesList;
   end;
 
-  TTaskInfoResponse = class(TEntityResponse)
+  TTaskInfoResponse = class(TFieldSetResponse)
   private
     function GetTask: TTask;
   public
-    constructor Create(AEntityClass: TEntityClass = nil); reintroduce; overload;
+    constructor Create(AEntityClass: TFieldSetClass = nil); reintroduce; overload;
     property Task: TTask read GetTask;
   end;
 
@@ -132,7 +132,7 @@ implementation
 
 { TTaskListResponse }
 
-constructor TTaskListResponse.Create(AListClass: TEntityListClass);
+constructor TTaskListResponse.Create(AListClass: TFieldSetListClass);
 begin
   if not Assigned(AListClass) then
     AListClass := TTaskList;
@@ -141,12 +141,12 @@ end;
 
 function TTaskListResponse.GetTaskList: TTaskList;
 begin
-  Result := EntityList as TTaskList;
+    Result := FieldSetList as TTaskList;
 end;
 
 { TTaskInfoResponse }
 
-constructor TTaskInfoResponse.Create(AEntityClass: TEntityClass);
+constructor TTaskInfoResponse.Create(AEntityClass: TFieldSetClass);
 begin
   if not Assigned(AEntityClass) then
     AEntityClass := TTask;
@@ -155,7 +155,7 @@ end;
 
 function TTaskInfoResponse.GetTask: TTask;
 begin
-  Result := Entity as TTask;
+    Result := FieldSet as TTask;
 end;
 
 { TTaskNewResponse / TTaskNewResult }
@@ -418,5 +418,7 @@ begin
 end;
 
 end.
+
+
 
 

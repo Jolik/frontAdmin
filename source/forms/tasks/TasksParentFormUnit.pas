@@ -1,11 +1,11 @@
-п»їunit TasksParentFormUnit;
+unit TasksParentFormUnit;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPanel, uniLabel, uniPageControl, uniSplitter,
@@ -13,10 +13,10 @@ uses
   EntityUnit, TaskUnit,
   TaskEditParentFormUnit, TaskSourceUnit, ParentEditFormUnit,
   TaskSourcesRestBrokerUnit, TaskSourceHttpRequests, TaskTypesUnit,
-  TasksRestBrokerUnit, TaskHttpRequests, BaseRequests, RestEntityBrokerUnit;
+  TasksRestBrokerUnit, TaskHttpRequests, BaseRequests, RestFieldSetBrokerUnit;
 
 type
-  TTaskParentForm = class(TListParentForm)
+  TTaskParentForm = class(TListParentFieldSetForm)
     cpTaskInfoModule: TUniContainerPanel;
     lTaskInfoModule: TUniLabel;
     lTaskInfoModuleValue: TUniLabel;
@@ -36,10 +36,10 @@ type
     function GetTaskBroker: TTasksRestBroker;
     procedure OnCreate; override;
     procedure UpdateTaskTypes;
-    procedure OnAddListItem(item: TEntity);override;
-    procedure OnInfoUpdated(AEntity: TEntity);override;
+    procedure OnAddListItem(item: TFieldSet);override;
+    procedure OnInfoUpdated(AFieldSet: TFieldSet);override;
     ///
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestFieldSetBroker; override;
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; virtual;
     function CreateEditForm(): TParentEditForm; override;
 
@@ -76,7 +76,7 @@ begin
 end;
 
 
-function TTaskParentForm.CreateRestBroker: TRestEntityBroker;
+function TTaskParentForm.CreateRestBroker: TRestFieldSetBroker;
 begin
   Result := TTasksRestBroker.Create(UniMainModule.XTicket);
 end;
@@ -208,7 +208,7 @@ begin
  result:=  SaveTaskCommon(False, AID, AEntity);
 end;
 
-procedure TTaskParentForm.OnAddListItem(item: TEntity);
+procedure TTaskParentForm.OnAddListItem(item: TFieldSet);
 begin
   inherited;
   with Item as TTask do
@@ -224,7 +224,7 @@ begin
     UpdateTaskTypes;
 end;
 
-procedure TTaskParentForm.OnInfoUpdated(AEntity: TEntity);
+procedure TTaskParentForm.OnInfoUpdated(AFieldSet: TFieldSet);
 begin
   inherited;
   lTaskInfoModuleValue.Caption := (AEntity as TTask).Module;
@@ -241,7 +241,7 @@ begin
     Exit;
 
   try
-    // РЎРѕР·РґР°С‘Рј Р·Р°РїСЂРѕСЃ
+    // Создаём запрос
     if IsNew then
       Req := RestBroker.CreateReqNew
     else
@@ -251,7 +251,7 @@ begin
       Exit;
 
 
-    // Р—Р°РїРѕР»РЅСЏРµРј ID, РµСЃР»Рё РµСЃС‚СЊ
+    // Заполняем ID, если есть
     if not IsNew then
     with (Req as TReqUpdate) do begin
       if EditForm.Id <> '' then
@@ -260,11 +260,11 @@ begin
         Id := TEntity(EditForm.Entity).Id;
     end;
 
-    // РљРѕРїРёСЂСѓРµРј РїРѕР»СЏ РёР· С„РѕСЂРјС‹ РІ С‚РµР»Рѕ Р·Р°РїСЂРѕСЃР°
+    // Копируем поля из формы в тело запроса
     if Assigned(Req.ReqBody) and (AEntity is TFieldSet) then
       TFieldSet(Req.ReqBody).Assign(AEntity);
 
-    // РЎРѕР±РёСЂР°РµРј sources[]
+    // Собираем sources[]
     var taskBody := TTaskUpdateBody(Req.ReqBody);
     if Assigned(taskBody.Sources) then
     begin
@@ -274,7 +274,7 @@ begin
     end;
 
 
-    // РћС‚РїСЂР°РІР»СЏРµРј Р·Р°РїСЂРѕСЃ
+    // Отправляем запрос
     if IsNew then
       JR := RestBroker.New(Req as TReqNew)
     else
@@ -296,6 +296,10 @@ begin
 end;
 
 end.
+
+
+
+
 
 
 

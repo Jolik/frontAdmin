@@ -1,18 +1,18 @@
-п»їunit SummaryTasksFormUnit;
+unit SummaryTasksFormUnit;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
    EntityUnit,
   ParentEditFormUnit,
-  TasksParentFormUnit, RestEntityBrokerUnit, RestBrokerBaseUnit, SummaryTasksRestBrokerUnit,
+  TasksParentFormUnit, RestFieldSetBrokerUnit, RestBrokerBaseUnit, SummaryTasksRestBrokerUnit,
   TaskSourcesRestBrokerUnit, TaskSourceUnit, uniPanel, uniLabel, APIConst,
   uniMultiItem, uniListBox, SummaryTaskUnit;
 
@@ -24,12 +24,12 @@ type
     procedure btnNewClick(Sender: TObject);
   protected
     procedure OnCreate; override;
-    procedure OnInfoUpdated(AEntity: TEntity);override;
+    procedure OnInfoUpdated(AFieldSet: TFieldSet);override;
     ///
 //    procedure Refresh(const AId: String = ''); override;
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestFieldSetBroker; override;
 
 //    procedure UpdateCallback(ASender: TComponent; AResult: Integer);
 
@@ -56,15 +56,15 @@ procedure TSummaryTasksForm.btnNewClick(Sender: TObject);
 begin
   PrepareEditForm;
 
-  ///  СЃРѕР·РґР°РµРј РєР»Р°СЃСЃ СЃСѓС‰РЅРѕСЃС‚Рё РѕС‚ Р±СЂРѕРєРµСЂР°
+  ///  создаем класс сущности от брокера
   var req := TSummaryTaskNewBody.Create;
-  ///  СѓСЃС‚Р°РЅР°РІР»Р°РёРµРј СЃСѓС‰РЅРѕСЃС‚СЊ РІ РѕРєРЅРѕ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ
+  ///  устанавлаием сущность в окно редактирования
   EditForm.Entity := req;
 
   try
     EditForm.ShowModalEx(NewCallback);
   finally
-///  СѓРґР°Р»СЏС‚СЊ РЅРµР»СЊР·СЏ РїРѕС‚РѕРјСѓ С‡С‚Рѕ РєР»Р°СЃСЃ РїРµСЂРµС…РѕРґРёС‚ РїРѕРґ СѓРїСЂР°РІР»РµРЅРёРµ С„РѕСЂРјСѓ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ
+///  удалять нельзя потому что класс переходит под управление форму редактирования
 ///    LEntity.Free;
   end;
 end;
@@ -76,7 +76,7 @@ begin
   Result:= res;
 end;
 
-function TSummaryTasksForm.CreateRestBroker: TRestEntityBroker;
+function TSummaryTasksForm.CreateRestBroker: TRestFieldSetBroker;
 begin
   result:= TSummaryTasksRestBroker.Create(UniMainModule.XTicket);
 end;
@@ -92,22 +92,26 @@ begin
   inherited;
 end;
 
-procedure TSummaryTasksForm.OnInfoUpdated(AEntity: TEntity);
+procedure TSummaryTasksForm.OnInfoUpdated(AFieldSet: TFieldSet);
 begin
   inherited;
   lbSettings.Items.Clear;
-  with FSelectedEntity as TSummaryTask do begin
-    lbSettings.Items.AddPair('РЎРѕРєСЂР°С‰РµРЅРЅС‹Р№ Р·Р°РіРѕР»РѕРІРѕРє', TaskSettings.Header);
-    lbSettings.Items.AddPair('РЎРѕРєСЂР°С‰РµРЅРЅС‹Р№ Р·Р°РіРѕР»РѕРІРѕРє 2', TaskSettings.Header2);
-    lbSettings.Items.AddPair('РљРѕСЂСЂРµРєС‚РёСЂРѕРІРєР° РІСЂРµРјРµРЅРё СЃРѕРєСЂР°С‰РµРЅРЅРѕРіРѕ Р·Р°РіРѕР»РѕРІРєР°', IntToStr(TaskSettings.HeaderCorr));
-    lbSettings.Items.AddPair('Р”РЅРё РјРµСЃСЏС†Р°', TaskSettings.MonthDays);
-    lbSettings.Items.AddPair('РЎСЂРѕРєРё РїРѕРґР°С‡Рё', TaskSettings.Time);
-    lbSettings.Items.AddPair('РџСЂРѕРІРµСЂСЏС‚СЊ РѕРїРѕР·РґР°РІС€РёРµ РЅР°Р±Р»СЋРґРµРЅРёСЏ', BoolToStr(TaskSettings.CheckLate,true));
-    lbSettings.Items.AddPair('РєР°Р¶РґС‹Рµ X СЃРµРєСѓРЅРґ:', IntToStr(TaskSettings.LateEvery));
-    lbSettings.Items.AddPair('РєР°Р¶РґС‹Рµ N РјРёРЅСѓС‚:', IntToStr(TaskSettings.LatePeriod));
+  with AFieldSet as TSummaryTask do begin
+    lbSettings.Items.AddPair('Сокращенный заголовок', TaskSettings.Header);
+    lbSettings.Items.AddPair('Сокращенный заголовок 2', TaskSettings.Header2);
+    lbSettings.Items.AddPair('Корректировка времени сокращенного заголовка', IntToStr(TaskSettings.HeaderCorr));
+    lbSettings.Items.AddPair('Дни месяца', TaskSettings.MonthDays);
+    lbSettings.Items.AddPair('Сроки подачи', TaskSettings.Time);
+    lbSettings.Items.AddPair('Проверять опоздавшие наблюдения', BoolToStr(TaskSettings.CheckLate,true));
+    lbSettings.Items.AddPair('каждые X секунд:', IntToStr(TaskSettings.LateEvery));
+    lbSettings.Items.AddPair('каждые N минут:', IntToStr(TaskSettings.LatePeriod));
     var Ex:= TaskSettings.ExcludeWeek;
 
   end;
 end;
 
 end.
+
+
+
+

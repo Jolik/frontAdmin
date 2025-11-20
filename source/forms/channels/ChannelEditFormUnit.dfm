@@ -2,10 +2,8 @@ inherited ChannelEditForm: TChannelEditForm
   ClientHeight = 813
   ClientWidth = 882
   Caption = #1057#1086#1079#1076#1072#1085#1080#1077'/'#1088#1077#1076#1072#1082#1090#1080#1088#1086#1074#1072#1085#1080#1077' '#1082#1072#1085#1072#1083#1072'...'
-  ExplicitLeft = 3
-  ExplicitTop = 3
-  ExplicitWidth = 898
-  ExplicitHeight = 852
+  ExplicitWidth = 900
+  ExplicitHeight = 860
   TextHeight = 15
   inherited pnBottom: TUniContainerPanel
     Top = 763
@@ -49,8 +47,8 @@ inherited ChannelEditForm: TChannelEditForm
     ExplicitTop = 108
     ExplicitWidth = 880
     ExplicitHeight = 380
-    ScrollHeight = 655
-    ScrollWidth = 882
+    ScrollHeight = 414
+    ScrollWidth = 819
     object panelLink: TUniPanel
       Left = 0
       Top = 0

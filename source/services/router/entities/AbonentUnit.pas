@@ -41,9 +41,9 @@ type
   /// <summary>
   /// List of router abonents.
   /// </summary>
-  TAbonentList = class(TEntityList)
+  TAbonentList = class(TFieldSetList)
   public
-    class function ItemClassType: TEntityClass; override;
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 implementation
@@ -191,7 +191,7 @@ begin
     FAttr.Clear;
 end;
 
-class function TAbonentList.ItemClassType: TEntityClass;
+class function TAbonentList.ItemClassType: TFieldSetClass;
 begin
   Result := TAbonent;
 end;

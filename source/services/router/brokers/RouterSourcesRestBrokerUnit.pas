@@ -3,19 +3,19 @@ unit RouterSourcesRestBrokerUnit;
 interface
 
 uses
-  RestBrokerBaseUnit, BaseRequests, BaseResponses,  RestEntityBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses,  RestFieldSetBrokerUnit,
   RouterSourceHttpRequests, HttpClientUnit;
 
 type
-  TRouterSourcesRestBroker = class(TRestEntityBroker)
+  TRouterSourcesRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TRouterSourceReqList): TRouterSourceListResponse; overload;
-    function List(AReq: TReqList): TListResponse; overload; override;
+    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
     function Info(AReq: TRouterSourceReqInfo): TRouterSourceInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
     function New(AReq: TRouterSourceReqNew): TJSONResponse; overload;
 ///!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
     function Update(AReq: TRouterSourceReqUpdate): TJSONResponse; overload;
@@ -39,7 +39,7 @@ begin
   SetPath(ServiceName, BasePath);
 end;
 
-function TRouterSourcesRestBroker.List(AReq: TReqList): TListResponse;
+function TRouterSourcesRestBroker.List(AReq: TReqList): TFieldSetListResponse;
 begin
   Result := TRouterSourceListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -106,7 +106,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TRouterSourcesRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TRouterSourcesRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
 begin
   Result := TRouterSourceInfoResponse.Create;
   inherited Info(AReq, Result);

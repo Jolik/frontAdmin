@@ -150,7 +150,15 @@ end;
 
 procedure TListParentFieldSetForm.OnAddListItem(item: TFieldSet);
 begin
-  FDMemTableEntity.FieldByName('Id').AsString := item.GetID;
+  if item is TEntity then begin
+    var ient:=item as TEntity;
+    FDMemTableEntity.FieldByName('Id').AsString := ient.Id;
+    FDMemTableEntity.FieldByName('Name').AsString := ient.Name;
+    FDMemTableEntity.FieldByName('def').AsString := ient.Def;
+    FDMemTableEntity.FieldByName('Created').AsDateTime := ient.Created;
+    FDMemTableEntity.FieldByName('Updated').AsDateTime := ient.Updated;
+  end else
+    FDMemTableEntity.FieldByName('Id').AsString := item.GetID;
   // FDMemTableEntity.FieldByName('Name').AsString := item.Name;
   // FDMemTableEntity.FieldByName('def').AsString := item.Def;
   // FDMemTableEntity.FieldByName('Created').AsDateTime := item.Created;
@@ -161,12 +169,17 @@ procedure TListParentFieldSetForm.OnInfoUpdated(AFieldSet: TFieldSet);
 var
    DT      : string;
 begin
-  lTaskInfoIDValue.Caption      := AFieldSet.GetID;
-  // lTaskInfoNameValue.Caption    := AFieldSet.Name;
-  // DateTimeToString(DT, 'dd.mm.yyyy HH:nn', AFieldSet.Created);
-  // lTaskInfoCreatedValue.Caption := DT;
-  // DateTimeToString(DT, 'dd.mm.yyyy HH:nn', AFieldSet.Updated);
-  // lTaskInfoUpdatedValue.Caption := DT;
+
+  if AFieldSet is TEntity then begin
+    var ient:=AFieldSet as TEntity;
+    lTaskInfoNameValue.Caption    := ient.Name;
+    DateTimeToString(DT, 'dd.mm.yyyy HH:nn', ient.Created);
+    lTaskInfoCreatedValue.Caption := DT;
+    DateTimeToString(DT, 'dd.mm.yyyy HH:nn', ient.Updated);
+    lTaskInfoUpdatedValue.Caption := DT;
+  end else begin
+    lTaskInfoIDValue.Caption      := AFieldSet.GetID;
+  end;
   tsTaskInfo.TabVisible := True;
 end;
 

@@ -6,21 +6,21 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
-  ListParentFormUnit, Data.DB, uniPageControl, uniSplitter, uniBasicGrid,
+  ListParentFieldSetFormUnit, Data.DB, uniPageControl, uniSplitter, uniBasicGrid,
   uniDBGrid, uniToolBar, uniGUIBaseClasses, ParentEditFormUnit,
-  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestEntityBrokerUnit,
+  RestBrokerBaseUnit, BaseRequests, BaseResponses, RestFieldSetBrokerUnit,
   uniPanel, uniLabel, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   EntityUnit, UserUnit;
 
 type
-  TUsersForm = class(TListParentForm)
+  TUsersForm = class(TListParentFieldSetForm)
   protected
-    function CreateRestBroker: TRestEntityBroker; override;
+    function CreateRestBroker: TRestFieldSetBroker; override;
     function CreateEditForm: TParentEditForm; override;
-    procedure OnAddListItem(item: TEntity); override;
-    procedure OnInfoUpdated(AEntity: TEntity); override;
+    procedure OnAddListItem(item: TFieldSet); override;
+    procedure OnInfoUpdated(AFieldSet: TFieldSet); override;
   end;
 
 function UsersForm: TUsersForm;
@@ -45,12 +45,12 @@ begin
   Result := UserEditForm;
 end;
 
-function TUsersForm.CreateRestBroker: TRestEntityBroker;
+function TUsersForm.CreateRestBroker: TRestFieldSetBroker;
 begin
   Result := TUsersRestBroker.Create(UniMainModule.XTicket);
 end;
 
-procedure TUsersForm.OnAddListItem(item: TEntity);
+procedure TUsersForm.OnAddListItem(item: TFieldSet);
 var
   User: TUser;
 begin
@@ -67,14 +67,14 @@ begin
     inherited OnAddListItem(item);
 end;
 
-procedure TUsersForm.OnInfoUpdated(AEntity: TEntity);
+procedure TUsersForm.OnInfoUpdated(AFieldSet: TFieldSet);
 var
   User: TUser;
 begin
-  inherited OnInfoUpdated(AEntity);
-  if AEntity is TUser then
+  inherited OnInfoUpdated(AFieldSet);
+  if AFieldSet is TUser then
   begin
-    User := TUser(AEntity);
+    User := TUser(AFieldSet);
     lTaskCaption.Caption := #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086' '#1087#1086#1083#1100#1079#1086#1074#1072#1090#1077#1083#1077;
     lTaskInfoNameValue.Caption := User.Email;
   end;

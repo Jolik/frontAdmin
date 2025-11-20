@@ -32,9 +32,9 @@ type
     property Channels: TNamedStringListsObject read FChannels;
   end;
 
-  TAliasList = class(TEntityList)
+  TAliasList = class(TFieldSetList)
   public
-    class function ItemClassType: TEntityClass; override;
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 implementation
@@ -145,7 +145,7 @@ end;
 
 { TAliasList }
 
-class function TAliasList.ItemClassType: TEntityClass;
+class function TAliasList.ItemClassType: TFieldSetClass;
 begin
   Result := TAlias;
 end;

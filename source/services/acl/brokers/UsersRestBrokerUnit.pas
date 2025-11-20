@@ -4,22 +4,22 @@ interface
 
 uses
   RestBrokerBaseUnit,
-  RestEntityBrokerUnit,
+  RestFieldSetBrokerUnit,
   BaseRequests,
   BaseResponses,
   HttpClientUnit,
   UserHttpRequests;
 
 type
-  TUsersRestBroker = class(TRestEntityBroker)
+  TUsersRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TUserReqList): TUserListResponse; overload;
-    function List(AReq: TReqList): TListResponse; overload; override;
+    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
     function Info(AReq: TUserReqInfo): TUserInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
     function New(AReq: TUserReqNew): TIdNewResponse; overload;
     function New(AReq: TReqNew): TJSONResponse; overload; override;
     function Update(AReq: TUserReqUpdate): TJSONResponse; overload;
@@ -116,7 +116,7 @@ begin
   Result := Info(AReq as TReqInfo) as TUserInfoResponse;
 end;
 
-function TUsersRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TUsersRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
 begin
   Result := TUserInfoResponse.Create;
   inherited Info(AReq, Result);
@@ -127,7 +127,7 @@ begin
   Result := List(AReq as TReqList) as TUserListResponse;
 end;
 
-function TUsersRestBroker.List(AReq: TReqList): TListResponse;
+function TUsersRestBroker.List(AReq: TReqList): TFieldSetListResponse;
 begin
   Result := TUserListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -136,7 +136,7 @@ end;
 function TUsersRestBroker.New(AReq: TReqNew): TJSONResponse;
 begin
   Result := TIdNewResponse.Create('usid');
-  Result := inherited New(AReq, Result);
+  inherited New(AReq, Result as TIdNewResponse);
 end;
 
 function TUsersRestBroker.New(AReq: TUserReqNew): TIdNewResponse;

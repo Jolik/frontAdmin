@@ -824,7 +824,7 @@ begin
         begin
           LinkResp.LinkList.OwnsObjects:= false;
           for var link in LinkResp.LinkList do
-            FLinks.Add(link.id, link as TLink);
+            FLinks.Add((link as TLink).id, link as TLink);
         end;
       finally
         LinkReq.Free;

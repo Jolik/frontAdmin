@@ -50,8 +50,8 @@ type
   end;
 
   /// список каналов
-  TChannelList = class (TEntityList)
-    class function ItemClassType: TEntityClass; override;
+  TChannelList = class (TFieldSetList)
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 implementation
@@ -136,7 +136,7 @@ end;
 
 { TChannelList }
 
-class function TChannelList.ItemClassType: TEntityClass;
+class function TChannelList.ItemClassType: TFieldSetClass;
 begin
   Result := TChannel;
 end;

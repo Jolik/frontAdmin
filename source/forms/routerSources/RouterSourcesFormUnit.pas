@@ -5,15 +5,15 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
-  ListParentFormUnit, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  ListParentFieldSetFormUnit, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, uniPageControl,
   uniSplitter, uniBasicGrid, uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  ParentEditFormUnit, RestBrokerBaseUnit, RestEntityBrokerUnit,
+  ParentEditFormUnit, RestBrokerBaseUnit, RestFieldSetBrokerUnit,
   RouterSourcesRestBrokerUnit, uniPanel, uniLabel, EntityUnit;
 
 type
-  TRouterSourcesForm = class(TListParentForm)
+  TRouterSourcesForm = class(TListParentFieldSetForm)
     FDMemTableEntitycaption2: TStringField;
     FDMemTableEntitywho: TStringField;
     FDMemTableEntitysercive: TStringField;
@@ -22,12 +22,12 @@ type
     procedure Refresh(const AId: string = ''); override;
 
     ///
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestFieldSetBroker; override;
 
     ///
     function CreateEditForm(): TParentEditForm; override;
 
-    procedure OnAddListItem(item: TEntity); override;
+    procedure OnAddListItem(item: TFieldSet); override;
 
   end;
 
@@ -53,12 +53,12 @@ begin
   Result := RouterSourceEditForm();
 end;
 
-function TRouterSourcesForm.CreateRestBroker: TRestEntityBroker;
+function TRouterSourcesForm.CreateRestBroker: TRestFieldSetBroker;
 begin
   Result := TRouterSourcesRestBroker.Create(UniMainModule.XTicket);
 end;
 
-procedure TRouterSourcesForm.OnAddListItem(item: TEntity);
+procedure TRouterSourcesForm.OnAddListItem(item: TFieldSet);
 begin
   inherited;
   var src := item as TRouterSource;

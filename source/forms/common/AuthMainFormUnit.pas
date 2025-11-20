@@ -97,7 +97,6 @@ procedure TAuthMainForm.InitializeCompanyData;
 var
   Req: TReqList;
   Resp: TFieldSetListResponse;
-  Resp2: TListResponse;
   DefaultIndex: string;
   Ind: Integer;
 begin
@@ -129,9 +128,9 @@ begin
   FDeps := TDepartmentList.Create;
   Req := FDepartmentBroker.CreateReqList;
   try
-    Resp2 := FDepartmentBroker.List(Req);
-    Resp2.EntityList.OwnsObjects := false;
-    FDeps.AddRange(Resp2.EntityList);
+    Resp := FDepartmentBroker.List(Req);
+    Resp.FieldSetList.OwnsObjects := false;
+    FDeps.AddRange(Resp.FieldSetList);
   finally
     Resp.Free;
     Req.Free;
@@ -204,7 +203,7 @@ begin
 
   for var Dep in FDeps do
     if CompId = (Dep as TDepartment).CompId then
-      cbCurDept.Items.AddObject(Dep.Name, Dep);
+      cbCurDept.Items.AddObject((Dep as TDepartment).Name, Dep);
 
   Ind := cbCurDept.Items.IndexOf(GetDefaultDeptIndex);
   if (Ind = -1) and (cbCurDept.Items.Count > 0) then

@@ -18,20 +18,20 @@ type
   end;
 
   // Response: list of rules
-  TRuleListResponse = class(TListResponse)
+  TRuleListResponse = class(TFieldSetListResponse)
   private
     function GetRuleList: TRuleList;
   public
-    constructor Create;
+    constructor Create; override;
     property RuleList: TRuleList read GetRuleList;
   end;
 
   // Response: rule info
-  TRuleInfoResponse = class(TEntityResponse)
+  TRuleInfoResponse = class(TFieldSetResponse)
   private
     function GetRule: TRule;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Rule: TRule read GetRule;
   end;
 
@@ -93,7 +93,7 @@ end;
 
 function TRuleListResponse.GetRuleList: TRuleList;
 begin
-  Result := EntityList as TRuleList;
+  Result := FieldSetList as TRuleList;
 end;
 
 { TRuleInfoResponse }
@@ -105,7 +105,7 @@ end;
 
 function TRuleInfoResponse.GetRule: TRule;
 begin
-  Result := Entity as TRule;
+  Result := FieldSet as TRule;
 end;
 
 { TRuleNewResponse }

@@ -48,8 +48,8 @@ inherited LinkEditForm: TLinkEditForm
     ExplicitTop = 108
     ExplicitWidth = 984
     ExplicitHeight = 643
-    ScrollHeight = 643
-    ScrollWidth = 984
+    ScrollHeight = 414
+    ScrollWidth = 819
   end
   object pnID: TUniContainerPanel [4]
     Left = 0
@@ -139,7 +139,7 @@ inherited LinkEditForm: TLinkEditForm
       Left = 106
       Top = 30
       Width = 875
-      Height = 0
+      Height = -6
       Hint = ''
       Style = csOwnerDrawFixed
       Text = ''
@@ -148,6 +148,7 @@ inherited LinkEditForm: TLinkEditForm
       TabOrder = 2
       IconItems = <>
       OnChange = comboLinkTypeChange
+      ExplicitHeight = 0
     end
     object directionPanel: TUniContainerPanel
       Left = 0

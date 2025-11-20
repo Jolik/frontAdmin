@@ -4,18 +4,18 @@ interface
 
 uses
   RestBrokerBaseUnit, BaseRequests, BaseResponses,
-  ChannelHttpRequests, HttpClientUnit, RestEntityBrokerUnit;
+  ChannelHttpRequests, HttpClientUnit, RestFieldSetBrokerUnit;
 
 type
-  TChannelsRestBroker = class(TRestEntityBroker)
+  TChannelsRestBroker = class(TRestFieldSetBroker)
   public
     BasePath: string;
     class function ServiceName: string; override;
     constructor Create(const ATicket: string = ''); override;
     function List(AReq: TChannelReqList): TChannelListResponse; overload;
-    function List(AReq: TReqList): TListResponse; overload; override;
+    function List(AReq: TReqList): TFieldSetListResponse; overload; override;
     function Info(AReq: TChannelReqInfo): TChannelInfoResponse; overload;
-    function Info(AReq: TReqInfo): TEntityResponse; overload; override;
+    function Info(AReq: TReqInfo): TFieldSetResponse; overload; override;
     function New(AReq: TChannelReqNew): TJSONResponse; overload;
 ///!!!    function New(AReq: TReqNew; AResp: TEntityResponse): TEntityResponse; overload; override;
     function Update(AReq: TChannelReqUpdate): TJSONResponse; overload;
@@ -39,7 +39,7 @@ begin
   SetPath(ServiceName, BasePath);
 end;
 
-function TChannelsRestBroker.List(AReq: TReqList): TListResponse;
+function TChannelsRestBroker.List(AReq: TReqList): TFieldSetListResponse;
 begin
   Result := TChannelListResponse.Create;
   Result := inherited List(AReq, Result);
@@ -106,7 +106,7 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TChannelsRestBroker.Info(AReq: TReqInfo): TEntityResponse;
+function TChannelsRestBroker.Info(AReq: TReqInfo): TFieldSetResponse;
 begin
   Result := TChannelInfoResponse.Create;
   inherited Info(AReq, Result);

@@ -8,19 +8,19 @@ uses
   RouterSourceUnit;
 
 type
-  TRouterSourceListResponse = class(TListResponse)
+  TRouterSourceListResponse = class(TFieldSetListResponse)
   private
     function GetSourceList: TRouterSourceList;
   public
-    constructor Create;
+    constructor Create; override;
     property SourceList: TRouterSourceList read GetSourceList;
   end;
 
-  TRouterSourceInfoResponse = class(TEntityResponse)
+  TRouterSourceInfoResponse = class(TFieldSetResponse)
   private
     function GetSource: TRouterSource;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Source: TRouterSource read GetSource;
   end;
 
@@ -69,7 +69,7 @@ end;
 
 function TRouterSourceListResponse.GetSourceList: TRouterSourceList;
 begin
-  Result := EntityList as TRouterSourceList;
+  Result := FieldSetList as TRouterSourceList;
 end;
 
 { TRouterSourceInfoResponse }
@@ -81,7 +81,7 @@ end;
 
 function TRouterSourceInfoResponse.GetSource: TRouterSource;
 begin
-  Result := Entity as TRouterSource;
+  Result := FieldSet as TRouterSource;
 end;
 
 { Requests }

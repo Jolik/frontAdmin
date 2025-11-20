@@ -5,19 +5,19 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
-  uniToolBar, uniGUIBaseClasses, RestBrokerBaseUnit,  RestEntityBrokerUnit,
+  uniToolBar, uniGUIBaseClasses, RestBrokerBaseUnit,  RestFieldSetBrokerUnit,
   ParentEditFormUnit, uniPanel, uniLabel,
   LinksRestBrokerUnit;
 
 type
-  TLinksForm = class(TListParentForm)
+  TLinksForm = class(TListParentFieldSetForm)
   protected
       ///  функция для создания нужного брокера потомком
-    function CreateRestBroker(): TRestEntityBroker; override;
+    function CreateRestBroker(): TRestFieldSetBroker; override;
 
      ///  функция обновления компоннет на форме
     procedure Refresh(const AId: String = ''); override;
@@ -52,7 +52,7 @@ begin
 
 end;
 
-function TLinksForm.CreateRestBroker: TRestEntityBroker;
+function TLinksForm.CreateRestBroker: TRestFieldSetBroker;
 begin
   Result := TLinksRestBroker.Create(UniMainModule.XTicket, constURLDrvcommBasePath);
 end;

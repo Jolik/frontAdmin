@@ -8,19 +8,19 @@ uses
   LinkUnit;
 
 type
-  TLinkListResponse = class(TListResponse)
+  TLinkListResponse = class(TFieldSetListResponse)
   private
     function GetLinkList: TLinkList;
   public
-    constructor Create;
+    constructor Create; override;
     property LinkList: TLinkList read GetLinkList;
   end;
 
-  TLinkInfoResponse = class(TEntityResponse)
+  TLinkInfoResponse = class(TFieldSetResponse)
   private
     function GetLink: TLink;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property Link: TLink read GetLink;
   end;
 
@@ -68,7 +68,7 @@ end;
 
 function TLinkListResponse.GetLinkList: TLinkList;
 begin
-  Result := EntityList as TLinkList;
+  Result := FieldSetList as TLinkList;
 end;
 
 { TLinkInfoResponse }
@@ -80,7 +80,7 @@ end;
 
 function TLinkInfoResponse.GetLink: TLink;
 begin
-  Result := Entity as TLink;
+  Result := FieldSet as TLink;
 end;
 
 { Requests }

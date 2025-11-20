@@ -58,8 +58,8 @@ type
   end;
 
   ///  Список отделов
-  TDepartmentList = class(TEntityList)
-    class function ItemClassType: TEntityClass; override;
+  TDepartmentList = class(TFieldSetList)
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 implementation
@@ -198,7 +198,7 @@ end;
 
 { TDepartmentList }
 
-class function TDepartmentList.ItemClassType: TEntityClass;
+class function TDepartmentList.ItemClassType: TFieldSetClass;
 begin
   Result := TDepartment;
 end;

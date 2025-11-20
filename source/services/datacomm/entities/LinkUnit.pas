@@ -75,10 +75,10 @@ type
 
 type
   ///  список задач
-  TLinkList = class (TEntityList)
+  TLinkList = class (TFieldSetList)
     ///  метод возвращает конкретный тип объекта элемента списка
     ///  потомки должны переопределить его, потому что он у всех разный
-    class function ItemClassType: TEntityClass; override;
+    class function ItemClassType: TFieldSetClass; override;
 
   end;
 
@@ -302,7 +302,7 @@ end;
 
 { TLinkList }
 
-class function TLinkList.ItemClassType: TEntityClass;
+class function TLinkList.ItemClassType: TFieldSetClass;
 begin
   Result := TLink;
 end;

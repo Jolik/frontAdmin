@@ -13,19 +13,19 @@ uses
   UserUnit;
 
 type
-  TUserListResponse = class(TListResponse)
+  TUserListResponse = class(TFieldSetListResponse)
   private
     function GetUsers: TUserList;
   public
-    constructor Create;
+    constructor Create; override;
     property Users: TUserList read GetUsers;
   end;
 
-  TUserInfoResponse = class(TEntityResponse)
+  TUserInfoResponse = class(TFieldSetResponse)
   private
     function GetUser: TUser;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     property User: TUser read GetUser;
   end;
 
@@ -227,7 +227,7 @@ end;
 
 function TUserListResponse.GetUsers: TUserList;
 begin
-  Result := EntityList as TUserList;
+  Result := FieldSetList as TUserList;
 end;
 
 { TUserInfoResponse }
@@ -239,7 +239,7 @@ end;
 
 function TUserInfoResponse.GetUser: TUser;
 begin
-  Result := Entity as TUser;
+  Result := FieldSet as TUser;
 end;
 
 { TUserReqListBody }

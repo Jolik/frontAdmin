@@ -32,10 +32,8 @@ type
 
 type
   ///
-  TRouterSourceList = class (TEntityList)
-    ///
-    ///     ,
-    class function ItemClassType: TEntityClass; override;
+  TRouterSourceList = class (TFieldSetList)
+    class function ItemClassType: TFieldSetClass; override;
 
   end;
 
@@ -103,7 +101,7 @@ end;
 
 { TRouterSourceList }
 
-class function TRouterSourceList.ItemClassType: TEntityClass;
+class function TRouterSourceList.ItemClassType: TFieldSetClass;
 begin
   Result := TRouterSource;
 end;

@@ -57,10 +57,10 @@ type
     property AllowCompanies: TGUIDList read FAllowCompanies;
   end;
 
-  TUserList = class(TEntityList)
-  protected
-    class function ItemClassType: TEntityClass; override;
-  end;
+  TUserList = class(TFieldSetList)
+    protected
+      class function ItemClassType: TFieldSetClass; override;
+    end;
 
 implementation
 
@@ -262,7 +262,7 @@ end;
 
 { TUserList }
 
-class function TUserList.ItemClassType: TEntityClass;
+class function TUserList.ItemClassType: TFieldSetClass;
 begin
   Result := TUser;
 end;

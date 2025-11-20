@@ -1,17 +1,17 @@
-п»їunit StripTasksFormUnit;
+unit StripTasksFormUnit;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
   
-  ParentEditFormUnit, TasksParentFormUnit, RestEntityBrokerUnit, TasksRestBrokerUnit,
+  ParentEditFormUnit, TasksParentFormUnit, RestFieldSetBrokerUnit, TasksRestBrokerUnit,
   TaskSourcesRestBrokerUnit, uniPanel, uniLabel, APIConst;
 
 type
@@ -20,12 +20,12 @@ type
 
   protected
     procedure OnCreate; override;
-    ///  С„СѓРЅРєС†РёСЏ РѕР±РЅРѕРІР»РµРЅРёСЏ РєРѕРјРїРѕРЅРЅРµС‚ РЅР° С„РѕСЂРјРµ
+    ///  функция обновления компоннет на форме
     procedure Refresh(const AId: String = ''); override;
 
-    ///  С„СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РЅСѓР¶РЅРѕРіРѕ Р±СЂРѕРєРµСЂР° РїРѕС‚РѕРєРѕРј
-    function CreateRestBroker(): TRestEntityBroker; override;
-    ///  С„СѓРЅРєРёС†СЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РЅСѓР¶РЅРѕР№ С„РѕСЂРјС‹ СЂРµРґР°РєС‚РёСЂРІРѕР°РЅРёСЏ
+    ///  функция для создания нужного брокера потоком
+    function CreateRestBroker(): TRestFieldSetBroker; override;
+    ///  функиця для создания нужной формы редактирвоания
     function CreateEditForm(): TParentEditForm; override;
 
     function CreateTaskSourcesBroker(): TTaskSourcesRestBroker; override;
@@ -51,11 +51,11 @@ end;
 { TStripTasksForm }
 function TStripTasksForm.CreateEditForm: TParentEditForm;
 begin
-  ///  СЃРѕР·РґР°РµРј "РЅР°С€Сѓ" С„РѕСЂРјСѓ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ РґР»СЏ Р—Р°РґР°С‡
+  ///  создаем "нашу" форму редактирования для Задач
   Result := StripTaskEditForm();
 end;
 
-function TStripTasksForm.CreateRestBroker: TRestEntityBroker;
+function TStripTasksForm.CreateRestBroker: TRestFieldSetBroker;
 begin
    result:= inherited;
   (result as TTasksRestBroker).BasePath:=  APIConst.constURLStripBasePath;
@@ -79,3 +79,5 @@ begin
 end;
 
 end.
+
+
