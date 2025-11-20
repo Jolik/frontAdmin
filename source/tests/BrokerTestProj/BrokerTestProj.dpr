@@ -15,8 +15,6 @@ uses
   HttpClientUnit in '..\..\services\common\brokers\HttpClientUnit.pas',
   BaseRequests in '..\..\services\common\brokers\BaseRequests.pas',
   BaseResponses in '..\..\services\common\brokers\BaseResponses.pas',
-  RestEntityBrokerUnit in '..\..\services\common\brokers\RestEntityBrokerUnit.pas',
-  APIConst in '..\..\services\common\brokers\APIConst.pas',
   OperatorLinksRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas',
   OperatorLinksHttpRequests in '..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas',
   OperatorLinksContentRestBrokerUnit in '..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas',
@@ -80,14 +78,16 @@ uses
   LogsHttpRequests in '..\..\services\signals\brokers\LogsHttpRequests.pas',
   LogsRestBrokerUnit in '..\..\services\signals\brokers\LogsRestBrokerUnit.pas',
   LogUnit in '..\..\services\signals\entities\LogUnit.pas',
-  LogsRequestsUnit in 'LogsRequestsUnit.pas';
+  LogsRequestsUnit in 'LogsRequestsUnit.pas',
+  AppConfigUnit in '..\..\common\AppConfigUnit.pas',
+  DefualtConfig in '..\..\common\DefualtConfig.pas';
 
 procedure TestAbonentListRequest;
 var
   Broker: TAbonentsRestBroker;
   Request: TAbonentReqList;
   Response: TAbonentListResponse;
-  Abonent: TEntity;
+  Abonent: TFieldSet;
   ChannelsText: string;
 begin
   try
@@ -124,8 +124,8 @@ begin
         if ChannelsText.IsEmpty then
           ChannelsText := '(no channels)';
 
-        Writeln(Format(' - %s (%s)', [Abonent.Name, TAbonent(Abonent).Abid]));
-        Writeln(Format('   Caption: %s', [Abonent.Caption]));
+        Writeln(Format(' - %s (%s)', [TAbonent(Abonent).Name, TAbonent(Abonent).Abid]));
+        Writeln(Format('   Caption: %s', [TAbonent(Abonent).Caption]));
         // Output the channels for each abonent retrieved in the list response.
         Writeln('   Channels: ' + ChannelsText);
       end;
@@ -145,11 +145,11 @@ begin
 //    ExecuteOperatorLinkRequest;
 //    ExecuteJournalRecordRequest;
 //    ExecuteCompaniesRequests;
-//    ExecuteAbonentsRequest;
+    ExecuteAbonentsRequest;
 //    ExecuteRulesRequest;
 //    ExecuteObservationRequests;
 //    ExecuteDsGroupsRequests;
-    ExecuteLogsRequests;
+//    ExecuteLogsRequests;
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;

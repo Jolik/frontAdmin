@@ -18,6 +18,8 @@ object LogViewForm: TLogViewForm
     ParentColor = False
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 992
+    ExplicitHeight = 575
     object pnlGrid: TUniContainerPanel
       Left = 0
       Top = 0
@@ -27,6 +29,8 @@ object LogViewForm: TLogViewForm
       ParentColor = False
       Align = alClient
       TabOrder = 0
+      ExplicitWidth = 700
+      ExplicitHeight = 575
       object gridLogs: TUniDBGrid
         Left = 0
         Top = 0
@@ -60,6 +64,8 @@ object LogViewForm: TLogViewForm
       Align = alRight
       ParentColor = False
       Color = clBtnFace
+      ExplicitLeft = 700
+      ExplicitHeight = 575
     end
     object pnlFilters: TUniContainerPanel
       Left = 714
@@ -70,10 +76,12 @@ object LogViewForm: TLogViewForm
       ParentColor = False
       Align = alRight
       TabOrder = 1
+      ExplicitLeft = 706
+      ExplicitHeight = 575
       object lParamsTitle: TUniLabel
         Left = 16
         Top = 16
-        Width = 196
+        Width = 92
         Height = 13
         Hint = ''
         Caption = 'Query parameters'

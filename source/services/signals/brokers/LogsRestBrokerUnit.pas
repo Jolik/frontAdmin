@@ -13,15 +13,15 @@ type
   /// </summary>
   TLogsRestBroker = class(TRestBrokerBase)
   private
-    FBasePath: string;
   public
+    BasePath: string;
+    class function ServiceName: string; override;
+
     constructor Create(const ATicket: string = ''); overload; override;
-    constructor Create(const ATicket, ABasePath: string); overload;
 
     function CreateReqQueryRange: TLogsReqQueryRange;
     function QueryRange(AReq: TLogsReqQueryRange): TLogsResponse;
 
-    property BasePath: string read FBasePath write FBasePath;
   end;
 
 implementation
@@ -35,20 +35,13 @@ uses
 constructor TLogsRestBroker.Create(const ATicket: string);
 begin
   inherited Create(ATicket);
-  FBasePath := ResolveServiceBasePath('signals');
-end;
-
-constructor TLogsRestBroker.Create(const ATicket, ABasePath: string);
-begin
-  Create(ATicket);
-  if not ABasePath.Trim.IsEmpty then
-    FBasePath := ABasePath.Trim;
+  SetPath(ServiceName, BasePath);
 end;
 
 function TLogsRestBroker.CreateReqQueryRange: TLogsReqQueryRange;
 begin
   Result := TLogsReqQueryRange.Create;
-  Result.BasePath := FBasePath;
+  Result.BasePath := BasePath;
 end;
 
 function TLogsRestBroker.QueryRange(AReq: TLogsReqQueryRange): TLogsResponse;
@@ -56,6 +49,11 @@ begin
   Result := TLogsResponse.Create;
   ApplyTicket(AReq);
   HttpClient.Request(AReq, Result);
+end;
+
+class function TLogsRestBroker.ServiceName: string;
+begin
+  Result := 'signals';
 end;
 
 end.
