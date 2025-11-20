@@ -119,7 +119,7 @@ begin
     Exit;
 
   SecondsSinceEpoch := NanoValue / NANOSECONDS_PER_SECOND;
-  UtcDateTime := UnixToDateTime(SecondsSinceEpoch, False);
+  //UtcDateTime := UnixToDateTime(SecondsSinceEpoch, False);
 
   FormatSettings := TFormatSettings.Create;
   FormatSettings.DecimalSeparator := '.';

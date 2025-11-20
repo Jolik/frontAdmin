@@ -151,7 +151,8 @@ uses
   LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
   LogUnit in '..\services\signals\entities\LogUnit.pas',
   LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas',
-  LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas';
+  LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas',
+  RouterFrameRuleConditionUnit in '..\forms\rules\RouterFrameRuleConditionUnit.pas';
 
 {$R *.res}
 
