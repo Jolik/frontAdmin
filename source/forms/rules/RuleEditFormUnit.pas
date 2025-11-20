@@ -34,8 +34,8 @@ type
   private
     FConditionFrame: TRouteFrameRuleCondition;
     FSelectedRuleItem: TObject;
-    FFirstSelectedNode: TUniTreeNode;
     FSelectedNode: TUniTreeNode;
+    FFirstSelectedNode: TUniTreeNode;
     function GetRule: TRule;
     function CurrentRule: TSmallRule;
     procedure RuleToTreeView(const ARule: TSmallRule);
@@ -62,7 +62,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication;
+  MainModule, uniGUIApplication, ConstsUnit;
 
 function RuleEditForm: TRuleEditForm;
 begin
@@ -99,12 +99,11 @@ end;
 
 function TRuleEditForm.DoCheck: Boolean;
 begin
-//  Result := False;
-//  if teName.Text = '' then
-//    MessageDlg(Format(rsWarningValueNotSetInField, [lName.Caption]), TMsgDlgType.mtWarning, [mbOK], nil)
-//  else
+  Result := False;
+  if teCaption.Text = '' then
+    MessageDlg(Format(rsWarningValueNotSetInField, [lName.Caption]), TMsgDlgType.mtWarning, [mbOK], nil)
+  else
    Result := True;
-
 end;
 
 procedure TRuleEditForm.SetEntity(AEntity: TFieldSet);
@@ -200,8 +199,6 @@ begin
     FilterNode := RuleTreeView.Items.AddChildObject(Node, Format(#1060#1080#1083#1100#1090#1088'-%d', [I + 1]), Filter);
     FilterNode.CheckboxVisible := True;
     FilterNode.Checked := not Filter.Disable;
-   // if not Assigned(FFirstSelectedNode) and (FilterNode.Level = 3) then
-   //   FFirstSelectedNode := FilterNode;
 
     for J := 0 to Filter.Conditions.Count - 1 do
     begin
@@ -239,14 +236,11 @@ begin
   FreeAndNil(FConditionFrame);
   if not Assigned(C) then
     Exit;
-
   FConditionFrame := TRouteFrameRuleCondition.Create(Self);
   FConditionFrame.Parent := RuleConditionsPanel;
   FConditionFrame.Align := alClient;
-  //FConditionFrame.SetLinkType(ltUnknown);
   FConditionFrame.SetData(C);
   FConditionFrame.OnOk := OnConditionChange;
-
 end;
 
 procedure TRuleEditForm.OnConditionChange(Sender: TObject);
@@ -358,14 +352,25 @@ begin
   begin
     if not Assigned(FSelectedNode) then
       Exit;
+
     ParentNode := FSelectedNode.Parent;
+
     if not Assigned(ParentNode) or not (TObject(ParentNode.Data) is TProfileFilter) then
       Exit;
-    if MessageDlg(Format('Удалить %s?', [(FSelectedRuleItem as TCondition).Caption]),
-      mtConfirmation, [mbYes, mbNo]) <> mrYes then
-      Exit;
-    if DeleteObject(((TObject(ParentNode.Data) as TProfileFilter).Conditions), FSelectedRuleItem) then
-      DrawRules;
+
+    MessageDlg(Format('Удалить %s?', [(FSelectedRuleItem as TCondition).Caption]),
+    mtConfirmation, [mbYes, mbNo],
+    procedure(Sender: TComponent; Res: Integer)
+    begin
+      if Res = mrYes then
+      begin
+        if DeleteObject(((TObject(ParentNode.Data) as TProfileFilter).Conditions), FSelectedRuleItem) then
+         DrawRules;
+
+      end;
+    end
+    );
+
     Exit;
   end;
 
@@ -373,17 +378,24 @@ begin
   begin
     if not Assigned(FSelectedNode) then
       Exit;
+
     ParentNode := FSelectedNode.Parent;
     if not Assigned(ParentNode) or not (TObject(ParentNode.Data) is TProfileFilterList) then
       Exit;
-    if MessageDlg(Format('Удалить фильтр (%d)?',
-      [(FSelectedRuleItem as TProfileFilter).Conditions.Count]), mtConfirmation, [mbYes, mbNo]) <> mrYes then
-      Exit;
 
-    FilterList := TObject(ParentNode.Data) as TProfileFilterList;
-    if DeleteObject(FilterList, FSelectedRuleItem) then
-      DrawRules;
-    Exit;
+    MessageDlg(Format('Удалить фильтр (%d)?',[(FSelectedRuleItem as TProfileFilter).Conditions.Count] ),
+    mtConfirmation, [mbYes, mbNo],
+    procedure(Sender: TComponent; Res: Integer)
+    begin
+      if Res = mrYes then
+      begin
+        FilterList := TObject(ParentNode.Data) as TProfileFilterList;
+        if DeleteObject(FilterList, FSelectedRuleItem) then
+          DrawRules;
+      end;
+    end
+    );
+
   end;
 end;
 
@@ -392,12 +404,17 @@ begin
   if not Assigned(RuleTreeView) then
     Exit;
 
-  RuleTreeView.Selected := FFirstSelectedNode;
-  if Assigned(FFirstSelectedNode) then
+  if not Assigned(FSelectedRuleItem) then
   begin
-    RuleTreeViewChange(RuleTreeView, FFirstSelectedNode);
-    FFirstSelectedNode.MakeVisible;
+    if Assigned(FFirstSelectedNode) then
+    begin
+      RuleTreeView.Selected := FFirstSelectedNode;
+      RuleTreeViewChange(RuleTreeView, FFirstSelectedNode);
+      FFirstSelectedNode.MakeVisible;
+      FFirstSelectedNode := nil;
+    end;
   end;
+
 end;
 
 end.
