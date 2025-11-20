@@ -84,4 +84,6 @@ modules/
 
 docker/etc
 docker/opt
+docker-wine/bin
+docker-wine/drive_c
 .idea

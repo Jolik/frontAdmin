@@ -63,10 +63,22 @@ inherited MainForm: TMainForm
     Color = 5652784
     ExplicitWidth = 145
     ExplicitHeight = 677
+    object btnDashboard: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = 'Dashboard'
+      Align = alTop
+      TabOrder = 0
+      OnClick = btnDashboardClick
+    end
     object btnAbonents: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 66
+      Top = 35
       Width = 137
       Height = 25
       Hint = ''
@@ -254,6 +266,18 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 14
       OnClick = btnContentStreamClick
+    end
+    object btnLogs: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 376
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = #1051#1086#1075#1080
+      Align = alTop
+      TabOrder = 15
+      OnClick = btnLogsClick
     end
   end
   object uncntnrpnForms: TUniContainerPanel [2]

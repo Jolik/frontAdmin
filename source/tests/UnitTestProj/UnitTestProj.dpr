@@ -12,6 +12,8 @@ uses
   DsTypesUnitTest in 'DsTypesUnitTest.pas',
   ObservationsUnitTest in 'ObservationsUnitTest.pas',
   ObservationsRestBrokerUnitTest in 'ObservationsRestBrokerUnitTest.pas',
+  LogUnitTest in 'LogUnitTest.pas',
+  LogsRestBrokerUnitTest in 'LogsRestBrokerUnitTest.pas',
   DsGroupTestsUnit in 'DsGroupTestsUnit.pas',
   DsGroupRestBrokerTestsUnit in 'DsGroupRestBrokerTestsUnit.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
@@ -42,7 +44,10 @@ uses
   DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
   DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
   DataseriesUnitTest in 'DataseriesUnitTest.pas',
-  DataserieUnit in '..\..\services\dataserver\entities\DataserieUnit.pas';
+  DataseriesUnit in '..\..\services\dataserver\entities\DataseriesUnit.pas',
+  LogUnit in '..\..\services\signals\entities\LogUnit.pas',
+  LogsHttpRequests in '..\..\services\signals\brokers\LogsHttpRequests.pas',
+  LogsRestBrokerUnit in '..\..\services\signals\brokers\LogsRestBrokerUnit.pas';
 
 begin
   try
@@ -54,6 +59,8 @@ begin
     RunDataserieTests;    
     RunObservationTests;
     RunObservationsBrokerTests;
+    RunLogEntityTests;
+    RunLogsRestBrokerTests;
     RunDsGroupTests;
     RunDsGroupBrokerTests;
     RunSearchTests;

@@ -15,6 +15,7 @@ uses
 
 type
   TMainForm = class(TAuthMainForm)
+    btnDashboard: TUniButton;
     btnChannel: TUniButton;
     btnLinks: TUniButton;
     btnRouterSources: TUniButton;
@@ -31,8 +32,10 @@ type
     btnOperatorLinksContent: TUniButton;
     btnSearch: TUniButton;
     btnContentStream: TUniButton;
+    btnLogs: TUniButton;
     unlblName1: TUniLabel;
     uncntnrpnForms: TUniContainerPanel;
+    procedure btnDashboardClick(Sender: TObject);
     procedure btnAbonentsClick(Sender: TObject);
     procedure btnChannelClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
@@ -47,6 +50,7 @@ type
     procedure btnOperatorLinksContentClick(Sender: TObject);
     procedure btnSearchClick(Sender: TObject);
     procedure btnContentStreamClick(Sender: TObject);
+    procedure btnLogsClick(Sender: TObject);
   private
   public
     { Public declarations }
@@ -73,7 +77,8 @@ uses
   OperatorLinksFormUnit,
   OperatorLinkContectFormUnit,
   SearchFormUnit,
-  ContentStreamFormUnit, HandlersFormUnit, UsersFormUnit;
+  ContentStreamFormUnit, HandlersFormUnit, UsersFormUnit,
+  LogViewFormUnit, MSSDashboardFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -129,9 +134,19 @@ begin
   ContentStreamForm.Show();
 end;
 
+procedure TMainForm.btnLogsClick(Sender: TObject);
+begin
+  LogViewForm.Show();
+end;
+
 procedure TMainForm.btnAliasesClick(Sender: TObject);
 begin
   AliasesForm.Show();
+end;
+
+procedure TMainForm.btnDashboardClick(Sender: TObject);
+begin
+  MSSDashboardForm.Show();
 end;
 
 procedure TMainForm.btnRouterSourcesClick(Sender: TObject);

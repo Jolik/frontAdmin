@@ -13,6 +13,7 @@ uses
   DsGroupsHttpRequests,
   DsGroupUnit,
   HttpClientUnit,
+  DataseriesUnit,
   BaseResponses;
 
 procedure ExecuteDsGroupsRequests;
@@ -52,12 +53,12 @@ procedure ExecuteDsGroupsRequests;
     Writeln(Format('  Source: %s', [Group.Sid]));
     Writeln(Format('  Dataseries (reported count): %d', [Group.DataseriesCount]));
     if Group.Dataseries.Count > 0 then
-      Writeln(Format('  First dataserie id: %s', [Group.Dataseries[0].Dsid]))
+      Writeln(Format('  First dataserie id: %s', [(Group.Dataseries[0] as TDataseries).Dsid]))
     else
       Writeln('  Dataseries list is empty.');
 
     if Assigned(Group.Metadata) and (Group.Metadata.Count > 0) then
-      MetadataText := Group.Metadata.ToJSON
+      MetadataText := Group.Metadata.JSON
     else
       MetadataText := '(no metadata)';
     Writeln('  Metadata: ' + MetadataText);
@@ -161,7 +162,7 @@ begin
         try
           MetadataObj.AddPair('origin', 'BrokerTestProj');
           MetadataObj.AddPair('createdAt', FormatDateTime('yyyy-mm-dd hh:nn:ss', Now));
-          TDsGroup(NewReq.ReqBody).Metadata := MetadataObj;
+//          TDsGroup(NewReq.ReqBody).Metadata := MetadataObj;
         finally
           MetadataObj.Free;
         end;
@@ -227,7 +228,7 @@ begin
         try
           MetadataObj.AddPair('origin', 'BrokerTestProj');
           MetadataObj.AddPair('updatedAt', FormatDateTime('yyyy-mm-dd hh:nn:ss', Now));
-          TDsGroup(UpdateReq.ReqBody).Metadata := MetadataObj;
+//          TDsGroup(UpdateReq.ReqBody).Metadata := MetadataObj;
         finally
           MetadataObj.Free;
         end;

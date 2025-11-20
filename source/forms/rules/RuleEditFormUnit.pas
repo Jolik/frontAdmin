@@ -9,7 +9,7 @@ uses
   uniGUIBaseClasses, uniPanel, uniGroupBox, uniTreeView, uniSplitter,
   LoggingUnit,
   EntityUnit, FilterUnit, ConditionUnit, RuleUnit, SmallRuleUnit,
-  SharedFrameBoolInput, SharedFrameTextInput, SharedFrameRuleConditionUnit,
+  SharedFrameBoolInput, SharedFrameTextInput, RouterFrameRuleConditionUnit,
   LinkUnit, uniGUIFrame, uniTimer, uniEdit, uniLabel;
 
 type
@@ -32,7 +32,7 @@ type
     procedure btnRuleAddClick(Sender: TObject);
     procedure btnRuleRemoveClick(Sender: TObject);
   private
-    FConditionFrame: TFrameRuleCondition;
+    FConditionFrame: TRouteFrameRuleCondition;
     FSelectedRuleItem: TObject;
     FSelectedNode: TUniTreeNode;
     function GetRule: TRule;
@@ -46,6 +46,7 @@ type
     procedure OnConditionChange(Sender: TObject);
   protected
     function Apply: Boolean; override;
+    function DoCheck: Boolean; override;
     procedure SetEntity(AEntity: TFieldSet); override;
   public
     destructor Destroy; override;
@@ -92,6 +93,16 @@ destructor TRuleEditForm.Destroy;
 begin
   FreeAndNil(FConditionFrame);
   inherited;
+end;
+
+function TRuleEditForm.DoCheck: Boolean;
+begin
+//  Result := False;
+//  if teName.Text = '' then
+//    MessageDlg(Format(rsWarningValueNotSetInField, [lName.Caption]), TMsgDlgType.mtWarning, [mbOK], nil)
+//  else
+   Result := True;
+
 end;
 
 procedure TRuleEditForm.SetEntity(AEntity: TFieldSet);
@@ -220,10 +231,10 @@ begin
   if not Assigned(C) then
     Exit;
 
-  FConditionFrame := TFrameRuleCondition.Create(Self);
+  FConditionFrame := TRouteFrameRuleCondition.Create(Self);
   FConditionFrame.Parent := RuleConditionsPanel;
   FConditionFrame.Align := alClient;
-  FConditionFrame.SetLinkType(ltUnknown);
+  //FConditionFrame.SetLinkType(ltUnknown);
   FConditionFrame.SetData(C);
   FConditionFrame.OnOk := OnConditionChange;
 end;
@@ -301,6 +312,7 @@ begin
     end;
 end;
 
+
 procedure TRuleEditForm.btnRuleAddClick(Sender: TObject);
 var
   Filters: TProfileFilterList;
@@ -357,6 +369,7 @@ begin
     if MessageDlg(Format('Удалить фильтр (%d)?',
       [(FSelectedRuleItem as TProfileFilter).Conditions.Count]), mtConfirmation, [mbYes, mbNo]) <> mrYes then
       Exit;
+
     FilterList := TObject(ParentNode.Data) as TProfileFilterList;
     if DeleteObject(FilterList, FSelectedRuleItem) then
       DrawRules;

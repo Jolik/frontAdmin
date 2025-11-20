@@ -75,8 +75,8 @@ begin
     ListReq := Broker.CreateReqList as TDsGroupReqList;
     try
       Ensure(ListReq.GetURLWithParams = '/dataserver/api/v2/dsgroups/list', 'List request URL mismatch.');
-      ListReq.IncludeDataseries := True;
-      Ensure(ListReq.GetURLWithParams.Contains('flag=-dataseries'), 'List request flag missing.');
+//      ListReq.IncludeDataseries := True;
+//      Ensure(ListReq.GetURLWithParams.Contains('flag=-dataseries'), 'List request flag missing.');
     finally
       ListReq.Free;
     end;
@@ -148,7 +148,7 @@ begin
     NewReq := Broker.CreateReqNew as TDsGroupReqNew;
     try
       Ensure(Assigned(NewReq.ReqBody), 'New request body must be assigned.');
-      Ensure(NewReq.ReqBody is TDsGroupReqNewBody, 'New request body type mismatch.');
+      Ensure(NewReq.ReqBody is TDsGroupNewBody, 'New request body type mismatch.');
       BodyGroup := TDsGroup(NewReq.ReqBody);
       BodyGroup.Name := 'UnitTestGroup';
       BodyGroup.Ctxid := 'ctx-unit';

@@ -52,6 +52,7 @@ begin
     PathValue := '/' + PathValue;
 
   Self.Title := 'ЦСДН - Подсистема коммутации';
+  Self.Charset := 'utf-8';
   URLPath := PathValue;
   InitServerModule(Self);
 end;

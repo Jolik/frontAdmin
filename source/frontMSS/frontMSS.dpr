@@ -1,9 +1,5 @@
 program frontMSS;
 
-
-
-
-
 uses
   Forms,
   ServerModule in 'ServerModule.pas' {UniServerModule: TUniGUIServerModule},
@@ -150,9 +146,19 @@ uses
   ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas' {ListParentForm: TUniForm},
   ParentEditFormUnit in '..\forms\common\ParentEditFormUnit.pas' {ParentEditForm: TUniForm},
   ParentFormUnit in '..\forms\common\ParentFormUnit.pas' {ParentForm: TUniForm},
-  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas',
+  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas';
   ListParentFieldSetFormUnit in '..\forms\common\ListParentFieldSetFormUnit.pas',
   ParentFieldSetFormUnit in '..\forms\common\ParentFieldSetFormUnit.pas';
+  LogEntryViewFormUnit in '..\forms\logs\LogEntryViewFormUnit.pas' {LogEntryViewForm: TUniForm},
+  LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
+  MSSDashboardFormUnit in '..\forms\dashboard\MSSDashboardFormUnit.pas' {MSSDashboardForm: TUniForm},
+  ChannelsFrameUnit in '..\forms\dashboard\ChannelsFrameUnit.pas' {ChannelsFrame: TUniFrame},
+  ContentFrameUnit in '..\forms\dashboard\ContentFrameUnit.pas' {ContentFrame: TUniFrame},
+  LogsFrameUnit in '..\forms\dashboard\LogsFrameUnit.pas' {LogsFrame: TUniFrame},
+  LogUnit in '..\services\signals\entities\LogUnit.pas',
+  LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas',
+  LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas',
+  RouterFrameRuleConditionUnit in '..\forms\rules\RouterFrameRuleConditionUnit.pas';
 
 {$R *.res}
 

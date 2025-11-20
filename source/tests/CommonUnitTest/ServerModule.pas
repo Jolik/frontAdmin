@@ -32,6 +32,7 @@ end;
 
 procedure TUniServerModule.FirstInit;
 begin
+  Self.Charset := 'utf-8';
   InitServerModule(Self);
 end;
 

@@ -10,17 +10,47 @@ inherited RuleEditForm: TRuleEditForm
     Width = 720
     ExplicitTop = 550
     ExplicitWidth = 720
+    inherited btnOk: TUniButton
+      Left = 561
+      OnClick = btnOkClick
+      ExplicitLeft = 561
+    end
+    inherited btnCancel: TUniButton
+      Left = 642
+      ExplicitLeft = 642
+    end
   end
   inherited pnCaption: TUniContainerPanel
     Width = 720
+    ExplicitWidth = 720
+    inherited lCaption: TUniLabel
+      Width = 48
+      Caption = #1055#1088#1072#1074#1080#1083#1086
+      Font.Style = [fsBold]
+      ExplicitWidth = 48
+    end
+    inherited teCaption: TUniEdit
+      Left = 62
+      Width = 655
+      ExplicitLeft = 62
+      ExplicitWidth = 655
+    end
   end
   inherited pnName: TUniContainerPanel
     Width = 720
+    Visible = False
+    ExplicitWidth = 720
+    inherited teName: TUniEdit
+      Left = 40
+      Width = 677
+      ExplicitLeft = 40
+      ExplicitWidth = 677
+    end
   end
   inherited pnClient: TUniContainerPanel
     Width = 720
     Height = 496
-    ExplicitWidth = 722
+    ExplicitWidth = 720
     ExplicitHeight = 496
     ScrollHeight = 496
     ScrollWidth = 720
@@ -34,7 +64,7 @@ inherited RuleEditForm: TRuleEditForm
       TabOrder = 0
       object RuleHeaderPanel: TUniPanel
         Left = 2
-        Top = 22
+        Top = 15
         Width = 668
         Height = 70
         Hint = ''
@@ -42,7 +72,6 @@ inherited RuleEditForm: TRuleEditForm
         TabOrder = 0
         BorderStyle = ubsNone
         Caption = ''
-        ExplicitTop = 15
         inline FrameRuleEnabled: TFrameBoolInput
           Left = 0
           Top = 0
@@ -57,6 +86,10 @@ inherited RuleEditForm: TRuleEditForm
           ExplicitWidth = 668
           inherited PanelText: TUniPanel
             Caption = #1042#1082#1083#1102#1095#1077#1085#1086
+          end
+          inherited CheckBox: TUniCheckBox
+            Width = 530
+            ExplicitWidth = 530
           end
         end
         inline FrameRulePosition: TFrameTextInput
@@ -76,15 +109,21 @@ inherited RuleEditForm: TRuleEditForm
             Caption = #1055#1086#1079#1080#1094#1080#1103
           end
           inherited Edit: TUniEdit
+            Width = 497
             InputType = 'number'
+            ExplicitWidth = 497
+          end
+          inherited PanelUnits: TUniPanel
+            Left = 642
+            ExplicitLeft = 642
           end
         end
       end
       object RuleTreePanel: TUniPanel
         Left = 2
-        Top = 92
+        Top = 85
         Width = 668
-        Height = 386
+        Height = 393
         Hint = ''
         Align = alClient
         TabOrder = 1
@@ -93,19 +132,17 @@ inherited RuleEditForm: TRuleEditForm
           Left = 261
           Top = 1
           Width = 6
-          Height = 384
+          Height = 391
           Hint = ''
           Align = alLeft
           ParentColor = False
           Color = clBtnFace
-          ExplicitLeft = 260
-          ExplicitHeight = 391
         end
         object RuleTreeLeftPanel: TUniPanel
           Left = 1
           Top = 1
           Width = 260
-          Height = 384
+          Height = 391
           Hint = ''
           Align = alLeft
           TabOrder = 0
@@ -123,10 +160,10 @@ inherited RuleEditForm: TRuleEditForm
             Caption = ''
             object RuleTreeAddPanel: TUniPanel
               AlignWithMargins = True
-              Left = 2
-              Top = 2
+              Left = 5
+              Top = 5
               Width = 25
-              Height = 24
+              Height = 18
               Hint = ''
               Align = alLeft
               TabOrder = 1
@@ -136,7 +173,7 @@ inherited RuleEditForm: TRuleEditForm
                 Left = 0
                 Top = 0
                 Width = 25
-                Height = 24
+                Height = 18
                 Hint = ''
                 Caption = '+'
                 Align = alClient
@@ -146,10 +183,10 @@ inherited RuleEditForm: TRuleEditForm
             end
             object RuleTreeRemovePanel: TUniPanel
               AlignWithMargins = True
-              Left = 31
-              Top = 2
+              Left = 36
+              Top = 5
               Width = 25
-              Height = 24
+              Height = 18
               Hint = ''
               Align = alLeft
               TabOrder = 2
@@ -159,7 +196,7 @@ inherited RuleEditForm: TRuleEditForm
                 Left = 0
                 Top = 0
                 Width = 25
-                Height = 24
+                Height = 18
                 Hint = ''
                 Caption = '-'
                 Align = alClient
@@ -172,7 +209,7 @@ inherited RuleEditForm: TRuleEditForm
             Left = 0
             Top = 28
             Width = 260
-            Height = 356
+            Height = 363
             Hint = ''
             Items.FontData = {0100000000}
             Align = alClient
@@ -192,8 +229,6 @@ inherited RuleEditForm: TRuleEditForm
           TabOrder = 3
           BorderStyle = ubsNone
           Caption = ''
-          ExplicitLeft = 266
-          ExplicitWidth = 401
         end
       end
     end

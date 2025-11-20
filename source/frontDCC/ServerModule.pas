@@ -1,4 +1,4 @@
-unit ServerModule;
+п»їunit ServerModule;
 
 interface
 
@@ -36,6 +36,10 @@ var
   PathValue: string;
   PortValue: Integer;
 begin
+   Self.Title := 'Р¦РЎР”Рќ - РџРѕРґСЃРёСЃС‚РµРјР° СѓРїСЂР°РІР»РµРЅРёСЏ РґР°РЅРЅС‹РјРё';
+   Self.Charset := 'utf-8';
+   URLPath := '/admin/dcc';
+
   if AppConfig = nil then
     LoadAppConfig('FRONTDCC');
 
@@ -51,8 +55,7 @@ begin
   if (PathValue <> '') and (PathValue[Low(PathValue)] <> '/') then
     PathValue := '/' + PathValue;
 
-  Self.Title := 'ЦСДН - подсистема данных';
-  URLPath := PathValue;
+
   InitServerModule(Self);
 end;
 

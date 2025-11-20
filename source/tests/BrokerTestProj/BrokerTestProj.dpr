@@ -75,7 +75,12 @@ uses
   DsGroupsRequestsUnit in 'DsGroupsRequestsUnit.pas',
   DsGroupUnit in '..\..\services\dataserver\entities\DsGroupUnit.pas',
   DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
-  DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas';
+  DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
+  DataseriesUnit in '..\..\services\dataserver\entities\DataseriesUnit.pas',
+  LogsHttpRequests in '..\..\services\signals\brokers\LogsHttpRequests.pas',
+  LogsRestBrokerUnit in '..\..\services\signals\brokers\LogsRestBrokerUnit.pas',
+  LogUnit in '..\..\services\signals\entities\LogUnit.pas',
+  LogsRequestsUnit in 'LogsRequestsUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -142,8 +147,9 @@ begin
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
 //    ExecuteRulesRequest;
-    ExecuteObservationRequests;
-    ExecuteDsGroupsRequests;
+//    ExecuteObservationRequests;
+//    ExecuteDsGroupsRequests;
+    ExecuteLogsRequests;
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;

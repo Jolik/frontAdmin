@@ -1,9 +1,5 @@
 program frontDCC;
 
-
-
-
-
 uses
   Forms,
   ServerModule in 'ServerModule.pas' {UniServerModule: TUniGUIServerModule},
@@ -141,9 +137,27 @@ uses
   DsGroupUnit in '..\services\dataserver\entities\DsGroupUnit.pas',
   DataseriesUnit in '..\services\dataserver\entities\DataseriesUnit.pas',
   DsGroupsHttpRequests in '..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
-  DsGroupsRestBrokerUnit in '..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
+  DsGroupsRestBrokerUnit in '..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas';
   ListParentFieldSetFormUnit in '..\forms\common\ListParentFieldSetFormUnit.pas',
   ParentFieldSetFormUnit in '..\forms\common\ParentFieldSetFormUnit.pas';
+  LogEntryViewFormUnit in '..\forms\logs\LogEntryViewFormUnit.pas' {LogEntryViewForm: TUniForm},
+  LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
+  LogUnit in '..\services\signals\entities\LogUnit.pas',
+  LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas',
+  LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas',
+  ContentFrameUnit in '..\forms\dashboard\ContentFrameUnit.pas' {ContentFrame: TUniFrame},
+  LogsFrameUnit in '..\forms\dashboard\LogsFrameUnit.pas' {LogsFrame: TUniFrame},
+  SourcesFrameUnit in '..\forms\dashboard\SourcesFrameUnit.pas' {SourcesFrame: TUniFrame},
+  LinksFrameUnit in '..\forms\dashboard\LinksFrameUnit.pas' {LinksFrame: TUniFrame},
+  DCCDashboardFormUnit in '..\forms\dashboard\DCCDashboardFormUnit.pas' {DCCDashboardForm: TUniForm},
+  HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
+  JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
+  JournalRecordUnit in '..\services\dataspace\entities\JournalRecordUnit.pas',
+  HistoryRecordHttpRequests in '..\services\dataspace\brokers\HistoryRecordHttpRequests.pas',
+  HistoryRecordsRestBrokerUnit in '..\services\dataspace\brokers\HistoryRecordsRestBrokerUnit.pas',
+  StorageHttpRequests in '..\services\dataspace\brokers\StorageHttpRequests.pas',
+  StorageRestBrokerUnit in '..\services\dataspace\brokers\StorageRestBrokerUnit.pas',
+  ContentViewFormUnit in '..\forms\contentView\ContentViewFormUnit.pas' {ContentViewForm: TUniForm};
 
 {$R *.res}
 

@@ -451,8 +451,40 @@
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
-        <DCCReference Include="..\forms\common\ListParentFieldSetFormUnit.pas"/>
-        <DCCReference Include="..\forms\common\ParentFieldSetFormUnit.pas"/>
+        <DCCReference Include="..\forms\logs\LogEntryViewFormUnit.pas">
+            <Form>LogEntryViewForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\logs\LogViewFormUnit.pas">
+            <Form>LogViewForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\MSSDashboardFormUnit.pas">
+            <Form>MSSDashboardForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\ChannelsFrameUnit.pas">
+            <Form>ChannelsFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\ContentFrameUnit.pas">
+            <Form>ContentFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dashboard\LogsFrameUnit.pas">
+            <Form>LogsFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\services\signals\entities\LogUnit.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsHttpRequests.pas"/>
+        <DCCReference Include="..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
+        <DCCReference Include="..\forms\rules\RouterFrameRuleConditionUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
