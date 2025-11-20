@@ -17,6 +17,9 @@ type
     tshRules: TUniTabSheet;
     tshAliases: TUniTabSheet;
     tshAbonents: TUniTabSheet;
+    pnlRulesHost: TUniContainerPanel;
+    pnlAliasesHost: TUniContainerPanel;
+    pnlAbonentsHost: TUniContainerPanel;
     procedure UniFormCreate(Sender: TObject);
     procedure tvNavigateChange(Sender: TObject; Node: TUniTreeNode);
   private
@@ -55,7 +58,7 @@ begin
   if not Assigned(FAbonentsForm) then
   begin
     FAbonentsForm := AbonentsForm;
-    FAbonentsForm.Parent := tshAbonents;
+    FAbonentsForm.Parent := pnlAbonentsHost;
     FAbonentsForm.Align := alClient;
     FAbonentsForm.BorderStyle := bsNone;
     FAbonentsForm.Show();
@@ -67,7 +70,7 @@ begin
   if not Assigned(FAliasesForm) then
   begin
     FAliasesForm := AliasesForm;
-    FAliasesForm.Parent := tshAliases;
+    FAliasesForm.Parent := pnlAliasesHost;
     FAliasesForm.Align := alClient;
     FAliasesForm.BorderStyle := bsNone;
     FAliasesForm.Show();
@@ -79,7 +82,7 @@ begin
   if not Assigned(FRulesForm) then
   begin
     FRulesForm := RulesForm;
-    FRulesForm.Parent := tshRules;
+    FRulesForm.Parent := pnlRulesHost;
     FRulesForm.Align := alClient;
     FRulesForm.BorderStyle := bsNone;
     FRulesForm.Show();

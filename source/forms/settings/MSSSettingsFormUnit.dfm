@@ -36,14 +36,41 @@ object MSSSettingsForm: TMSSSettingsForm
     object tshRules: TUniTabSheet
       Hint = ''
       Caption = 'Rules'
+      object pnlRulesHost: TUniContainerPanel
+        Left = 0
+        Top = 0
+        Width = 592
+        Height = 570
+        Hint = ''
+        Align = alClient
+        TabOrder = 0
+      end
     end
     object tshAliases: TUniTabSheet
       Hint = ''
       Caption = 'Aliases'
+      object pnlAliasesHost: TUniContainerPanel
+        Left = 0
+        Top = 0
+        Width = 592
+        Height = 570
+        Hint = ''
+        Align = alClient
+        TabOrder = 0
+      end
     end
     object tshAbonents: TUniTabSheet
       Hint = ''
       Caption = 'Abonents'
+      object pnlAbonentsHost: TUniContainerPanel
+        Left = 0
+        Top = 0
+        Width = 592
+        Height = 570
+        Hint = ''
+        Align = alClient
+        TabOrder = 0
+      end
     end
   end
 end

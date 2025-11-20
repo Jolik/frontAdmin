@@ -455,6 +455,10 @@
             <Form>MSSDashboardForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\settings\MSSSettingsFormUnit.pas">
+            <Form>MSSSettingsForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\forms\dashboard\ChannelsFrameUnit.pas">
             <Form>ChannelsFrame</Form>
             <DesignClass>TUniFrame</DesignClass>

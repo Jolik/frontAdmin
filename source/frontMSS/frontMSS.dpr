@@ -151,6 +151,7 @@ uses
   ChannelsFrameUnit in '..\forms\dashboard\ChannelsFrameUnit.pas' {ChannelsFrame: TUniFrame},
   ContentFrameUnit in '..\forms\dashboard\ContentFrameUnit.pas' {ContentFrame: TUniFrame},
   LogsFrameUnit in '..\forms\dashboard\LogsFrameUnit.pas' {LogsFrame: TUniFrame},
+  MSSSettingsFormUnit in '..\forms\settings\MSSSettingsFormUnit.pas' {MSSSettingsForm: TUniForm},
   LogUnit in '..\services\signals\entities\LogUnit.pas',
   LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas',
   LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas',
