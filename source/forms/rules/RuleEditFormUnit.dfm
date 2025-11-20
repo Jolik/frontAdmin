@@ -12,7 +12,6 @@ inherited RuleEditForm: TRuleEditForm
     ExplicitWidth = 720
     inherited btnOk: TUniButton
       Left = 561
-      OnClick = btnOkClick
       ExplicitLeft = 561
     end
     inherited btnCancel: TUniButton

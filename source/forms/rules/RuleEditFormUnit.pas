@@ -34,6 +34,7 @@ type
   private
     FConditionFrame: TRouteFrameRuleCondition;
     FSelectedRuleItem: TObject;
+    FFirstSelectedNode: TUniTreeNode;
     FSelectedNode: TUniTreeNode;
     function GetRule: TRule;
     function CurrentRule: TSmallRule;
@@ -48,6 +49,7 @@ type
     function Apply: Boolean; override;
     function DoCheck: Boolean; override;
     procedure SetEntity(AEntity: TFieldSet); override;
+    procedure SelectFirstLevelTwoNode;
   public
     destructor Destroy; override;
     property RuleEntity: TRule read GetRule;
@@ -150,7 +152,7 @@ begin
   if Assigned(RuleTreeView) then
   begin
     RuleTreeView.FullExpand;
-    RuleTreeView.Selected := nil;
+    SelectFirstLevelTwoNode;
   end;
   TidyRuleControls;
 end;
@@ -163,6 +165,8 @@ begin
     Exit;
 
   RuleTreeView.Items.Clear;
+  FFirstSelectedNode := nil;
+
   if not Assigned(ARule) then
     Exit;
 
@@ -177,6 +181,7 @@ begin
 
   FiltersToTreeViewNode(ARule.IncFilters, IncludeNode);
   FiltersToTreeViewNode(ARule.ExcFilters, ExcludeNode);
+
 end;
 
 procedure TRuleEditForm.FiltersToTreeViewNode(AFilters: TProfileFilterList; Node: TUniTreeNode);
@@ -195,12 +200,16 @@ begin
     FilterNode := RuleTreeView.Items.AddChildObject(Node, Format(#1060#1080#1083#1100#1090#1088'-%d', [I + 1]), Filter);
     FilterNode.CheckboxVisible := True;
     FilterNode.Checked := not Filter.Disable;
+   // if not Assigned(FFirstSelectedNode) and (FilterNode.Level = 3) then
+   //   FFirstSelectedNode := FilterNode;
 
     for J := 0 to Filter.Conditions.Count - 1 do
     begin
       Condition := Filter.Conditions[J] as TCondition;
       ConditionNode := RuleTreeView.Items.AddChildObject(FilterNode, Condition.Caption, Condition);
       ConditionNode.CheckboxVisible := False;
+      if not Assigned(FFirstSelectedNode) then
+        FFirstSelectedNode := ConditionNode;
     end;
   end;
 end;
@@ -237,6 +246,7 @@ begin
   //FConditionFrame.SetLinkType(ltUnknown);
   FConditionFrame.SetData(C);
   FConditionFrame.OnOk := OnConditionChange;
+
 end;
 
 procedure TRuleEditForm.OnConditionChange(Sender: TObject);
@@ -374,6 +384,19 @@ begin
     if DeleteObject(FilterList, FSelectedRuleItem) then
       DrawRules;
     Exit;
+  end;
+end;
+
+procedure TRuleEditForm.SelectFirstLevelTwoNode;
+begin
+  if not Assigned(RuleTreeView) then
+    Exit;
+
+  RuleTreeView.Selected := FFirstSelectedNode;
+  if Assigned(FFirstSelectedNode) then
+  begin
+    RuleTreeViewChange(RuleTreeView, FFirstSelectedNode);
+    FFirstSelectedNode.MakeVisible;
   end;
 end;
 
