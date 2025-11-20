@@ -107,10 +107,11 @@ end;
 
 function TLogViewForm.FormatTimestampIso8601(const RawTimestamp: string): string;
 const
-  NANOSECONDS_PER_SECOND = 1000000000.0;
+  NanoPerSecond = 1000000000;
 var
   NanoValue: Int64;
-  SecondsSinceEpoch: Extended;
+  SecondsPart: Int64;
+  Fractional: Int64;
   UtcDateTime: TDateTime;
   FormatSettings: TFormatSettings;
 begin
@@ -118,12 +119,14 @@ begin
   if not TryStrToInt64(RawTimestamp, NanoValue) then
     Exit;
 
-  SecondsSinceEpoch := NanoValue / NANOSECONDS_PER_SECOND;
-  //UtcDateTime := UnixToDateTime(SecondsSinceEpoch, False);
+  SecondsPart := NanoValue div NanoPerSecond;
+  Fractional := NanoValue mod NanoPerSecond;
+
+  UtcDateTime := UnixToDateTime(SecondsPart, False) + (Fractional / NanoPerSecond) / SecsPerDay;
 
   FormatSettings := TFormatSettings.Create;
   FormatSettings.DecimalSeparator := '.';
-  Result := FormatDateTime('yyyy"-"mm"-"dd"T"hh":"nn":"ss"."zzz', UtcDateTime, FormatSettings) + 'Z';
+  Result := FormatDateTime('yyyy"-"mm"-"dd"T"hh":"nn":"ss"."zzz"', UtcDateTime, FormatSettings) + 'Z';
 end;
 
 procedure TLogViewForm.btnClearFiltersClick(Sender: TObject);
