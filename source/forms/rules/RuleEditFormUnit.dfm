@@ -1,170 +1,236 @@
 inherited RuleEditForm: TRuleEditForm
+  ClientHeight = 600
+  ClientWidth = 720
   Caption = #1055#1088#1072#1074#1080#1083#1086' '#1084#1072#1088#1096#1088#1091#1090#1080#1079#1072#1094#1080#1080
+  ExplicitWidth = 736
+  ExplicitHeight = 639
   TextHeight = 15
+  inherited pnBottom: TUniContainerPanel
+    Top = 550
+    Width = 720
+    ExplicitTop = 550
+    ExplicitWidth = 720
+    inherited btnOk: TUniButton
+      Left = 561
+      OnClick = btnOkClick
+      ExplicitLeft = 561
+    end
+    inherited btnCancel: TUniButton
+      Left = 642
+      ExplicitLeft = 642
+    end
+  end
+  inherited pnCaption: TUniContainerPanel
+    Width = 720
+    ExplicitWidth = 720
+    inherited lCaption: TUniLabel
+      Width = 48
+      Caption = #1055#1088#1072#1074#1080#1083#1086
+      Font.Style = [fsBold]
+      ExplicitWidth = 48
+    end
+    inherited teCaption: TUniEdit
+      Left = 62
+      Width = 655
+      ExplicitLeft = 62
+      ExplicitWidth = 655
+    end
+  end
+  inherited pnName: TUniContainerPanel
+    Width = 720
+    Visible = False
+    ExplicitWidth = 720
+    inherited teName: TUniEdit
+      Left = 40
+      Width = 677
+      ExplicitLeft = 40
+      ExplicitWidth = 677
+    end
+  end
   inherited pnClient: TUniContainerPanel
-    ScrollHeight = 504
-    ScrollWidth = 819
-    ScrollY = 111
-    object lRuid: TUniLabel
-      Left = 40
-      Top = -79
-      Width = 26
-      Height = 13
+    Width = 720
+    Height = 496
+    ExplicitWidth = 720
+    ExplicitHeight = 496
+    ScrollHeight = 496
+    ScrollWidth = 720
+    object RuleGroupBox: TUniGroupBox
+      Left = 24
+      Top = 16
+      Width = 672
+      Height = 480
       Hint = ''
-      Caption = 'RUID'
-      TabOrder = 1
-    end
-    object teRuid: TUniEdit
-      Left = 120
-      Top = -83
-      Width = 185
-      Hint = ''
-      Text = ''
-      TabOrder = 2
-    end
-    object lPosition: TUniLabel
-      Left = 40
-      Top = -39
-      Width = 47
-      Height = 13
-      Hint = ''
-      Caption = #1055#1086#1079#1080#1094#1080#1103
-      TabOrder = 3
-    end
-    object tePosition: TUniEdit
-      Left = 120
-      Top = -43
-      Width = 120
-      Hint = ''
-      Text = ''
-      TabOrder = 4
-    end
-    object lPriority: TUniLabel
-      Left = 40
-      Top = 1
-      Width = 59
-      Height = 13
-      Hint = ''
-      Caption = #1055#1088#1080#1086#1088#1080#1090#1077#1090
-      TabOrder = 5
-    end
-    object tePriority: TUniEdit
-      Left = 120
-      Top = -3
-      Width = 120
-      Hint = ''
-      Text = ''
-      TabOrder = 6
-    end
-    object chkDoubles: TUniCheckBox
-      Left = 272
-      Top = -43
-      Width = 170
-      Height = 17
-      Hint = ''
-      Caption = #1056#1072#1079#1088#1077#1096#1080#1090#1100' '#1076#1091#1073#1083#1080
-      TabOrder = 7
-    end
-    object chkBreakRule: TUniCheckBox
-      Left = 272
-      Top = -3
-      Width = 170
-      Height = 17
-      Hint = ''
-      Caption = #1055#1088#1077#1088#1099#1074#1072#1090#1100' '#1094#1077#1087#1086#1095#1082#1091
-      TabOrder = 8
-    end
-    object lHandlers: TUniLabel
-      Left = 40
-      Top = 41
-      Width = 75
-      Height = 13
-      Hint = ''
-      Caption = #1054#1073#1088#1072#1073#1086#1090#1095#1080#1082#1080
-      TabOrder = 9
-    end
-    object meHandlers: TUniMemo
-      Left = 40
-      Top = 57
-      Width = 240
-      Height = 96
-      Hint = ''
-      Lines.Strings = (
-        '')
-      TabOrder = 10
-    end
-    object lChannels: TUniLabel
-      Left = 312
-      Top = 41
-      Width = 39
-      Height = 13
-      Hint = ''
-      Caption = #1050#1072#1085#1072#1083#1099
-      TabOrder = 11
-    end
-    object meChannels: TUniMemo
-      Left = 312
-      Top = 57
-      Width = 360
-      Height = 96
-      Hint = ''
-      Lines.Strings = (
-        '')
-      TabOrder = 12
-    end
-    object lIncFilters: TUniLabel
-      Left = 40
-      Top = 169
-      Width = 109
-      Height = 13
-      Hint = ''
-      Caption = #1060#1080#1083#1100#1090#1088#1099' '#1074#1082#1083#1102#1095#1077#1085#1080#1103
-      TabOrder = 13
-    end
-    object btnAddIncFilter: TUniButton
-      Left = 160
-      Top = 165
-      Width = 120
-      Height = 25
-      Hint = ''
-      Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1092#1080#1083#1100#1090#1088
-      TabOrder = 14
-      OnClick = btnAddIncFilterClick
-    end
-    object sbIncFilters: TUniScrollBox
-      Left = 40
-      Top = 193
-      Width = 280
-      Height = 200
-      Hint = ''
-      TabOrder = 15
-    end
-    object lExcFilters: TUniLabel
-      Left = 344
-      Top = 169
-      Width = 115
-      Height = 13
-      Hint = ''
-      Caption = #1060#1080#1083#1100#1090#1088#1099' '#1080#1089#1082#1083#1102#1095#1077#1085#1080#1103
-      TabOrder = 16
-    end
-    object btnAddExcFilter: TUniButton
-      Left = 472
-      Top = 165
-      Width = 120
-      Height = 25
-      Hint = ''
-      Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1092#1080#1083#1100#1090#1088
-      TabOrder = 17
-      OnClick = btnAddExcFilterClick
-    end
-    object sbExcFilters: TUniScrollBox
-      Left = 344
-      Top = 193
-      Width = 328
-      Height = 200
-      Hint = ''
-      TabOrder = 18
+      Caption = ' '#1055#1088#1072#1074#1080#1083#1086' '
+      TabOrder = 0
+      object RuleHeaderPanel: TUniPanel
+        Left = 2
+        Top = 15
+        Width = 668
+        Height = 70
+        Hint = ''
+        Align = alTop
+        TabOrder = 0
+        BorderStyle = ubsNone
+        Caption = ''
+        inline FrameRuleEnabled: TFrameBoolInput
+          Left = 0
+          Top = 0
+          Width = 668
+          Height = 30
+          Align = alTop
+          Anchors = [akLeft, akTop, akRight]
+          Constraints.MaxHeight = 30
+          Constraints.MinHeight = 30
+          TabOrder = 1
+          Background.Picture.Data = {00}
+          ExplicitWidth = 668
+          inherited PanelText: TUniPanel
+            Caption = #1042#1082#1083#1102#1095#1077#1085#1086
+          end
+          inherited CheckBox: TUniCheckBox
+            Width = 530
+            ExplicitWidth = 530
+          end
+        end
+        inline FrameRulePosition: TFrameTextInput
+          Left = 0
+          Top = 30
+          Width = 668
+          Height = 30
+          Align = alTop
+          Anchors = [akLeft, akTop, akRight]
+          Constraints.MaxHeight = 30
+          Constraints.MinHeight = 30
+          TabOrder = 2
+          Background.Picture.Data = {00}
+          ExplicitTop = 30
+          ExplicitWidth = 668
+          inherited PanelText: TUniPanel
+            Caption = #1055#1086#1079#1080#1094#1080#1103
+          end
+          inherited Edit: TUniEdit
+            Width = 497
+            InputType = 'number'
+            ExplicitWidth = 497
+          end
+          inherited PanelUnits: TUniPanel
+            Left = 642
+            ExplicitLeft = 642
+          end
+        end
+      end
+      object RuleTreePanel: TUniPanel
+        Left = 2
+        Top = 85
+        Width = 668
+        Height = 393
+        Hint = ''
+        Align = alClient
+        TabOrder = 1
+        Caption = ''
+        object RuleTreeSplitter: TUniSplitter
+          Left = 261
+          Top = 1
+          Width = 6
+          Height = 391
+          Hint = ''
+          Align = alLeft
+          ParentColor = False
+          Color = clBtnFace
+        end
+        object RuleTreeLeftPanel: TUniPanel
+          Left = 1
+          Top = 1
+          Width = 260
+          Height = 391
+          Hint = ''
+          Align = alLeft
+          TabOrder = 0
+          BorderStyle = ubsNone
+          Caption = ''
+          object RuleTreeToolbar: TUniPanel
+            Left = 0
+            Top = 0
+            Width = 260
+            Height = 28
+            Hint = ''
+            Align = alTop
+            TabOrder = 0
+            BorderStyle = ubsFrameLowered
+            Caption = ''
+            object RuleTreeAddPanel: TUniPanel
+              AlignWithMargins = True
+              Left = 5
+              Top = 5
+              Width = 25
+              Height = 18
+              Hint = ''
+              Align = alLeft
+              TabOrder = 1
+              BorderStyle = ubsNone
+              Caption = ''
+              object btnRuleAdd: TUniBitBtn
+                Left = 0
+                Top = 0
+                Width = 25
+                Height = 18
+                Hint = ''
+                Caption = '+'
+                Align = alClient
+                TabOrder = 1
+                OnClick = btnRuleAddClick
+              end
+            end
+            object RuleTreeRemovePanel: TUniPanel
+              AlignWithMargins = True
+              Left = 36
+              Top = 5
+              Width = 25
+              Height = 18
+              Hint = ''
+              Align = alLeft
+              TabOrder = 2
+              BorderStyle = ubsNone
+              Caption = ''
+              object btnRuleRemove: TUniBitBtn
+                Left = 0
+                Top = 0
+                Width = 25
+                Height = 18
+                Hint = ''
+                Caption = '-'
+                Align = alClient
+                TabOrder = 1
+                OnClick = btnRuleRemoveClick
+              end
+            end
+          end
+          object RuleTreeView: TUniTreeView
+            Left = 0
+            Top = 28
+            Width = 260
+            Height = 363
+            Hint = ''
+            Items.FontData = {0100000000}
+            Align = alClient
+            TabOrder = 2
+            Color = clWindow
+            UseCheckBox = True
+            OnChange = RuleTreeViewChange
+          end
+        end
+        object RuleConditionsPanel: TUniPanel
+          Left = 267
+          Top = 1
+          Width = 400
+          Height = 391
+          Hint = ''
+          Align = alClient
+          TabOrder = 3
+          BorderStyle = ubsNone
+          Caption = ''
+        end
+      end
     end
   end
 end
