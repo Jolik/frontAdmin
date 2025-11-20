@@ -7,7 +7,7 @@ uses
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIForm, uniTreeView, uniPageControl,
   uniGUIBaseClasses, uniPanel,
-  RulesFormUnit, AliasesFormUnit, AbonentsFormUnit;
+  RulesFormUnit, AliasesFrameUnit, AbonentsFormUnit;
 
 type
   TMSSSettingsForm = class(TUniForm)
@@ -29,12 +29,12 @@ type
     FNodeAliases: TUniTreeNode;
     FNodeAbonents: TUniTreeNode;
     FRulesForm: TRulesForm;
-    FAliasesForm: TAliasesForm;
+    FAliasesFrame: TAliasesFrame;
     FAbonentsForm: TAbonentsForm;
     procedure InitTree;
     procedure ShowTabForNode(ANode: TUniTreeNode);
     procedure EnsureRulesForm;
-    procedure EnsureAliasesForm;
+    procedure EnsureAliasesFrame;
     procedure EnsureAbonentsForm;
   public
   end;
@@ -65,15 +65,13 @@ begin
   end;
 end;
 
-procedure TMSSSettingsForm.EnsureAliasesForm;
+procedure TMSSSettingsForm.EnsureAliasesFrame;
 begin
-  if not Assigned(FAliasesForm) then
+  if not Assigned(FAliasesFrame) then
   begin
-    FAliasesForm := AliasesForm;
-    FAliasesForm.Parent := pnlAliasesHost;
-    FAliasesForm.Align := alClient;
-    FAliasesForm.BorderStyle := bsNone;
-    FAliasesForm.Show();
+    FAliasesFrame := TAliasesFrame.Create(Self);
+    FAliasesFrame.Parent := pnlAliasesHost;
+    FAliasesFrame.Align := alClient;
   end;
 end;
 
@@ -94,19 +92,19 @@ begin
   tvNavigate.Items.BeginUpdate;
   try
     tvNavigate.Items.Clear;
-    FNodeMain := tvNavigate.Items.Add(nil, 'Главное');
+    FNodeMain := tvNavigate.Items.Add(nil, #1043#1083#1072#1074#1085#1086#1077);
     FNodeMain.Data := tshBlank;
 
-    FNodeComm := tvNavigate.Items.AddChild(FNodeMain, 'Коммутация');
+    FNodeComm := tvNavigate.Items.AddChild(FNodeMain, #1050#1086#1084#1084#1091#1090#1072#1094#1080#1103);
     FNodeComm.Data := tshBlank;
 
-    FNodeRules := tvNavigate.Items.AddChild(FNodeComm, 'Правила');
+    FNodeRules := tvNavigate.Items.AddChild(FNodeComm, #1055#1088#1072#1074#1080#1083#1072);
     FNodeRules.Data := tshRules;
 
-    FNodeAliases := tvNavigate.Items.AddChild(FNodeComm, 'Алиасы');
+    FNodeAliases := tvNavigate.Items.AddChild(FNodeComm, #1040#1083#1080#1072#1089#1099);
     FNodeAliases.Data := tshAliases;
 
-    FNodeAbonents := tvNavigate.Items.AddChild(FNodeComm, 'Абоненты');
+    FNodeAbonents := tvNavigate.Items.AddChild(FNodeComm, #1040#1073#1086#1085#1077#1085#1090#1099);
     FNodeAbonents.Data := tshAbonents;
 
     FNodeMain.Expand(False);
@@ -128,7 +126,11 @@ begin
   if LTarget = tshRules then
     EnsureRulesForm
   else if LTarget = tshAliases then
-    EnsureAliasesForm
+  begin
+    EnsureAliasesFrame;
+    if Assigned(FAliasesFrame) then
+      FAliasesFrame.RefreshData;
+  end
   else if LTarget = tshAbonents then
     EnsureAbonentsForm;
 

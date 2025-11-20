@@ -3,7 +3,7 @@ object MSSSettingsForm: TMSSSettingsForm
   Top = 0
   ClientHeight = 600
   ClientWidth = 800
-  Caption = 'MSSSettingsForm'
+  Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080#32#77#83#83
   OnCreate = UniFormCreate
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
@@ -31,11 +31,11 @@ object MSSSettingsForm: TMSSSettingsForm
     TabOrder = 1
     object tshBlank: TUniTabSheet
       Hint = ''
-      Caption = 'Blank'
+      Caption = #1055#1091#1089#1090#1072#1103
     end
     object tshRules: TUniTabSheet
       Hint = ''
-      Caption = 'Rules'
+      Caption = #1055#1088#1072#1074#1080#1083#1072
       object pnlRulesHost: TUniContainerPanel
         Left = 0
         Top = 0
@@ -48,7 +48,7 @@ object MSSSettingsForm: TMSSSettingsForm
     end
     object tshAliases: TUniTabSheet
       Hint = ''
-      Caption = 'Aliases'
+      Caption = #1040#1083#1080#1072#1089#1099
       object pnlAliasesHost: TUniContainerPanel
         Left = 0
         Top = 0
@@ -61,7 +61,7 @@ object MSSSettingsForm: TMSSSettingsForm
     end
     object tshAbonents: TUniTabSheet
       Hint = ''
-      Caption = 'Abonents'
+      Caption = #1040#1073#1086#1085#1077#1085#1090#1099
       object pnlAbonentsHost: TUniContainerPanel
         Left = 0
         Top = 0

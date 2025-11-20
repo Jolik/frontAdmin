@@ -94,6 +94,7 @@ uses
   UserEditFormUnit in '..\forms\users\UserEditFormUnit.pas' {UserEditForm: TUniForm},
   UsersFormUnit in '..\forms\users\UsersFormUnit.pas' {UsersForm: TUniForm},
   AliasEditFormUnit in '..\forms\aliases\AliasEditFormUnit.pas' {AliasEditForm: TUniForm},
+  AliasesFrameUnit in '..\forms\aliases\AliasesFrameUnit.pas' {AliasesFrame: TUniFrame},
   AliasesFormUnit in '..\forms\aliases\AliasesFormUnit.pas' {AliasesForm: TUniForm},
   RouterSourceEditFormUnit in '..\forms\routerSources\RouterSourceEditFormUnit.pas' {RouterSourceEditForm: TUniForm},
   RouterSourcesFormUnit in '..\forms\routerSources\RouterSourcesFormUnit.pas' {RouterSourcesForm: TUniForm},
