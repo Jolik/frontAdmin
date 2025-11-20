@@ -36,8 +36,6 @@
         <DCCReference Include="..\..\services\common\brokers\HttpClientUnit.pas"/>
         <DCCReference Include="..\..\services\common\brokers\BaseRequests.pas"/>
         <DCCReference Include="..\..\services\common\brokers\BaseResponses.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\RestEntityBrokerUnit.pas"/>
-        <DCCReference Include="..\..\services\common\brokers\APIConst.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksHttpRequests.pas"/>
         <DCCReference Include="..\..\services\linkop\brokers\OperatorLinksContentRestBrokerUnit.pas"/>
@@ -102,6 +100,8 @@
         <DCCReference Include="..\..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\signals\entities\LogUnit.pas"/>
         <DCCReference Include="LogsRequestsUnit.pas"/>
+        <DCCReference Include="..\..\common\AppConfigUnit.pas"/>
+        <DCCReference Include="..\..\common\DefualtConfig.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
