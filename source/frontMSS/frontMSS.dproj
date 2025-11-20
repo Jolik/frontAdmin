@@ -147,7 +147,6 @@
         <DCCReference Include="..\services\common\brokers\BaseResponses.pas"/>
         <DCCReference Include="..\services\common\brokers\HttpClientUnit.pas"/>
         <DCCReference Include="..\services\common\brokers\RestBrokerBaseUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\RestEntityBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\cas\brokers\CasRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\cas\brokers\CasHttpRequests.pas"/>
         <DCCReference Include="..\services\common\brokers\HttpProtocolExceptionHelper.pas"/>
@@ -435,50 +434,38 @@
             <Form>FormLayout</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\forms\common\ListParentFormUnit.pas">
-            <Form>ListParentForm</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
         <DCCReference Include="..\forms\common\ParentEditFormUnit.pas">
             <Form>ParentEditForm</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
+        <DCCReference Include="..\forms\common\ListParentFormUnit.pas"/>
         <DCCReference Include="..\forms\common\ParentFormUnit.pas">
             <Form>ParentForm</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\common\MainModuleBaseUnit.pas"/>
         <DCCReference Include="..\forms\logs\LogEntryViewFormUnit.pas">
             <Form>LogEntryViewForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\logs\LogViewFormUnit.pas">
             <Form>LogViewForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dashboard\MSSDashboardFormUnit.pas">
             <Form>MSSDashboardForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dashboard\ChannelsFrameUnit.pas">
             <Form>ChannelsFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dashboard\ContentFrameUnit.pas">
             <Form>ContentFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dashboard\LogsFrameUnit.pas">
             <Form>LogsFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\services\signals\entities\LogUnit.pas"/>

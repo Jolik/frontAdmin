@@ -8,7 +8,8 @@ uses
   uniGUIClasses, uniGUIForm,
   EntityUnit,
   ParentEditFormUnit,
-  RestEntityBrokerUnit, BaseRequests, BaseResponses;
+  RestFieldSetBrokerUnit,
+  BaseRequests, BaseResponses;
 
 type
   ///  базовая форма с редактором и брокером
@@ -17,7 +18,7 @@ type
     procedure UniFormDestroy(Sender: TObject);
   private
     ///  REST‑брокер для доступа к API
-    FRestBroker: TRestEntityBroker;
+    FRestBroker: TRestFieldSetBroker;
     ///  форма для редактирования сущности — потомок должен создать функциональный класс
     FEditForm: TParentEditForm;
 
@@ -33,14 +34,14 @@ type
     procedure Refresh(const AId: String = ''); virtual; abstract;
 
     // фабрика REST брокера (запросы создаёт брокер)
-    function CreateRestBroker(): TRestEntityBroker; virtual;
+    function CreateRestBroker(): TRestFieldSetBroker; virtual;
 
     ///  функция для создания нужной формы редактирования
     function CreateEditForm(): TParentEditForm; virtual; abstract;
 
   public
     ///  доступ к REST‑брокеру и форме редактирования
-    property RestBroker: TRestEntityBroker read FRestBroker;
+    property RestBroker: TRestFieldSetBroker read FRestBroker;
     property EditForm: TParentEditForm read FEditForm;
 
     ///  создать форму редактирования и задать режим
@@ -56,7 +57,7 @@ implementation
 uses
   MainModule, uniGUIApplication, HttpClientUnit, IdHTTP, LoggingUnit;
 
-{ TParentForm }
+{ TParentFieldSetForm }
 
 function TParentForm.NewCallback(const AID: string;AEntity: TFieldSet):boolean;
 var
@@ -225,7 +226,7 @@ end;
 
 { Default implementations for REST factories }
 
-function TParentForm.CreateRestBroker: TRestEntityBroker;
+function TParentForm.CreateRestBroker: TRestFieldSetBroker;
 begin
   Result := nil;
 end;

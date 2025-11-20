@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
@@ -16,7 +16,7 @@ uses
   APIConst, uniPanel, uniLabel, ListParentFormUnit;
 
 type
-  TAliasesForm = class(TListParentFieldSetForm)
+  TAliasesForm = class(TListParentForm)
   private
     procedure btnNewClick(Sender: TObject);
     procedure btnUpdateClick(Sender: TObject);

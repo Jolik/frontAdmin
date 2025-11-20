@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
@@ -15,7 +15,7 @@ uses
   OperatorLinksRestBrokerUnit, uniPanel, uniLabel;
 
 type
-  TOperatorLinksForm = class(TListParentFieldSetForm)
+  TOperatorLinksForm = class(TListParentForm)
   protected
     procedure Refresh(const AId: String = ''); override;
     function CreateRestBroker: TRestFieldSetBroker; override;

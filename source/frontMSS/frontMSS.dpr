@@ -27,7 +27,6 @@ uses
   BaseResponses in '..\services\common\brokers\BaseResponses.pas',
   HttpClientUnit in '..\services\common\brokers\HttpClientUnit.pas',
   RestBrokerBaseUnit in '..\services\common\brokers\RestBrokerBaseUnit.pas',
-  RestEntityBrokerUnit in '..\services\common\brokers\RestEntityBrokerUnit.pas',
   CasRestBrokerUnit in '..\services\acl\cas\brokers\CasRestBrokerUnit.pas',
   CasHttpRequests in '..\services\acl\cas\brokers\CasHttpRequests.pas',
   HttpProtocolExceptionHelper in '..\services\common\brokers\HttpProtocolExceptionHelper.pas',
@@ -143,12 +142,10 @@ uses
   AuthMainFormUnit in '..\forms\common\AuthMainFormUnit.pas' {AuthMainForm: TUniForm},
   EmbedLoginFormUnit in '..\forms\common\EmbedLoginFormUnit.pas' {EmbedLoginForm: TUniForm},
   FormLayoutFormUnit in '..\forms\common\FormLayoutFormUnit.pas' {FormLayout: TUniForm},
-  ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas' {ListParentForm: TUniForm},
   ParentEditFormUnit in '..\forms\common\ParentEditFormUnit.pas' {ParentEditForm: TUniForm},
-  ParentFormUnit in '..\forms\common\ParentFormUnit.pas' {ParentForm: TUniForm},
-  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas';
-  ListParentFieldSetFormUnit in '..\forms\common\ListParentFieldSetFormUnit.pas',
-  ParentFieldSetFormUnit in '..\forms\common\ParentFieldSetFormUnit.pas';
+  MainModuleBaseUnit in '..\common\MainModuleBaseUnit.pas',
+  ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas',
+  ParentFormUnit in '..\forms\common\ParentFormUnit.pas' {ParentForm},
   LogEntryViewFormUnit in '..\forms\logs\LogEntryViewFormUnit.pas' {LogEntryViewForm: TUniForm},
   LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
   MSSDashboardFormUnit in '..\forms\dashboard\MSSDashboardFormUnit.pas' {MSSDashboardForm: TUniForm},

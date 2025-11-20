@@ -68,20 +68,15 @@ type
   protected
     procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
 
-    ///  iaoia aica?auaao eiie?aoiue oei iauaeoa Settings
-    ///  iioiiee aie?iu ia?aii?aaaeeou aai, iioiio ?oi ii o anao ?aciue
     class function SettingsClassType: TSettingsClass; override;
   public
     function TaskSettings:TSummaryTaskSettings;
   end;
 
 type
-  ///  nienie caaa? aey na?aena naiia?e
   TSummaryTaskList = class (TTaskList)
   protected
-    ///  iaoia aica?auaao eiie?aoiue oei iauaeoa yeaiaioa nienea
-    ///  iioiiee aie?iu ia?aii?aaaeeou aai, iioiio ?oi ii o anao ?aciue
-    class function ItemClassType: TEntityClass; override;
+    class function ItemClassType: TFieldSetClass; override;
 
   end;
 

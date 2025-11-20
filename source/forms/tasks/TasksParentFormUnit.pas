@@ -1,11 +1,11 @@
-unit TasksParentFormUnit;
+п»їunit TasksParentFormUnit;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPanel, uniLabel, uniPageControl, uniSplitter,
@@ -16,7 +16,7 @@ uses
   TasksRestBrokerUnit, TaskHttpRequests, BaseRequests, RestFieldSetBrokerUnit;
 
 type
-  TTaskParentForm = class(TListParentFieldSetForm)
+  TTaskParentForm = class(TListParentForm)
     cpTaskInfoModule: TUniContainerPanel;
     lTaskInfoModule: TUniLabel;
     lTaskInfoModuleValue: TUniLabel;
@@ -142,7 +142,7 @@ var
   EditParentForm: TTaskEditParentForm;
 begin
 
-  if not Assigned(FSelectedEntity) or (FSelectedEntity.Id='') then  Exit;
+  if not Assigned(FSelectedEntity) or ((FSelectedEntity as TTask).Id='') then  Exit;
 
   PrepareEditForm(true);
   TaskSourceList := nil;
@@ -227,7 +227,7 @@ end;
 procedure TTaskParentForm.OnInfoUpdated(AFieldSet: TFieldSet);
 begin
   inherited;
-  lTaskInfoModuleValue.Caption := (AEntity as TTask).Module;
+  lTaskInfoModuleValue.Caption := (AFieldSet as TTask).Module;
 end;
 
 function TTaskParentForm.SaveTaskCommon(IsNew: Boolean; const AID: string; AEntity: TFieldSet): Boolean;
@@ -241,7 +241,7 @@ begin
     Exit;
 
   try
-    // Создаём запрос
+    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     if IsNew then
       Req := RestBroker.CreateReqNew
     else
@@ -251,7 +251,7 @@ begin
       Exit;
 
 
-    // Заполняем ID, если есть
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ID, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     if not IsNew then
     with (Req as TReqUpdate) do begin
       if EditForm.Id <> '' then
@@ -260,11 +260,11 @@ begin
         Id := TEntity(EditForm.Entity).Id;
     end;
 
-    // Копируем поля из формы в тело запроса
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     if Assigned(Req.ReqBody) and (AEntity is TFieldSet) then
       TFieldSet(Req.ReqBody).Assign(AEntity);
 
-    // Собираем sources[]
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ sources[]
     var taskBody := TTaskUpdateBody(Req.ReqBody);
     if Assigned(taskBody.Sources) then
     begin
@@ -274,7 +274,7 @@ begin
     end;
 
 
-    // Отправляем запрос
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     if IsNew then
       JR := RestBroker.New(Req as TReqNew)
     else

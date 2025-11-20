@@ -24,7 +24,7 @@ type
   protected
     ///  метод возвращает конкретный тип объекта элемента списка
     ///  потомки должны переопределить его, потому что он у всех разный
-    class function ItemClassType: TEntityClass; override;
+    class function ItemClassType: TFieldSetClass; override;
 
   end;
 

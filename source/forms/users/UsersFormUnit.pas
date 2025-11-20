@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
-  ListParentFieldSetFormUnit, Data.DB, uniPageControl, uniSplitter, uniBasicGrid,
+  ListParentFormUnit, Data.DB, uniPageControl, uniSplitter, uniBasicGrid,
   uniDBGrid, uniToolBar, uniGUIBaseClasses, ParentEditFormUnit,
   RestBrokerBaseUnit, BaseRequests, BaseResponses, RestFieldSetBrokerUnit,
   uniPanel, uniLabel, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
@@ -15,7 +15,7 @@ uses
   EntityUnit, UserUnit;
 
 type
-  TUsersForm = class(TListParentFieldSetForm)
+  TUsersForm = class(TListParentForm)
   protected
     function CreateRestBroker: TRestFieldSetBroker; override;
     function CreateEditForm: TParentEditForm; override;

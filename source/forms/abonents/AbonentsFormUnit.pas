@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, Data.DB,
+  uniGUIClasses, uniGUIForm, ListParentFormUnit, Data.DB,
    uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
   uniToolBar, uniGUIBaseClasses,
    ParentEditFormUnit,
@@ -16,7 +16,7 @@ uses
   FireDAC.Comp.Client;
 
 type
-  TAbonentsForm = class(TListParentFieldSetForm)
+  TAbonentsForm = class(TListParentForm)
   protected
     procedure Refresh(const AId: String = ''); override;
     function CreateRestBroker: TRestFieldSetBroker; override;

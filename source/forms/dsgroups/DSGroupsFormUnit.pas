@@ -6,18 +6,18 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
-  ListParentFormUnit, Data.DB, uniPageControl, uniSplitter, uniBasicGrid,
+  Data.DB, uniPageControl, uniSplitter, uniBasicGrid,
   uniDBGrid, uniToolBar, uniGUIBaseClasses,
   uniPanel, uniLabel, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  ParentEditFormUnit, RestEntityBrokerUnit, BaseRequests, BaseResponses,
+  ParentEditFormUnit, BaseRequests, BaseResponses,
   RestFieldSetBrokerUnit,
-  ListParentFieldSetFormUnit,
+  ListParentFormUnit,
   EntityUnit;
 
 type
-  TDsGroupsForm = class(TListParentFieldSetForm)
+  TDsGroupsForm = class(TListParentForm)
     CredMemFDMemTableEntitysid: TStringField;
     CredMemFDMemTableEntitytype: TStringField;
   protected

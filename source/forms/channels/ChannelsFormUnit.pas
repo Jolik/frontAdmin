@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPanel, uniPageControl, uniSplitter, uniBasicGrid,
@@ -14,13 +14,13 @@ uses
   ParentEditFormUnit, uniLabel;
 
 type
-  TChannelsForm = class(TListParentFieldSetForm)
+  TChannelsForm = class(TListParentForm)
     procedure btnUpdateClick(Sender: TObject);
   protected
-    ///  функция для создания нужного брокера потомком
+    ///  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     function CreateRestBroker(): TRestFieldSetBroker; override;
 
-    ///  функиця для создания нужной формы редактирвоания
+    ///  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     function CreateEditForm(): TParentEditForm; override;
 
   public

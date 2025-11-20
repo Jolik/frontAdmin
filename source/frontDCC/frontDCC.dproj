@@ -132,7 +132,6 @@
         <DCCReference Include="..\services\common\brokers\BaseResponses.pas"/>
         <DCCReference Include="..\services\common\brokers\HttpClientUnit.pas"/>
         <DCCReference Include="..\services\common\brokers\RestBrokerBaseUnit.pas"/>
-        <DCCReference Include="..\services\common\brokers\RestEntityBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\brokers\CompaniesRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\acl\brokers\CompanyHttpRequests.pas"/>
         <DCCReference Include="..\services\acl\brokers\DepartmentsRestBrokerUnit.pas"/>
@@ -143,7 +142,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\common\ParentFormUnit.pas">
             <Form>ParentForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\common\ConstsUnit.pas"/>
@@ -160,7 +158,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\common\ListParentFormUnit.pas">
             <Form>ListParentForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFormUnit.pas">
@@ -433,12 +430,10 @@
         <DCCReference Include="..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
         <DCCReference Include="..\forms\logs\LogEntryViewFormUnit.pas">
             <Form>LogEntryViewForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\logs\LogViewFormUnit.pas">
             <Form>LogViewForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\services\signals\entities\LogUnit.pas"/>
@@ -446,27 +441,22 @@
         <DCCReference Include="..\services\signals\brokers\LogsHttpRequests.pas"/>
         <DCCReference Include="..\forms\dashboard\ContentFrameUnit.pas">
             <Form>ContentFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dashboard\LogsFrameUnit.pas">
             <Form>LogsFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dashboard\SourcesFrameUnit.pas">
             <Form>SourcesFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dashboard\LinksFrameUnit.pas">
             <Form>LinksFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dashboard\DCCDashboardFormUnit.pas">
             <Form>DCCDashboardForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\services\dataspace\entities\HistoryRecordUnit.pas"/>
@@ -478,7 +468,6 @@
         <DCCReference Include="..\services\dataspace\brokers\StorageRestBrokerUnit.pas"/>
         <DCCReference Include="..\forms\contentView\ContentViewFormUnit.pas">
             <Form>ContentViewForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">
@@ -506,7 +495,7 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
-            <Deployment Version="5">
+            <Deployment Version="4">
                 <DeployFile LocalName="Linux64\Debug\frontDCC" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput">
@@ -525,6 +514,16 @@
                     </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
+                    </Platform>
+                </DeployClass>
+                <DeployClass Name="AndroidClasses">
+                    <Platform Name="Android">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
+                    </Platform>
+                    <Platform Name="Android64">
+                        <RemoteDir>classes</RemoteDir>
+                        <Operation>64</Operation>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidFileProvider">

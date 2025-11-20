@@ -22,10 +22,7 @@ type
   ///
   TDSProcessorTaskList = class (TTaskList)
   protected
-    ///
-    ///     ,
-    class function ItemClassType: TEntityClass; override;
-
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
 type

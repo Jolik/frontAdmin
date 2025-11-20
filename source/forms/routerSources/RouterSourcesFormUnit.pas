@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
-  ListParentFieldSetFormUnit, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  ListParentFormUnit, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, uniPageControl,
   uniSplitter, uniBasicGrid, uniDBGrid, uniToolBar, uniGUIBaseClasses,
@@ -13,7 +13,7 @@ uses
   RouterSourcesRestBrokerUnit, uniPanel, uniLabel, EntityUnit;
 
 type
-  TRouterSourcesForm = class(TListParentFieldSetForm)
+  TRouterSourcesForm = class(TListParentForm)
     FDMemTableEntitycaption2: TStringField;
     FDMemTableEntitywho: TStringField;
     FDMemTableEntitysercive: TStringField;

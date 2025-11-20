@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFieldSetFormUnit, FireDAC.Stan.Intf,
+  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniPageControl, uniSplitter, uniBasicGrid, uniDBGrid,
@@ -56,15 +56,15 @@ procedure TSummaryTasksForm.btnNewClick(Sender: TObject);
 begin
   PrepareEditForm;
 
-  ///  создаем класс сущности от брокера
+  ///  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   var req := TSummaryTaskNewBody.Create;
-  ///  устанавлаием сущность в окно редактирования
+  ///  пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
   EditForm.Entity := req;
 
   try
     EditForm.ShowModalEx(NewCallback);
   finally
-///  удалять нельзя потому что класс переходит под управление форму редактирования
+///  пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 ///    LEntity.Free;
   end;
 end;
@@ -97,14 +97,14 @@ begin
   inherited;
   lbSettings.Items.Clear;
   with AFieldSet as TSummaryTask do begin
-    lbSettings.Items.AddPair('Сокращенный заголовок', TaskSettings.Header);
-    lbSettings.Items.AddPair('Сокращенный заголовок 2', TaskSettings.Header2);
-    lbSettings.Items.AddPair('Корректировка времени сокращенного заголовка', IntToStr(TaskSettings.HeaderCorr));
-    lbSettings.Items.AddPair('Дни месяца', TaskSettings.MonthDays);
-    lbSettings.Items.AddPair('Сроки подачи', TaskSettings.Time);
-    lbSettings.Items.AddPair('Проверять опоздавшие наблюдения', BoolToStr(TaskSettings.CheckLate,true));
-    lbSettings.Items.AddPair('каждые X секунд:', IntToStr(TaskSettings.LateEvery));
-    lbSettings.Items.AddPair('каждые N минут:', IntToStr(TaskSettings.LatePeriod));
+    lbSettings.Items.AddPair('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ', TaskSettings.Header);
+    lbSettings.Items.AddPair('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2', TaskSettings.Header2);
+    lbSettings.Items.AddPair('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ', IntToStr(TaskSettings.HeaderCorr));
+    lbSettings.Items.AddPair('пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ', TaskSettings.MonthDays);
+    lbSettings.Items.AddPair('пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ', TaskSettings.Time);
+    lbSettings.Items.AddPair('пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ', BoolToStr(TaskSettings.CheckLate,true));
+    lbSettings.Items.AddPair('пїЅпїЅпїЅпїЅпїЅпїЅ X пїЅпїЅпїЅпїЅпїЅпїЅ:', IntToStr(TaskSettings.LateEvery));
+    lbSettings.Items.AddPair('пїЅпїЅпїЅпїЅпїЅпїЅ N пїЅпїЅпїЅпїЅпїЅ:', IntToStr(TaskSettings.LatePeriod));
     var Ex:= TaskSettings.ExcludeWeek;
 
   end;
