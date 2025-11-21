@@ -7,7 +7,7 @@ uses
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIForm, uniTreeView, uniPageControl,
   uniGUIBaseClasses, uniPanel,
-  RulesFormUnit, AliasesFrameUnit, AbonentsFormUnit;
+  RulesFrameUnit, AliasesFrameUnit, AbonentsFrameUnit;
 
 type
   TMSSSettingsForm = class(TUniForm)
@@ -28,14 +28,14 @@ type
     FNodeRules: TUniTreeNode;
     FNodeAliases: TUniTreeNode;
     FNodeAbonents: TUniTreeNode;
-    FRulesForm: TRulesForm;
+    FRulesFrame: TRulesFrame;
     FAliasesFrame: TAliasesFrame;
-    FAbonentsForm: TAbonentsForm;
+    FAbonentsFrame: TAbonentsFrame;
     procedure InitTree;
     procedure ShowTabForNode(ANode: TUniTreeNode);
-    procedure EnsureRulesForm;
+    procedure EnsureRulesFrame;
     procedure EnsureAliasesFrame;
-    procedure EnsureAbonentsForm;
+    procedure EnsureAbonentsFrame;
   public
   end;
 
@@ -53,15 +53,13 @@ begin
   Result := TMSSSettingsForm(UniMainModule.GetFormInstance(TMSSSettingsForm));
 end;
 
-procedure TMSSSettingsForm.EnsureAbonentsForm;
+procedure TMSSSettingsForm.EnsureAbonentsFrame;
 begin
-  if not Assigned(FAbonentsForm) then
+  if not Assigned(FAbonentsFrame) then
   begin
-    FAbonentsForm := AbonentsForm;
-    FAbonentsForm.Parent := pnlAbonentsHost;
-    FAbonentsForm.Align := alClient;
-    FAbonentsForm.BorderStyle := bsNone;
-    FAbonentsForm.Show();
+    FAbonentsFrame := TAbonentsFrame.Create(Self);
+    FAbonentsFrame.Parent := pnlAbonentsHost;
+    FAbonentsFrame.Align := alClient;
   end;
 end;
 
@@ -75,15 +73,13 @@ begin
   end;
 end;
 
-procedure TMSSSettingsForm.EnsureRulesForm;
+procedure TMSSSettingsForm.EnsureRulesFrame;
 begin
-  if not Assigned(FRulesForm) then
+  if not Assigned(FRulesFrame) then
   begin
-    FRulesForm := RulesForm;
-    FRulesForm.Parent := pnlRulesHost;
-    FRulesForm.Align := alClient;
-    FRulesForm.BorderStyle := bsNone;
-    FRulesForm.Show();
+    FRulesFrame := TRulesFrame.Create(Self);
+    FRulesFrame.Parent := pnlRulesHost;
+    FRulesFrame.Align := alClient;
   end;
 end;
 
@@ -124,15 +120,13 @@ begin
     LTarget := tshBlank;
 
   if LTarget = tshRules then
-    EnsureRulesForm
+    EnsureRulesFrame
   else if LTarget = tshAliases then
   begin
     EnsureAliasesFrame;
-    if Assigned(FAliasesFrame) then
-      FAliasesFrame.RefreshData;
   end
   else if LTarget = tshAbonents then
-    EnsureAbonentsForm;
+    EnsureAbonentsFrame;
 
   pcForms.ActivePage := LTarget;
 end;
