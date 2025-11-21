@@ -1,13 +1,13 @@
 object ProfileFrame: TProfileFrame
   Left = 0
   Top = 0
-  Width = 401
+  Width = 358
   Height = 521
   TabOrder = 0
   object UniGroupBox1: TUniGroupBox
     Left = 0
     Top = 60
-    Width = 401
+    Width = 358
     Height = 239
     Hint = ''
     Caption = ' '#1055#1088#1072#1074#1080#1083#1086' '
@@ -16,7 +16,7 @@ object ProfileFrame: TProfileFrame
     object UniPanel1: TUniPanel
       Left = 2
       Top = 22
-      Width = 397
+      Width = 354
       Height = 66
       Hint = ''
       Align = alTop
@@ -28,7 +28,7 @@ object ProfileFrame: TProfileFrame
       inline FrameRuleEnabled: TFrameBoolInput
         Left = 0
         Top = 0
-        Width = 397
+        Width = 354
         Height = 30
         Align = alTop
         Anchors = [akLeft, akTop, akRight]
@@ -36,20 +36,20 @@ object ProfileFrame: TProfileFrame
         Constraints.MinHeight = 30
         TabOrder = 1
         Background.Picture.Data = {00}
-        ExplicitWidth = 397
+        ExplicitWidth = 399
         inherited PanelText: TUniPanel
           Caption = #1042#1082#1083#1102#1095#1077#1085#1086
         end
         inherited CheckBox: TUniCheckBox
-          Width = 259
+          Width = 216
           OnChange = FrameRuleEnabledCheckBoxChange
-          ExplicitWidth = 259
+          ExplicitWidth = 261
         end
       end
       inline FrameRulePosition: TFrameTextInput
         Left = 0
         Top = 30
-        Width = 397
+        Width = 354
         Height = 30
         Align = alTop
         Anchors = [akLeft, akTop, akRight]
@@ -58,27 +58,27 @@ object ProfileFrame: TProfileFrame
         TabOrder = 2
         Background.Picture.Data = {00}
         ExplicitTop = 30
-        ExplicitWidth = 397
+        ExplicitWidth = 399
         inherited PanelText: TUniPanel
           Caption = #1055#1086#1079#1080#1094#1080#1103
         end
         inherited Edit: TUniEdit
-          Width = 226
+          Width = 183
           InputType = 'number'
           OnChange = FrameRulePositionEditChange
-          ExplicitWidth = 226
+          ExplicitWidth = 228
         end
         inherited PanelUnits: TUniPanel
-          Left = 371
+          Left = 328
           Caption = ''
-          ExplicitLeft = 371
+          ExplicitLeft = 373
         end
       end
     end
     object UniPanel2: TUniPanel
       Left = 2
       Top = 88
-      Width = 397
+      Width = 354
       Height = 149
       Hint = ''
       Align = alClient
@@ -86,7 +86,7 @@ object ProfileFrame: TProfileFrame
       ShowCaption = False
       Caption = 'UniPanel2'
       object UniSplitter2: TUniSplitter
-        Left = 190
+        Left = 169
         Top = 1
         Width = 6
         Height = 147
@@ -97,9 +97,9 @@ object ProfileFrame: TProfileFrame
         ExplicitHeight = 154
       end
       object PanelConditions: TUniPanel
-        Left = 196
+        Left = 175
         Top = 1
-        Width = 200
+        Width = 178
         Height = 147
         Hint = ''
         Align = alClient
@@ -112,11 +112,10 @@ object ProfileFrame: TProfileFrame
       object UniPanel3: TUniPanel
         Left = 1
         Top = 1
-        Width = 189
+        Width = 168
         Height = 147
         Hint = ''
         Align = alLeft
-        Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 3
         BorderStyle = ubsNone
         ShowCaption = False
@@ -124,7 +123,7 @@ object ProfileFrame: TProfileFrame
         object RuleTreeView: TUniTreeView
           Left = 0
           Top = 25
-          Width = 189
+          Width = 168
           Height = 122
           Hint = ''
           Items.FontData = {0100000000}
@@ -137,7 +136,7 @@ object ProfileFrame: TProfileFrame
         object UniPanel4: TUniPanel
           Left = 0
           Top = 0
-          Width = 189
+          Width = 168
           Height = 25
           Hint = ''
           Align = alTop
@@ -160,6 +159,9 @@ object ProfileFrame: TProfileFrame
             BorderStyle = ubsNone
             ShowCaption = False
             Caption = 'UniPanel5'
+            ExplicitLeft = 1
+            ExplicitTop = 1
+            ExplicitHeight = 23
             object btnAddRules: TUniBitBtn
               Left = 0
               Top = 0
@@ -175,6 +177,7 @@ object ProfileFrame: TProfileFrame
               Align = alClient
               TabOrder = 1
               OnClick = btnAddRulesClick
+              ExplicitHeight = 23
             end
           end
           object UniPanel6: TUniPanel
@@ -192,6 +195,9 @@ object ProfileFrame: TProfileFrame
             BorderStyle = ubsNone
             ShowCaption = False
             Caption = 'UniPanel5'
+            ExplicitLeft = 29
+            ExplicitTop = 1
+            ExplicitHeight = 23
             object btnRemoveRules: TUniBitBtn
               Left = 0
               Top = 0
@@ -207,6 +213,7 @@ object ProfileFrame: TProfileFrame
               Align = alClient
               TabOrder = 1
               OnClick = btnRemoveRulesClick
+              ExplicitHeight = 23
             end
           end
         end
@@ -216,7 +223,7 @@ object ProfileFrame: TProfileFrame
   object UniSplitter1: TUniSplitter
     Left = 0
     Top = 299
-    Width = 401
+    Width = 358
     Height = 6
     Cursor = crVSplit
     Hint = ''
@@ -227,7 +234,7 @@ object ProfileFrame: TProfileFrame
   object UniGroupBox2: TUniGroupBox
     Left = 0
     Top = 305
-    Width = 401
+    Width = 358
     Height = 216
     Hint = ''
     Caption = ' '#1044#1077#1081#1089#1090#1074#1080#1103' '
@@ -237,7 +244,7 @@ object ProfileFrame: TProfileFrame
       AlignWithMargins = True
       Left = 12
       Top = 25
-      Width = 377
+      Width = 334
       Height = 184
       Hint = ''
       Margins.Left = 10
@@ -251,7 +258,7 @@ object ProfileFrame: TProfileFrame
         AlignWithMargins = True
         Left = 12
         Top = 156
-        Width = 360
+        Width = 317
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -264,7 +271,7 @@ object ProfileFrame: TProfileFrame
         AlignWithMargins = True
         Left = 12
         Top = 133
-        Width = 360
+        Width = 317
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -277,7 +284,7 @@ object ProfileFrame: TProfileFrame
         AlignWithMargins = True
         Left = 12
         Top = 110
-        Width = 360
+        Width = 317
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -290,7 +297,7 @@ object ProfileFrame: TProfileFrame
         AlignWithMargins = True
         Left = 12
         Top = 87
-        Width = 360
+        Width = 317
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -303,7 +310,7 @@ object ProfileFrame: TProfileFrame
         AlignWithMargins = True
         Left = 12
         Top = 64
-        Width = 360
+        Width = 317
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -316,7 +323,7 @@ object ProfileFrame: TProfileFrame
         AlignWithMargins = True
         Left = 12
         Top = 41
-        Width = 360
+        Width = 317
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -329,7 +336,7 @@ object ProfileFrame: TProfileFrame
         AlignWithMargins = True
         Left = 12
         Top = 18
-        Width = 360
+        Width = 317
         Height = 17
         Hint = ''
         Margins.Left = 10
@@ -343,7 +350,7 @@ object ProfileFrame: TProfileFrame
   inline PridFrame: TFrameTextInput
     Left = 0
     Top = 0
-    Width = 401
+    Width = 358
     Height = 30
     Align = alTop
     Anchors = [akLeft, akTop, akRight]
@@ -356,12 +363,12 @@ object ProfileFrame: TProfileFrame
       Caption = 'ID '#1087#1088#1086#1092#1080#1083#1103
     end
     inherited Edit: TUniEdit
-      Width = 230
+      Width = 187
       ReadOnly = True
       ExplicitWidth = 230
     end
     inherited PanelUnits: TUniPanel
-      Left = 375
+      Left = 332
       Caption = ''
       ExplicitLeft = 375
     end
@@ -369,7 +376,7 @@ object ProfileFrame: TProfileFrame
   inline DescriptionFrame: TFrameTextInput
     Left = 0
     Top = 30
-    Width = 401
+    Width = 358
     Height = 30
     Align = alTop
     Anchors = [akLeft, akTop, akRight]
@@ -383,12 +390,12 @@ object ProfileFrame: TProfileFrame
       Caption = #1054#1087#1080#1089#1072#1085#1080#1077
     end
     inherited Edit: TUniEdit
-      Width = 230
+      Width = 187
       OnChange = DescriptionFrameEditChange
       ExplicitWidth = 230
     end
     inherited PanelUnits: TUniPanel
-      Left = 375
+      Left = 332
       Caption = ''
       ExplicitLeft = 375
     end

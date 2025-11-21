@@ -122,6 +122,12 @@ type
     constructor Create; override;
   end;
 
+  // Base archive request by identifier
+  TReqArchive = class(TReqWithID)
+  public
+    constructor Create; override;
+  end;
+
 implementation
 
 { TBaseRouterRequest }
@@ -410,6 +416,15 @@ begin
   inherited Create;
   Method := mPOST;
   AddPath := 'remove';
+end;
+
+{ TReqArchive }
+
+constructor TReqArchive.Create;
+begin
+  inherited Create;
+  Method := mPOST;
+  AddPath := 'archive';
 end;
 
 end.

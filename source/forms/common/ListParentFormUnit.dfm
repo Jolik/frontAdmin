@@ -116,7 +116,6 @@ inherited ListParentFieldSetForm: TListParentForm
       Hint = ''
       TabVisible = False
       Caption = 'Task.Info'
-      ExplicitHeight = 502
       object cpTaskInfo: TUniContainerPanel
         Left = 0
         Top = 0

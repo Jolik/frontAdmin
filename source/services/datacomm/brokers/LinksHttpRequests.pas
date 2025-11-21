@@ -57,6 +57,11 @@ type
     constructor Create; override;
   end;
 
+  TLinkReqArchive = class(TReqArchive)
+  public
+    constructor Create; override;
+  end;
+
 implementation
 
 { TLinkListResponse }
@@ -132,6 +137,12 @@ begin
 end;
 
 constructor TLinkReqRemove.Create;
+begin
+  inherited Create;
+  SetEndpoint('links');
+end;
+
+constructor TLinkReqArchive.Create;
 begin
   inherited Create;
   SetEndpoint('links');

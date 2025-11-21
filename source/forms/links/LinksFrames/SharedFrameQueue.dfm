@@ -1,4 +1,4 @@
-﻿object FrameQueue: TFrameQueue
+object FrameQueue: TFrameQueue
   Left = 0
   Top = 0
   Width = 274
