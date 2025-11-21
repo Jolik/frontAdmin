@@ -279,6 +279,18 @@ inherited MainForm: TMainForm
       TabOrder = 15
       OnClick = btnLogsClick
     end
+    object btnSeetings: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 407
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
+      Align = alTop
+      TabOrder = 16
+      OnClick = btnSeetingsClick
+    end
   end
   object uncntnrpnForms: TUniContainerPanel [2]
     Left = 145

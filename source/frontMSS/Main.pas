@@ -35,6 +35,7 @@ type
     btnLogs: TUniButton;
     unlblName1: TUniLabel;
     uncntnrpnForms: TUniContainerPanel;
+    btnSeetings: TUniButton;
     procedure btnDashboardClick(Sender: TObject);
     procedure btnAbonentsClick(Sender: TObject);
     procedure btnChannelClick(Sender: TObject);
@@ -51,6 +52,7 @@ type
     procedure btnSearchClick(Sender: TObject);
     procedure btnContentStreamClick(Sender: TObject);
     procedure btnLogsClick(Sender: TObject);
+    procedure btnSeetingsClick(Sender: TObject);
   private
   public
     { Public declarations }
@@ -78,7 +80,7 @@ uses
   OperatorLinkContectFormUnit,
   SearchFormUnit,
   ContentStreamFormUnit, HandlersFormUnit, UsersFormUnit,
-  LogViewFormUnit, MSSDashboardFormUnit;
+  LogViewFormUnit, MSSDashboardFormUnit, MSSSettingsFormUnit;
 
 function MainForm: TMainForm;
 begin
@@ -137,6 +139,11 @@ end;
 procedure TMainForm.btnLogsClick(Sender: TObject);
 begin
   LogViewForm.Show();
+end;
+
+procedure TMainForm.btnSeetingsClick(Sender: TObject);
+begin
+  MSSSettingsForm.Show();
 end;
 
 procedure TMainForm.btnAliasesClick(Sender: TObject);
