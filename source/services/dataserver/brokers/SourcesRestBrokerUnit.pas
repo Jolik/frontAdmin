@@ -33,8 +33,7 @@ type
     function Remove(AReq: TSourceReqRemove): TJSONResponse; overload;
     function Remove(AReq: TReqRemove): TJSONResponse; overload; override;
     function Archive(AReq: TSourceReqArchive): TJSONResponse; overload;
-    function Observations(AReq: TSourceReqObservations): TSourceObservationsResponse; overload;
-    function Observations(AReq: TReqList): TListResponse; overload;
+    function Observations(AReq: TSourceReqObservations): TSourceObservationsResponse;
 
     // Request factories
     function CreateReqList: TReqList; override;
@@ -47,9 +46,6 @@ type
   end;
 
 implementation
-
-uses
-  StrUtils;
 
 { TSourcesRestBroker }
 
@@ -174,16 +170,12 @@ begin
   Result := inherited Remove(AReq);
 end;
 
-function TSourcesRestBroker.Observations(
-  AReq: TSourceReqObservations): TSourceObservationsResponse;
+function TSourcesRestBroker.Observations(AReq: TSourceReqObservations): TSourceObservationsResponse;
 begin
-  Result := Observations(AReq as TReqList) as TSourceObservationsResponse;
+  Result := TSourceObservationsResponse.Create();
+  ApplyTicket(AReq);
+  HttpClient.Request(AReq, Result);
 end;
 
-function TSourcesRestBroker.Observations(AReq: TReqList): TListResponse;
-begin
-  Result := TSourceObservationsResponse.Create;
-  inherited List(AReq, Result);
-end;
 
 end.

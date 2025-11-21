@@ -8,6 +8,7 @@ implementation
 
 uses
   System.SysUtils,
+  EntityUnit,
   SourcesRestBrokerUnit,
   SourceHttpRequests,
   SourceUnit,
@@ -22,9 +23,9 @@ var
   ObsReq: TSourceReqObservations;
   ObsResp: TSourceObservationsResponse;
   Source: TSource;
-  Observation: TSourceObservation;
-  DsType: TSourceObservationDstType;
-  Serie: TDataseries;
+  Observation: TFieldSet;
+  DsType: TFieldSet;
+  Serie: TFieldSet;
   StateText: string;
   SourceName: string;
 begin
@@ -42,7 +43,7 @@ begin
         Exit;
       end;
 
-      Source := ListResp.SourceList[0];
+      Source := TSource(ListResp.SourceList[0]);
       if Assigned(Source) and Source.Name.HasValue then
         SourceName := Source.Name.Value
       else
@@ -75,13 +76,13 @@ begin
 
             for Serie in TSourceObservationDstType(DsType).Dataseries do
             begin
-              if Serie.State.HasValues then
+              if TDataseries(Serie).State.HasValues then
                 StateText := Format('%s at %d',
-                  [Serie.State.Color.Value, Serie.State.Dt.Value])
+                  [TDataseries(Serie).State.Color.Value, TDataseries(Serie).State.Dt.Value])
               else
                 StateText := 'no state';
 
-              Writeln(Format('    Dataserie %s state: %s', [Serie.DsId, StateText]));
+              Writeln(Format('    Dataserie %s state: %s', [TDataseries(Serie).DsId, StateText]));
             end;
           end;
         end;

@@ -147,7 +147,7 @@ type
   end;
 
   // GET /api/v2/sources/<sid>/observations
-  TSourceReqObservations = class(TReqList)
+  TSourceReqObservations = class(TReqWithID)
   private
     procedure SetCsvParam(const AName: string; const Values: array of string);
   public
@@ -576,7 +576,8 @@ constructor TSourceReqObservations.Create;
 begin
   inherited Create;
   Method := mGET;
-  SetEndpoint('sources/observations');
+  SetEndpoint('sources');
+  AddPath := 'observations';
 end;
 
 procedure TSourceReqObservations.SetCsvParam(const AName: string;
@@ -622,10 +623,6 @@ end;
 procedure TSourceReqObservations.SetSourceId(const Value: string);
 begin
   Id := Value;
-  if Value.Trim.IsEmpty then
-    SetEndpoint('sources/observations')
-  else
-    SetEndpoint(Format('sources/%s/observations', [Value]));
 end;
 
 end.
