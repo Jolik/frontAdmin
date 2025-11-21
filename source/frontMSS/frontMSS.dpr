@@ -164,7 +164,8 @@ uses
   OperatorLinksFrameUnit in '..\forms\operatorLinks\OperatorLinksFrameUnit.pas' {OperatorLinksFrame: TUniFrame},
   OperatorLinksFormUnit in '..\forms\operatorLinks\OperatorLinksFormUnit.pas' {OperatorLinksForm: TUniForm},
   ChannelsFrameUnit in '..\forms\channels\ChannelsFrameUnit.pas' {ChannelsFrame: TUniFrame},
-  ChannelsFormUnit in '..\forms\channels\ChannelsFormUnit.pas' {ChannelsForm: TUniForm};
+  ChannelsFormUnit in '..\forms\channels\ChannelsFormUnit.pas' {ChannelsForm: TUniForm},
+  LinksFrameUnit in '..\forms\links\LinksFrameUnit.pas' {LinksFrame: TUniFrame};
 
 {$R *.res}
 

@@ -521,6 +521,11 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrameUnit.pas">
+            <Form>LinksFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
