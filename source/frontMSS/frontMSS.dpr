@@ -160,9 +160,7 @@ uses
   InfoListParentFrameUnit in '..\forms\common\InfoListParentFrameUnit.pas' {InfoListParentFrame: TUniFrame},
   ListParentFrameUnit in '..\forms\common\ListParentFrameUnit.pas' {ListParentFrame: TUniFrame},
   ParentFrameUnit in '..\forms\common\ParentFrameUnit.pas' {ParentFrame: TUniFrame},
-  AliasesFrameUnit in '..\forms\aliases\AliasesFrameUnit.pas' {AliasesFrame: TUniFrame},
-  FrameContainerFormUnit in '..\forms\common\FrameContainerFormUnit.pas' {FrameContainerForm: TUniForm},
-  AliasesFormUnit in '..\forms\aliases\AliasesFormUnit.pas' {AliasesForm: TUniForm};
+  FrameContainerFormUnit in '..\forms\common\FrameContainerFormUnit.pas' {FrameContainerForm: TUniForm};
 
 {$R *.res}
 

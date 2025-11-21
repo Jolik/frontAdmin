@@ -129,7 +129,7 @@ begin
   begin
     EnsureAliasesFrame;
     if Assigned(FAliasesFrame) then
-      FAliasesFrame.RefreshData;
+      FAliasesFrame.Refresh;
   end
   else if LTarget = tshAbonents then
     EnsureAbonentsForm;

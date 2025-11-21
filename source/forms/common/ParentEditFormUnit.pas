@@ -79,7 +79,7 @@ end;
 
 procedure TParentEditForm.btnOkClick(Sender: TObject);
 begin
-  //JSInterface.JSCall('setLoading', ['Обработка...']);
+  JSInterface.JSCall('setLoading', ['Обработка...']);
   if DoCheck then
     if Apply() then
        UniTimer1.Enabled:= true;
@@ -109,7 +109,7 @@ end;
 
 procedure TParentEditForm.UniTimer1Timer(Sender: TObject);
 begin
-  //JSInterface.JSCall('setLoading', [False]);
+  JSInterface.JSCall('setLoading', [False]);
   if not assigned(FOnOkCalback) then
   begin
     ShowMessage('Обработчик не присвоен');

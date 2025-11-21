@@ -3,11 +3,10 @@ object MSSSettingsForm: TMSSSettingsForm
   Top = 0
   ClientHeight = 600
   ClientWidth = 800
-  Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080#32#77#83#83
-  OnCreate = UniFormCreate
+  Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080' MSS'
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
-  PixelsPerInch = 96
+  OnCreate = UniFormCreate
   TextHeight = 15
   object tvNavigate: TUniTreeView
     Left = 0
@@ -15,9 +14,10 @@ object MSSSettingsForm: TMSSSettingsForm
     Width = 200
     Height = 600
     Hint = ''
+    Items.FontData = {0100000000}
     Align = alLeft
-    Items.NodeData = {0100000000000000}
     TabOrder = 0
+    Color = clWindow
     OnChange = tvNavigateChange
   end
   object pcForms: TUniPageControl
@@ -32,16 +32,25 @@ object MSSSettingsForm: TMSSSettingsForm
     object tshBlank: TUniTabSheet
       Hint = ''
       Caption = #1055#1091#1089#1090#1072#1103
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 256
+      ExplicitHeight = 128
     end
     object tshRules: TUniTabSheet
       Hint = ''
       Caption = #1055#1088#1072#1074#1080#1083#1072
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 256
+      ExplicitHeight = 128
       object pnlRulesHost: TUniContainerPanel
         Left = 0
         Top = 0
         Width = 592
         Height = 570
         Hint = ''
+        ParentColor = False
         Align = alClient
         TabOrder = 0
       end
@@ -49,12 +58,17 @@ object MSSSettingsForm: TMSSSettingsForm
     object tshAliases: TUniTabSheet
       Hint = ''
       Caption = #1040#1083#1080#1072#1089#1099
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 256
+      ExplicitHeight = 128
       object pnlAliasesHost: TUniContainerPanel
         Left = 0
         Top = 0
         Width = 592
         Height = 570
         Hint = ''
+        ParentColor = False
         Align = alClient
         TabOrder = 0
       end
@@ -62,12 +76,17 @@ object MSSSettingsForm: TMSSSettingsForm
     object tshAbonents: TUniTabSheet
       Hint = ''
       Caption = #1040#1073#1086#1085#1077#1085#1090#1099
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 256
+      ExplicitHeight = 128
       object pnlAbonentsHost: TUniContainerPanel
         Left = 0
         Top = 0
         Width = 592
         Height = 570
         Hint = ''
+        ParentColor = False
         Align = alClient
         TabOrder = 0
       end

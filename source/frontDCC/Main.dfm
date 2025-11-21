@@ -17,6 +17,7 @@ inherited MainForm: TMainForm
     inherited lblUtcTime: TUniLabel
       Left = 145
       Width = 639
+      ExplicitLeft = 145
       ExplicitWidth = 663
     end
     inherited uncntnrpnLogo: TUniContainerPanel
@@ -51,9 +52,6 @@ inherited MainForm: TMainForm
     inherited uncntnrpnAuth: TUniContainerPanel
       Left = 784
       ExplicitLeft = 784
-      inherited UserNameLabel: TUniLabel
-        ExplicitLeft = 386
-      end
     end
   end
   inherited pnlRight: TUniPanel
@@ -188,7 +186,7 @@ inherited MainForm: TMainForm
       Hint = ''
       Caption = #1051#1086#1075#1080
       Align = alTop
-      TabOrder = 9
+      TabOrder = 11
       OnClick = btnLogsClick
     end
     object uncntnrpnInfo: TUniContainerPanel

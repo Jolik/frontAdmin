@@ -139,7 +139,7 @@ end;
 procedure TMainForm.UniFormCreate(Sender: TObject);
 begin
   inherited;
-  OSLabel.Caption := 'Платформа: ' + TOSVersion.ToString;
+  OSLabel.Caption := 'OS:а: ' + TOSVersion.ToString;
   URLLabel.Caption := 'Url:' + HttpClient.Addr + ' : ' + IntToStr(HttpClient.Port);
 end;
 

@@ -77,16 +77,16 @@ object ParentEditForm: TParentEditForm
     end
     object teCaption: TUniEdit
       AlignWithMargins = True
-      Left = 84
+      Left = 86
       Top = 3
-      Width = 732
+      Width = 730
       Height = 21
       Hint = ''
       Text = ''
       Align = alRight
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 2
-      ExplicitWidth = 730
+      ExplicitWidth = 728
     end
   end
   object pnName: TUniContainerPanel
@@ -117,16 +117,16 @@ object ParentEditForm: TParentEditForm
     end
     object teName: TUniEdit
       AlignWithMargins = True
-      Left = 84
+      Left = 86
       Top = 3
-      Width = 732
+      Width = 730
       Height = 21
       Hint = ''
       Text = ''
       Align = alRight
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 2
-      ExplicitWidth = 730
+      ExplicitWidth = 728
     end
   end
   object pnClient: TUniContainerPanel
