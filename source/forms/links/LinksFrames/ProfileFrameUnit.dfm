@@ -15,7 +15,7 @@ object ProfileFrame: TProfileFrame
     TabOrder = 0
     object UniPanel1: TUniPanel
       Left = 2
-      Top = 15
+      Top = 22
       Width = 397
       Height = 66
       Hint = ''
@@ -24,9 +24,7 @@ object ProfileFrame: TProfileFrame
       BorderStyle = ubsNone
       ShowCaption = False
       Caption = 'UniPanel1'
-      ExplicitLeft = 1
-      ExplicitTop = 16
-      ExplicitWidth = 399
+      ExplicitTop = 15
       inline FrameRuleEnabled: TFrameBoolInput
         Left = 0
         Top = 0
@@ -38,14 +36,14 @@ object ProfileFrame: TProfileFrame
         Constraints.MinHeight = 30
         TabOrder = 1
         Background.Picture.Data = {00}
-        ExplicitWidth = 399
+        ExplicitWidth = 397
         inherited PanelText: TUniPanel
           Caption = #1042#1082#1083#1102#1095#1077#1085#1086
         end
         inherited CheckBox: TUniCheckBox
           Width = 259
           OnChange = FrameRuleEnabledCheckBoxChange
-          ExplicitWidth = 261
+          ExplicitWidth = 259
         end
       end
       inline FrameRulePosition: TFrameTextInput
@@ -60,7 +58,7 @@ object ProfileFrame: TProfileFrame
         TabOrder = 2
         Background.Picture.Data = {00}
         ExplicitTop = 30
-        ExplicitWidth = 399
+        ExplicitWidth = 397
         inherited PanelText: TUniPanel
           Caption = #1055#1086#1079#1080#1094#1080#1103
         end
@@ -68,60 +66,54 @@ object ProfileFrame: TProfileFrame
           Width = 226
           InputType = 'number'
           OnChange = FrameRulePositionEditChange
-          ExplicitWidth = 228
+          ExplicitWidth = 226
         end
         inherited PanelUnits: TUniPanel
           Left = 371
           Caption = ''
-          ExplicitLeft = 373
+          ExplicitLeft = 371
         end
       end
     end
     object UniPanel2: TUniPanel
       Left = 2
-      Top = 81
+      Top = 88
       Width = 397
-      Height = 156
+      Height = 149
       Hint = ''
       Align = alClient
       TabOrder = 2
       ShowCaption = False
       Caption = 'UniPanel2'
-      ExplicitLeft = 1
-      ExplicitTop = 82
-      ExplicitWidth = 399
       object UniSplitter2: TUniSplitter
         Left = 190
         Top = 1
         Width = 6
-        Height = 154
+        Height = 147
         Hint = ''
         Align = alLeft
         ParentColor = False
         Color = clBtnFace
-        ExplicitLeft = 192
-        ExplicitHeight = 155
+        ExplicitHeight = 154
       end
       object PanelConditions: TUniPanel
         Left = 196
         Top = 1
         Width = 200
-        Height = 154
+        Height = 147
         Hint = ''
         Align = alClient
         TabOrder = 2
         BorderStyle = ubsNone
         ShowCaption = False
         Caption = 'PanelConditions'
-        ExplicitLeft = 198
-        ExplicitWidth = 201
-        ExplicitHeight = 155
+        ExplicitHeight = 154
       end
       object UniPanel3: TUniPanel
         Left = 1
         Top = 1
         Width = 189
-        Height = 154
+        Height = 147
         Hint = ''
         Align = alLeft
         Anchors = [akLeft, akTop, akRight, akBottom]
@@ -129,13 +121,11 @@ object ProfileFrame: TProfileFrame
         BorderStyle = ubsNone
         ShowCaption = False
         Caption = 'UniPanel3'
-        ExplicitWidth = 191
-        ExplicitHeight = 155
         object RuleTreeView: TUniTreeView
           Left = 0
           Top = 25
           Width = 189
-          Height = 129
+          Height = 122
           Hint = ''
           Items.FontData = {0100000000}
           Align = alClient
@@ -143,8 +133,6 @@ object ProfileFrame: TProfileFrame
           Color = clWindow
           UseCheckBox = True
           OnChange = RuleTreeViewChange
-          ExplicitWidth = 191
-          ExplicitHeight = 130
         end
         object UniPanel4: TUniPanel
           Left = 0
@@ -157,7 +145,6 @@ object ProfileFrame: TProfileFrame
           BorderStyle = ubsFrameLowered
           ShowCaption = False
           Caption = 'UniPanel4'
-          ExplicitWidth = 191
           object UniPanel5: TUniPanel
             AlignWithMargins = True
             Left = 2
@@ -173,9 +160,6 @@ object ProfileFrame: TProfileFrame
             BorderStyle = ubsNone
             ShowCaption = False
             Caption = 'UniPanel5'
-            ExplicitLeft = 1
-            ExplicitTop = 1
-            ExplicitHeight = 23
             object btnAddRules: TUniBitBtn
               Left = 0
               Top = 0
@@ -191,7 +175,6 @@ object ProfileFrame: TProfileFrame
               Align = alClient
               TabOrder = 1
               OnClick = btnAddRulesClick
-              ExplicitHeight = 23
             end
           end
           object UniPanel6: TUniPanel
@@ -209,9 +192,6 @@ object ProfileFrame: TProfileFrame
             BorderStyle = ubsNone
             ShowCaption = False
             Caption = 'UniPanel5'
-            ExplicitLeft = 29
-            ExplicitTop = 1
-            ExplicitHeight = 23
             object btnRemoveRules: TUniBitBtn
               Left = 0
               Top = 0
@@ -227,7 +207,6 @@ object ProfileFrame: TProfileFrame
               Align = alClient
               TabOrder = 1
               OnClick = btnRemoveRulesClick
-              ExplicitHeight = 23
             end
           end
         end
@@ -268,9 +247,6 @@ object ProfileFrame: TProfileFrame
       Caption = #1053#1072#1087#1088#1072#1074#1080#1090#1100' '#1074' FTA'
       Align = alTop
       TabOrder = 1
-      ExplicitLeft = 11
-      ExplicitTop = 26
-      ExplicitWidth = 379
       object CheckBox_fta_XML: TUniCheckBox
         AlignWithMargins = True
         Left = 12
@@ -283,9 +259,6 @@ object ProfileFrame: TProfileFrame
         Align = alTop
         TabOrder = 1
         OnChange = CheckBox_fta_XMLChange
-        ExplicitLeft = 11
-        ExplicitTop = 157
-        ExplicitWidth = 364
       end
       object CheckBox_fta_JSON: TUniCheckBox
         AlignWithMargins = True
@@ -299,9 +272,6 @@ object ProfileFrame: TProfileFrame
         Align = alTop
         TabOrder = 2
         OnChange = CheckBox_fta_JSONChange
-        ExplicitLeft = 11
-        ExplicitTop = 134
-        ExplicitWidth = 364
       end
       object CheckBox_fta_SIMPLE: TUniCheckBox
         AlignWithMargins = True
@@ -315,9 +285,6 @@ object ProfileFrame: TProfileFrame
         Align = alTop
         TabOrder = 3
         OnChange = CheckBox_fta_SIMPLEChange
-        ExplicitLeft = 11
-        ExplicitTop = 111
-        ExplicitWidth = 364
       end
       object CheckBox_fta_GAO: TUniCheckBox
         AlignWithMargins = True
@@ -331,9 +298,6 @@ object ProfileFrame: TProfileFrame
         Align = alTop
         TabOrder = 4
         OnChange = CheckBox_fta_GAOChange
-        ExplicitLeft = 11
-        ExplicitTop = 88
-        ExplicitWidth = 364
       end
       object CheckBox_fta_TLG: TUniCheckBox
         AlignWithMargins = True
@@ -347,9 +311,6 @@ object ProfileFrame: TProfileFrame
         Align = alTop
         TabOrder = 5
         OnChange = CheckBox_fta_TLGChange
-        ExplicitLeft = 11
-        ExplicitTop = 65
-        ExplicitWidth = 364
       end
       object CheckBox_fta_TLF: TUniCheckBox
         AlignWithMargins = True
@@ -363,9 +324,6 @@ object ProfileFrame: TProfileFrame
         Align = alTop
         TabOrder = 6
         OnChange = CheckBox_fta_TLFChange
-        ExplicitLeft = 11
-        ExplicitTop = 42
-        ExplicitWidth = 364
       end
       object CheckBox_fta_FILE: TUniCheckBox
         AlignWithMargins = True
@@ -379,9 +337,6 @@ object ProfileFrame: TProfileFrame
         Align = alTop
         TabOrder = 7
         OnChange = CheckBox_fta_FILEChange
-        ExplicitLeft = 11
-        ExplicitTop = 19
-        ExplicitWidth = 364
       end
     end
   end

@@ -111,6 +111,7 @@ implementation
 uses
   MainModule, uniGUIApplication,
   ContentViewFormUnit,
+  System.NetEncoding,
   EntityUnit;
 
 {$R *.dfm}
@@ -570,7 +571,7 @@ begin
 
   memoBody.Lines.BeginUpdate;
   try
-    memoBody.Lines.Text := ARecord.Body;
+    memoBody.Lines.Text := TNetEncoding.Base64.Decode(ARecord.Body);
   finally
     memoBody.Lines.EndUpdate;
   end;

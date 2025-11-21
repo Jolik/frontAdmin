@@ -69,14 +69,14 @@ type
     function DeletObject(f: TFieldSetList; o: TObject): boolean;
     procedure OnConditionChange(Sender: TObject);
   protected
-
+     FFirstSelectedNode: TUniTreeNode;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
     procedure SetData(srcProfile: TProfile; srclink: TLink); virtual;
     procedure GetData(dst: TProfile); virtual;
-
+    procedure SelectFirstLevelThreeNode;
     property OnChange: TNotifyEvent read FOnChange write FOnChange;
   end;
 
@@ -122,6 +122,23 @@ end;
 
 
 
+procedure TProfileFrame.SelectFirstLevelThreeNode;
+begin
+  if not Assigned(RuleTreeView) then
+    Exit;
+
+  if not Assigned(FSelectedRuleItem) then
+  begin
+    if Assigned(FFirstSelectedNode) then
+    begin
+      RuleTreeView.Selected := FFirstSelectedNode;
+      RuleTreeViewChange(RuleTreeView, FFirstSelectedNode);
+      FFirstSelectedNode.MakeVisible;
+      FFirstSelectedNode := nil;
+    end;
+  end;
+end;
+
 procedure TProfileFrame.SetData(srcProfile: TProfile; srclink: TLink);
 begin
   FLink := srclink;
@@ -165,7 +182,7 @@ begin
   ConditionToFrame(nil);
   RuleToTreeView(FProfile.ProfileBody.Rule);
   RuleTreeView.FullExpand;
-  RuleTreeView.Selected := nil;
+  SelectFirstLevelThreeNode;
   TidyRuleControls;
 end;
 
@@ -173,6 +190,7 @@ procedure TProfileFrame.RuleToTreeView(rule: TProfileRule);
 begin
   FrameRuleEnabled.SetData(rule.Enabled);
   FrameRulePosition.SetData(rule.Position);
+  FFirstSelectedNode := nil;
   RuleTreeView.Items.Clear;
   var root := RuleTreeView.Items.AddChildObject(nil, 'фильтры', nil);
   var incFiltersNode := RuleTreeView.Items.AddChildObject(root, 'включающие', rule.IncFilters);
@@ -197,8 +215,10 @@ begin
     for var j := 0 to filter.Conditions.Count-1 do
     begin
       var condition := (filter.Conditions[j] as TCondition);
-      var c := RuleTreeView.Items.AddChildObject(filterNode, condition.Caption, condition);
-      c.CheckboxVisible := false;
+      var cNode := RuleTreeView.Items.AddChildObject(filterNode, condition.Caption, condition);
+      cNode.CheckboxVisible := false;
+      if not Assigned(FFirstSelectedNode) then
+        FFirstSelectedNode := cNode;
     end;
   end;
 end;
@@ -345,30 +365,45 @@ begin
   if FSelectedRuleItem is TCondition then
   begin
     var q := Format('Удалить условие %s?', [(FSelectedRuleItem as TCondition).Caption]);
-    if MessageDlg(q, mtConfirmation, mbYesNo) <> mrYes then
-      exit;
-    if not (TObject(FSelecteNode.Parent.Data) is TProfileFilter) then
-      exit;
-    var f := (TObject(FSelecteNode.Parent.Data) as TProfileFilter);
-    if not DeletObject(f.Conditions, FSelectedRuleItem) then
-      exit;
+    MessageDlg(q, mtConfirmation, mbYesNo,
+    procedure(Sender: TComponent; Res: Integer)
+    begin
+      if Res = mrYes then
+      begin
+        if not (TObject(FSelecteNode.Parent.Data) is TProfileFilter) then
+          exit;
+        var f := (TObject(FSelecteNode.Parent.Data) as TProfileFilter);
+        if not DeletObject(f.Conditions, FSelectedRuleItem) then
+          exit;
+        DrawRules;
+        if Assigned(FOnChange) then
+          FOnChange(Self);
+      end;
+    end);
+    exit;
   end;
 
   if FSelectedRuleItem is TProfileFilter then
   begin
     var q := Format('Удалить фильтр (%d условий)?', [(FSelectedRuleItem as TProfileFilter).Conditions.Count]);
-    if MessageDlg(q, mtConfirmation, mbYesNo) <> mrYes then
-      exit;
-    if not (TObject(FSelecteNode.Parent.Data) is TProfileFilterList) then
-      exit;
-    var f := (TObject(FSelecteNode.Parent.Data) as TProfileFilterList);
-    if not DeletObject(f, FSelectedRuleItem) then
-      exit;
+    MessageDlg(q, mtConfirmation, mbYesNo,
+    procedure(Sender: TComponent; Res: Integer)
+    begin
+      if Res = mrYes then
+      begin
+       if not (TObject(FSelecteNode.Parent.Data) is TProfileFilterList) then
+          exit;
+        var f := (TObject(FSelecteNode.Parent.Data) as TProfileFilterList);
+        if not DeletObject(f, FSelectedRuleItem) then
+          exit;
+        DrawRules;
+        if Assigned(FOnChange) then
+          FOnChange(Self);
+      end;
+    end);
+    exit;
   end;
 
-  DrawRules;
-  if Assigned(FOnChange) then
-    FOnChange(Self);
 end;
 
 

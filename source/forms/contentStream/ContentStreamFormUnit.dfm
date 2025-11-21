@@ -18,6 +18,8 @@ object ContentStreamForm: TContentStreamForm
     ParentColor = False
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 1098
+    ExplicitHeight = 592
     object cpLeft: TUniContainerPanel
       Left = 0
       Top = 0
@@ -27,6 +29,8 @@ object ContentStreamForm: TContentStreamForm
       ParentColor = False
       Align = alClient
       TabOrder = 1
+      ExplicitWidth = 758
+      ExplicitHeight = 592
       object gridContent: TUniDBGrid
         Left = 0
         Top = 0
@@ -94,6 +98,8 @@ object ContentStreamForm: TContentStreamForm
         ParentColor = False
         Align = alBottom
         TabOrder = 2
+        ExplicitTop = 472
+        ExplicitWidth = 758
         object lTotalRecords: TUniLabel
           Left = 16
           Top = 16
@@ -165,6 +171,8 @@ object ContentStreamForm: TContentStreamForm
       Align = alRight
       ParentColor = False
       Color = clBtnFace
+      ExplicitLeft = 758
+      ExplicitHeight = 592
     end
     object cpInfo: TUniContainerPanel
       Left = 766
@@ -175,6 +183,8 @@ object ContentStreamForm: TContentStreamForm
       ParentColor = False
       Align = alRight
       TabOrder = 2
+      ExplicitLeft = 764
+      ExplicitHeight = 592
       object pcInfo: TUniPageControl
         Left = 0
         Top = 0
@@ -185,9 +195,11 @@ object ContentStreamForm: TContentStreamForm
         Align = alClient
         TabOrder = 1
         OnChange = pcInfoChange
+        ExplicitHeight = 592
         object tsInfo: TUniTabSheet
           Hint = ''
           Caption = 'Info'
+          ExplicitHeight = 564
           object cpInfoName: TUniContainerPanel
             Left = 0
             Top = 0
@@ -317,6 +329,7 @@ object ContentStreamForm: TContentStreamForm
             ParentColor = False
             Align = alClient
             TabOrder = 4
+            ExplicitHeight = 324
             object memoBody: TUniMemo
               Left = 0
               Top = 0
@@ -326,12 +339,14 @@ object ContentStreamForm: TContentStreamForm
               Align = alClient
               ReadOnly = True
               TabOrder = 1
+              ExplicitHeight = 324
             end
           end
         end
         object tsHistory: TUniTabSheet
           Hint = ''
           Caption = 'History'
+          ExplicitHeight = 564
           object cpHistoryToolbar: TUniContainerPanel
             Left = 0
             Top = 0

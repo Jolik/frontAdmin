@@ -82,7 +82,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication;
+  System.NetEncoding, MainModule, uniGUIApplication;
 
 function ContentViewForm: TContentViewForm;
 begin
@@ -186,7 +186,7 @@ begin
 
   memoBody.Lines.BeginUpdate;
   try
-    memoBody.Lines.Text := ARecord.Body;
+    memoBody.Lines.Text := TNetEncoding.Base64.Decode(ARecord.Body);
   finally
     memoBody.Lines.EndUpdate;
   end;
