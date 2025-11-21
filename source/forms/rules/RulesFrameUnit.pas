@@ -22,14 +22,17 @@ type
     procedure btnNewClick(Sender: TObject);
     procedure btnUpdateClick(Sender: TObject);
   private
+    // Копия редактируемого правила, чтобы оно не освобождалось вместе с ответом брокера
+    FEditRule: TRule;
   public
     procedure Refresh(const AId: String = ''); override;
     function CreateRestBroker(): TRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
     procedure UniFormCreate(Sender: TObject);
     procedure OnAddListItem(item: TFieldSet); override;
+    destructor Destroy; override;
 
-  end;
+end;
 
 implementation
 
@@ -66,6 +69,12 @@ begin
   btnUpdate.OnClick := btnUpdateClick;
 end;
 
+destructor TRulesFrame.Destroy;
+begin
+  FreeAndNil(FEditRule);
+  inherited;
+end;
+
 procedure TRulesFrame.btnNewClick(Sender: TObject);
 begin
   PrepareEditForm;
@@ -81,6 +90,7 @@ procedure TRulesFrame.btnUpdateClick(Sender: TObject);
 begin
   PrepareEditForm(true);
   FId := FDMemTableEntity.FieldByName('Id').AsString;
+  FreeAndNil(FEditRule);
 
   if Assigned(RestBroker) then
   begin
@@ -88,7 +98,13 @@ begin
     Req.Id := FId;
     var Resp := RestBroker.Info(Req);
     try
-      EditForm.Entity := Resp.FieldSet as TEntity;
+      // Ответ удаляет FieldSet при уничтожении Resp, поэтому клонируем правило
+      if Assigned(Resp.FieldSet) and (Resp.FieldSet is TRule) then
+      begin
+        FEditRule := TRule.Create;
+        FEditRule.Assign(Resp.FieldSet);
+        EditForm.Entity := FEditRule;
+      end;
     finally
       Resp.Free;
     end;
@@ -98,6 +114,8 @@ begin
     EditForm.OnOkCalback:=UpdateCallback;
     EditForm.ShowModal();
   finally
+    FreeAndNil(FEditRule);
+    EditForm.Entity := nil;
   end;
 end;
 
