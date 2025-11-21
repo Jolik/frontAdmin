@@ -96,7 +96,6 @@ uses
   AliasesFrameUnit in '..\forms\aliases\AliasesFrameUnit.pas' {AliasesFrame: TUniFrame},
   AliasesFormUnit in '..\forms\aliases\AliasesFormUnit.pas' {AliasesForm: TUniForm},
   RouterSourceEditFormUnit in '..\forms\routerSources\RouterSourceEditFormUnit.pas' {RouterSourceEditForm: TUniForm},
-  RouterSourcesFormUnit in '..\forms\routerSources\RouterSourcesFormUnit.pas' {RouterSourcesForm: TUniForm},
   RuleEditFormUnit in '..\forms\rules\RuleEditFormUnit.pas' {RuleEditForm: TUniForm},
   HandlerEditFormUnit in '..\forms\handlers\HandlerEditFormUnit.pas' {HandlerEditForm: TUniForm},
   HandlersFormUnit in '..\forms\handlers\HandlersFormUnit.pas' {HandlersForm: TUniForm},
@@ -162,7 +161,9 @@ uses
   FrameContainerFormUnit in '..\forms\common\FrameContainerFormUnit.pas' {FrameContainerForm: TUniForm},
   RulesFrameUnit in '..\forms\rules\RulesFrameUnit.pas' {RulesFrame: TUniFrame},
   RulesFormUnit in '..\forms\rules\RulesFormUnit.pas' {RulesForm: TUniForm},
-  AbonentsFrameUnit in '..\forms\abonents\AbonentsFrameUnit.pas' {AbonentsFrame: TUniFrame};
+  AbonentsFrameUnit in '..\forms\abonents\AbonentsFrameUnit.pas' {AbonentsFrame: TUniFrame},
+  RouterSourcesFrameUnit in '..\forms\routerSources\RouterSourcesFrameUnit.pas' {RouterSourcesFrame: TUniFrame},
+  RouterSourcesFormUnit in '..\forms\routerSources\RouterSourcesFormUnit.pas' {RouterSourcesForm: TUniForm};
 
 {$R *.res}
 

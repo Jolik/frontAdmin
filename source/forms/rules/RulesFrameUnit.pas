@@ -18,6 +18,7 @@ uses
 
 type
   TRulesFrame = class(TInfoListParentFrame)
+    FDMemTableEntityCaption2: TStringField;
     procedure btnNewClick(Sender: TObject);
     procedure btnUpdateClick(Sender: TObject);
   private

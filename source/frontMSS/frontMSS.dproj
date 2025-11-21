@@ -359,10 +359,6 @@
             <Form>RouterSourceEditForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\forms\routerSources\RouterSourcesFormUnit.pas">
-            <Form>RouterSourcesForm</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
         <DCCReference Include="..\forms\rules\RuleEditFormUnit.pas">
             <Form>RuleEditForm</Form>
             <DesignClass>TUniForm</DesignClass>
@@ -506,6 +502,16 @@
             <Form>AbonentsFrame</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\routerSources\RouterSourcesFrameUnit.pas">
+            <Form>RouterSourcesFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\routerSources\RouterSourcesFormUnit.pas">
+            <Form>RouterSourcesForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

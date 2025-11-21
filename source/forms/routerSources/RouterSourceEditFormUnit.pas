@@ -8,7 +8,7 @@ uses
   uniGUIClasses, uniGUIForm, ParentEditFormUnit, uniEdit, uniLabel, uniButton,
   uniGUIBaseClasses, uniPanel,
   LoggingUnit,
-  EntityUnit, RouterSourceUnit;
+  EntityUnit, RouterSourceUnit, uniTimer;
 
 type
   TRouterSourceEditForm = class(TParentEditForm)

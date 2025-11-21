@@ -1,33 +1,18 @@
-﻿unit RouterSourcesFormUnit;
+unit RouterSourcesFormUnit;
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
-  ListParentFormUnit, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
-  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, uniPageControl,
-  uniSplitter, uniBasicGrid, uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  ParentEditFormUnit, RestBrokerBaseUnit, RestBrokerUnit,
-  RouterSourcesRestBrokerUnit, uniPanel, uniLabel, EntityUnit;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
+  uniGUIClasses, uniGUIForm, FrameContainerFormUnit, uniGUIBaseClasses, uniPanel,
+  RouterSourcesFrameUnit, RouterSourceEditFormUnit;
 
 type
-  TRouterSourcesForm = class(TListParentForm)
-    FDMemTableEntitycaption2: TStringField;
-    FDMemTableEntitywho: TStringField;
-    FDMemTableEntitysercive: TStringField;
-  protected
-    ///
-    procedure Refresh(const AId: string = ''); override;
-
-    ///
-    function CreateRestBroker(): TRestBroker; override;
-
-    ///
-    function CreateEditForm(): TParentEditForm; override;
-
-    procedure OnAddListItem(item: TFieldSet); override;
+  TRouterSourcesForm = class(TFrameContainerForm)
+  private
+  public
+    function GetFrameClass: TParentFrameClass; virtual;
 
   end;
 
@@ -38,39 +23,18 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, RouterSourceEditFormUnit, RouterSourceUnit;
+  MainModule, uniGUIApplication;
 
 function RouterSourcesForm: TRouterSourcesForm;
 begin
   Result := TRouterSourcesForm(UniMainModule.GetFormInstance(TRouterSourcesForm));
 end;
 
-{ TRouterSourcesForm }
+{ TFrameContainerForm1 }
 
-function TRouterSourcesForm.CreateEditForm: TParentEditForm;
+function TRouterSourcesForm.GetFrameClass: TParentFrameClass;
 begin
-  ///   ""
-  Result := RouterSourceEditForm();
-end;
-
-function TRouterSourcesForm.CreateRestBroker: TRestBroker;
-begin
-  Result := TRouterSourcesRestBroker.Create(UniMainModule.XTicket);
-end;
-
-procedure TRouterSourcesForm.OnAddListItem(item: TFieldSet);
-begin
-  inherited;
-  var src := item as TRouterSource;
-  FDMemTableEntity.FieldByName('Caption').AsString := src.Caption;
-  FDMemTableEntity.FieldByName('who').AsString := src.Who;
-  FDMemTableEntity.FieldByName('service').AsString := src.SvcId;
-end;
-
-procedure TRouterSourcesForm.Refresh(const AId: string = '');
-begin
-  inherited Refresh(AId)
+  Result := TRouterSourcesFrame;
 end;
 
 end.
-

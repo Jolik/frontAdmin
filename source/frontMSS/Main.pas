@@ -17,21 +17,15 @@ type
   TMainForm = class(TAuthMainForm)
     btnDashboard: TUniButton;
     btnChannel: TUniButton;
-    btnLinks: TUniButton;
     btnRouterSources: TUniButton;
-    btnAliases: TUniButton;
-    btnQueues: TUniButton;
-    btnAbonents: TUniButton;
     btnUsers: TUniButton;
     btnOperatorLinks: TUniButton;
-    btnRules: TUniButton;
     btnHandlers: TUniButton;
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
     uncntnrpnInfo: TUniContainerPanel;
     btnOperatorLinksContent: TUniButton;
     btnSearch: TUniButton;
-    btnContentStream: TUniButton;
     btnLogs: TUniButton;
     unlblName1: TUniLabel;
     uncntnrpnForms: TUniContainerPanel;

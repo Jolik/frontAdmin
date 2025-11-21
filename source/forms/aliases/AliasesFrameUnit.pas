@@ -10,12 +10,13 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, uniSplitter, uniPanel, uniLabel, uniPageControl,
   uniBasicGrid, uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  ParentEditFormUnit,
+  EntityUnit, RouterSourceUnit, ParentEditFormUnit,
   RestBrokerBaseUnit, RestBrokerUnit,
   AliasesRestBrokerUnit, InfoListParentFrameUnit;
 
 type
   TAliasesFrame = class(TListParentFrame)
+    FDMemTableEntityCaption2: TStringField;
     procedure btnNewClick(Sender: TObject);
     procedure btnUpdateClick(Sender: TObject);
     procedure UniFrameCreate(Sender: TObject);
@@ -39,7 +40,7 @@ implementation
 
 uses
   MainModule, uniGUIApplication, AliasEditFormUnit, AliasUnit, BaseResponses,
-  BaseRequests, EntityUnit;
+  BaseRequests;
 
 { TAliasesFrame }
 
