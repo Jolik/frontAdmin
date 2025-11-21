@@ -47,6 +47,7 @@ type
     gridHistory: TUniDBGrid;
     dsHistory: TDataSource;
     mtHistory: TFDMemTable;
+    mtHistoryhrid: TStringField;
     mtHistorytime: TStringField;
     mtHistoryevent: TStringField;
     mtHistorywho: TStringField;
@@ -61,11 +62,11 @@ type
   private
     FBroker: TStorageRestBroker;
     FInfoRequest: TStorageReqInfo;
-    FHistoryBroker: THistoryRecordsRestBroker;
-    FHistoryRequest: TJournalRecordHistoryReq;
-    FJRID: string;
-    FHistoryLoaded: Boolean;
-    procedure ClearContentInfo;
+  FHistoryBroker: THistoryRecordsRestBroker;
+  FHistoryRequest: TJournalRecordHistoryReq;
+  FJRID: string;
+  FHistoryLoaded: Boolean;
+  procedure ClearContentInfo;
     procedure LoadContentInfo;
     procedure LoadHistoryRecords(const AForce: Boolean = False);
     procedure FillHistoryDataset(AHistory: THistoryRecordList);
@@ -82,7 +83,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication;
+  System.NetEncoding, common, MainModule, uniGUIApplication;
 
 function ContentViewForm: TContentViewForm;
 begin
@@ -184,12 +185,17 @@ begin
   lInfoTypeValue.Caption := ARecord.&Type;
   lInfoWhoValue.Caption := ARecord.Who;
 
+  var body := ARecord.Body;
+  if ARecord.Body.Length > 1024*5  then
+    body:= Utf8SafeTruncate(ARecord.Body, 1024 * 5);
+
   memoBody.Lines.BeginUpdate;
   try
-    memoBody.Lines.Text := ARecord.Body;
-  finally
-    memoBody.Lines.EndUpdate;
+    memoBody.Lines.Text := TNetEncoding.Base64.Decode(ARecord.body);
+  except
+    memoBody.Lines.Text := body
   end;
+  memoBody.Lines.EndUpdate;
   FHistoryLoaded := False;
 end;
 
@@ -215,6 +221,7 @@ begin
 
         HistoryRecord := THistoryRecord(Item);
         mtHistory.Append;
+        mtHistoryhrid.AsString := HistoryRecord.HRID;
         mtHistorytime.AsString := HistoryRecord.Time;
         mtHistoryevent.AsString := HistoryRecord.Event;
         mtHistorywho.AsString := HistoryRecord.Who;
@@ -229,12 +236,17 @@ end;
 procedure TContentViewForm.LoadHistoryRecords(const AForce: Boolean);
 var
   Resp: THistoryRecordListResponse;
+  CurrentHistoryID: string;
 begin
   if (not Assigned(FHistoryBroker)) or FJRID.Trim.IsEmpty then
     Exit;
 
   if not AForce and FHistoryLoaded then
     Exit;
+
+  CurrentHistoryID := '';
+  if Assigned(mtHistory) and mtHistory.Active and (mtHistory.FindField('hrid') <> nil) then
+    CurrentHistoryID := Trim(mtHistory.FieldByName('hrid').AsString);
 
   if not Assigned(FHistoryRequest) then
     FHistoryRequest := FHistoryBroker.CreateJournalHistoryReq;
@@ -252,6 +264,9 @@ begin
   end;
 
   FHistoryLoaded := True;
+
+  if (CurrentHistoryID <> '') and Assigned(mtHistory) and mtHistory.Active then
+    mtHistory.Locate('hrid', CurrentHistoryID, []);
 end;
 
 procedure TContentViewForm.btnRefreshHistoryClick(Sender: TObject);

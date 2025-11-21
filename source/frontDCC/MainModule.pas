@@ -46,7 +46,8 @@ uses
 
 function UniMainModule: TUniMainModule;
 begin
-  Result := TUniMainModule(UniApplication.UniMainModule)
+  Result := TUniMainModule(UniApplication.UniMainModule);
+  Result.EnableSynchronousOperations := true;
 end;
 
 procedure TUniMainModule.AfterConstruction;

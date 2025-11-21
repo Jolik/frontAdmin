@@ -44,7 +44,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
       OnClick = btnRemoveContentClick
     end
     object cbOperatorLinks: TUniComboBox
-      Left = 632
+      Left = 630
       Top = 12
       Width = 452
       Hint = ''
@@ -54,6 +54,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
       TabOrder = 3
       IconItems = <>
       OnChange = cbOperatorLinksChange
+      ExplicitLeft = 632
     end
   end
   object gridContent: TUniDBGrid
@@ -68,8 +69,8 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
     ForceFit = True
     Align = alClient
     TabOrder = 1
-    OnDblClick = gridContentDblClick
     OnSelectionChange = gridContentSelectionChange
+    OnDblClick = gridContentDblClick
     Columns = <
       item
         FieldName = 'jrid'
@@ -130,13 +131,14 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
         Left = 0
         Top = 0
         Width = 386
-        Height = 507
+        Height = 524
         Hint = ''
         ParentColor = False
         Align = alClient
         TabOrder = 0
         Layout = 'table'
         LayoutAttribs.Columns = 2
+        ExplicitHeight = 517
         object cpContentInfoID: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
