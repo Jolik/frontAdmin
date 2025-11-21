@@ -1,0 +1,2 @@
+inherited OperatorLinksFrame: TOperatorLinksFrame
+end

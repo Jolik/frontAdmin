@@ -2,7 +2,7 @@ object MSSSettingsForm: TMSSSettingsForm
   Left = 0
   Top = 0
   ClientHeight = 600
-  ClientWidth = 800
+  ClientWidth = 1474
   Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080' MSS'
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
@@ -24,7 +24,7 @@ object MSSSettingsForm: TMSSSettingsForm
   object pcForms: TUniPageControl
     Left = 200
     Top = 0
-    Width = 600
+    Width = 1274
     Height = 600
     Hint = ''
     ActivePage = tshRouterSources
@@ -47,7 +47,7 @@ object MSSSettingsForm: TMSSSettingsForm
       object pnlRulesHost: TUniContainerPanel
         Left = 0
         Top = 0
-        Width = 592
+        Width = 1266
         Height = 572
         Hint = ''
         ParentColor = False
@@ -65,7 +65,7 @@ object MSSSettingsForm: TMSSSettingsForm
       object pnlAliasesHost: TUniContainerPanel
         Left = 0
         Top = 0
-        Width = 592
+        Width = 1266
         Height = 572
         Hint = ''
         ParentColor = False
@@ -83,7 +83,7 @@ object MSSSettingsForm: TMSSSettingsForm
       object pnlAbonentsHost: TUniContainerPanel
         Left = 0
         Top = 0
-        Width = 592
+        Width = 1266
         Height = 572
         Hint = ''
         ParentColor = False
@@ -103,7 +103,7 @@ object MSSSettingsForm: TMSSSettingsForm
       object pnlRouterSources: TUniContainerPanel
         Left = 0
         Top = 0
-        Width = 592
+        Width = 1266
         Height = 572
         Hint = ''
         ParentColor = False
