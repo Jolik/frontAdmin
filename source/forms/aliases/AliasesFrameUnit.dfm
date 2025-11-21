@@ -1,0 +1,2 @@
+inherited AliasesFrame: TAliasesFrame
+end

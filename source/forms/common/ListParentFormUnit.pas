@@ -288,7 +288,7 @@ begin
           MessageDlg('Ошибка получения спика : ' + E.Message, mtWarning, [mbOK], nil);
           Log('TListParentForm.Refresh ' + e.Message, lrtError);
         end;
-    end;      
+    end;
   finally
     if Assigned(Resp) then
       Resp.Free

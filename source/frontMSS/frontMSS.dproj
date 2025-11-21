@@ -345,10 +345,6 @@
             <Form>AliasEditForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\forms\aliases\AliasesFormUnit.pas">
-            <Form>AliasesForm</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
         <DCCReference Include="..\forms\routerSources\RouterSourceEditFormUnit.pas">
             <Form>RouterSourceEditForm</Form>
             <DesignClass>TUniForm</DesignClass>
@@ -450,6 +446,10 @@
             <Form>MSSDashboardForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\settings\MSSSettingsFormUnit.pas">
+            <Form>MSSSettingsForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\forms\dashboard\ChannelsFrameUnit.pas">
             <Form>ChannelsFrame</Form>
             <DesignClass>TUniFrame</DesignClass>
@@ -467,6 +467,36 @@
         <DCCReference Include="..\services\signals\brokers\LogsRestBrokerUnit.pas"/>
         <DCCReference Include="..\forms\rules\RouterFrameRuleConditionUnit.pas"/>
         <DCCReference Include="..\common\DefualtConfig.pas"/>
+        <DCCReference Include="..\forms\common\InfoListParentFrameUnit.pas">
+            <Form>InfoListParentFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\common\ListParentFrameUnit.pas">
+            <Form>ListParentFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\common\ParentFrameUnit.pas">
+            <Form>ParentFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\aliases\AliasesFrameUnit.pas">
+            <Form>AliasesFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\common\FrameContainerFormUnit.pas">
+            <Form>FrameContainerForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\aliases\AliasesFormUnit.pas">
+            <Form>AliasesForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -492,10 +522,15 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
             </Delphi.Personality>
-            <Deployment Version="4">
+            <Deployment Version="5">
                 <DeployFile LocalName="Linux64\Debug\frontMSS" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win32\Debug\frontMSS.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>frontMSS.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>
@@ -506,16 +541,6 @@
                     </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
-                    </Platform>
-                </DeployClass>
-                <DeployClass Name="AndroidClasses">
-                    <Platform Name="Android">
-                        <RemoteDir>classes</RemoteDir>
-                        <Operation>64</Operation>
-                    </Platform>
-                    <Platform Name="Android64">
-                        <RemoteDir>classes</RemoteDir>
-                        <Operation>64</Operation>
                     </Platform>
                 </DeployClass>
                 <DeployClass Name="AndroidFileProvider">
