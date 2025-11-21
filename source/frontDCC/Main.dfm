@@ -177,16 +177,28 @@ inherited MainForm: TMainForm
       OnClick = btnObservationsClick
       ExplicitWidth = 105
     end
-    object btnLogs: TUniButton
+    object btnDataseries: TUniButton
       AlignWithMargins = True
       Left = 4
       Top = 283
       Width = 137
       Height = 25
       Hint = ''
+      Caption = #1056#1103#1076#1099#32#1076#1072#1085#1085#1099#1093
+      Align = alTop
+      TabOrder = 9
+      OnClick = btnDataseriesClick
+    end
+    object btnLogs: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 314
+      Width = 137
+      Height = 25
+      Hint = ''
       Caption = #1051#1086#1075#1080
       Align = alTop
-      TabOrder = 11
+      TabOrder = 10
       OnClick = btnLogsClick
     end
     object uncntnrpnInfo: TUniContainerPanel
@@ -197,7 +209,7 @@ inherited MainForm: TMainForm
       Hint = ''
       ParentColor = False
       Align = alBottom
-      TabOrder = 9
+      TabOrder = 11
       ExplicitWidth = 111
       object URLLabel: TUniLabel
         AlignWithMargins = True
