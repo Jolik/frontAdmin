@@ -44,7 +44,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
       OnClick = btnRemoveContentClick
     end
     object cbOperatorLinks: TUniComboBox
-      Left = 630
+      Left = 628
       Top = 12
       Width = 452
       Hint = ''
@@ -767,6 +767,16 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
             Font.Style = [fsBold]
             TabOrder = 1
           end
+          object btnDownloadBody: TUniButton
+            Left = 224
+            Top = 4
+            Width = 139
+            Height = 25
+            Hint = ''
+            Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100
+            TabOrder = 2
+            OnClick = btnDownloadBodyClick
+          end
           object memoContentBody: TUniMemo
             Left = 0
             Top = 32
@@ -778,7 +788,7 @@ object OperatorLinkContectForm: TOperatorLinkContectForm
               '')
             Align = alBottom
             ReadOnly = True
-            TabOrder = 2
+            TabOrder = 3
           end
         end
       end

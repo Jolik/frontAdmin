@@ -1,4 +1,4 @@
-unit ContentViewFormUnit;
+﻿unit ContentViewFormUnit;
 
 interface
 
@@ -44,6 +44,7 @@ type
     cpInfoWho: TUniContainerPanel;
     lInfoWho: TUniLabel;
     lInfoWhoValue: TUniLabel;
+    btnDownloadBody: TUniButton;
     gridHistory: TUniDBGrid;
     dsHistory: TDataSource;
     mtHistory: TFDMemTable;
@@ -59,21 +60,24 @@ type
     procedure UniFormShow(Sender: TObject);
     procedure pcInfoChange(Sender: TObject);
     procedure btnRefreshHistoryClick(Sender: TObject);
-  private
+    procedure btnDownloadBodyClick(Sender: TObject);
+   private
     FBroker: TStorageRestBroker;
     FInfoRequest: TStorageReqInfo;
-  FHistoryBroker: THistoryRecordsRestBroker;
-  FHistoryRequest: TJournalRecordHistoryReq;
-  FJRID: string;
-  FHistoryLoaded: Boolean;
-  procedure ClearContentInfo;
+    FHistoryBroker: THistoryRecordsRestBroker;
+    FHistoryRequest: TJournalRecordHistoryReq;
+    FJRID: string;
+    FHistoryLoaded: Boolean;
+    FSelectedRecordBody: string;
+    function SanitizeFileName(const AValue: string): string;
+    procedure ClearContentInfo;
     procedure LoadContentInfo;
-    procedure LoadHistoryRecords(const AForce: Boolean = False);
-    procedure FillHistoryDataset(AHistory: THistoryRecordList);
-    procedure SetJRID(const Value: string);
-    procedure UpdateContentInfo(const ARecord: TJournalRecord);
-  public
-    property JRID: string read FJRID write SetJRID;
+      procedure LoadHistoryRecords(const AForce: Boolean = False);
+      procedure FillHistoryDataset(AHistory: THistoryRecordList);
+      procedure SetJRID(const Value: string);
+      procedure UpdateContentInfo(const ARecord: TJournalRecord);
+    public
+      property JRID: string read FJRID write SetJRID;
   end;
 
 function ContentViewForm: TContentViewForm;
@@ -83,7 +87,7 @@ implementation
 {$R *.dfm}
 
 uses
-  System.NetEncoding, common, MainModule, uniGUIApplication;
+  common, System.NetEncoding, System.IOUtils, MainModule, uniGUIApplication;
 
 function ContentViewForm: TContentViewForm;
 begin
@@ -95,6 +99,45 @@ begin
   Close;
 end;
 
+procedure TContentViewForm.btnDownloadBodyClick(Sender: TObject);
+var
+  TempFileName: string;
+  FileNameBase: string;
+begin
+  if FSelectedRecordBody.Trim.IsEmpty then
+  begin
+    ShowMessage('Нет данных для загрузки');
+    Exit;
+  end;
+
+  FileNameBase := SanitizeFileName(lInfoNameValue.Caption);
+  if FileNameBase.IsEmpty then
+    FileNameBase := 'content';
+
+  TempFileName := TPath.Combine(TPath.GetTempPath,
+    Format('%s_%s.txt', [FileNameBase, FormatDateTime('yyyymmddhhnnsszzz', Now)]));
+
+  TFile.WriteAllText(TempFileName, FSelectedRecordBody, TEncoding.UTF8);
+  UniSession.SendFile(TempFileName);
+end;
+
+function TContentViewForm.SanitizeFileName(const AValue: string): string;
+const
+  InvalidChars: array [0..8] of Char = ('\', '/', ':', '*', '?', '"', '<', '>', '|');
+var
+  Clean: string;
+  C: Char;
+begin
+  Clean := Trim(AValue);
+  for C in InvalidChars do
+    Clean := Clean.Replace(C, '_');
+  Clean := Clean.Replace(' ', '_');
+  if Clean.IsEmpty then
+    Result := 'content'
+  else
+    Result := Clean;
+end;
+
 procedure TContentViewForm.ClearContentInfo;
 begin
   lHeaderNameValue.Caption := '';
@@ -103,6 +146,7 @@ begin
   lInfoTypeValue.Caption := '';
   lInfoWhoValue.Caption := '';
   memoBody.Lines.Clear;
+  FSelectedRecordBody := '';
   if Assigned(mtHistory) then
   begin
     if mtHistory.Active then
@@ -196,6 +240,7 @@ begin
     memoBody.Lines.Text := body
   end;
   memoBody.Lines.EndUpdate;
+  FSelectedRecordBody := memoBody.Lines.Text;
   FHistoryLoaded := False;
 end;
 

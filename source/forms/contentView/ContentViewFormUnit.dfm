@@ -131,6 +131,10 @@ object ContentViewForm: TContentViewForm
         object tsInfo: TUniTabSheet
           Hint = ''
           Caption = 'Info'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 256
+          ExplicitHeight = 128
           object cpInfoName: TUniContainerPanel
             Left = 0
             Top = 0
@@ -251,10 +255,24 @@ object ContentViewForm: TContentViewForm
               TabOrder = 2
             end
           end
+          object btnDownloadBody: TUniButton
+            Left = 16
+            Top = 246
+            Width = 160
+            Height = 30
+            Hint = ''
+            Caption = #1047#1072#1075#1088#1091#1079#1080#1090#1100
+            TabOrder = 4
+            OnClick = btnDownloadBodyClick
+          end
         end
         object tsHistory: TUniTabSheet
           Hint = ''
           Caption = 'History'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 256
+          ExplicitHeight = 128
           object gridHistory: TUniDBGrid
             Left = 0
             Top = 0

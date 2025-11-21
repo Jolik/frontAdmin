@@ -8,7 +8,7 @@ uses
   Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm, uniGUIBaseClasses,
   uniPanel, uniBasicGrid, uniDBGrid, uniLabel, uniMemo, uniPageControl, uniSplitter,
-  uniTimer, uniButton,
+  uniTimer, uniButton, uniCheckBox,
   Data.DB,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
@@ -47,8 +47,10 @@ type
     lInfoWhoValue: TUniLabel;
     cpInfoBody: TUniContainerPanel;
     memoBody: TUniMemo;
+    btnDownloadBody: TUniButton;
     cpHistoryToolbar: TUniContainerPanel;
     btnRefreshHistory: TUniButton;
+    chkAutoRefresh: TUniCheckBox;
     gridHistory: TUniDBGrid;
     dsContent: TDataSource;
     mtContent: TFDMemTable;
@@ -74,6 +76,8 @@ type
     procedure dsContentDataChange(Sender: TObject; Field: TField);
     procedure pcInfoChange(Sender: TObject);
     procedure btnRefreshHistoryClick(Sender: TObject);
+    procedure chkAutoRefreshClick(Sender: TObject);
+    procedure btnDownloadBodyClick(Sender: TObject);
   private
     FBroker: TStorageRestBroker;
     FListRequest: TStorageReqList;
@@ -85,8 +89,12 @@ type
     FCurrentJRID: string;
     FUpdatingData: Boolean;
     FHistoryLoaded: Boolean;
+    FSelectedRecordBody: string;
+    FSelectedRecordTime: string;
     FInitialLoadComplete: Boolean;
+    function SanitizeFileName(const AValue: string): string;
     procedure InitializeDataset;
+    procedure UpdateAutoRefreshState;
     procedure AppendRecords(AList: TJournalRecordList);
     procedure PollContent;
     procedure TrimContent;
@@ -110,8 +118,9 @@ implementation
 
 uses
   MainModule, uniGUIApplication,
+  common,
   ContentViewFormUnit,
-  System.NetEncoding,
+  System.NetEncoding, System.IOUtils,
   EntityUnit;
 
 {$R *.dfm}
@@ -124,6 +133,8 @@ const
 function ContentStreamForm: TContentStreamForm;
 begin
   Result := TContentStreamForm(UniMainModule.GetFormInstance(TContentStreamForm));
+  Result.FSelectedRecordBody:='';
+  Result.FSelectedRecordTime:='';
 end;
 
 procedure TContentStreamForm.AppendRecords(AList: TJournalRecordList);
@@ -133,12 +144,16 @@ var
   RecordTime: TDateTime;
   SortedRecords: TList<TJournalRecord>;
   HasRecords: Boolean;
+  CurrentJRID: string;
 begin
   if not Assigned(AList) then
     Exit;
 
   HasRecords := False;
   SortedRecords := TList<TJournalRecord>.Create;
+  CurrentJRID := '';
+  if Assigned(mtContent) and mtContent.Active and not mtContent.IsEmpty then
+    CurrentJRID := Trim(mtContentjrid.AsString);
   try
     for Item in AList do
       if Item is TJournalRecord then
@@ -203,6 +218,10 @@ begin
 
   TrimContent;
   UpdateStats;
+
+  if (CurrentJRID <> '') and Assigned(mtContent) and mtContent.Active then
+    if not mtContent.Locate('jrid', CurrentJRID, []) then
+      mtContent.First;
 end;
 
 procedure TContentStreamForm.ClearContentInfo;
@@ -223,7 +242,33 @@ begin
   end;
   if Assigned(pcInfo) and Assigned(tsInfo) then
     pcInfo.ActivePage := tsInfo;
+  FSelectedRecordBody := '';
+  FSelectedRecordTime := '';
 end;
+
+procedure TContentStreamForm.UpdateAutoRefreshState;
+begin
+  StreamTimer.Enabled := Assigned(chkAutoRefresh) and chkAutoRefresh.Checked;
+end;
+
+
+function TContentStreamForm.SanitizeFileName(const AValue: string): string;
+const
+  InvalidChars: array [0..8] of Char = ('\', '/', ':', '*', '?', '"', '<', '>', '|');
+var
+  Clean: string;
+  C: Char;
+begin
+  Clean := Trim(AValue);
+  for C in InvalidChars do
+    Clean := Clean.Replace(C, '_');
+  Clean := Clean.Replace(' ', '_');
+  if Clean.IsEmpty then
+    Result := 'content'
+  else
+    Result := Clean;
+end;
+
 
 procedure TContentStreamForm.dsContentDataChange(Sender: TObject; Field: TField);
 var
@@ -288,6 +333,35 @@ begin
   LoadHistoryRecords(True);
   if Assigned(pcInfo) then
     pcInfo.ActivePage := tsHistory;
+end;
+
+procedure TContentStreamForm.btnDownloadBodyClick(Sender: TObject);
+var
+  TempFileName: string;
+  FileNameBase: string;
+begin
+  if FSelectedRecordBody.Trim.IsEmpty then
+  begin
+    ShowMessage('Нет данных для загрузки');
+    Exit;
+  end;
+
+  FileNameBase := SanitizeFileName(lInfoNameValue.Caption);
+  if FileNameBase.IsEmpty then
+    FileNameBase := 'content';
+
+  TempFileName := TPath.Combine(TPath.GetTempPath,
+    Format('%s_%s.txt', [FileNameBase, FSelectedRecordTime]));
+
+  TFile.WriteAllText(TempFileName, FSelectedRecordBody, TEncoding.UTF8);
+  UniSession.SendFile(TempFileName);
+end;
+
+procedure TContentStreamForm.chkAutoRefreshClick(Sender: TObject);
+begin
+  UpdateAutoRefreshState;
+  if chkAutoRefresh.Checked then
+    PollContent;
 end;
 
 procedure TContentStreamForm.InitializeDataset;
@@ -409,6 +483,9 @@ procedure TContentStreamForm.PollContent;
 var
   Resp: TStorageListResponse;
 begin
+  if Assigned(chkAutoRefresh) and not chkAutoRefresh.Checked then
+    Exit;
+
   if (not Assigned(FBroker)) or (not Assigned(FListRequest)) then
     Exit;
 
@@ -424,7 +501,7 @@ begin
 
   Resp := FBroker.List(FListRequest);
   try
-    if Assigned(Resp) and Assigned(Resp.JournalRecords) then
+    if Assigned(Resp) and Assigned(Resp.JournalRecords) and (Resp.JournalRecords.Count > 0) then
       AppendRecords(Resp.JournalRecords);
   finally
     Resp.Free;
@@ -498,16 +575,24 @@ end;
 
 procedure TContentStreamForm.StreamTimerTimer(Sender: TObject);
 begin
+  if Assigned(chkAutoRefresh) and not chkAutoRefresh.Checked then
+    Exit;
   PollContent;
 end;
 
 procedure TContentStreamForm.TrimContent;
+var
+  CurrentJRID: string;
 begin
   if not mtContent.Active then
     Exit;
 
   if mtContent.IsEmpty then
     Exit;
+
+  CurrentJRID := '';
+  if not mtContent.IsEmpty then
+    CurrentJRID := Trim(mtContentjrid.AsString);
 
   FUpdatingData := True;
   mtContent.DisableControls;
@@ -517,6 +602,8 @@ begin
       mtContent.Delete;
   finally
     mtContent.EnableControls;
+    if (CurrentJRID <> '') and not mtContent.IsEmpty then
+      mtContent.Locate('jrid', CurrentJRID, []);
     FUpdatingData := False;
   end;
 end;
@@ -543,7 +630,9 @@ begin
 
   LoadInitialContent;
 
-  StreamTimer.Enabled := True;
+  if Assigned(chkAutoRefresh) then
+    chkAutoRefresh.Checked := True;
+  UpdateAutoRefreshState;
 end;
 
 procedure TContentStreamForm.UniFormDestroy(Sender: TObject);
@@ -557,6 +646,9 @@ begin
 end;
 
 procedure TContentStreamForm.UpdateContentInfo(const ARecord: TJournalRecord);
+var
+  SelectedBody: string;
+  PrevSelStart: Integer;
 begin
   if not Assigned(ARecord) then
   begin
@@ -568,13 +660,19 @@ begin
   lInfoKeyValue.Caption := ARecord.Key;
   lInfoTypeValue.Caption := ARecord.&Type;
   lInfoWhoValue.Caption := ARecord.Who;
+  FSelectedRecordTime:= FormatDateTime('yyyymmddhhnnsszzz', UnixToDateTime(ARecord.Time));
 
-  memoBody.Lines.BeginUpdate;
+    var body := ARecord.Body;
+    if ARecord.Body.Length > 1024*5  then
+      body:= Utf8SafeTruncate(ARecord.Body, 1024 * 5);
+    memoBody.Lines.BeginUpdate;
   try
-    memoBody.Lines.Text := TNetEncoding.Base64.Decode(ARecord.Body);
-  finally
-    memoBody.Lines.EndUpdate;
+    FSelectedRecordBody := TNetEncoding.Base64.Decode(ARecord.body);
+    memoBody.Lines.Text := FSelectedRecordBody;
+  except
+    memoBody.Lines.Text := body
   end;
+  memoBody.Lines.EndUpdate;
 end;
 
 procedure TContentStreamForm.UpdateStats;

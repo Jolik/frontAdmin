@@ -1,4 +1,4 @@
-unit OperatorLinkContectFormUnit;
+﻿unit OperatorLinkContectFormUnit;
 
 interface
 
@@ -68,32 +68,36 @@ type
     lContentInfoReason: TUniLabel;
     lContentInfoReasonValue: TUniLabel;
     pContentSeparator9: TUniPanel;
-    cpContentBody: TUniContainerPanel;
-    lContentInfoBody: TUniLabel;
-    memoContentBody: TUniMemo;
-    splContent: TUniSplitter;
-    btnRemoveContent: TUniButton;
-    procedure UniFormCreate(Sender: TObject);
-    procedure UniFormDestroy(Sender: TObject);
-    procedure cbOperatorLinksChange(Sender: TObject);
-    procedure gridContentSelectionChange(Sender: TObject);
-    procedure gridContentDblClick(Sender: TObject);
-    procedure btnRemoveContentClick(Sender: TObject);
-  private
-    FLinksBroker: TOperatorLinksRestBroker;
-    FContentBroker: TOperatorLinksContentRestBroker;
-    FLinks: TOperatorLinkList;
-    procedure LoadOperatorLinks;
-    procedure PopulateOperatorLinks;
-    function GetSelectedLink: TOperatorLink;
-    procedure LoadLinkContent(const ALink: TOperatorLink);
-    procedure ClearContentGrid;
-    procedure ClearContentInfo;
-    procedure UpdateContentInfo(const ARecord: TJournalRecord);
-    procedure ShowSelectedContentInfo;
-    function FormatUnixDate(const AValue: Int64): string;
-  public
-  end;
+  cpContentBody: TUniContainerPanel;
+  lContentInfoBody: TUniLabel;
+  memoContentBody: TUniMemo;
+  splContent: TUniSplitter;
+  btnRemoveContent: TUniButton;
+  btnDownloadBody: TUniButton;
+  procedure UniFormCreate(Sender: TObject);
+  procedure UniFormDestroy(Sender: TObject);
+  procedure cbOperatorLinksChange(Sender: TObject);
+  procedure gridContentSelectionChange(Sender: TObject);
+  procedure gridContentDblClick(Sender: TObject);
+  procedure btnRemoveContentClick(Sender: TObject);
+  procedure btnDownloadBodyClick(Sender: TObject);
+private
+  FLinksBroker: TOperatorLinksRestBroker;
+  FContentBroker: TOperatorLinksContentRestBroker;
+  FLinks: TOperatorLinkList;
+  FSelectedRecordBody: string;
+  procedure LoadOperatorLinks;
+  procedure PopulateOperatorLinks;
+  function GetSelectedLink: TOperatorLink;
+  procedure LoadLinkContent(const ALink: TOperatorLink);
+  procedure ClearContentGrid;
+  procedure ClearContentInfo;
+  procedure UpdateContentInfo(const ARecord: TJournalRecord);
+  procedure ShowSelectedContentInfo;
+  function FormatUnixDate(const AValue: Int64): string;
+  function SanitizeFileName(const AValue: string): string;
+public
+end;
 
 function OperatorLinkContectForm: TOperatorLinkContectForm;
 
@@ -103,6 +107,7 @@ implementation
 
 uses
   System.NetEncoding, common, MainModule, uniGUIApplication, HttpClientUnit,
+  System.IOUtils,
   ContentViewFormUnit;
 
 function OperatorLinkContectForm: TOperatorLinkContectForm;
@@ -126,6 +131,7 @@ begin
     mtContent.EnableControls;
   end;
   btnRemoveContent.Enabled := False;
+  FSelectedRecordBody := '';
 end;
 
 procedure TOperatorLinkContectForm.ClearContentInfo;
@@ -141,6 +147,7 @@ begin
   lContentInfoReasonValue.Caption := '';
   memoContentBody.Lines.Clear;
   tsContentInfo.TabVisible := False;
+  FSelectedRecordBody := '';
 end;
 
 function TOperatorLinkContectForm.FormatUnixDate(const AValue: Int64): string;
@@ -161,6 +168,23 @@ begin
   Result := nil;
   if (cbOperatorLinks.ItemIndex >= 0) and (cbOperatorLinks.ItemIndex < cbOperatorLinks.Items.Count) then
     Result := TOperatorLink(cbOperatorLinks.Items.Objects[cbOperatorLinks.ItemIndex]);
+end;
+
+function TOperatorLinkContectForm.SanitizeFileName(const AValue: string): string;
+const
+  InvalidChars: array [0..8] of Char = ('\', '/', ':', '*', '?', '"', '<', '>', '|');
+var
+  Clean: string;
+  C: Char;
+begin
+  Clean := Trim(AValue);
+  for C in InvalidChars do
+    Clean := Clean.Replace(C, '_');
+  Clean := Clean.Replace(' ', '_');
+  if Clean.IsEmpty then
+    Result := 'content'
+  else
+    Result := Clean;
 end;
 
 procedure TOperatorLinkContectForm.gridContentSelectionChange(Sender: TObject);
@@ -211,10 +235,10 @@ begin
           for Item in Resp.Records do
           begin
             mtContent.Append;
-            mtContentjrid.AsString := TJournalRecord(Item).JRID;
-            mtContentname.AsString := TJournalRecord(Item).Name;
-            mtContentwho.AsString := TJournalRecord(Item).Who;
-            if TJournalRecord(Item).Time > 0 then
+        mtContentjrid.AsString := TJournalRecord(Item).JRID;
+        mtContentname.AsString := TJournalRecord(Item).Name;
+        mtContentwho.AsString := TJournalRecord(Item).Who;
+        if TJournalRecord(Item).Time > 0 then
               mtContenttime.AsDateTime := UnixToDateTime(TJournalRecord(Item).Time, True)
             else
               mtContenttime.Clear;
@@ -364,6 +388,28 @@ begin
   LoadLinkContent(Link);
 end;
 
+procedure TOperatorLinkContectForm.btnDownloadBodyClick(Sender: TObject);
+var
+  TempFileName: string;
+  FileNameBase: string;
+begin
+  if FSelectedRecordBody.Trim.IsEmpty then
+  begin
+    ShowMessage('Нет данных для загрузки');
+    Exit;
+  end;
+
+  FileNameBase := SanitizeFileName(lContentInfoNameValue.Caption);
+  if FileNameBase.IsEmpty then
+    FileNameBase := 'content';
+
+  TempFileName := TPath.Combine(TPath.GetTempPath,
+    Format('%s_%s.txt', [FileNameBase, FormatDateTime('yyyymmddhhnnsszzz', Now)]));
+
+  TFile.WriteAllText(TempFileName, FSelectedRecordBody, TEncoding.UTF8);
+  UniSession.SendFile(TempFileName);
+end;
+
 procedure TOperatorLinkContectForm.UniFormCreate(Sender: TObject);
 begin
   FLinks := TOperatorLinkList.Create;
@@ -381,6 +427,8 @@ begin
 end;
 
 procedure TOperatorLinkContectForm.UpdateContentInfo(const ARecord: TJournalRecord);
+var
+  BodyText: string;
 begin
   if not Assigned(ARecord) then
     Exit;
@@ -398,10 +446,12 @@ begin
   if ARecord.Body.Length > 1024*5  then
     body:= Utf8SafeTruncate(ARecord.Body, 1024 * 5);
   try
-    memoContentBody.Lines.Text := TNetEncoding.Base64.Decode(body);
+    BodyText := TNetEncoding.Base64.Decode(body);
   except
-    memoContentBody.Lines.Text := body;
+    BodyText := body;
   end;
+  memoContentBody.Lines.Text := BodyText;
+  FSelectedRecordBody := BodyText;
 
   tsContentInfo.TabVisible := True;
   pcContentInfo.ActivePage := tsContentInfo;
