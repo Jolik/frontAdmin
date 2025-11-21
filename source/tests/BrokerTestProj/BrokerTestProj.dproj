@@ -130,6 +130,7 @@
         <DCCReference Include="..\..\services\dataserver\brokers\SourcesRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\entities\SourceUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\entities\ContextUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
