@@ -11,6 +11,22 @@ uses
   TDsTypesUnit;
 
 type
+  /// <summary>Current state of dataserver serie.</summary>
+  TDsState = class(TFieldSet)
+  private
+    FColor: Nullable<string>;
+    FDt: Nullable<Int64>;
+  public
+    function Assign(ASource: TFieldSet): Boolean; override;
+    procedure Clear;
+    function HasValues: Boolean;
+    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+
+    property Color: Nullable<string> read FColor write FColor;
+    property Dt: Nullable<Int64> read FDt write FDt;
+  end;
+
   /// <summary>Single dataserver value entry.</summary>
   TDsValue = class(TFieldSet)
   private
@@ -126,10 +142,12 @@ type
     FSid: string;
     FUid: string;
     FUpdated: Nullable<Int64>;
+    FState: TDsState;
     function HasAttr: Boolean;
     function HasLastData: Boolean;
     function HasLimits: Boolean;
     function HasMetadata: Boolean;
+    function HasState: Boolean;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -156,6 +174,7 @@ type
     property Name: string read FName write FName;
     property Oid: string read FOid write FOid;
     property Sid: string read FSid write FSid;
+    property State: TDsState read FState;
     property Uid: string read FUid write FUid;
     property Updated: Nullable<Int64> read FUpdated write FUpdated;
   end;
@@ -169,6 +188,56 @@ type
   end;
 
 implementation
+
+{ TDsState }
+
+function TDsState.Assign(ASource: TFieldSet): Boolean;
+var
+  Src: TDsState;
+begin
+  Result := False;
+  if not Assigned(ASource) then
+    Exit;
+  if not (ASource is TDsState) then
+    Exit(inherited Assign(ASource));
+
+  Src := TDsState(ASource);
+  FColor := Src.Color;
+  FDt := Src.Dt;
+  Result := True;
+end;
+
+procedure TDsState.Clear;
+begin
+  FColor.Clear;
+  FDt.Clear;
+end;
+
+function TDsState.HasValues: Boolean;
+begin
+  Result := FColor.HasValue or FDt.HasValue;
+end;
+
+procedure TDsState.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+begin
+  Clear;
+  if not Assigned(src) then
+    Exit;
+
+  FColor := GetNullableStr(src, 'color');
+  FDt := GetNullableInt64(src, 'dt');
+end;
+
+procedure TDsState.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+begin
+  if not Assigned(dst) then
+    Exit;
+
+  if FColor.HasValue then
+    dst.AddPair('color', FColor.Value);
+  if FDt.HasValue then
+    dst.AddPair('dt', TJSONNumber.Create(FDt.Value));
+end;
 
 { TDsValue }
 
@@ -457,6 +526,7 @@ begin
   FLastData.Assign(Src.LastData);
   FLimits.Assign(Src.Limits);
   FMetadata.Assign(Src.Metadata);
+  FState.Assign(Src.State);
   Result := True;
 end;
 
@@ -482,6 +552,7 @@ begin
   FLastData.Clear;
   FLimits.Clear;
   FMetadata.Clear;
+  FState.Clear;
 end;
 
 constructor TDataseries.Create;
@@ -492,6 +563,7 @@ begin
   FLastData := TDsValue.Create;
   FLimits := TLimits.Create;
   FMetadata := TDsMetadata.Create;
+  FState := TDsState.Create;
 end;
 
 destructor TDataseries.Destroy;
@@ -501,6 +573,7 @@ begin
   FLastData.Free;
   FLimits.Free;
   FMetadata.Free;
+  FState.Free;
   inherited;
 end;
 
@@ -524,6 +597,11 @@ begin
   Result := FMetadata.HasValues;
 end;
 
+function TDataseries.HasState: Boolean;
+begin
+  Result := FState.HasValues;
+end;
+
 procedure TDataseries.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
 var
   AttrValue: TJSONValue;
@@ -531,6 +609,7 @@ var
   LastValue: TJSONValue;
   LimitsValue: TJSONValue;
   MetadataValue: TJSONValue;
+  StateValue: TJSONValue;
 begin
   Clear;
   if not Assigned(src) then
@@ -580,6 +659,12 @@ begin
     FMetadata.Parse(MetadataValue as TJSONObject)
   else
     FMetadata.Clear;
+
+  StateValue := src.GetValue('state');
+  if StateValue is TJSONObject then
+    FState.Parse(StateValue as TJSONObject)
+  else
+    FState.Clear;
 end;
 
 procedure TDataseries.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
@@ -663,6 +748,18 @@ begin
     try
       FMetadata.Serialize(Obj);
       dst.AddPair('metadata', Obj);
+    except
+      Obj.Free;
+      raise;
+    end;
+  end;
+
+  if HasState then
+  begin
+    Obj := TJSONObject.Create;
+    try
+      FState.Serialize(Obj);
+      dst.AddPair('state', Obj);
     except
       Obj.Free;
       raise;

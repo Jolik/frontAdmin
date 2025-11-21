@@ -81,7 +81,12 @@ uses
   LogsRequestsUnit in 'LogsRequestsUnit.pas',
   AppConfigUnit in '..\..\common\AppConfigUnit.pas',
   common in '..\..\common\common.pas',
-  DefualtConfig in '..\..\common\DefualtConfig.pas';
+  DefualtConfig in '..\..\common\DefualtConfig.pas',
+  SourcesTestsUnit in 'SourcesTestsUnit.pas',
+  SourceHttpRequests in '..\..\services\dataserver\brokers\SourceHttpRequests.pas',
+  SourcesRestBrokerUnit in '..\..\services\dataserver\brokers\SourcesRestBrokerUnit.pas',
+  SourceUnit in '..\..\services\dataserver\entities\SourceUnit.pas',
+  ContextUnit in '..\..\services\dataserver\entities\ContextUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -156,12 +161,13 @@ begin
 //    ExecuteCompaniesRequests;
 //    ExecuteAbonentsRequest;
 //    ExecuteRulesRequest;
-    ExecuteObservationRequests;
+//    ExecuteObservationRequests;
 //    ExecuteDsGroupsRequests;
 //    ExecuteLogsRequests;
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
+    ExecuteSourcesTests;
     Readln;
   except
     on E: Exception do

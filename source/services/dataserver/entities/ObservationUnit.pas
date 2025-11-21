@@ -19,6 +19,8 @@ type
     FUid: string;
     FDsTypes: TDsTypesList;
     function HasDsTypes: Boolean;
+  protected
+    function CreateDsTypesList: TDsTypesList; virtual;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -74,7 +76,12 @@ end;
 constructor TObservation.Create;
 begin
   inherited Create;
-  FDsTypes := TDsTypesList.Create;
+  FDsTypes := CreateDsTypesList;
+end;
+
+function TObservation.CreateDsTypesList: TDsTypesList;
+begin
+  Result := TDsTypesList.Create;
 end;
 
 destructor TObservation.Destroy;

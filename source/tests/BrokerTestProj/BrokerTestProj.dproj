@@ -125,6 +125,11 @@
         <DCCReference Include="..\..\common\AppConfigUnit.pas"/>
         <DCCReference Include="..\..\common\common.pas"/>
         <DCCReference Include="..\..\common\DefualtConfig.pas"/>
+        <DCCReference Include="SourcesTestsUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\SourceHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\SourcesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\SourceUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\ContextUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
