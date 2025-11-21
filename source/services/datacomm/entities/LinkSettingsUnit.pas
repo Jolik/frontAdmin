@@ -32,6 +32,7 @@ type
     ///  в массиве const APropertyNames передаются поля, которые необходимо использовать
     procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
     procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); overload; override;
+    function Assign(ASource: TFieldSet): boolean; override;
 
     property LastActivityTimeout: integer read FLastActivityTimeout write FLastActivityTimeout;
     property Dump: boolean read FDump write FDump;
@@ -344,6 +345,14 @@ uses FuncUnit;
 
 { TDataSettings }
 
+function TDataSettings.Assign(ASource: TFieldSet): boolean;
+begin
+  result := inherited;
+  if not result then
+    exit;
+  Parse(ASource.Serialize());
+end;
+
 procedure TDataSettings.Parse(src: TJSONObject;
   const APropertyNames: TArray<string>);
 begin
@@ -362,7 +371,6 @@ end;
 
 {$ifdef FRONT_MSS}
 
-{ TSocketSpecialDataSettings }
 
 constructor TSocketSpecialDataSettings.Create;
 begin

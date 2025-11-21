@@ -28,7 +28,6 @@ uses
   ConstsUnit in '..\common\ConstsUnit.pas',
   LinkFrameUtils in '..\forms\links\LinksFrames\LinkFrameUtils.pas',
   LinkEditFormUnit in '..\forms\links\LinkEditFormUnit.pas' {LinkEditForm: TUniForm},
-  LinkSettingsFormUnit in '..\forms\links\LinkSettingsFormUnit.pas' {LinkSettingsForm: TUniForm},
   ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas' {ListParentForm: TUniForm},
   LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
   LinksHttpRequests in '..\services\datacomm\brokers\LinksHttpRequests.pas',
@@ -154,7 +153,10 @@ uses
   StorageHttpRequests in '..\services\dataspace\brokers\StorageHttpRequests.pas',
   StorageRestBrokerUnit in '..\services\dataspace\brokers\StorageRestBrokerUnit.pas',
   ContentViewFormUnit in '..\forms\contentView\ContentViewFormUnit.pas' {ContentViewForm: TUniForm},
-  DefualtConfig in '..\common\DefualtConfig.pas';
+  DefualtConfig in '..\common\DefualtConfig.pas',
+  ParentFrameUnit in '..\forms\common\ParentFrameUnit.pas' {ParentFrame: TUniFrame},
+  ListParentFrameUnit in '..\forms\common\ListParentFrameUnit.pas' {ListParentFrame: TUniFrame},
+  InfoListParentFrameUnit in '..\forms\common\InfoListParentFrameUnit.pas' {InfoListParentFrame: TUniFrame};
 
 {$R *.res}
 

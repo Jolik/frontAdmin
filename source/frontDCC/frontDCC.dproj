@@ -136,7 +136,6 @@
         <DCCReference Include="..\services\acl\brokers\DepartmentsRestBrokerUnit.pas"/>
         <DCCReference Include="..\forms\common\ParentEditFormUnit.pas">
             <Form>ParentEditForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\common\ParentFormUnit.pas">
@@ -147,12 +146,6 @@
         <DCCReference Include="..\forms\links\LinksFrames\LinkFrameUtils.pas"/>
         <DCCReference Include="..\forms\links\LinkEditFormUnit.pas">
             <Form>LinkEditForm</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="..\forms\links\LinkSettingsFormUnit.pas">
-            <Form>LinkSettingsForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\common\ListParentFormUnit.pas">
@@ -161,7 +154,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFormUnit.pas">
             <Form>LinksForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\services\datacomm\brokers\LinksHttpRequests.pas"/>
@@ -174,37 +166,30 @@
         <DCCReference Include="..\services\datacomm\entities\ScheduleSettingsUnit.pas"/>
         <DCCReference Include="..\forms\links\LinksFrames\SharedFrameTextInput.pas">
             <Form>FrameTextInput</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SharedFrameCombobox.pas">
             <Form>FrameCombobox</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SharedFrameBoolInput.pas">
             <Form>FrameBoolInput</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\ParentLinkSettingEditFrameUnit.pas">
             <Form>ParentLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\ProfilesFrameUnit.pas">
             <Form>ProfilesFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\ProfileFrameUnit.pas">
             <Form>ProfileFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SharedFrameRuleConditionUnit.pas">
             <Form>FrameRuleCondition</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\common\KeyValUnit.pas"/>
@@ -218,47 +203,38 @@
         <DCCReference Include="..\common\common.pas"/>
         <DCCReference Include="..\forms\links\LinksFrames\SharedFrameConnections.pas">
             <Form>FrameConnections</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SharedFrameSchedule.pas">
             <Form>FrameSchedule</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SharedFrameS3.pas">
             <Form>FrameS3</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\HTTPCliDownLinkSettingEditFrameUnit.pas">
             <Form>HTTPCliDownLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SebaCSDLinkSettingEditFrameUnit.pas">
             <Form>SebaCSDLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\links\LinksFrames\SebaSGSLinkSettingEditFrameUnit.pas">
             <Form>SebaSGSLinkSettingEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\sources\SourcesFormUnit.pas">
             <Form>SourcesForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\sources\SourceEditFormUnit.pas">
             <Form>SourceEditForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\sources\IntefraceEditFormUnit.pas">
             <Form>InterfaceModalForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\observation\ObservationFormUnit.pas">
@@ -269,7 +245,6 @@
         <DCCReference Include="..\services\dataserver\entities\SourceCredsUnit.pas"/>
         <DCCReference Include="..\forms\sources\ContextCreateFormUnit.pas">
             <Form>ContextCreateForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\services\dataserver\brokers\ContextsHttpRequests.pas"/>
@@ -284,77 +259,62 @@
         <DCCReference Include="..\services\dataserver\brokers\SourcesRestBrokerUnit.pas"/>
         <DCCReference Include="..\forms\tasks\TaskEditParentFormUnit.pas">
             <Form>TaskEditParentForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\tasks\TasksParentFormUnit.pas">
             <Form>TaskParentForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\tasks\TasksFrames\ParentTaskCustomSettingsEditFrameUnit.pas">
             <Form>ParentTaskCustomSettingsEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\summary\TasksFrames\SummaryCXMLTaskCustomSettingsEditFrameUnit.pas">
             <Form>SummaryCXMLTaskCustomSettingsEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\summary\TasksFrames\SummaryHydraTaskCustomSettingsEditFrameUnit.pas">
             <Form>SummaryHydraTaskCustomSettingsEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\summary\TasksFrames\SummarySEBATaskCustomSettingsEditFrameUnit.pas">
             <Form>SummarySEBATaskCustomSettingsEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\summary\TasksFrames\SummarySynopTaskCustomSettingsEditFrameUnit.pas">
             <Form>SummarySynopTaskCustomSettingsEditFrame</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dsproc\DSProcessorTaskEditFormUnit.pas">
             <Form>DSProcessorTaskEditForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dsproc\DSProcessorTasksFormUnit.pas">
             <Form>DSProcessorTasksForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\monitoring\MonitoringTaskEditFormUnit.pas">
             <Form>MonitoringTaskEditForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\monitoring\MonitoringTasksFormUnit.pas">
             <Form>MonitoringTasksForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\strip\StripTaskEditFormUnit.pas">
             <Form>StripTaskEditForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\strip\StripTasksFormUnit.pas">
             <Form>StripTasksForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\summary\SummaryTaskEditFormUnit.pas">
             <Form>SummaryTaskEditForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\summary\SummaryTasksFormUnit.pas">
             <Form>SummaryTasksForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dsgroups\DSGroupEditFormUnit.pas">
@@ -369,7 +329,6 @@
         <DCCReference Include="..\services\summary\entities\SummaryTaskCustomSettingsUnit.pas"/>
         <DCCReference Include="..\forms\tasks\SelectTaskSourcesFormUnit.pas">
             <Form>SelectTaskSourcesForm</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\services\tasks\entities\TaskSettingsUnit.pas"/>
@@ -465,6 +424,21 @@
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\common\DefualtConfig.pas"/>
+        <DCCReference Include="..\forms\common\ParentFrameUnit.pas">
+            <Form>ParentFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\common\ListParentFrameUnit.pas">
+            <Form>ListParentFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\common\InfoListParentFrameUnit.pas">
+            <Form>InfoListParentFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -493,6 +467,12 @@
             <Deployment Version="5">
                 <DeployFile LocalName="Linux64\Debug\frontDCC" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="Win32\Debug\frontDCC.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>frontDCC.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

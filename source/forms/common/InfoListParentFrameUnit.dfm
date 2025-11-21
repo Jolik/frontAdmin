@@ -1,125 +1,37 @@
-inherited ListParentForm: TListParentForm
-  Caption = 'ListParentForm'
-  TextHeight = 15
-  object tbEntity: TUniToolBar
-    Left = 0
-    Top = 0
-    Width = 1160
-    Height = 29
-    Hint = ''
-    TabOrder = 0
-    ParentColor = False
-    Color = clBtnFace
-    ExplicitWidth = 1152
-    object btnNew: TUniToolButton
-      AlignWithMargins = True
-      Left = 3
-      Top = 3
-      Hint = ''
-      Caption = 'btnNew'
-      TabOrder = 1
-      IconCls = 'add'
-      OnClick = btnNewClick
-    end
-    object btnUpdate: TUniToolButton
-      AlignWithMargins = True
-      Left = 32
-      Top = 3
-      Hint = ''
-      Caption = 'btnUpdate'
-      TabOrder = 3
-      IconCls = 'settings'
-      OnClick = btnUpdateClick
-    end
-    object btnRemove: TUniToolButton
-      AlignWithMargins = True
-      Left = 61
-      Top = 3
-      Hint = ''
-      Caption = 'btnRemove'
-      TabOrder = 2
-      IconCls = 'delete'
-      OnClick = btnRemoveClick
-    end
-    object btnRefresh: TUniToolButton
-      AlignWithMargins = True
-      Left = 90
-      Top = 3
-      Hint = ''
-      Caption = 'btnRefresh'
-      TabOrder = 4
-      IconCls = 'refresh'
-      OnClick = btnRefreshClick
-    end
+inherited InfoListParentFrame: TInfoListParentFrame
+  Width = 1348
+  ExplicitWidth = 1348
+  inherited tbEntity: TUniToolBar
+    Width = 1348
+    ExplicitLeft = 0
+    ExplicitWidth = 990
   end
-  object dbgEntity: TUniDBGrid
-    Left = 0
-    Top = 29
-    Width = 774
-    Height = 538
-    Hint = ''
-    DataSource = DatasourceEntity
-    LoadMask.Message = 'Loading data...'
-    ForceFit = True
-    Align = alClient
-    TabOrder = 1
+  inherited dbgEntity: TUniDBGrid
+    Width = 962
     OnSelectionChange = dbgEntitySelectionChange
-    Columns = <
-      item
-        FieldName = 'Name'
-        Title.Caption = #1048#1084#1103
-        Width = 100
-      end
-      item
-        FieldName = 'Caption'
-        Title.Caption = #1055#1086#1076#1087#1080#1089#1100
-        Width = 100
-      end
-      item
-        FieldName = 'Created'
-        Title.Caption = #1057#1086#1079#1076#1072#1085
-        Width = 112
-      end
-      item
-        FieldName = 'Updated'
-        Title.Caption = #1048#1079#1084#1077#1085#1077#1085
-        Width = 112
-      end>
   end
-  object splSplitter: TUniSplitter
-    Left = 774
-    Top = 29
-    Width = 6
-    Height = 538
-    Hint = ''
-    Align = alRight
-    ParentColor = False
-    Color = clBtnFace
-    ExplicitLeft = 766
-    ExplicitHeight = 513
-  end
-  object pcEntityInfo: TUniPageControl
-    Left = 780
+  object pcEntityInfo: TUniPageControl [2]
+    Left = 968
     Top = 29
     Width = 380
-    Height = 538
+    Height = 698
     Hint = ''
     ActivePage = tsTaskInfo
     TabBarVisible = False
     Align = alRight
-    TabOrder = 3
-    ExplicitLeft = 772
-    ExplicitHeight = 513
+    TabOrder = 2
+    ExplicitLeft = 561
+    ExplicitHeight = 538
     object tsTaskInfo: TUniTabSheet
       Hint = ''
       TabVisible = False
       Caption = 'Task.Info'
-      ExplicitHeight = 485
+      ExplicitHeight = 510
       object cpTaskInfo: TUniContainerPanel
         Left = 0
         Top = 0
         Width = 372
-        Height = 510
+        Height = 670
         Hint = ''
         Margins.Right = 0
         ParentColor = False
@@ -128,7 +40,7 @@ inherited ListParentForm: TListParentForm
         TabOrder = 0
         Layout = 'table'
         LayoutAttribs.Columns = 2
-        ExplicitHeight = 485
+        ExplicitHeight = 510
         object cpTaskInfoID: TUniContainerPanel
           AlignWithMargins = True
           Left = 10
@@ -432,38 +344,16 @@ inherited ListParentForm: TListParentForm
       end
     end
   end
-  object DatasourceEntity: TDataSource
-    DataSet = FDMemTableEntity
-    Left = 272
-    Top = 64
-  end
-  object FDMemTableEntity: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 384
-    Top = 64
-    object FDMemTableEntityName: TStringField
-      FieldName = 'Name'
-      Size = 256
-    end
-    object FDMemTableEntityCaption: TStringField
-      FieldName = 'def'
-      Size = 256
-    end
-    object FDMemTableEntityCreated: TDateTimeField
-      FieldName = 'Created'
-    end
-    object FDMemTableEntityUpdated: TDateTimeField
-      FieldName = 'Updated'
-    end
-    object FDMemTableEntityId: TStringField
-      FieldName = 'Id'
-      Size = 50
-    end
+  object splSplitter: TUniSplitter [3]
+    Left = 962
+    Top = 29
+    Width = 6
+    Height = 698
+    Hint = ''
+    Align = alRight
+    ParentColor = False
+    Color = clBtnFace
+    ExplicitLeft = 766
+    ExplicitHeight = 513
   end
 end

@@ -39,7 +39,6 @@ uses
   QueueUnit in '..\services\router\entities\QueueUnit.pas',
   RouterSourceUnit in '..\services\router\entities\RouterSourceUnit.pas',
   LinkEditFormUnit in '..\forms\links\LinkEditFormUnit.pas' {LinkEditForm: TUniForm},
-  LinkSettingsFormUnit in '..\forms\links\LinkSettingsFormUnit.pas' {LinkSettingsForm: TUniForm},
   LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
   OperatorLinkEditFormUnit in '..\forms\operatorLinks\OperatorLinkEditFormUnit.pas' {OperatorLinkEditForm: TUniForm},
   OperatorLinksFormUnit in '..\forms\operatorLinks\OperatorLinksFormUnit.pas' {OperatorLinksForm: TUniForm},
@@ -157,7 +156,13 @@ uses
   LogsHttpRequests in '..\services\signals\brokers\LogsHttpRequests.pas',
   LogsRestBrokerUnit in '..\services\signals\brokers\LogsRestBrokerUnit.pas',
   RouterFrameRuleConditionUnit in '..\forms\rules\RouterFrameRuleConditionUnit.pas',
-  DefualtConfig in '..\common\DefualtConfig.pas';
+  DefualtConfig in '..\common\DefualtConfig.pas',
+  InfoListParentFrameUnit in '..\forms\common\InfoListParentFrameUnit.pas' {InfoListParentFrame: TUniFrame},
+  ListParentFrameUnit in '..\forms\common\ListParentFrameUnit.pas' {ListParentFrame: TUniFrame},
+  ParentFrameUnit in '..\forms\common\ParentFrameUnit.pas' {ParentFrame: TUniFrame},
+  AliasesFrameUnit in '..\forms\aliases\AliasesFrameUnit.pas' {AliasesFrame: TUniFrame},
+  FrameContainerFormUnit in '..\forms\common\FrameContainerFormUnit.pas' {FrameContainerForm: TUniForm},
+  AliasesFormUnit in '..\forms\aliases\AliasesFormUnit.pas' {AliasesForm: TUniForm};
 
 {$R *.res}
 

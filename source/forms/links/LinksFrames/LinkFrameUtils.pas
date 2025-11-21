@@ -50,7 +50,6 @@ begin
     ltPop3ClientDown: result := TPop3CliDownLinkSettingEditFrame;
     ltSmtpCliUp: result := TSMTPClieUpLinkSettingEditFrame;
 {$endif}
-    else exit;
   end;
 end;
 

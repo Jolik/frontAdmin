@@ -9,6 +9,7 @@ uses
   System.StrUtils,
   System.JSON,
   EntityUnit,
+  common,
   IdHTTP;
 
 type
@@ -718,6 +719,7 @@ begin
         ReqBodyStream := TStringStream.Create(ReqBodyContent, TEncoding.UTF8);
         RespStream := TMemoryStream.Create;
         try
+          //ReqBodyStream.SaveToFile( 'c:\projects\1.txt');  // tut
           FHttpClient.Post(Url, ReqBodyStream, RespStream);
           ResponseContent := DecodeResponse(RespStream);
         finally

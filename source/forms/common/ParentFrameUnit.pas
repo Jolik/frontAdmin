@@ -1,11 +1,11 @@
-﻿unit ParentFormUnit;
+﻿unit ParentFrameUnit;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm,
+  uniGUIClasses, uniGUIFrame,
   EntityUnit,
   ParentEditFormUnit,
   RestBrokerUnit,
@@ -13,9 +13,9 @@ uses
 
 type
   ///  базовая форма с редактором и брокером
-  TParentForm = class(TUniForm)
-    procedure UniFormCreate(Sender: TObject);
-    procedure UniFormDestroy(Sender: TObject);
+  TParentFrame = class(TUniFrame)
+    procedure UniFrameCreate(Sender: TObject);
+    procedure UniFrameDestroy(Sender: TObject);
   private
     ///  REST‑брокер для доступа к API
     FRestBroker: TRestBroker;
@@ -47,8 +47,6 @@ type
     procedure PrepareEditForm(isEditMode: boolean = false);
   end;
 
-function ParentForm: TParentForm;
-
 implementation
 
 {$R *.dfm}
@@ -56,9 +54,9 @@ implementation
 uses
   MainModule, uniGUIApplication, HttpClientUnit, IdHTTP, LoggingUnit;
 
-{ TParentFieldSetForm }
+{ TParentFrame }
 
-function TParentForm.NewCallback(const AID: string;AEntity: TFieldSet):boolean;
+function TParentFrame.NewCallback(const AID: string;AEntity: TFieldSet):boolean;
 var
   ReqNew: TReqNew;
   JsonRes: TJSONResponse;
@@ -101,12 +99,12 @@ begin
     Refresh();
 end;
 
-procedure TParentForm.OnCreate;
+procedure TParentFrame.OnCreate;
 begin
   //
 end;
 
-function TParentForm.UpdateCallback(const AID: string; AEntity: TFieldSet):boolean;
+function TParentFrame.UpdateCallback(const AID: string; AEntity: TFieldSet):boolean;
 var
   ReqUpd: TReqUpdate;
   JsonRes: TJSONResponse;
@@ -182,7 +180,7 @@ begin
 
 end;
 
-function TParentForm.GetCurrentEntityId: string;
+function TParentFrame.GetCurrentEntityId: string;
 begin
   Result := '';
   if Assigned(EditForm) then
@@ -196,7 +194,7 @@ begin
   end;
 end;
 
-procedure TParentForm.UniFormCreate(Sender: TObject);
+procedure TParentFrame.UniFrameCreate(Sender: TObject);
 begin
   // создаем брокера
   FRestBroker := CreateRestBroker();
@@ -205,27 +203,22 @@ begin
   // FEditForm := CreateEditForm();
 end;
 
-procedure TParentForm.UniFormDestroy(Sender: TObject);
+procedure TParentFrame.UniFrameDestroy(Sender: TObject);
 begin
   FreeAndNil(FRestBroker);
   // нужно удалять или нет? FreeAndNil(EditForm);
 end;
 
-procedure TParentForm.PrepareEditForm(isEditMode: boolean);
+procedure TParentFrame.PrepareEditForm(isEditMode: boolean);
 begin
   FEditForm := CreateEditForm();
   FEditForm.IsEdit := isEditMode;
 end;
 
 
-function ParentForm: TParentForm;
-begin
-  Result := TParentForm(UniMainModule.GetFormInstance(TParentForm));
-end;
-
 { Default implementations for REST factories }
 
-function TParentForm.CreateRestBroker: TRestBroker;
+function TParentFrame.CreateRestBroker: TRestBroker;
 begin
   Result := nil;
 end;
