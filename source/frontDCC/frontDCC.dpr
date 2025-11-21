@@ -159,7 +159,8 @@ uses
   InfoListParentFrameUnit in '..\forms\common\InfoListParentFrameUnit.pas' {InfoListParentFrame: TUniFrame},
   LinksFrameUnit in '..\forms\links\LinksFrameUnit.pas' {LinksFrame: TUniFrame},
   FrameContainerFormUnit in '..\forms\common\FrameContainerFormUnit.pas' {FrameContainerForm: TUniForm},
-  LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm};
+  LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
+  DataseriesRestBrokerUnit in '..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas';
 
 {$R *.res}
 

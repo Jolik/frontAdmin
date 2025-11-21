@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Classes,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm, uniGUIBaseClasses,
   uniPanel, uniLabel, uniButton,
-  DataseriesUnit;
+  FuncUnit, DataseriesUnit, Vcl.Controls, Vcl.Forms;
 
 type
   TDataseriesViewForm = class(TUniForm)

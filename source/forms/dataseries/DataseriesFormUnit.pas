@@ -1,4 +1,4 @@
-unit DataseriesFormUnit;
+﻿unit DataseriesFormUnit;
 
 interface
 
@@ -13,7 +13,7 @@ uses
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  SourceUnit, SourcesRestBrokerUnit, SourceHttpRequests,
+  FuncUnit, EntityUnit, SourceUnit, SourcesRestBrokerUnit, SourceHttpRequests,
   DataseriesUnit, DataseriesRestBrokerUnit;
 
 type
@@ -199,7 +199,9 @@ begin
   if not Assigned(Node) or not Assigned(Node.Parent) then
     Exit;
   if Node.Parent = tvSources.Items.GetFirstNode then
-    Result := Node.Hint;
+    Result := Node.Text;
+    ///  пытается использовать хинт для хранения SID а его нет!
+///!!!    Result := Node.Hint;
 end;
 
 procedure TDataseriesForm.gridDataseriesDblClick(Sender: TObject);
@@ -258,8 +260,8 @@ begin
     Req.Free;
   end;
 
-  if Assigned(Root.GetFirstChild) then
-    tvSources.Select(Root.GetFirstChild)
+  if Root.GetFirstChild <> nil then
+    tvSources.Selected := Root.GetFirstChild
   else
     tvSources.Selected := Root;
 end;
@@ -312,7 +314,7 @@ end;
 
 procedure TDataseriesForm.PopulateSourcesTree(AList: TSourceList);
 var
-  Source: TSource;
+  Source: TFieldSet;
   Node: TUniTreeNode;
   Root: TUniTreeNode;
   DisplayName: string;
@@ -329,13 +331,15 @@ begin
     if not Assigned(Source) then
       Continue;
 
-    if Source.Name.HasValue then
-      DisplayName := Source.Name.Value
-    else
-      DisplayName := Source.Sid;
+      ///  !!! пока используем Node.Text для хранения SID
+//    if TSource(Source).Name.HasValue then
+//      DisplayName := TSource(Source).Name.Value
+//    else
+      DisplayName := TSource(Source).Sid;
 
     Node := tvSources.Items.AddChild(Root, DisplayName);
-    Node.Hint := Source.Sid;
+    ///  пытается SID засунуть в хинт, а его нет!
+///!!!    Node.Hint := TSource(Source).Sid;
   end;
   Root.Expand(True);
 end;
