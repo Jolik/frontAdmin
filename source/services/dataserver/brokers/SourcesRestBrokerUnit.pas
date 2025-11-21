@@ -33,6 +33,8 @@ type
     function Remove(AReq: TSourceReqRemove): TJSONResponse; overload;
     function Remove(AReq: TReqRemove): TJSONResponse; overload; override;
     function Archive(AReq: TSourceReqArchive): TJSONResponse; overload;
+    function Observations(AReq: TSourceReqObservations): TSourceObservationsResponse; overload;
+    function Observations(AReq: TReqList): TListResponse; overload;
 
     // Request factories
     function CreateReqList: TReqList; override;
@@ -41,6 +43,7 @@ type
     function CreateReqUpdate: TReqUpdate; override;
     function CreateReqRemove: TReqRemove; override;
     function CreateReqArchive: TSourceReqArchive;
+    function CreateReqObservations(const ASourceId: string = ''): TSourceReqObservations;
   end;
 
 implementation
@@ -96,6 +99,14 @@ function TSourcesRestBroker.CreateReqArchive: TSourceReqArchive;
 begin
   Result := TSourceReqArchive.Create;
   Result.BasePath := BasePath;
+end;
+
+function TSourcesRestBroker.CreateReqObservations(
+  const ASourceId: string): TSourceReqObservations;
+begin
+  Result := TSourceReqObservations.Create;
+  Result.BasePath := BasePath;
+  Result.SetSourceId(ASourceId);
 end;
 
 function TSourcesRestBroker.Info(AReq: TSourceReqInfo): TSourceInfoResponse;
@@ -161,6 +172,18 @@ end;
 function TSourcesRestBroker.Archive(AReq: TSourceReqArchive): TJSONResponse;
 begin
   Result := inherited Remove(AReq);
+end;
+
+function TSourcesRestBroker.Observations(
+  AReq: TSourceReqObservations): TSourceObservationsResponse;
+begin
+  Result := Observations(AReq as TReqList) as TSourceObservationsResponse;
+end;
+
+function TSourcesRestBroker.Observations(AReq: TReqList): TListResponse;
+begin
+  Result := TSourceObservationsResponse.Create;
+  inherited List(AReq, Result);
 end;
 
 end.

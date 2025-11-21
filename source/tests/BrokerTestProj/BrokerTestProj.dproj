@@ -125,6 +125,7 @@
         <DCCReference Include="..\..\common\AppConfigUnit.pas"/>
         <DCCReference Include="..\..\common\common.pas"/>
         <DCCReference Include="..\..\common\DefualtConfig.pas"/>
+        <DCCReference Include="SourcesTestsUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

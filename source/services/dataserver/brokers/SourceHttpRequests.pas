@@ -10,7 +10,10 @@ uses
   StringListUnit,
   BaseRequests,
   BaseResponses,
-  SourceUnit;
+  SourceUnit,
+  ObservationUnit,
+  TDsTypesUnit,
+  DataseriesUnit;
 
 type
   // List response for sources
@@ -29,6 +32,48 @@ type
   public
     constructor Create;
     property Source: TSource read GetSource;
+  end;
+
+  // Observations response for a single source
+  TSourceObservationsResponse = class(TListResponse)
+  private
+    function GetObservations: TObservationsList;
+  public
+    constructor Create; override;
+    property ObservationList: TObservationsList read GetObservations;
+  end;
+
+  // DsType that contains dataseries section in observation response
+  TSourceObservationDstType = class(TDsType)
+  private
+    FDataseries: TDataseriesList;
+    function HasDataseries: Boolean;
+  public
+    constructor Create; override;
+    destructor Destroy; override;
+    function Assign(ASource: TFieldSet): Boolean; override;
+    procedure Parse(src: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+    procedure Serialize(dst: TJSONObject; const APropertyNames: TArray<string> = nil); override;
+
+    property Dataseries: TDataseriesList read FDataseries;
+  end;
+
+  // Custom list to build TSourceObservationDstType items
+  TSourceDsTypesList = class(TDsTypesList)
+  public
+    class function ItemClassType: TFieldSetClass; override;
+  end;
+
+  // Observation with dataseries-aware dstype list
+  TSourceObservation = class(TObservation)
+  protected
+    function CreateDsTypesList: TDsTypesList; override;
+  end;
+
+  // Container for observations list in response
+  TSourceObservationsList = class(TObservationsList)
+  public
+    class function ItemClassType: TFieldSetClass; override;
   end;
 
   // GET /sources/list
@@ -101,6 +146,22 @@ type
     procedure SetKeep(const Value: Boolean);
   end;
 
+  // GET /api/v2/sources/<sid>/observations
+  TSourceReqObservations = class(TReqList)
+  private
+    procedure SetCsvParam(const AName: string; const Values: array of string);
+  public
+    constructor Create; override;
+    procedure SetSourceId(const Value: string);
+    procedure SetDataseries(const Value: Boolean);
+    procedure SetFlags(const Values: array of string);
+    procedure SetSeasons(const Values: array of string);
+    procedure SetLastAt(const Value: Int64);
+    procedure ClearLastAt;
+    procedure SetLastNewer(const Value: Integer);
+    procedure ClearLastNewer;
+  end;
+
 implementation
 
 function JoinCsvValues(const Values: array of string): string;
@@ -146,6 +207,116 @@ end;
 function TSourceInfoResponse.GetSource: TSource;
 begin
   Result := FieldSet as TSource;
+end;
+
+{ TSourceObservationsResponse }
+
+constructor TSourceObservationsResponse.Create;
+begin
+  inherited Create(TSourceObservationsList, 'response', 'observations');
+end;
+
+function TSourceObservationsResponse.GetObservations: TObservationsList;
+begin
+  Result := FieldSetList as TSourceObservationsList;
+end;
+
+{ TSourceObservationDstType }
+
+function TSourceObservationDstType.Assign(ASource: TFieldSet): Boolean;
+var
+  Src: TSourceObservationDstType;
+begin
+  Result := inherited Assign(ASource);
+  if not Result then
+    Exit;
+
+  if ASource is TSourceObservationDstType then
+  begin
+    Src := TSourceObservationDstType(ASource);
+    FDataseries.Assign(Src.Dataseries);
+  end;
+end;
+
+constructor TSourceObservationDstType.Create;
+begin
+  inherited Create;
+  FDataseries := TDataseriesList.Create;
+end;
+
+destructor TSourceObservationDstType.Destroy;
+begin
+  FDataseries.Free;
+  inherited;
+end;
+
+function TSourceObservationDstType.HasDataseries: Boolean;
+begin
+  Result := FDataseries.Count > 0;
+end;
+
+procedure TSourceObservationDstType.Parse(src: TJSONObject; const APropertyNames: TArray<string>);
+var
+  DsValue: TJSONValue;
+  ItemsValue: TJSONValue;
+begin
+  inherited Parse(src, APropertyNames);
+
+  DsValue := nil;
+  if Assigned(src) then
+    DsValue := src.FindValue('dataseries');
+
+  if DsValue is TJSONObject then
+  begin
+    ItemsValue := TJSONObject(DsValue).GetValue('items');
+    if ItemsValue is TJSONArray then
+      FDataseries.ParseArray(ItemsValue as TJSONArray)
+    else
+      FDataseries.Clear;
+  end
+  else
+    FDataseries.Clear;
+end;
+
+procedure TSourceObservationDstType.Serialize(dst: TJSONObject; const APropertyNames: TArray<string>);
+var
+  Container: TJSONObject;
+begin
+  inherited Serialize(dst, APropertyNames);
+
+  if not HasDataseries then
+    Exit;
+
+  Container := TJSONObject.Create;
+  try
+    Container.AddPair('count', TJSONNumber.Create(FDataseries.Count));
+    Container.AddPair('items', FDataseries.SerializeArray);
+    dst.AddPair('dataseries', Container);
+  except
+    Container.Free;
+    raise;
+  end;
+end;
+
+{ TSourceDsTypesList }
+
+class function TSourceDsTypesList.ItemClassType: TFieldSetClass;
+begin
+  Result := TSourceObservationDstType;
+end;
+
+{ TSourceObservation }
+
+function TSourceObservation.CreateDsTypesList: TDsTypesList;
+begin
+  Result := TSourceDsTypesList.Create;
+end;
+
+{ TSourceObservationsList }
+
+class function TSourceObservationsList.ItemClassType: TFieldSetClass;
+begin
+  Result := TSourceObservation;
 end;
 
 { Requests }
@@ -387,6 +558,74 @@ begin
     Params.AddOrSetValue('sid', Value)
   else
     Params.Remove('sid');
+end;
+
+{ TSourceReqObservations }
+
+procedure TSourceReqObservations.ClearLastAt;
+begin
+  Params.Remove('lastAt');
+end;
+
+procedure TSourceReqObservations.ClearLastNewer;
+begin
+  Params.Remove('lastNewer');
+end;
+
+constructor TSourceReqObservations.Create;
+begin
+  inherited Create;
+  Method := mGET;
+  SetEndpoint('sources/observations');
+end;
+
+procedure TSourceReqObservations.SetCsvParam(const AName: string;
+  const Values: array of string);
+var
+  Csv: string;
+begin
+  Csv := JoinCsvValues(Values);
+  if Csv.IsEmpty then
+    Params.Remove(AName)
+  else
+    Params.AddOrSetValue(AName, Csv);
+end;
+
+procedure TSourceReqObservations.SetDataseries(const Value: Boolean);
+begin
+  if Value then
+    Params.AddOrSetValue('dataseries', 'true')
+  else
+    Params.Remove('dataseries');
+end;
+
+procedure TSourceReqObservations.SetFlags(const Values: array of string);
+begin
+  SetCsvParam('flag', Values);
+end;
+
+procedure TSourceReqObservations.SetLastAt(const Value: Int64);
+begin
+  Params.AddOrSetValue('lastAt', IntToStr(Value));
+end;
+
+procedure TSourceReqObservations.SetLastNewer(const Value: Integer);
+begin
+  Params.AddOrSetValue('lastNewer', IntToStr(Value));
+end;
+
+procedure TSourceReqObservations.SetSeasons(const Values: array of string);
+begin
+  SetCsvParam('seasons', Values);
+end;
+
+procedure TSourceReqObservations.SetSourceId(const Value: string);
+begin
+  Id := Value;
+  if Value.Trim.IsEmpty then
+    SetEndpoint('sources/observations')
+  else
+    SetEndpoint(Format('sources/%s/observations', [Value]));
 end;
 
 end.

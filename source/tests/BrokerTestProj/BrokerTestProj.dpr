@@ -81,7 +81,8 @@ uses
   LogsRequestsUnit in 'LogsRequestsUnit.pas',
   AppConfigUnit in '..\..\common\AppConfigUnit.pas',
   common in '..\..\common\common.pas',
-  DefualtConfig in '..\..\common\DefualtConfig.pas';
+  DefualtConfig in '..\..\common\DefualtConfig.pas',
+  SourcesTestsUnit in 'SourcesTestsUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -162,6 +163,7 @@ begin
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
+    ExecuteSourcesTests;
     Readln;
   except
     on E: Exception do
