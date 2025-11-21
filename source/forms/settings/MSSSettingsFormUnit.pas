@@ -7,7 +7,7 @@ uses
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIForm, uniTreeView, uniPageControl,
   uniGUIBaseClasses, uniPanel,
-  RulesFrameUnit, AliasesFrameUnit, AbonentsFrameUnit;
+  RulesFrameUnit, AliasesFrameUnit, AbonentsFrameUnit, RouterSourcesFrameUnit;
 
 type
   TMSSSettingsForm = class(TUniForm)
@@ -20,22 +20,27 @@ type
     pnlRulesHost: TUniContainerPanel;
     pnlAliasesHost: TUniContainerPanel;
     pnlAbonentsHost: TUniContainerPanel;
+    tshRouterSources: TUniTabSheet;
+    pnlRouterSources: TUniContainerPanel;
+
     procedure UniFormCreate(Sender: TObject);
     procedure tvNavigateChange(Sender: TObject; Node: TUniTreeNode);
+
   private
     FNodeMain: TUniTreeNode;
     FNodeComm: TUniTreeNode;
     FNodeRules: TUniTreeNode;
     FNodeAliases: TUniTreeNode;
     FNodeAbonents: TUniTreeNode;
+    FNodeRouterSources: TUniTreeNode;
     FRulesFrame: TRulesFrame;
     FAliasesFrame: TAliasesFrame;
     FAbonentsFrame: TAbonentsFrame;
+    FRouterSourcesFrame: TRouterSourcesFrame;
+
     procedure InitTree;
     procedure ShowTabForNode(ANode: TUniTreeNode);
-    procedure EnsureRulesFrame;
-    procedure EnsureAliasesFrame;
-    procedure EnsureAbonentsFrame;
+
   public
   end;
 
@@ -53,58 +58,31 @@ begin
   Result := TMSSSettingsForm(UniMainModule.GetFormInstance(TMSSSettingsForm));
 end;
 
-procedure TMSSSettingsForm.EnsureAbonentsFrame;
-begin
-  if not Assigned(FAbonentsFrame) then
-  begin
-    FAbonentsFrame := TAbonentsFrame.Create(Self);
-    FAbonentsFrame.Parent := pnlAbonentsHost;
-    FAbonentsFrame.Align := alClient;
-  end;
-end;
-
-procedure TMSSSettingsForm.EnsureAliasesFrame;
-begin
-  if not Assigned(FAliasesFrame) then
-  begin
-    FAliasesFrame := TAliasesFrame.Create(Self);
-    FAliasesFrame.Parent := pnlAliasesHost;
-    FAliasesFrame.Align := alClient;
-  end;
-end;
-
-procedure TMSSSettingsForm.EnsureRulesFrame;
-begin
-  if not Assigned(FRulesFrame) then
-  begin
-    FRulesFrame := TRulesFrame.Create(Self);
-    FRulesFrame.Parent := pnlRulesHost;
-    FRulesFrame.Align := alClient;
-  end;
-end;
-
 procedure TMSSSettingsForm.InitTree;
 begin
   tvNavigate.Items.BeginUpdate;
   try
     tvNavigate.Items.Clear;
-    FNodeMain := tvNavigate.Items.Add(nil, #1043#1083#1072#1074#1085#1086#1077);
+    FNodeMain := tvNavigate.Items.Add(nil, 'Настройки');
     FNodeMain.Data := tshBlank;
 
-    FNodeComm := tvNavigate.Items.AddChild(FNodeMain, #1050#1086#1084#1084#1091#1090#1072#1094#1080#1103);
+    FNodeComm := tvNavigate.Items.AddChild(FNodeMain, 'Коммутация');
     FNodeComm.Data := tshBlank;
 
-    FNodeRules := tvNavigate.Items.AddChild(FNodeComm, #1055#1088#1072#1074#1080#1083#1072);
+    FNodeRules := tvNavigate.Items.AddChild(FNodeComm, 'Правила');
     FNodeRules.Data := tshRules;
 
-    FNodeAliases := tvNavigate.Items.AddChild(FNodeComm, #1040#1083#1080#1072#1089#1099);
+    FNodeAliases := tvNavigate.Items.AddChild(FNodeComm, 'Алиасы');
     FNodeAliases.Data := tshAliases;
 
-    FNodeAbonents := tvNavigate.Items.AddChild(FNodeComm, #1040#1073#1086#1085#1077#1085#1090#1099);
+    FNodeAbonents := tvNavigate.Items.AddChild(FNodeComm, 'Абоненты');
     FNodeAbonents.Data := tshAbonents;
 
-    FNodeMain.Expand(False);
-    FNodeComm.Expand(False);
+    FNodeRouterSources := tvNavigate.Items.AddChild(FNodeComm, 'Источники');
+    FNodeRouterSources.Data := tshRouterSources;
+
+    FNodeMain.Expand(True);
+    FNodeComm.Expand(True);
   finally
     tvNavigate.Items.EndUpdate;
   end;
@@ -119,15 +97,6 @@ begin
   else
     LTarget := tshBlank;
 
-  if LTarget = tshRules then
-    EnsureRulesFrame
-  else if LTarget = tshAliases then
-  begin
-    EnsureAliasesFrame;
-  end
-  else if LTarget = tshAbonents then
-    EnsureAbonentsFrame;
-
   pcForms.ActivePage := LTarget;
 end;
 
@@ -138,6 +107,35 @@ end;
 
 procedure TMSSSettingsForm.UniFormCreate(Sender: TObject);
 begin
+
+  if not Assigned(FRouterSourcesFrame) then
+  begin
+    FRouterSourcesFrame := TRouterSourcesFrame.Create(Self);
+    FRouterSourcesFrame.Parent := pnlRouterSources;
+    FRouterSourcesFrame.Align := alClient;
+  end;
+
+  if not Assigned(FAbonentsFrame) then
+  begin
+    FAbonentsFrame := TAbonentsFrame.Create(Self);
+    FAbonentsFrame.Parent := pnlAbonentsHost;
+    FAbonentsFrame.Align := alClient;
+  end;
+
+  if not Assigned(FAliasesFrame) then
+  begin
+    FAliasesFrame := TAliasesFrame.Create(Self);
+    FAliasesFrame.Parent := pnlAliasesHost;
+    FAliasesFrame.Align := alClient;
+  end;
+
+  if not Assigned(FRulesFrame) then
+  begin
+    FRulesFrame := TRulesFrame.Create(Self);
+    FRulesFrame.Parent := pnlRulesHost;
+    FRulesFrame.Align := alClient;
+  end;
+
   InitTree;
   tvNavigate.Selected := FNodeMain;
   ShowTabForNode(FNodeMain);

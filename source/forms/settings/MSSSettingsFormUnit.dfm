@@ -27,7 +27,7 @@ object MSSSettingsForm: TMSSSettingsForm
     Width = 600
     Height = 600
     Hint = ''
-    ActivePage = tshBlank
+    ActivePage = tshRouterSources
     TabBarVisible = False
     Align = alClient
     TabOrder = 1
@@ -91,6 +91,28 @@ object MSSSettingsForm: TMSSSettingsForm
         TabOrder = 0
         ExplicitWidth = 584
         ExplicitHeight = 547
+      end
+    end
+    object tshRouterSources: TUniTabSheet
+      Hint = ''
+      Caption = #1048#1089#1090#1086#1095#1085#1080#1082#1080
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 600
+      ExplicitHeight = 600
+      object pnlRouterSources: TUniContainerPanel
+        Left = 0
+        Top = 0
+        Width = 592
+        Height = 572
+        Hint = ''
+        ParentColor = False
+        Align = alClient
+        TabOrder = 0
+        ExplicitLeft = 168
+        ExplicitTop = 224
+        ExplicitWidth = 256
+        ExplicitHeight = 128
       end
     end
   end
