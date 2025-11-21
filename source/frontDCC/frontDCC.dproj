@@ -237,6 +237,14 @@
             <Form>ObservationForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
+        <DCCReference Include="..\forms\dataseries\DataseriesFormUnit.pas">
+            <Form>DataseriesForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\dataseries\DataseriesViewFormUnit.pas">
+            <Form>DataseriesViewForm</Form>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\SourceCredsUnit.pas"/>
         <DCCReference Include="..\forms\sources\ContextCreateFormUnit.pas">

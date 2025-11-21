@@ -63,6 +63,8 @@ uses
   SourceEditFormUnit in '..\forms\sources\SourceEditFormUnit.pas' {SourceEditForm: TUniForm},
   IntefraceEditFormUnit in '..\forms\sources\IntefraceEditFormUnit.pas' {InterfaceModalForm: TUniForm},
   ObservationFormUnit in '..\forms\observation\ObservationFormUnit.pas' {ObservationForm: TUniForm},
+  DataseriesFormUnit in '..\forms\dataseries\DataseriesFormUnit.pas' {DataseriesForm: TUniForm},
+  DataseriesViewFormUnit in '..\forms\dataseries\DataseriesViewFormUnit.pas' {DataseriesViewForm: TUniForm},
   ObservationsRestBrokerUnit in '..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
   SourceCredsUnit in '..\services\dataserver\entities\SourceCredsUnit.pas',
   ContextCreateFormUnit in '..\forms\sources\ContextCreateFormUnit.pas' {ContextCreateForm: TUniForm},
