@@ -80,6 +80,7 @@ uses
   LogUnit in '..\..\services\signals\entities\LogUnit.pas',
   LogsRequestsUnit in 'LogsRequestsUnit.pas',
   AppConfigUnit in '..\..\common\AppConfigUnit.pas',
+  common in '..\..\common\common.pas',
   DefualtConfig in '..\..\common\DefualtConfig.pas';
 
 procedure TestAbonentListRequest;
@@ -142,12 +143,20 @@ begin
     HttpClient.Addr := '213.167.42.170';
     HttpClient.Port := 8088;
 
+  if AppConfig = nil then
+    LoadAppConfig('FRONTDCC');
+
+  if (AppConfig <> nil) and (AppConfig.Port > 0) then
+    HttpClient.Port := AppConfig.Port
+  else
+    HttpClient.Port := 8080;
+
 //    ExecuteOperatorLinkRequest;
 //    ExecuteJournalRecordRequest;
 //    ExecuteCompaniesRequests;
-    ExecuteAbonentsRequest;
+//    ExecuteAbonentsRequest;
 //    ExecuteRulesRequest;
-//    ExecuteObservationRequests;
+    ExecuteObservationRequests;
 //    ExecuteDsGroupsRequests;
 //    ExecuteLogsRequests;
 //    ExecuteOperatorLinksContentRequests;

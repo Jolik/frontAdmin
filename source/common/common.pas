@@ -3,9 +3,8 @@
 interface
 
 uses
-  Classes,
-  Windows,
-  StrUtils, DateUtils, SysUtils, IOUtils;
+  System.Classes,
+  System.StrUtils, System.DateUtils, System.SysUtils, System.IOUtils;
 
 const
   // перевод строки независимо от ос
@@ -128,7 +127,7 @@ type
 implementation
 
 uses
-Math, System.RegularExpressions;
+  System.Math, System.RegularExpressions;
 
 
 function Utf8SafeTruncate(const S: string; MaxBytes: Integer): string;
@@ -334,7 +333,7 @@ end;
 
 function LastError: string;
 var
-  i: dword;
+  i: cardinal;
 begin
   i := GetLastError;
 
@@ -377,7 +376,7 @@ end;
 
 procedure SaveUTF8(Data, FileName: string);
 begin
-   IOUtils.TFile.WriteAllText(FileName, Data, TEncoding.UTF8);
+   System.IOUtils.TFile.WriteAllText(FileName, Data, TEncoding.UTF8);
 end;
 
 
