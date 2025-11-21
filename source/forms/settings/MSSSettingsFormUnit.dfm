@@ -19,6 +19,7 @@ object MSSSettingsForm: TMSSSettingsForm
     TabOrder = 0
     Color = clWindow
     OnChange = tvNavigateChange
+    ExplicitHeight = 575
   end
   object pcForms: TUniPageControl
     Left = 200
@@ -27,68 +28,69 @@ object MSSSettingsForm: TMSSSettingsForm
     Height = 600
     Hint = ''
     ActivePage = tshBlank
+    TabBarVisible = False
     Align = alClient
     TabOrder = 1
+    ExplicitWidth = 592
+    ExplicitHeight = 575
     object tshBlank: TUniTabSheet
       Hint = ''
       Caption = #1055#1091#1089#1090#1072#1103
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 256
-      ExplicitHeight = 128
+      ExplicitWidth = 584
+      ExplicitHeight = 547
     end
     object tshRules: TUniTabSheet
       Hint = ''
       Caption = #1055#1088#1072#1074#1080#1083#1072
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 256
-      ExplicitHeight = 128
+      ExplicitWidth = 584
+      ExplicitHeight = 547
       object pnlRulesHost: TUniContainerPanel
         Left = 0
         Top = 0
         Width = 592
-        Height = 570
+        Height = 572
         Hint = ''
         ParentColor = False
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 584
+        ExplicitHeight = 547
       end
     end
     object tshAliases: TUniTabSheet
       Hint = ''
       Caption = #1040#1083#1080#1072#1089#1099
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 256
-      ExplicitHeight = 128
+      ExplicitWidth = 584
+      ExplicitHeight = 547
       object pnlAliasesHost: TUniContainerPanel
         Left = 0
         Top = 0
         Width = 592
-        Height = 570
+        Height = 572
         Hint = ''
         ParentColor = False
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 584
+        ExplicitHeight = 547
       end
     end
     object tshAbonents: TUniTabSheet
       Hint = ''
       Caption = #1040#1073#1086#1085#1077#1085#1090#1099
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 256
-      ExplicitHeight = 128
+      ExplicitWidth = 584
+      ExplicitHeight = 547
       object pnlAbonentsHost: TUniContainerPanel
         Left = 0
         Top = 0
         Width = 592
-        Height = 570
+        Height = 572
         Hint = ''
         ParentColor = False
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 584
+        ExplicitHeight = 547
       end
     end
   end

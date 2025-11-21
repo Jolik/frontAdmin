@@ -98,7 +98,6 @@ uses
   RouterSourceEditFormUnit in '..\forms\routerSources\RouterSourceEditFormUnit.pas' {RouterSourceEditForm: TUniForm},
   RouterSourcesFormUnit in '..\forms\routerSources\RouterSourcesFormUnit.pas' {RouterSourcesForm: TUniForm},
   RuleEditFormUnit in '..\forms\rules\RuleEditFormUnit.pas' {RuleEditForm: TUniForm},
-  RulesFormUnit in '..\forms\rules\RulesFormUnit.pas' {RulesForm: TUniForm},
   HandlerEditFormUnit in '..\forms\handlers\HandlerEditFormUnit.pas' {HandlerEditForm: TUniForm},
   HandlersFormUnit in '..\forms\handlers\HandlersFormUnit.pas' {HandlersForm: TUniForm},
   AbonentHttpRequests in '..\services\router\brokers\AbonentHttpRequests.pas',
@@ -160,7 +159,10 @@ uses
   InfoListParentFrameUnit in '..\forms\common\InfoListParentFrameUnit.pas' {InfoListParentFrame: TUniFrame},
   ListParentFrameUnit in '..\forms\common\ListParentFrameUnit.pas' {ListParentFrame: TUniFrame},
   ParentFrameUnit in '..\forms\common\ParentFrameUnit.pas' {ParentFrame: TUniFrame},
-  FrameContainerFormUnit in '..\forms\common\FrameContainerFormUnit.pas' {FrameContainerForm: TUniForm};
+  FrameContainerFormUnit in '..\forms\common\FrameContainerFormUnit.pas' {FrameContainerForm: TUniForm},
+  RulesFrameUnit in '..\forms\rules\RulesFrameUnit.pas' {RulesFrame: TUniFrame},
+  RulesFormUnit in '..\forms\rules\RulesFormUnit.pas' {RulesForm: TUniForm},
+  AbonentsFrameUnit in '..\forms\abonents\AbonentsFrameUnit.pas' {AbonentsFrame: TUniFrame};
 
 {$R *.res}
 

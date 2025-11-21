@@ -1,0 +1,2 @@
+inherited RulesFrame: TRulesFrame
+end

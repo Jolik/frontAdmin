@@ -1,0 +1,2 @@
+inherited AbonentsFrame: TAbonentsFrame
+end
