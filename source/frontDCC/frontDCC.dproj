@@ -152,10 +152,6 @@
             <Form>ListParentForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\forms\links\LinksFormUnit.pas">
-            <Form>LinksForm</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
         <DCCReference Include="..\services\datacomm\brokers\LinksHttpRequests.pas"/>
         <DCCReference Include="..\services\datacomm\brokers\LinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\services\datacomm\entities\ConnectionSettingsUnit.pas"/>
@@ -404,10 +400,6 @@
             <Form>SourcesFrame</Form>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\forms\dashboard\LinksFrameUnit.pas">
-            <Form>LinksFrame</Form>
-            <DesignClass>TUniFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="..\forms\dashboard\DCCDashboardFormUnit.pas">
             <Form>DCCDashboardForm</Form>
             <DesignClass>TUniForm</DesignClass>
@@ -438,6 +430,21 @@
             <Form>InfoListParentFrame</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFrameUnit.pas">
+            <Form>LinksFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\common\FrameContainerFormUnit.pas">
+            <Form>FrameContainerForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\links\LinksFormUnit.pas">
+            <Form>LinksForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

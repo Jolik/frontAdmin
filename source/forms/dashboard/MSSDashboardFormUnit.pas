@@ -7,7 +7,8 @@ uses
   Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm, uniGUIBaseClasses,
   uniPanel, uniSplitter,
-  ChannelsFrameUnit, ContentFrameUnit, LogsFrameUnit;
+  ChannelsFrameUnit, ContentFrameUnit, LogsFrameUnit, uniGUIFrame,
+  ParentFrameUnit, ListParentFrameUnit;
 
 type
   TMSSDashboardForm = class(TUniForm)

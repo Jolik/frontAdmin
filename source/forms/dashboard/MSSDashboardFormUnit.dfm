@@ -1,12 +1,11 @@
 object MSSDashboardForm: TMSSDashboardForm
   Left = 0
   Top = 0
-  Caption = 'MSS Dashboard'
   ClientHeight = 720
   ClientWidth = 1200
+  Caption = 'MSS Dashboard'
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
-  PixelsPerInch = 96
   TextHeight = 15
   object cpMain: TUniContainerPanel
     Left = 0
@@ -35,15 +34,26 @@ object MSSDashboardForm: TMSSDashboardForm
         ParentColor = False
         Align = alTop
         TabOrder = 1
-        object ChannelsFrame: TChannelsFrame
+        inline ChannelsFrame: TChannelsFrame
           Left = 0
           Top = 0
           Width = 780
           Height = 320
           Align = alClient
+          Anchors = [akLeft, akTop, akRight, akBottom]
           TabOrder = 0
+          Background.Picture.Data = {00}
           ExplicitWidth = 780
           ExplicitHeight = 320
+          inherited tbEntity: TUniToolBar
+            Width = 780
+            ExplicitLeft = 0
+            ExplicitWidth = 780
+          end
+          inherited dbgEntity: TUniDBGrid
+            Width = 780
+            Height = 291
+          end
         end
       end
       object splChannels: TUniSplitter
@@ -51,6 +61,7 @@ object MSSDashboardForm: TMSSDashboardForm
         Top = 320
         Width = 780
         Height = 6
+        Cursor = crVSplit
         Hint = ''
         Align = alTop
         ParentColor = False
@@ -65,15 +76,20 @@ object MSSDashboardForm: TMSSDashboardForm
         ParentColor = False
         Align = alClient
         TabOrder = 2
-        object ContentFrame: TContentFrame
+        inline ContentFrame: TContentFrame
           Left = 0
           Top = 0
           Width = 780
           Height = 394
           Align = alClient
+          Anchors = [akLeft, akTop, akRight, akBottom]
           TabOrder = 0
+          ParentFont = False
+          Background.Picture.Data = {00}
           ExplicitWidth = 780
-          ExplicitHeight = 394
+          inherited gridContent: TUniDBGrid
+            Width = 780
+          end
         end
       end
     end
@@ -96,15 +112,16 @@ object MSSDashboardForm: TMSSDashboardForm
       ParentColor = False
       Align = alRight
       TabOrder = 2
-      object LogsFrame: TLogsFrame
+      inline LogsFrame: TLogsFrame
         Left = 0
         Top = 0
         Width = 414
         Height = 720
         Align = alClient
+        Anchors = [akLeft, akTop, akRight, akBottom]
         TabOrder = 0
-        ExplicitWidth = 414
-        ExplicitHeight = 720
+        ParentFont = False
+        Background.Picture.Data = {00}
       end
     end
   end

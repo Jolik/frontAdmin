@@ -29,7 +29,6 @@ uses
   LinkFrameUtils in '..\forms\links\LinksFrames\LinkFrameUtils.pas',
   LinkEditFormUnit in '..\forms\links\LinkEditFormUnit.pas' {LinkEditForm: TUniForm},
   ListParentFormUnit in '..\forms\common\ListParentFormUnit.pas' {ListParentForm: TUniForm},
-  LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
   LinksHttpRequests in '..\services\datacomm\brokers\LinksHttpRequests.pas',
   LinksRestBrokerUnit in '..\services\datacomm\brokers\LinksRestBrokerUnit.pas',
   ConnectionSettingsUnit in '..\services\datacomm\entities\ConnectionSettingsUnit.pas',
@@ -143,7 +142,6 @@ uses
   ContentFrameUnit in '..\forms\dashboard\ContentFrameUnit.pas' {ContentFrame: TUniFrame},
   LogsFrameUnit in '..\forms\dashboard\LogsFrameUnit.pas' {LogsFrame: TUniFrame},
   SourcesFrameUnit in '..\forms\dashboard\SourcesFrameUnit.pas' {SourcesFrame: TUniFrame},
-  LinksFrameUnit in '..\forms\dashboard\LinksFrameUnit.pas' {LinksFrame: TUniFrame},
   DCCDashboardFormUnit in '..\forms\dashboard\DCCDashboardFormUnit.pas' {DCCDashboardForm: TUniForm},
   HistoryRecordUnit in '..\services\dataspace\entities\HistoryRecordUnit.pas',
   JournalRecordsAttrsUnit in '..\services\dataspace\entities\JournalRecordsAttrsUnit.pas',
@@ -156,7 +154,10 @@ uses
   DefualtConfig in '..\common\DefualtConfig.pas',
   ParentFrameUnit in '..\forms\common\ParentFrameUnit.pas' {ParentFrame: TUniFrame},
   ListParentFrameUnit in '..\forms\common\ListParentFrameUnit.pas' {ListParentFrame: TUniFrame},
-  InfoListParentFrameUnit in '..\forms\common\InfoListParentFrameUnit.pas' {InfoListParentFrame: TUniFrame};
+  InfoListParentFrameUnit in '..\forms\common\InfoListParentFrameUnit.pas' {InfoListParentFrame: TUniFrame},
+  LinksFrameUnit in '..\forms\links\LinksFrameUnit.pas' {LinksFrame: TUniFrame},
+  FrameContainerFormUnit in '..\forms\common\FrameContainerFormUnit.pas' {FrameContainerForm: TUniForm},
+  LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm};
 
 {$R *.res}
 

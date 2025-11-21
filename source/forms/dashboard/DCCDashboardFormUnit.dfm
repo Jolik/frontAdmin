@@ -6,6 +6,7 @@ object DCCDashboardForm: TDCCDashboardForm
   Caption = 'DCC Dashboard'
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
+  OnCreate = UniFormCreate
   TextHeight = 15
   object cpMain: TUniContainerPanel
     Left = 0
@@ -25,8 +26,6 @@ object DCCDashboardForm: TDCCDashboardForm
       ParentColor = False
       Align = alLeft
       TabOrder = 1
-      ExplicitTop = 246
-      ExplicitHeight = 474
       object cpSources: TUniContainerPanel
         Left = 0
         Top = 0
@@ -36,7 +35,6 @@ object DCCDashboardForm: TDCCDashboardForm
         ParentColor = False
         Align = alClient
         TabOrder = 0
-        ExplicitHeight = 474
         inline SourcesFrame: TSourcesFrame
           Left = 0
           Top = 0
@@ -48,7 +46,7 @@ object DCCDashboardForm: TDCCDashboardForm
           ParentFont = False
           Background.Picture.Data = {00}
           ExplicitWidth = 320
-          ExplicitHeight = 474
+          ExplicitHeight = 720
           inherited gridSources: TUniDBGrid
             Width = 320
             Height = 720
@@ -66,8 +64,7 @@ object DCCDashboardForm: TDCCDashboardForm
       ParentColor = False
       Color = clBtnFace
       ExplicitLeft = 772
-      ExplicitTop = 246
-      ExplicitHeight = 449
+      ExplicitHeight = 695
     end
     object cpRight: TUniContainerPanel
       Left = 786
@@ -78,8 +75,6 @@ object DCCDashboardForm: TDCCDashboardForm
       ParentColor = False
       Align = alRight
       TabOrder = 2
-      ExplicitTop = 246
-      ExplicitHeight = 474
       inline LogsFrame: TLogsFrame
         Left = 0
         Top = 0
@@ -90,7 +85,6 @@ object DCCDashboardForm: TDCCDashboardForm
         TabOrder = 0
         ParentFont = False
         Background.Picture.Data = {00}
-        ExplicitHeight = 474
       end
     end
     object cpCenter: TUniContainerPanel
@@ -102,10 +96,6 @@ object DCCDashboardForm: TDCCDashboardForm
       ParentColor = False
       Align = alClient
       TabOrder = 4
-      ExplicitLeft = 472
-      ExplicitTop = 56
-      ExplicitWidth = 256
-      ExplicitHeight = 128
       object cpLinks: TUniContainerPanel
         Left = 0
         Top = 0
@@ -115,25 +105,7 @@ object DCCDashboardForm: TDCCDashboardForm
         ParentColor = False
         Align = alTop
         TabOrder = 1
-        ExplicitLeft = -746
-        ExplicitWidth = 1200
-        inline LinksFrame: TLinksFrame
-          Left = 0
-          Top = 0
-          Width = 454
-          Height = 240
-          Align = alClient
-          Anchors = [akLeft, akTop, akRight, akBottom]
-          TabOrder = 0
-          ParentFont = False
-          Background.Picture.Data = {00}
-          ExplicitWidth = 1200
-          ExplicitHeight = 240
-          inherited gridLinks: TUniDBGrid
-            Width = 454
-            Height = 240
-          end
-        end
+        ExplicitWidth = 446
       end
       object cpContent: TUniContainerPanel
         Left = 0
@@ -144,7 +116,6 @@ object DCCDashboardForm: TDCCDashboardForm
         ParentColor = False
         Align = alClient
         TabOrder = 2
-        ExplicitTop = 240
         inline ContentFrame: TContentFrame
           Left = 0
           Top = 0
@@ -173,7 +144,7 @@ object DCCDashboardForm: TDCCDashboardForm
         Align = alTop
         ParentColor = False
         Color = clBtnFace
-        ExplicitTop = 112
+        ExplicitWidth = 446
       end
     end
     object splSources: TUniSplitter
@@ -185,9 +156,7 @@ object DCCDashboardForm: TDCCDashboardForm
       Align = alLeft
       ParentColor = False
       Color = clBtnFace
-      ExplicitLeft = 332
-      ExplicitTop = 12
-      ExplicitHeight = 714
+      ExplicitHeight = 695
     end
   end
 end

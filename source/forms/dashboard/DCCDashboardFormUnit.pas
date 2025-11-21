@@ -7,7 +7,8 @@ uses
   Controls, Forms,
   uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm, uniGUIBaseClasses,
   uniPanel, uniSplitter,
-  SourcesFrameUnit, LinksFrameUnit, ContentFrameUnit, LogsFrameUnit, uniGUIFrame;
+  SourcesFrameUnit, LinksFrameUnit, ContentFrameUnit, LogsFrameUnit, uniGUIFrame,
+  ParentFrameUnit, ListParentFrameUnit;
 
 type
   TDCCDashboardForm = class(TUniForm)
@@ -21,11 +22,13 @@ type
     splSources: TUniSplitter;
     splLinks: TUniSplitter;
     SourcesFrame: TSourcesFrame;
-    LinksFrame: TLinksFrame;
     ContentFrame: TContentFrame;
     LogsFrame: TLogsFrame;
     cpCenter: TUniContainerPanel;
+    procedure UniFormCreate(Sender: TObject);
   private
+    FLinksFrame: TLinksFrame;
+
   public
   end;
 
@@ -41,6 +44,16 @@ uses
 function DCCDashboardForm: TDCCDashboardForm;
 begin
   Result := TDCCDashboardForm(UniMainModule.GetFormInstance(TDCCDashboardForm));
+end;
+
+procedure TDCCDashboardForm.UniFormCreate(Sender: TObject);
+begin
+  if FLinksFrame = nil then
+  begin
+    FLinksFrame := TLinksFrame.Create(Self);
+    FLinksFrame.Parent := cpLinks;
+    FLinksFrame.Align := alClient;
+  end;
 end;
 
 end.
