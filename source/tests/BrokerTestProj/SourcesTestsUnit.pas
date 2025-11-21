@@ -13,11 +13,13 @@ uses
   SourceHttpRequests,
   SourceUnit,
   ObservationUnit,
-  DataseriesUnit;
+  DataseriesUnit,
+  DataseriesRestBrokerUnit;
 
 procedure ExecuteSourcesTests;
 var
   Broker: TSourcesRestBroker;
+  DataserieBroker: TDataseriesRestBroker;
   ListReq: TSourceReqList;
   ListResp: TSourceListResponse;
   ObsReq: TSourceReqObservations;
@@ -28,8 +30,14 @@ var
   Serie: TFieldSet;
   StateText: string;
   SourceName: string;
+  DataserieReq: TDataserieReqInfo;
+  DataserieResp: TDataserieInfoResponse;
+  DataserieInfo: TDataseries;
+  BeginText: string;
+  EndText: string;
 begin
   Broker := TSourcesRestBroker.Create('ST-Test');
+  DataserieBroker := TDataseriesRestBroker.Create('ST-Test');
   try
     ListReq := Broker.CreateReqList as TSourceReqList;
     ListResp := Broker.List(ListReq);
@@ -83,6 +91,35 @@ begin
                 StateText := 'no state';
 
               Writeln(Format('    Dataserie %s state: %s', [TDataseries(Serie).DsId, StateText]));
+
+              if TDataseries(Serie).DsId <> '' then
+              begin
+                DataserieReq := DataserieBroker.CreateReqInfo(TDataseries(Serie).DsId)
+                  as TDataserieReqInfo;
+                DataserieResp := DataserieBroker.Info(DataserieReq);
+                try
+                  DataserieInfo := DataserieResp.Dataserie;
+                  if Assigned(DataserieInfo) then
+                  begin
+                    if DataserieInfo.BeginObs.HasValue then
+                      BeginText := DataserieInfo.BeginObs.Value.ToString
+                    else
+                      BeginText := 'n/a';
+
+                    if DataserieInfo.EndObs.HasValue then
+                      EndText := DataserieInfo.EndObs.Value.ToString
+                    else
+                      EndText := 'n/a';
+
+                    Writeln(Format(
+                      '      Dataserie info: %s (caption=%s, begin_obs=%s, end_obs=%s)',
+                      [DataserieInfo.DsId, DataserieInfo.Caption, BeginText, EndText]));
+                  end;
+                finally
+                  DataserieResp.Free;
+                  DataserieReq.Free;
+                end;
+              end;
             end;
           end;
         end;
@@ -95,6 +132,7 @@ begin
       ListReq.Free;
     end;
   finally
+    DataserieBroker.Free;
     Broker.Free;
   end;
 end;

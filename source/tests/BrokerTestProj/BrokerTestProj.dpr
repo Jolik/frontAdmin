@@ -86,7 +86,8 @@ uses
   SourceHttpRequests in '..\..\services\dataserver\brokers\SourceHttpRequests.pas',
   SourcesRestBrokerUnit in '..\..\services\dataserver\brokers\SourcesRestBrokerUnit.pas',
   SourceUnit in '..\..\services\dataserver\entities\SourceUnit.pas',
-  ContextUnit in '..\..\services\dataserver\entities\ContextUnit.pas';
+  ContextUnit in '..\..\services\dataserver\entities\ContextUnit.pas',
+  DataseriesRestBrokerUnit in '..\..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas';
 
 procedure TestAbonentListRequest;
 var

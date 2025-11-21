@@ -42,7 +42,9 @@ uses
   DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',
   DsGroupsHttpRequests in '..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas',
   DataseriesUnitTest in 'DataseriesUnitTest.pas',
+  DataseriesRestBrokerUnitTest in 'DataseriesRestBrokerUnitTest.pas',
   DataseriesUnit in '..\..\services\dataserver\entities\DataseriesUnit.pas',
+  DataseriesRestBrokerUnit in '..\..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas',
   LogUnit in '..\..\services\signals\entities\LogUnit.pas',
   LogsHttpRequests in '..\..\services\signals\brokers\LogsHttpRequests.pas',
   LogsRestBrokerUnit in '..\..\services\signals\brokers\LogsRestBrokerUnit.pas',
@@ -57,7 +59,8 @@ begin
     RunJournalRecordTests;
     TestOperatorLinksContentRestBroker;
     RunDsTypesTests;
-    RunDataserieTests;    
+    RunDataseriesRestBrokerTests;
+    RunDataserieTests;
     RunObservationTests;
     RunObservationsBrokerTests;
     RunLogEntityTests;
