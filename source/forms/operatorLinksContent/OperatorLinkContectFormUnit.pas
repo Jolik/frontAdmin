@@ -102,7 +102,7 @@ implementation
 {$R *.dfm}
 
 uses
-  MainModule, uniGUIApplication, HttpClientUnit,
+  System.NetEncoding, common, MainModule, uniGUIApplication, HttpClientUnit,
   ContentViewFormUnit;
 
 function OperatorLinkContectForm: TOperatorLinkContectForm;
@@ -394,7 +394,15 @@ begin
   lContentInfoOwnerValue.Caption := ARecord.Owner;
   lContentInfoTopicValue.Caption := ARecord.TopicHierarchy;
   lContentInfoReasonValue.Caption := ARecord.Reason;
-  memoContentBody.Lines.Text := ARecord.Body;
+  var body := ARecord.Body;
+  if ARecord.Body.Length > 1024*5  then
+    body:= Utf8SafeTruncate(ARecord.Body, 1024 * 5);
+  try
+    memoContentBody.Lines.Text := TNetEncoding.Base64.Decode(body);
+  except
+    memoContentBody.Lines.Text := body;
+  end;
+
   tsContentInfo.TabVisible := True;
   pcContentInfo.ActivePage := tsContentInfo;
 end;

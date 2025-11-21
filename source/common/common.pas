@@ -49,6 +49,9 @@ function ValidateAHD(ahd: string): boolean;
 // получить размер файла
 function  FileSize(FilePath: String): int64;
 
+// усечение по UTF-8, с проверкой границ символов:
+function Utf8SafeTruncate(const S: string; MaxBytes: Integer): string;
+
 type
 
   TFile = class
@@ -126,6 +129,28 @@ implementation
 
 uses
 Math, System.RegularExpressions;
+
+
+function Utf8SafeTruncate(const S: string; MaxBytes: Integer): string;
+var
+  Bytes: TBytes;
+  L: Integer;
+begin
+  Bytes := TEncoding.UTF8.GetBytes(S);
+
+  if Length(Bytes) <= MaxBytes then
+    Exit(S);
+
+  L := MaxBytes;
+
+  // Проверяем, не попали ли внутрь UTF-8 последовательности
+  while (L > 0) and ((Bytes[L] and $C0) = $80) do
+    Dec(L); // идём назад пока байт — продолжение многобайтного символа
+
+  SetLength(Bytes, L);
+  Result := TEncoding.UTF8.GetString(Bytes);
+end;
+
 
 function ValidateSID( ASid : string):Boolean;
 begin

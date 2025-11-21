@@ -365,45 +365,30 @@ begin
   if FSelectedRuleItem is TCondition then
   begin
     var q := Format('Удалить условие %s?', [(FSelectedRuleItem as TCondition).Caption]);
-    MessageDlg(q, mtConfirmation, mbYesNo,
-    procedure(Sender: TComponent; Res: Integer)
-    begin
-      if Res = mrYes then
-      begin
-        if not (TObject(FSelecteNode.Parent.Data) is TProfileFilter) then
-          exit;
-        var f := (TObject(FSelecteNode.Parent.Data) as TProfileFilter);
-        if not DeletObject(f.Conditions, FSelectedRuleItem) then
-          exit;
-        DrawRules;
-        if Assigned(FOnChange) then
-          FOnChange(Self);
-      end;
-    end);
-    exit;
+    if MessageDlg(q, mtConfirmation, mbYesNo) <> mrYes then
+      exit;
+    if not (TObject(FSelecteNode.Parent.Data) is TProfileFilter) then
+      exit;
+    var f := (TObject(FSelecteNode.Parent.Data) as TProfileFilter);
+    if not DeletObject(f.Conditions, FSelectedRuleItem) then
+      exit;
   end;
 
   if FSelectedRuleItem is TProfileFilter then
   begin
     var q := Format('Удалить фильтр (%d условий)?', [(FSelectedRuleItem as TProfileFilter).Conditions.Count]);
-    MessageDlg(q, mtConfirmation, mbYesNo,
-    procedure(Sender: TComponent; Res: Integer)
-    begin
-      if Res = mrYes then
-      begin
-       if not (TObject(FSelecteNode.Parent.Data) is TProfileFilterList) then
-          exit;
-        var f := (TObject(FSelecteNode.Parent.Data) as TProfileFilterList);
-        if not DeletObject(f, FSelectedRuleItem) then
-          exit;
-        DrawRules;
-        if Assigned(FOnChange) then
-          FOnChange(Self);
-      end;
-    end);
-    exit;
+    if MessageDlg(q, mtConfirmation, mbYesNo) <> mrYes then
+      exit;
+    if not (TObject(FSelecteNode.Parent.Data) is TProfileFilterList) then
+      exit;
+    var f := (TObject(FSelecteNode.Parent.Data) as TProfileFilterList);
+    if not DeletObject(f, FSelectedRuleItem) then
+      exit;
   end;
 
+  DrawRules;
+  if Assigned(FOnChange) then
+    FOnChange(Self);
 end;
 
 
