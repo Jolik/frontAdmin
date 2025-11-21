@@ -5,25 +5,15 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
-  uniGUIClasses, uniGUIForm, ListParentFormUnit, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, uniPanel, uniPageControl, uniSplitter, uniBasicGrid,
-  uniDBGrid, uniToolBar, uniGUIBaseClasses,
-  RestBrokerUnit, ChannelsRestBrokerUnit,
-  ParentEditFormUnit, uniLabel;
+  uniGUIClasses, uniGUIForm, FrameContainerFormUnit, uniGUIBaseClasses, uniPanel,
+  MainModule, uniGUIApplication,
+  ChannelsFrameUnit;
 
 type
-  TChannelsForm = class(TListParentForm)
-    procedure btnUpdateClick(Sender: TObject);
-  protected
-    ///  ������� ��� �������� ������� ������� ��������
-    function CreateRestBroker(): TRestBroker; override;
-
-    ///  ������� ��� �������� ������ ����� ��������������
-    function CreateEditForm(): TParentEditForm; override;
-
+  TChannelsForm = class(TFrameContainerForm)
+  private
   public
+    function GetFrameClass: TParentFrameClass; override;
 
   end;
 
@@ -33,9 +23,6 @@ implementation
 
 {$R *.dfm}
 
-uses
-  MainModule, uniGUIApplication, ChannelEditFormUnit;
-
 function ChannelsForm: TChannelsForm;
 begin
   Result := TChannelsForm(UniMainModule.GetFormInstance(TChannelsForm));
@@ -43,21 +30,9 @@ end;
 
 { TChannelsForm }
 
-procedure TChannelsForm.btnUpdateClick(Sender: TObject);
+function TChannelsForm.GetFrameClass: TParentFrameClass;
 begin
-  inherited;
-  //
+  Result := TChannelsFrame;
 end;
-
-function TChannelsForm.CreateRestBroker: TRestBroker;
-begin
-  Result := TChannelsRestBroker.Create(UniMainModule.XTicket);
-end;
-
-function TChannelsForm.CreateEditForm: TParentEditForm;
-begin
-  Result := ChannelEditForm();
-end;
-
 
 end.

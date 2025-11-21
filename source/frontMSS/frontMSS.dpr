@@ -31,7 +31,6 @@ uses
   HttpProtocolExceptionHelper in '..\services\common\brokers\HttpProtocolExceptionHelper.pas',
   ConstsUnit in '..\common\ConstsUnit.pas',
   ChannelEditFormUnit in '..\forms\channels\ChannelEditFormUnit.pas' {ChannelEditForm: TUniForm},
-  ChannelsFormUnit in '..\forms\channels\ChannelsFormUnit.pas' {ChannelsForm: TUniForm},
   AbonentUnit in '..\services\router\entities\AbonentUnit.pas',
   AliasUnit in '..\services\router\entities\AliasUnit.pas',
   ChannelUnit in '..\services\router\entities\ChannelUnit.pas',
@@ -41,7 +40,6 @@ uses
   LinkEditFormUnit in '..\forms\links\LinkEditFormUnit.pas' {LinkEditForm: TUniForm},
   LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
   OperatorLinkEditFormUnit in '..\forms\operatorLinks\OperatorLinkEditFormUnit.pas' {OperatorLinkEditForm: TUniForm},
-  OperatorLinksFormUnit in '..\forms\operatorLinks\OperatorLinksFormUnit.pas' {OperatorLinksForm: TUniForm},
   OperatorLinkContectFormUnit in '..\forms\operatorLinksContent\OperatorLinkContectFormUnit.pas' {OperatorLinkContectForm: TUniForm},
   ContentViewFormUnit in '..\forms\contentView\ContentViewFormUnit.pas' {ContentViewForm: TUniForm},
   ContentStreamFormUnit in '..\forms\contentStream\ContentStreamFormUnit.pas' {ContentStreamForm: TUniForm},
@@ -146,7 +144,6 @@ uses
   LogEntryViewFormUnit in '..\forms\logs\LogEntryViewFormUnit.pas' {LogEntryViewForm: TUniForm},
   LogViewFormUnit in '..\forms\logs\LogViewFormUnit.pas' {LogViewForm: TUniForm},
   MSSDashboardFormUnit in '..\forms\dashboard\MSSDashboardFormUnit.pas' {MSSDashboardForm: TUniForm},
-  ChannelsFrameUnit in '..\forms\dashboard\ChannelsFrameUnit.pas' {ChannelsFrame: TUniFrame},
   ContentFrameUnit in '..\forms\dashboard\ContentFrameUnit.pas' {ContentFrame: TUniFrame},
   LogsFrameUnit in '..\forms\dashboard\LogsFrameUnit.pas' {LogsFrame: TUniFrame},
   MSSSettingsFormUnit in '..\forms\settings\MSSSettingsFormUnit.pas' {MSSSettingsForm: TUniForm},
@@ -163,7 +160,11 @@ uses
   RulesFormUnit in '..\forms\rules\RulesFormUnit.pas' {RulesForm: TUniForm},
   AbonentsFrameUnit in '..\forms\abonents\AbonentsFrameUnit.pas' {AbonentsFrame: TUniFrame},
   RouterSourcesFrameUnit in '..\forms\routerSources\RouterSourcesFrameUnit.pas' {RouterSourcesFrame: TUniFrame},
-  RouterSourcesFormUnit in '..\forms\routerSources\RouterSourcesFormUnit.pas' {RouterSourcesForm: TUniForm};
+  RouterSourcesFormUnit in '..\forms\routerSources\RouterSourcesFormUnit.pas' {RouterSourcesForm: TUniForm},
+  OperatorLinksFrameUnit in '..\forms\operatorLinks\OperatorLinksFrameUnit.pas' {OperatorLinksFrame: TUniFrame},
+  OperatorLinksFormUnit in '..\forms\operatorLinks\OperatorLinksFormUnit.pas' {OperatorLinksForm: TUniForm},
+  ChannelsFrameUnit in '..\forms\channels\ChannelsFrameUnit.pas' {ChannelsFrame: TUniFrame},
+  ChannelsFormUnit in '..\forms\channels\ChannelsFormUnit.pas' {ChannelsForm: TUniForm};
 
 {$R *.res}
 

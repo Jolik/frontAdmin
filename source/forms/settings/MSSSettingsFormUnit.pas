@@ -7,7 +7,8 @@ uses
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIForm, uniTreeView, uniPageControl,
   uniGUIBaseClasses, uniPanel,
-  RulesFrameUnit, AliasesFrameUnit, AbonentsFrameUnit, RouterSourcesFrameUnit;
+  RulesFrameUnit, AliasesFrameUnit, AbonentsFrameUnit, RouterSourcesFrameUnit,
+  OperatorLinksFrameUnit;
 
 type
   TMSSSettingsForm = class(TUniForm)
@@ -17,11 +18,13 @@ type
     tshRules: TUniTabSheet;
     tshAliases: TUniTabSheet;
     tshAbonents: TUniTabSheet;
+    tshRouterSources: TUniTabSheet;
+    tshOperLinks: TUniTabSheet;
     pnlRulesHost: TUniContainerPanel;
     pnlAliasesHost: TUniContainerPanel;
     pnlAbonentsHost: TUniContainerPanel;
-    tshRouterSources: TUniTabSheet;
-    pnlRouterSources: TUniContainerPanel;
+    pnlRouterSourcesHost: TUniContainerPanel;
+    pnlOperLinksHost: TUniContainerPanel;
 
     procedure UniFormCreate(Sender: TObject);
     procedure tvNavigateChange(Sender: TObject; Node: TUniTreeNode);
@@ -33,10 +36,13 @@ type
     FNodeAliases: TUniTreeNode;
     FNodeAbonents: TUniTreeNode;
     FNodeRouterSources: TUniTreeNode;
+    FNodeOperators: TUniTreeNode;
+    FNodeOperLinks: TUniTreeNode;
     FRulesFrame: TRulesFrame;
     FAliasesFrame: TAliasesFrame;
     FAbonentsFrame: TAbonentsFrame;
     FRouterSourcesFrame: TRouterSourcesFrame;
+    FOperLinksFrame: TOperatorLinksFrame;
 
     procedure InitTree;
     procedure ShowTabForNode(ANode: TUniTreeNode);
@@ -81,6 +87,12 @@ begin
     FNodeRouterSources := tvNavigate.Items.AddChild(FNodeComm, 'Источники');
     FNodeRouterSources.Data := tshRouterSources;
 
+    FNodeOperators := tvNavigate.Items.AddChild(FNodeMain, 'Операторы');
+    FNodeComm.Data := tshBlank;
+
+    FNodeOperLinks := tvNavigate.Items.AddChild(FNodeOperators, 'Линки');
+    FNodeOperLinks.Data := tshOperLinks;
+
     FNodeMain.Expand(True);
     FNodeComm.Expand(True);
   finally
@@ -111,7 +123,7 @@ begin
   if not Assigned(FRouterSourcesFrame) then
   begin
     FRouterSourcesFrame := TRouterSourcesFrame.Create(Self);
-    FRouterSourcesFrame.Parent := pnlRouterSources;
+    FRouterSourcesFrame.Parent := pnlRouterSourcesHost;
     FRouterSourcesFrame.Align := alClient;
   end;
 
@@ -134,6 +146,13 @@ begin
     FRulesFrame := TRulesFrame.Create(Self);
     FRulesFrame.Parent := pnlRulesHost;
     FRulesFrame.Align := alClient;
+  end;
+
+  if not Assigned(FOperLinksFrame) then
+  begin
+    FOperLinksFrame := TOperatorLinksFrame.Create(Self);
+    FOperLinksFrame.Parent := pnlOperLinksHost;
+    FOperLinksFrame.Align := alClient;
   end;
 
   InitTree;

@@ -12,7 +12,7 @@ type
   TRouterSourcesForm = class(TFrameContainerForm)
   private
   public
-    function GetFrameClass: TParentFrameClass; virtual;
+    function GetFrameClass: TParentFrameClass; override;
 
   end;
 

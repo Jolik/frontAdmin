@@ -154,10 +154,6 @@
             <Form>ChannelEditForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\forms\channels\ChannelsFormUnit.pas">
-            <Form>ChannelsForm</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
         <DCCReference Include="..\services\router\entities\AbonentUnit.pas"/>
         <DCCReference Include="..\services\router\entities\AliasUnit.pas"/>
         <DCCReference Include="..\services\router\entities\ChannelUnit.pas"/>
@@ -176,10 +172,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\operatorLinks\OperatorLinkEditFormUnit.pas">
             <Form>OperatorLinkEditForm</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="..\forms\operatorLinks\OperatorLinksFormUnit.pas">
-            <Form>OperatorLinksForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\operatorLinksContent\OperatorLinkContectFormUnit.pas">
@@ -448,10 +440,6 @@
             <Form>MSSDashboardForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\forms\dashboard\ChannelsFrameUnit.pas">
-            <Form>ChannelsFrame</Form>
-            <DesignClass>TUniFrame</DesignClass>
-        </DCCReference>
         <DCCReference Include="..\forms\dashboard\ContentFrameUnit.pas">
             <Form>ContentFrame</Form>
             <DesignClass>TUniFrame</DesignClass>
@@ -510,6 +498,26 @@
         </DCCReference>
         <DCCReference Include="..\forms\routerSources\RouterSourcesFormUnit.pas">
             <Form>RouterSourcesForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\operatorLinks\OperatorLinksFrameUnit.pas">
+            <Form>OperatorLinksFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\operatorLinks\OperatorLinksFormUnit.pas">
+            <Form>OperatorLinksForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\channels\ChannelsFrameUnit.pas">
+            <Form>ChannelsFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\channels\ChannelsFormUnit.pas">
+            <Form>ChannelsForm</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>

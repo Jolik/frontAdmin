@@ -27,22 +27,22 @@ object MSSSettingsForm: TMSSSettingsForm
     Width = 1274
     Height = 600
     Hint = ''
-    ActivePage = tshRouterSources
+    ActivePage = tshOperLinks
     TabBarVisible = False
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 592
+    ExplicitWidth = 1266
     ExplicitHeight = 575
     object tshBlank: TUniTabSheet
       Hint = ''
       Caption = #1055#1091#1089#1090#1072#1103
-      ExplicitWidth = 584
+      ExplicitWidth = 1258
       ExplicitHeight = 547
     end
     object tshRules: TUniTabSheet
       Hint = ''
       Caption = #1055#1088#1072#1074#1080#1083#1072
-      ExplicitWidth = 584
+      ExplicitWidth = 1258
       ExplicitHeight = 547
       object pnlRulesHost: TUniContainerPanel
         Left = 0
@@ -53,14 +53,14 @@ object MSSSettingsForm: TMSSSettingsForm
         ParentColor = False
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 584
+        ExplicitWidth = 1258
         ExplicitHeight = 547
       end
     end
     object tshAliases: TUniTabSheet
       Hint = ''
       Caption = #1040#1083#1080#1072#1089#1099
-      ExplicitWidth = 584
+      ExplicitWidth = 1258
       ExplicitHeight = 547
       object pnlAliasesHost: TUniContainerPanel
         Left = 0
@@ -71,14 +71,14 @@ object MSSSettingsForm: TMSSSettingsForm
         ParentColor = False
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 584
+        ExplicitWidth = 1258
         ExplicitHeight = 547
       end
     end
     object tshAbonents: TUniTabSheet
       Hint = ''
       Caption = #1040#1073#1086#1085#1077#1085#1090#1099
-      ExplicitWidth = 584
+      ExplicitWidth = 1258
       ExplicitHeight = 547
       object pnlAbonentsHost: TUniContainerPanel
         Left = 0
@@ -89,18 +89,16 @@ object MSSSettingsForm: TMSSSettingsForm
         ParentColor = False
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 584
+        ExplicitWidth = 1258
         ExplicitHeight = 547
       end
     end
     object tshRouterSources: TUniTabSheet
       Hint = ''
       Caption = #1048#1089#1090#1086#1095#1085#1080#1082#1080
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 600
-      ExplicitHeight = 600
-      object pnlRouterSources: TUniContainerPanel
+      ExplicitWidth = 1258
+      ExplicitHeight = 547
+      object pnlRouterSourcesHost: TUniContainerPanel
         Left = 0
         Top = 0
         Width = 1266
@@ -109,7 +107,27 @@ object MSSSettingsForm: TMSSSettingsForm
         ParentColor = False
         Align = alClient
         TabOrder = 0
-        ExplicitLeft = 168
+        ExplicitWidth = 1258
+        ExplicitHeight = 547
+      end
+    end
+    object tshOperLinks: TUniTabSheet
+      Hint = ''
+      Caption = #1051#1080#1085#1082#1080
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 1274
+      ExplicitHeight = 600
+      object pnlOperLinksHost: TUniContainerPanel
+        Left = 0
+        Top = 0
+        Width = 1266
+        Height = 572
+        Hint = ''
+        ParentColor = False
+        Align = alClient
+        TabOrder = 0
+        ExplicitLeft = 504
         ExplicitTop = 224
         ExplicitWidth = 256
         ExplicitHeight = 128

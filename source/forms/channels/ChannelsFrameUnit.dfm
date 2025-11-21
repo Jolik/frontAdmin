@@ -1,0 +1,2 @@
+inherited ChannelsFrame: TChannelsFrame
+end

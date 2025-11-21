@@ -76,7 +76,7 @@ inherited MainForm: TMainForm
     object btnUsers: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 66
+      Top = 35
       Width = 137
       Height = 25
       Hint = ''
@@ -84,12 +84,12 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 1
       OnClick = btnUsersClick
-      ExplicitTop = 128
+      ExplicitTop = 66
     end
     object btnChannel: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 128
+      Top = 97
       Width = 137
       Height = 25
       Hint = ''
@@ -97,12 +97,12 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 2
       OnClick = btnChannelClick
-      ExplicitTop = 283
+      ExplicitTop = 128
     end
     object btnHandlers: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 97
+      Top = 66
       Width = 137
       Height = 25
       Hint = ''
@@ -110,32 +110,6 @@ inherited MainForm: TMainForm
       Align = alTop
       TabOrder = 3
       OnClick = btnHandlersClick
-      ExplicitLeft = 3
-    end
-    object btnOperatorLinks: TUniButton
-      AlignWithMargins = True
-      Left = 4
-      Top = 159
-      Width = 137
-      Height = 25
-      Hint = ''
-      Caption = #1054#1087#1077#1088'. '#1089#1074#1103#1079#1080
-      Align = alTop
-      TabOrder = 4
-      OnClick = btnOperatorLinksClick
-      ExplicitTop = 314
-    end
-    object btnRouterSources: TUniButton
-      AlignWithMargins = True
-      Left = 4
-      Top = 35
-      Width = 137
-      Height = 25
-      Hint = ''
-      Caption = #1048#1089#1090#1086#1095#1085#1080#1082#1080
-      Align = alTop
-      TabOrder = 5
-      OnClick = btnRouterSourcesClick
       ExplicitTop = 97
     end
     object uncntnrpnInfo: TUniContainerPanel
@@ -146,7 +120,7 @@ inherited MainForm: TMainForm
       Hint = ''
       ParentColor = False
       Align = alBottom
-      TabOrder = 6
+      TabOrder = 4
       object URLLabel: TUniLabel
         AlignWithMargins = True
         Left = 3
@@ -177,54 +151,54 @@ inherited MainForm: TMainForm
     object btnOperatorLinksContent: TUniButton
       AlignWithMargins = True
       Left = 4
-      Top = 190
+      Top = 128
       Width = 137
       Height = 25
       Hint = ''
       Caption = #1050#1086#1085#1090#1077#1085#1090' '#1083#1080#1085#1082#1086#1074
       Align = alTop
-      TabOrder = 7
+      TabOrder = 5
       OnClick = btnOperatorLinksContentClick
-      ExplicitTop = 345
+      ExplicitTop = 190
     end
     object btnSearch: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 159
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = #1055#1086#1080#1089#1082
+      Align = alTop
+      TabOrder = 6
+      OnClick = btnSearchClick
+      ExplicitTop = 221
+    end
+    object btnLogs: TUniButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 190
+      Width = 137
+      Height = 25
+      Hint = ''
+      Caption = #1051#1086#1075#1080
+      Align = alTop
+      TabOrder = 7
+      OnClick = btnLogsClick
+      ExplicitTop = 252
+    end
+    object btnSeetings: TUniButton
       AlignWithMargins = True
       Left = 4
       Top = 221
       Width = 137
       Height = 25
       Hint = ''
-      Caption = #1055#1086#1080#1089#1082
-      Align = alTop
-      TabOrder = 8
-      OnClick = btnSearchClick
-      ExplicitTop = 376
-    end
-    object btnLogs: TUniButton
-      AlignWithMargins = True
-      Left = 4
-      Top = 252
-      Width = 137
-      Height = 25
-      Hint = ''
-      Caption = #1051#1086#1075#1080
-      Align = alTop
-      TabOrder = 9
-      OnClick = btnLogsClick
-      ExplicitTop = 438
-    end
-    object btnSeetings: TUniButton
-      AlignWithMargins = True
-      Left = 4
-      Top = 283
-      Width = 137
-      Height = 25
-      Hint = ''
       Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
       Align = alTop
-      TabOrder = 10
+      TabOrder = 8
       OnClick = btnSeetingsClick
-      ExplicitTop = 469
+      ExplicitTop = 283
     end
   end
   object uncntnrpnForms: TUniContainerPanel [2]

@@ -17,9 +17,7 @@ type
   TMainForm = class(TAuthMainForm)
     btnDashboard: TUniButton;
     btnChannel: TUniButton;
-    btnRouterSources: TUniButton;
     btnUsers: TUniButton;
-    btnOperatorLinks: TUniButton;
     btnHandlers: TUniButton;
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
