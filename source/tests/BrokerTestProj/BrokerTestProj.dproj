@@ -136,6 +136,9 @@
         <DCCReference Include="..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\datacomm\brokers\ProfileHttpRequests.pas"/>
         <DCCReference Include="..\..\services\datacomm\brokers\ProfilesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\UnitsBrokerUnit.pas"/>
+        <DCCReference Include="UnitsTestsUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\UnitUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

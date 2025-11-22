@@ -16,6 +16,7 @@ uses
   LogsRestBrokerUnitTest in 'LogsRestBrokerUnitTest.pas',
   DsGroupTestsUnit in 'DsGroupTestsUnit.pas',
   DsGroupRestBrokerTestsUnit in 'DsGroupRestBrokerTestsUnit.pas',
+  UnitsUnitTest in 'UnitsUnitTest.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   EntityUnit in '..\..\services\common\entities\EntityUnit.pas',
   LoggingUnit in '..\..\logging\LoggingUnit.pas',
@@ -68,6 +69,7 @@ begin
     RunDsGroupTests;
     RunDsGroupBrokerTests;
     RunSearchTests;
+    RunUnitTests;
     Writeln('Все тесты пройдены успешно.');
     Readln;
   except
