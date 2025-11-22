@@ -11,7 +11,7 @@ uses
   LocationUnit in '..\services\dataserver\entities\LocationUnit.pas',
   SourceUnit in '..\services\dataserver\entities\SourceUnit.pas',
   ObservationUnit in '..\services\dataserver\entities\ObservationUnit.pas',
-  TDsTypesUnit in '..\services\dataserver\entities\TDsTypesUnit.pas',
+  DsTypesUnit in '..\services\dataserver\entities\DsTypesUnit.pas',
   DepartmentUnit in '..\services\acl\entities\DepartmentUnit.pas',
   FuncUnit in '..\common\FuncUnit.pas',
   GUIDListUnit in '..\common\GUIDListUnit.pas',
@@ -62,7 +62,6 @@ uses
   SourcesFormUnit in '..\forms\sources\SourcesFormUnit.pas' {SourcesForm: TUniForm},
   SourceEditFormUnit in '..\forms\sources\SourceEditFormUnit.pas' {SourceEditForm: TUniForm},
   IntefraceEditFormUnit in '..\forms\sources\IntefraceEditFormUnit.pas' {InterfaceModalForm: TUniForm},
-  ObservationFormUnit in '..\forms\observation\ObservationFormUnit.pas' {ObservationForm: TUniForm},
   DataseriesFormUnit in '..\forms\dataseries\DataseriesFormUnit.pas' {DataseriesForm: TUniForm},
   DataseriesViewFormUnit in '..\forms\dataseries\DataseriesViewFormUnit.pas' {DataseriesViewForm: TUniForm},
   ObservationsRestBrokerUnit in '..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
@@ -164,8 +163,9 @@ uses
   UnitsBrokerUnit in '..\services\dataserver\brokers\UnitsBrokerUnit.pas',
   UnitUnit in '..\services\dataserver\entities\UnitUnit.pas',
   UnitEditFormUnit in '..\forms\units\UnitEditFormUnit.pas' {UnitEditForm: TUniForm},
-  UnitsListParentFrameUnit in '..\forms\units\UnitsListParentFrameUnit.pas' {UnitsListParentFrame: TUniFrame},
-  DCCSettingsFormUnit in '..\forms\settings\DCCSettingsFormUnit.pas' {DCCSettingsForm: TUniForm};
+  UnitsListFrameUnit in '..\forms\units\UnitsListFrameUnit.pas' {UnitsListFrame: TUniFrame},
+  DCCSettingsFormUnit in '..\forms\settings\DCCSettingsFormUnit.pas' {DCCSettingsForm: TUniForm},
+  ObservationsFrameUnit in '..\forms\observation\ObservationsFrameUnit.pas' {ObservationsFrame: TUniFrame};
 
 {$R *.res}
 

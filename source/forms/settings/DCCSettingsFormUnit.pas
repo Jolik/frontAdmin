@@ -1,4 +1,4 @@
-unit DCCSettingsFormUnit;
+﻿unit DCCSettingsFormUnit;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Controls, Forms, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIForm, uniTreeView, uniPageControl,
   uniGUIBaseClasses, uniPanel,
-  UnitsListParentFrameUnit;
+  UnitsListFrameUnit, ObservationsFrameUnit;
 
 type
   TDCCSettingsForm = class(TUniForm)
@@ -16,13 +16,17 @@ type
     tshBlank: TUniTabSheet;
     tshUnits: TUniTabSheet;
     pnlUnitsHost: TUniContainerPanel;
+    tshObservations: TUniTabSheet;
+    pnlObservationsHost: TUniContainerPanel;
     procedure UniFormCreate(Sender: TObject);
     procedure tvNavigateChange(Sender: TObject; Node: TUniTreeNode);
   private
     FNodeMain: TUniTreeNode;
     FNodeDirectories: TUniTreeNode;
+    FNodeObservations: TUniTreeNode;
     FNodeUnits: TUniTreeNode;
-    FUnitsFrame: TUnitsListParentFrame;
+    FUnitsFrame: TUnitsListFrame;
+    FObservationsFrame: TObservationsFrame;
     procedure InitTree;
     procedure ShowTabForNode(ANode: TUniTreeNode);
   public
@@ -55,6 +59,9 @@ begin
     FNodeDirectories := tvNavigate.Items.AddChild(FNodeMain, 'Справочники');
     FNodeDirectories.Data := tshBlank;
 
+    FNodeObservations := tvNavigate.Items.AddChild(FNodeDirectories, 'Наблюдения');
+    FNodeObservations.Data := tshObservations;
+
     FNodeUnits := tvNavigate.Items.AddChild(FNodeDirectories, 'Единицы измерения');
     FNodeUnits.Data := tshUnits;
 
@@ -86,9 +93,16 @@ procedure TDCCSettingsForm.UniFormCreate(Sender: TObject);
 begin
   if not Assigned(FUnitsFrame) then
   begin
-    FUnitsFrame := TUnitsListParentFrame.Create(Self);
+    FUnitsFrame := TUnitsListFrame.Create(Self);
     FUnitsFrame.Parent := pnlUnitsHost;
     FUnitsFrame.Align := alClient;
+  end;
+
+  if not Assigned(FObservationsFrame) then
+  begin
+    FObservationsFrame := TObservationsFrame.Create(Self);
+    FObservationsFrame.Parent := pnlObservationsHost;
+    FObservationsFrame.Align := alClient;
   end;
 
   InitTree;

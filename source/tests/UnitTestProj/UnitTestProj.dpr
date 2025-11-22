@@ -37,7 +37,7 @@ uses
   RestBrokerUnit in '..\..\services\common\brokers\RestBrokerUnit.pas',
   OperatorLinkUnit in '..\..\services\linkop\entities\OperatorLinkUnit.pas',
   ObservationUnit in '..\..\services\dataserver\entities\ObservationUnit.pas',
-  TDsTypesUnit in '..\..\services\dataserver\entities\TDsTypesUnit.pas',
+  DsTypesUnit in '..\..\services\dataserver\entities\DsTypesUnit.pas',
   ObservationsRestBrokerUnit in '..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas',
   DsGroupUnit in '..\..\services\dataserver\entities\DsGroupUnit.pas',
   DsGroupsRestBrokerUnit in '..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas',

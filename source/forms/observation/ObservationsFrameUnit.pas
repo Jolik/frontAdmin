@@ -1,21 +1,22 @@
-unit ObservationFormUnit;
+﻿unit ObservationsFrameUnit;
 
 interface
 
 uses
   System.SysUtils, System.Classes,
   Controls, Forms,
-  uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIForm,
+  uniGUITypes, uniGUIAbstractClasses, uniGUIClasses, uniGUIFrame,
   uniGUIBaseClasses, uniPanel, uniLabel, uniSplitter,
   uniBasicGrid, uniDBGrid,
   Data.DB,
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
   FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  ObservationsRestBrokerUnit, ObservationUnit, TDsTypesUnit;
+  ParentFrameUnit, RestBrokerUnit,
+  ObservationsRestBrokerUnit, ObservationUnit, DsTypesUnit;
 
 type
-  TObservationForm = class(TUniForm)
+  TObservationsFrame = class(TParentFrame)
     gridObservation: TUniDBGrid;
     cpObservationInfo: TUniContainerPanel;
     splObservation: TUniSplitter;
@@ -49,13 +50,13 @@ type
     mtDsTypesname: TStringField;
     mtDsTypescaption: TStringField;
     mtDsTypesuid: TStringField;
-    procedure UniFormCreate(Sender: TObject);
-    procedure UniFormDestroy(Sender: TObject);
     procedure gridObservationSelectionChange(Sender: TObject);
   private
-    FBroker: TObservationsRestBroker;
+    procedure OnCreate; override;
+    // фабрика REST брокера (запросы создаёт брокер)
+    function CreateRestBroker(): TRestBroker; override;
+
     procedure EnsureMemTables;
-    procedure LoadObservations;
     procedure PopulateObservations(AList: TObservationsList);
     procedure ClearObservationInfo;
     procedure UpdateObservationInfo(const AObservation: TObservation);
@@ -66,7 +67,7 @@ type
   public
   end;
 
-function ObservationForm: TObservationForm;
+function ObservationsFrame: TObservationsFrame;
 
 implementation
 
@@ -75,12 +76,12 @@ implementation
 uses
   MainModule, uniGUIApplication;
 
-function ObservationForm: TObservationForm;
+function ObservationsFrame: TObservationsFrame;
 begin
-  Result := TObservationForm(UniMainModule.GetFormInstance(TObservationForm));
+  Result := TObservationsFrame(UniMainModule.GetFormInstance(TObservationsFrame));
 end;
 
-procedure TObservationForm.ClearObservationInfo;
+procedure TObservationsFrame.ClearObservationInfo;
 begin
   lObservationOidValue.Caption := '';
   lObservationNameValue.Caption := '';
@@ -89,7 +90,12 @@ begin
   ClearDsTypesData;
 end;
 
-procedure TObservationForm.ClearDsTypesData;
+function TObservationsFrame.CreateRestBroker: TRestBroker;
+begin
+  Result := TObservationsRestBroker.Create(UniMainModule.XTicket);
+end;
+
+procedure TObservationsFrame.ClearDsTypesData;
 begin
   EnsureMemTables;
   if not Assigned(mtDsTypes) then
@@ -102,7 +108,7 @@ begin
   end;
 end;
 
-procedure TObservationForm.EnsureMemTables;
+procedure TObservationsFrame.EnsureMemTables;
 begin
   if Assigned(mtObservation) and not mtObservation.Active then
     mtObservation.CreateDataSet;
@@ -110,7 +116,7 @@ begin
     mtDsTypes.CreateDataSet;
 end;
 
-function TObservationForm.GetSelectedOid: string;
+function TObservationsFrame.GetSelectedOid: string;
 begin
   Result := '';
   if not Assigned(mtObservation) or not mtObservation.Active or mtObservation.IsEmpty then
@@ -118,26 +124,26 @@ begin
   Result := Trim(mtObservationoid.AsString);
 end;
 
-procedure TObservationForm.gridObservationSelectionChange(Sender: TObject);
+procedure TObservationsFrame.gridObservationSelectionChange(Sender: TObject);
 begin
   ShowSelectedObservationInfo;
 end;
 
-procedure TObservationForm.LoadObservations;
+procedure TObservationsFrame.OnCreate;
 var
   Req: TObservationsReqList;
   Resp: TObservationsListResponse;
   CountText: string;
 begin
-  if not Assigned(FBroker) then
+  if not Assigned(RestBroker) then
     Exit;
 
   ClearObservationInfo;
   EnsureMemTables;
-  Req := FBroker.CreateReqList as TObservationsReqList;
+  Req := RestBroker.CreateReqList as TObservationsReqList;
   Resp := nil;
   try
-    Resp := FBroker.List(Req);
+    Resp := RestBroker.List(Req) as TObservationsListResponse;
     if Assigned(Resp) then
     begin
       PopulateObservations(Resp.ObservationList);
@@ -164,7 +170,7 @@ begin
   ShowSelectedObservationInfo;
 end;
 
-procedure TObservationForm.PopulateObservations(AList: TObservationsList);
+procedure TObservationsFrame.PopulateObservations(AList: TObservationsList);
 var
   I: Integer;
   Item: TObservation;
@@ -190,23 +196,23 @@ begin
   end;
 end;
 
-procedure TObservationForm.ShowSelectedObservationInfo;
+procedure TObservationsFrame.ShowSelectedObservationInfo;
 var
   Oid: string;
   Req: TObservationReqInfo;
   Resp: TObservationInfoResponse;
 begin
   ClearObservationInfo;
-  if not Assigned(FBroker) then
+  if not Assigned(RestBroker) then
     Exit;
   Oid := GetSelectedOid;
   if Oid.IsEmpty then
     Exit;
 
-  Req := FBroker.CreateReqInfo(Oid) as TObservationReqInfo;
+  Req := RestBroker.CreateReqInfo(Oid) as TObservationReqInfo;
   Resp := nil;
   try
-    Resp := FBroker.Info(Req);
+    Resp := RestBroker.Info(Req) as TObservationInfoResponse;
     if Assigned(Resp) and Assigned(Resp.Observation) then
       UpdateObservationInfo(Resp.Observation);
   finally
@@ -215,18 +221,7 @@ begin
   end;
 end;
 
-procedure TObservationForm.UniFormCreate(Sender: TObject);
-begin
-  FBroker := TObservationsRestBroker.Create(UniMainModule.XTicket);
-  LoadObservations;
-end;
-
-procedure TObservationForm.UniFormDestroy(Sender: TObject);
-begin
-  FreeAndNil(FBroker);
-end;
-
-procedure TObservationForm.UpdateDsTypesInfo(const AObservation: TObservation);
+procedure TObservationsFrame.UpdateDsTypesInfo(const AObservation: TObservation);
 var
   I: Integer;
   DsType: TDsType;
@@ -257,7 +252,7 @@ begin
   end;
 end;
 
-procedure TObservationForm.UpdateObservationInfo(const AObservation: TObservation);
+procedure TObservationsFrame.UpdateObservationInfo(const AObservation: TObservation);
 begin
   if not Assigned(AObservation) then
     Exit;

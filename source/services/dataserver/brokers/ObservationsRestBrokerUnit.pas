@@ -9,7 +9,7 @@ uses
   BaseRequests,
   BaseResponses,
   ObservationUnit,
-  TDsTypesUnit;
+  DsTypesUnit;
 
 type
   /// <summary>Response wrapper for /observations/list.</summary>
@@ -69,14 +69,11 @@ type
     function CreateReqInfo(id: string = ''): TReqInfo; override;
     function CreateReqDstTypeInfo(const ADstId: string = ''): TObservationReqDsTypeInfo;
 
-    function List(AReq: TObservationsReqList): TObservationsListResponse; reintroduce; overload;
-    function List(AReq: TReqList): TListResponse; overload; override;
+    function List(AReq: TReqList): TListResponse; override;
 
-    function Info(AReq: TObservationReqInfo): TObservationInfoResponse; reintroduce; overload;
-    function Info(AReq: TReqInfo): TResponse; overload;
+    function Info(AReq: TReqInfo): TResponse; override;
 
-    function DsTypeInfo(AReq: TObservationReqDsTypeInfo): TDsTypeInfoResponse; overload;
-    function DsTypeInfo(AReq: TReqInfo): TResponse; overload;
+    function DsTypeInfo(AReq: TReqInfo): TResponse;
 
     property BasePath: string read FBasePath write FBasePath;
   end;
@@ -179,32 +176,16 @@ begin
   Result.BasePath := BasePath;
 end;
 
-function TObservationsRestBroker.DsTypeInfo(
-  AReq: TObservationReqDsTypeInfo): TDsTypeInfoResponse;
-begin
-  Result := DsTypeInfo(AReq as TReqInfo) as TDsTypeInfoResponse;
-end;
-
 function TObservationsRestBroker.DsTypeInfo(AReq: TReqInfo): TResponse;
 begin
   Result := TDsTypeInfoResponse.Create;
   inherited Info(AReq, Result);
 end;
 
-function TObservationsRestBroker.Info(AReq: TObservationReqInfo): TObservationInfoResponse;
-begin
-  Result := Info(AReq as TReqInfo) as TObservationInfoResponse;
-end;
-
 function TObservationsRestBroker.Info(AReq: TReqInfo): TResponse;
 begin
   Result := TObservationInfoResponse.Create;
   inherited Info(AReq, Result);
-end;
-
-function TObservationsRestBroker.List(AReq: TObservationsReqList): TObservationsListResponse;
-begin
-  Result := List(AReq as TReqList) as TObservationsListResponse;
 end;
 
 function TObservationsRestBroker.List(AReq: TReqList): TListResponse;

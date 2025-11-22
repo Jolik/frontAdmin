@@ -1,4 +1,7 @@
-inherited UnitsListParentFrame: TUnitsListParentFrame
+inherited UnitsListFrame: TUnitsListFrame
+  inherited tbEntity: TUniToolBar
+    ExplicitWidth = 1348
+  end
   inherited dbgEntity: TUniDBGrid
     Columns = <
       item
@@ -15,15 +18,16 @@ inherited UnitsListParentFrame: TUnitsListParentFrame
         FieldName = 'def'
         Title.Caption = #1055#1086#1076#1087#1080#1089#1100
         Width = 140
-      end
-      item
-        FieldName = 'WUnit'
-        Title.Caption = 'WUnit'
-        Width = 80
       end>
   end
   inherited pcEntityInfo: TUniPageControl
+    ExplicitLeft = 968
+    ExplicitHeight = 698
     inherited tsTaskInfo: TUniTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 24
+      ExplicitWidth = 372
+      ExplicitHeight = 670
       inherited cpTaskInfo: TUniContainerPanel
         ExplicitHeight = 670
       end
@@ -36,10 +40,6 @@ inherited UnitsListParentFrame: TUnitsListParentFrame
   inherited FDMemTableEntity: TFDMemTable
     object FDMemTableEntityUid: TStringField
       FieldName = 'Uid'
-      Size = 100
-    end
-    object FDMemTableEntityWUnit: TStringField
-      FieldName = 'WUnit'
       Size = 100
     end
   end

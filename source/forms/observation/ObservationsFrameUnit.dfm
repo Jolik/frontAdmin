@@ -1,23 +1,12 @@
-object ObservationForm: TObservationForm
-  Left = 0
-  Top = 0
-  Caption = #1053#1072#1073#1083#1102#1076#1077#1085#1080#1103
-  ClientHeight = 540
-  ClientWidth = 900
-  OnCreate = UniFormCreate
-  OnDestroy = UniFormDestroy
-  OldCreateOrder = False
-  MonitoredKeys.Keys = <>
-  PixelsPerInch = 96
-  TextHeight = 13
+inherited ObservationsFrame: TObservationsFrame
   object gridObservation: TUniDBGrid
     Left = 0
     Top = 0
-    Width = 265
-    Height = 540
+    Width = 365
+    Height = 480
     Hint = ''
     DataSource = dsObservation
-    LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072#46#46#46
+    LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072'...'
     Align = alClient
     TabOrder = 0
     OnSelectionChange = gridObservationSelectionChange
@@ -39,19 +28,22 @@ object ObservationForm: TObservationForm
       end>
   end
   object splObservation: TUniSplitter
-    Left = 265
+    Left = 365
     Top = 0
     Width = 5
-    Height = 540
-    Cursor = crHSplit
+    Height = 480
+    Hint = ''
     Align = alRight
+    ParentColor = False
+    Color = clBtnFace
   end
   object cpObservationInfo: TUniContainerPanel
-    Left = 270
+    Left = 370
     Top = 0
     Width = 630
-    Height = 540
+    Height = 480
     Hint = ''
+    ParentColor = False
     Align = alRight
     TabOrder = 2
     object cpObservationInfoHeader: TUniContainerPanel
@@ -60,17 +52,17 @@ object ObservationForm: TObservationForm
       Width = 630
       Height = 40
       Hint = ''
-      Align = alTop
       ParentColor = False
       Color = 14540253
+      Align = alTop
       TabOrder = 1
       object lObservationInfoTitle: TUniLabel
         Left = 16
         Top = 12
-        Width = 200
-        Height = 18
+        Width = 158
+        Height = 13
         Hint = ''
-        Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103#32#1086#32#1085#1072#1073#1083#1102#1076#1077#1085#1080#1080
+        Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086' '#1085#1072#1073#1083#1102#1076#1077#1085#1080#1080
         ParentFont = False
         Font.Style = [fsBold]
         TabOrder = 1
@@ -82,15 +74,16 @@ object ObservationForm: TObservationForm
       Width = 630
       Height = 32
       Hint = ''
+      ParentColor = False
       Align = alTop
       TabOrder = 2
       object lObservationListStatus: TUniLabel
         Left = 16
         Top = 8
-        Width = 598
-        Height = 17
+        Width = 61
+        Height = 13
         Hint = ''
-        Caption = #1053#1077#1090#32#1076#1072#1085#1085#1099#1093
+        Caption = #1053#1077#1090' '#1076#1072#1085#1085#1099#1093
         TabOrder = 1
       end
     end
@@ -100,12 +93,13 @@ object ObservationForm: TObservationForm
       Width = 630
       Height = 48
       Hint = ''
+      ParentColor = False
       Align = alTop
       TabOrder = 3
       object lObservationOid: TUniLabel
         Left = 16
         Top = 6
-        Width = 39
+        Width = 23
         Height = 13
         Hint = ''
         Caption = 'OID:'
@@ -117,8 +111,8 @@ object ObservationForm: TObservationForm
         Width = 598
         Height = 17
         Hint = ''
-        Caption = ''
         AutoSize = False
+        Caption = ''
         TabOrder = 2
       end
     end
@@ -128,12 +122,13 @@ object ObservationForm: TObservationForm
       Width = 630
       Height = 48
       Hint = ''
+      ParentColor = False
       Align = alTop
       TabOrder = 4
       object lObservationName: TUniLabel
         Left = 16
         Top = 6
-        Width = 48
+        Width = 32
         Height = 13
         Hint = ''
         Caption = 'Name:'
@@ -145,8 +140,8 @@ object ObservationForm: TObservationForm
         Width = 598
         Height = 17
         Hint = ''
-        Caption = ''
         AutoSize = False
+        Caption = ''
         TabOrder = 2
       end
     end
@@ -156,12 +151,13 @@ object ObservationForm: TObservationForm
       Width = 630
       Height = 48
       Hint = ''
+      ParentColor = False
       Align = alTop
       TabOrder = 5
       object lObservationCaption: TUniLabel
         Left = 16
         Top = 6
-        Width = 56
+        Width = 44
         Height = 13
         Hint = ''
         Caption = 'Caption:'
@@ -173,8 +169,8 @@ object ObservationForm: TObservationForm
         Width = 598
         Height = 17
         Hint = ''
-        Caption = ''
         AutoSize = False
+        Caption = ''
         TabOrder = 2
       end
     end
@@ -184,12 +180,13 @@ object ObservationForm: TObservationForm
       Width = 630
       Height = 48
       Hint = ''
+      ParentColor = False
       Align = alTop
       TabOrder = 6
       object lObservationUid: TUniLabel
         Left = 16
         Top = 6
-        Width = 27
+        Width = 22
         Height = 13
         Hint = ''
         Caption = 'UID:'
@@ -201,8 +198,8 @@ object ObservationForm: TObservationForm
         Width = 598
         Height = 17
         Hint = ''
-        Caption = ''
         AutoSize = False
+        Caption = ''
         TabOrder = 2
       end
     end
@@ -210,36 +207,37 @@ object ObservationForm: TObservationForm
       Left = 0
       Top = 264
       Width = 630
-      Height = 276
+      Height = 216
       Hint = ''
+      ParentColor = False
       Align = alClient
       TabOrder = 7
       object lObservationDsTypes: TUniLabel
         AlignWithMargins = True
         Left = 16
-        Top = 6
-        Width = 598
-        Height = 18
+        Top = 3
+        Width = 142
+        Height = 13
         Hint = ''
-        Align = alTop
         Margins.Left = 16
         Margins.Right = 16
-        Caption = #1058#1080#1087#1099#32#1076#1072#1085#1085#1099#1093#32#1085#1072#1073#1083#1102#1076#1077#1085#1080#1103#58
+        Caption = #1058#1080#1087#1099' '#1076#1072#1085#1085#1099#1093' '#1085#1072#1073#1083#1102#1076#1077#1085#1080#1103':'
+        Align = alTop
         TabOrder = 1
       end
       object gridDsTypes: TUniDBGrid
         AlignWithMargins = True
         Left = 16
-        Top = 24
+        Top = 22
         Width = 598
-        Height = 240
+        Height = 178
         Hint = ''
-        DataSource = dsDsTypes
-        LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072#46#46#46
-        Align = alClient
         Margins.Left = 16
         Margins.Right = 16
         Margins.Bottom = 16
+        DataSource = dsDsTypes
+        LoadMask.Message = #1047#1072#1075#1088#1091#1079#1082#1072'...'
+        Align = alClient
         TabOrder = 2
         Columns = <
           item

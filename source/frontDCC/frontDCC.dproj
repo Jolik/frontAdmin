@@ -122,7 +122,7 @@
         <DCCReference Include="..\services\dataserver\entities\LocationUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\SourceUnit.pas"/>
         <DCCReference Include="..\services\dataserver\entities\ObservationUnit.pas"/>
-        <DCCReference Include="..\services\dataserver\entities\TDsTypesUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\DsTypesUnit.pas"/>
         <DCCReference Include="..\services\acl\entities\DepartmentUnit.pas"/>
         <DCCReference Include="..\common\FuncUnit.pas"/>
         <DCCReference Include="..\common\GUIDListUnit.pas"/>
@@ -231,10 +231,6 @@
         </DCCReference>
         <DCCReference Include="..\forms\sources\IntefraceEditFormUnit.pas">
             <Form>InterfaceModalForm</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="..\forms\observation\ObservationFormUnit.pas">
-            <Form>ObservationForm</Form>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\forms\dataseries\DataseriesFormUnit.pas">
@@ -462,8 +458,8 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\forms\units\UnitsListParentFrameUnit.pas">
-            <Form>UnitsListParentFrame</Form>
+        <DCCReference Include="..\forms\units\UnitsListFrameUnit.pas">
+            <Form>UnitsListFrame</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
@@ -471,6 +467,11 @@
             <Form>DCCSettingsForm</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\observation\ObservationsFrameUnit.pas">
+            <Form>ObservationsFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

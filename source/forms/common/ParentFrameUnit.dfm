@@ -6,4 +6,6 @@ object ParentFrame: TParentFrame
   OnCreate = UniFrameCreate
   OnDestroy = UniFrameDestroy
   TabOrder = 0
+  ParentColor = False
+  ParentBackground = False
 end

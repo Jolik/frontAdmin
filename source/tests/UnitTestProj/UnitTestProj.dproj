@@ -102,6 +102,7 @@
         <DCCReference Include="LogsRestBrokerUnitTest.pas"/>
         <DCCReference Include="DsGroupTestsUnit.pas"/>
         <DCCReference Include="DsGroupRestBrokerTestsUnit.pas"/>
+        <DCCReference Include="UnitsUnitTest.pas"/>
         <DCCReference Include="..\..\common\FuncUnit.pas"/>
         <DCCReference Include="..\..\services\common\entities\EntityUnit.pas"/>
         <DCCReference Include="..\..\logging\LoggingUnit.pas"/>
@@ -122,13 +123,15 @@
         <DCCReference Include="..\..\services\common\brokers\RestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\linkop\entities\OperatorLinkUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\entities\ObservationUnit.pas"/>
-        <DCCReference Include="..\..\services\dataserver\entities\TDsTypesUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\entities\DsTypesUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\brokers\ObservationsRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\entities\DsGroupUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\brokers\DsGroupsHttpRequests.pas"/>
         <DCCReference Include="DataseriesUnitTest.pas"/>
+        <DCCReference Include="DataseriesRestBrokerUnitTest.pas"/>
         <DCCReference Include="..\..\services\dataserver\entities\DataseriesUnit.pas"/>
+        <DCCReference Include="..\..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\services\signals\entities\LogUnit.pas"/>
         <DCCReference Include="..\..\services\signals\brokers\LogsHttpRequests.pas"/>
         <DCCReference Include="..\..\services\signals\brokers\LogsRestBrokerUnit.pas"/>

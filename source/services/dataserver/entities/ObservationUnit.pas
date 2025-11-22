@@ -7,7 +7,7 @@ uses
   System.JSON,
   EntityUnit,
   FuncUnit,
-  TDsTypesUnit;
+  DsTypesUnit;
 
 type
   /// <summary>Observation entity that references a list of dataserver types.</summary>

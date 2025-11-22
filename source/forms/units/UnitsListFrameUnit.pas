@@ -1,4 +1,4 @@
-﻿unit UnitsListParentFrameUnit;
+﻿unit UnitsListFrameUnit;
 
 interface
 
@@ -14,10 +14,12 @@ uses
   EntityUnit, UnitsBrokerUnit, UnitUnit, RestBrokerBaseUnit, RestBrokerUnit;
 
 type
-  TUnitsListParentFrame = class(TInfoListParentFrame)
+  TUnitsListFrame = class(TInfoListParentFrame)
     FDMemTableEntityUid: TStringField;
-    FDMemTableEntityWUnit: TStringField;
     procedure dbgEntitySelectionChange(Sender: TObject); reintroduce;
+    procedure btnNewClick(Sender: TObject);
+    procedure btnUpdateClick(Sender: TObject);
+    procedure btnRemoveClick(Sender: TObject);
   public
 //    procedure Refresh(const AId: String = ''); override;
     function CreateRestBroker(): TRestBroker; override;
@@ -36,17 +38,32 @@ uses
 
 { TUnitsListParentFrame }
 
-function TUnitsListParentFrame.CreateEditForm: TParentEditForm;
+procedure TUnitsListFrame.btnNewClick(Sender: TObject);
+begin
+//
+end;
+
+procedure TUnitsListFrame.btnRemoveClick(Sender: TObject);
+begin
+//
+end;
+
+procedure TUnitsListFrame.btnUpdateClick(Sender: TObject);
+begin
+//
+end;
+
+function TUnitsListFrame.CreateEditForm: TParentEditForm;
 begin
   Result := UnitEditForm();
 end;
 
-function TUnitsListParentFrame.CreateRestBroker: TRestBroker;
+function TUnitsListFrame.CreateRestBroker: TRestBroker;
 begin
   Result := TUnitsBroker.Create(UniMainModule.XTicket);
 end;
 
-procedure TUnitsListParentFrame.dbgEntitySelectionChange(Sender: TObject);
+procedure TUnitsListFrame.dbgEntitySelectionChange(Sender: TObject);
 var
   UnitItem: TUnit;
 begin
@@ -63,13 +80,12 @@ begin
   UnitItem.Uid := FDMemTableEntityUid.AsString;
   UnitItem.Name := FDMemTableEntityName.AsString;
   UnitItem.Caption := FDMemTableEntityCaption.AsString;
-  UnitItem.WUnit := FDMemTableEntityWUnit.AsString;
 
   FSelectedEntity := UnitItem;
   OnInfoUpdated(UnitItem);
 end;
 
-procedure TUnitsListParentFrame.OnAddListItem(item: TFieldSet);
+procedure TUnitsListFrame.OnAddListItem(item: TFieldSet);
 var
   UnitItem: TUnit;
 begin
@@ -79,10 +95,9 @@ begin
   FDMemTableEntityName.AsString := UnitItem.Name;
   FDMemTableEntityCaption.AsString := UnitItem.Caption;
   FDMemTableEntityUid.AsString := UnitItem.Uid;
-  FDMemTableEntityWUnit.AsString := UnitItem.WUnit;
 end;
 
-procedure TUnitsListParentFrame.OnInfoUpdated(AFieldSet: TFieldSet);
+procedure TUnitsListFrame.OnInfoUpdated(AFieldSet: TFieldSet);
 var
   UnitItem: TUnit;
 begin
@@ -98,8 +113,6 @@ begin
   lTaskCaption.Caption := UnitItem.Name;
   lTaskInfoCreated.Caption := 'UID';
   lTaskInfoCreatedValue.Caption := UnitItem.Uid;
-  lTaskInfoUpdated.Caption := 'WUnit';
-  lTaskInfoUpdatedValue.Caption := UnitItem.WUnit;
   tsTaskInfo.TabVisible := True;
 end;
 

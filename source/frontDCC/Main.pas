@@ -23,7 +23,6 @@ type
     btnDSProcessorTasks: TUniButton;
     unbtnMonitoring: TUniButton;
     unbtnSources: TUniButton;
-    btnObservations: TUniButton;
     btnDataseries: TUniButton;
     btnDsGroups: TUniButton;
     btnLogs: TUniButton;
@@ -40,7 +39,6 @@ type
     procedure unbtnSourcesClick(Sender: TObject);
     procedure unbtnMonitoringClick(Sender: TObject);
     procedure btnDsGroupsClick(Sender: TObject);
-    procedure btnObservationsClick(Sender: TObject);
     procedure btnDataseriesClick(Sender: TObject);
     procedure btnLogsClick(Sender: TObject);
     procedure btnSettingsClick(Sender: TObject);
@@ -72,7 +70,6 @@ uses
   SummaryTasksFormUnit,
   DSProcessorTasksFormUnit,
   DSGroupsFormUnit,
-  ObservationFormUnit,
   DataseriesFormUnit,
   LogViewFormUnit,
   DCCDashboardFormUnit,
@@ -105,11 +102,6 @@ end;
 procedure TMainForm.btnDsGroupsClick(Sender: TObject);
 begin
   DsGroupsForm.Show();
-end;
-
-procedure TMainForm.btnObservationsClick(Sender: TObject);
-begin
-  ObservationForm.Show();
 end;
 
 procedure TMainForm.btnDataseriesClick(Sender: TObject);
@@ -155,7 +147,7 @@ end;
 procedure TMainForm.UniFormCreate(Sender: TObject);
 begin
   inherited;
-  OSLabel.Caption := 'OS:à: ' + TOSVersion.ToString;
+  OSLabel.Caption := 'OS: ' + TOSVersion.ToString;
   URLLabel.Caption := 'Url:' + HttpClient.Addr + ' : ' + IntToStr(HttpClient.Port);
 end;
 

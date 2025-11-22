@@ -8,7 +8,7 @@ uses
   EntityUnit,
   FuncUnit,
   GUIDListUnit,
-  TDsTypesUnit;
+  DsTypesUnit;
 
 type
   /// <summary>Current state of dataserver serie.</summary>
