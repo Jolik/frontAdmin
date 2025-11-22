@@ -455,6 +455,23 @@
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\brokers\UnitsBrokerUnit.pas"/>
+        <DCCReference Include="..\services\dataserver\entities\UnitUnit.pas"/>
+        <DCCReference Include="..\forms\units\UnitEditFormUnit.pas">
+            <Form>UnitEditForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\units\UnitsListParentFrameUnit.pas">
+            <Form>UnitsListParentFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\forms\settings\DCCSettingsFormUnit.pas">
+            <Form>DCCSettingsForm</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

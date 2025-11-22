@@ -30,6 +30,7 @@ type
     OSLabel: TUniLabel;
     URLLabel: TUniLabel;
     unlblName1: TUniLabel;
+    btnSettings: TUniButton;
     procedure btnStripTasksClick(Sender: TObject);
     procedure btnLinksClick(Sender: TObject);
     procedure btnSummTaskClick(Sender: TObject);
@@ -42,6 +43,7 @@ type
     procedure btnObservationsClick(Sender: TObject);
     procedure btnDataseriesClick(Sender: TObject);
     procedure btnLogsClick(Sender: TObject);
+    procedure btnSettingsClick(Sender: TObject);
   private
   public
     { Public declarations }
@@ -73,7 +75,8 @@ uses
   ObservationFormUnit,
   DataseriesFormUnit,
   LogViewFormUnit,
-  DCCDashboardFormUnit
+  DCCDashboardFormUnit,
+  DCCSettingsFormUnit
 //  AliasesFormUnit,
 //  AbonentsFormUnit,
 //  RouterSourcesFormUnit,
@@ -117,6 +120,11 @@ end;
 procedure TMainForm.btnLogsClick(Sender: TObject);
 begin
   LogViewForm.Show();
+end;
+
+procedure TMainForm.btnSettingsClick(Sender: TObject);
+begin
+  DCCSettingsForm.Show();
 end;
 
 procedure TMainForm.btnLinksClick(Sender: TObject);

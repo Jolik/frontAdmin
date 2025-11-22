@@ -160,7 +160,12 @@ uses
   LinksFrameUnit in '..\forms\links\LinksFrameUnit.pas' {LinksFrame: TUniFrame},
   FrameContainerFormUnit in '..\forms\common\FrameContainerFormUnit.pas' {FrameContainerForm: TUniForm},
   LinksFormUnit in '..\forms\links\LinksFormUnit.pas' {LinksForm: TUniForm},
-  DataseriesRestBrokerUnit in '..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas';
+  DataseriesRestBrokerUnit in '..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas',
+  UnitsBrokerUnit in '..\services\dataserver\brokers\UnitsBrokerUnit.pas',
+  UnitUnit in '..\services\dataserver\entities\UnitUnit.pas',
+  UnitEditFormUnit in '..\forms\units\UnitEditFormUnit.pas' {UnitEditForm: TUniForm},
+  UnitsListParentFrameUnit in '..\forms\units\UnitsListParentFrameUnit.pas' {UnitsListParentFrame: TUniFrame},
+  DCCSettingsFormUnit in '..\forms\settings\DCCSettingsFormUnit.pas' {DCCSettingsForm: TUniForm};
 
 {$R *.res}
 
