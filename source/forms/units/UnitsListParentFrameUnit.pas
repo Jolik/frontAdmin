@@ -1,4 +1,4 @@
-unit UnitsListParentFrameUnit;
+﻿unit UnitsListParentFrameUnit;
 
 interface
 
@@ -19,7 +19,7 @@ type
     FDMemTableEntityWUnit: TStringField;
     procedure dbgEntitySelectionChange(Sender: TObject); reintroduce;
   public
-    procedure Refresh(const AId: String = ''); override;
+//    procedure Refresh(const AId: String = ''); override;
     function CreateRestBroker(): TRestBroker; override;
     function CreateEditForm(): TParentEditForm; override;
     procedure OnAddListItem(item: TFieldSet); override;
@@ -101,59 +101,6 @@ begin
   lTaskInfoUpdated.Caption := 'WUnit';
   lTaskInfoUpdatedValue.Caption := UnitItem.WUnit;
   tsTaskInfo.TabVisible := True;
-end;
-
-procedure TUnitsListParentFrame.Refresh(const AId: String);
-var
-  Req: TUnitsReqList;
-  Resp: TUnitsListResponse;
-  FieldSetList: TFieldSetList;
-begin
-  FDMemTableEntity.Active := True;
-  if not Assigned(RestBroker) then
-    Exit;
-
-  Req := RestBroker.CreateReqList as TUnitsReqList;
-  Resp := nil;
-  try
-    Req.SetFlagFormula(True);
-    Resp := (RestBroker as TUnitsBroker).List(Req);
-
-    FieldSetList := Resp.FieldSetList;
-    FDMemTableEntity.EmptyDataSet;
-
-    if Assigned(FieldSetList) then
-      for var FieldSet in FieldSetList do
-      begin
-        FDMemTableEntity.Append;
-        OnAddListItem(FieldSet);
-        FDMemTableEntity.Post;
-      end;
-  except
-    on E: EIdHTTPProtocolException do
-    begin
-      MessageDlg(Format('Ошибка загрузки единиц измерения. HTTP %d'#13#10'%s',
-        [E.ErrorCode, E.ErrorMessage]), mtWarning, [mbOK], nil);
-      Log('TUnitsListParentFrame.Refresh ' + E.Message + ' ' + E.ErrorMessage, lrtError);
-    end;
-    on E: Exception do
-    begin
-      MessageDlg('Ошибка загрузки единиц измерения: ' + E.Message, mtWarning, [mbOK], nil);
-      Log('TUnitsListParentFrame.Refresh ' + E.Message, lrtError);
-    end;
-  end;
-
-  Resp.Free;
-  Req.Free;
-
-  if FDMemTableEntity.IsEmpty then
-    tsTaskInfo.TabVisible := False
-  else if AId.IsEmpty then
-    FDMemTableEntity.First
-  else
-    FDMemTableEntity.Locate('Id', AId, []);
-
-  dbgEntitySelectionChange(dbgEntity);
 end;
 
 end.

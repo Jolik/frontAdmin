@@ -1,6 +1,5 @@
 inherited UnitsListParentFrame: TUnitsListParentFrame
   inherited dbgEntity: TUniDBGrid
-    OnSelectionChange = dbgEntitySelectionChange
     Columns = <
       item
         FieldName = 'Uid'
