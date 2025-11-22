@@ -176,7 +176,7 @@ begin
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
-    ExecuteLinksProfilesTests;
+//    ExecuteLinksProfilesTests;
     ExecuteUnitsTests;
 //    ExecuteSourcesTests;
     Readln;

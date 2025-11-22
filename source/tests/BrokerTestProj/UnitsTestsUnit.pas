@@ -41,9 +41,9 @@ begin
       ListResp := Broker.List(ListReq);
       Writeln('-----------------------------------------------------------------');
       Writeln('Units with formulas request URL: ' + ListReq.GetURLWithParams);
-      if (ListResp.Units.Count > 0) and (ListResp.Units[0].Convert.Count > 0) then
+      if (ListResp.Units.Count > 0) and (TUnit(ListResp.Units[0]).Convert.Count > 0) then
       begin
-        FirstTo := ListResp.Units[0].Convert[0].ToUnit;
+        FirstTo := TUnit(ListResp.Units[0]).Convert[0].ToUnit;
         Writeln(Format('First conversion target in full format: %s', [FirstTo]));
       end
       else

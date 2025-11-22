@@ -35,7 +35,7 @@ type
     FFullFormat: Boolean;
     function GetItem(Index: Integer): TConvert;
   public
-    constructor Create; override;
+    constructor Create;
     class function ItemClassType: TFieldSetClass; override;
     /// <summary>Detects input representation (compact or full) and parses accordingly.</summary>
     procedure ParseList(src: TJSONArray; const APropertyNames: TArray<string> = nil); override;
@@ -187,7 +187,7 @@ end;
 
 procedure TConvertList.SerializeList(dst: TJSONArray; const APropertyNames: TArray<string>);
 var
-  Convert: TConvert;
+  Convert: TFieldSet;
   Value: TJSONValue;
 begin
   if not Assigned(dst) then
@@ -195,7 +195,7 @@ begin
 
   for Convert in Self do
   begin
-    Value := Convert.SerializeValue(FFullFormat);
+    Value := TConvert(Convert).SerializeValue(FFullFormat);
     dst.AddElement(Value);
   end;
 end;

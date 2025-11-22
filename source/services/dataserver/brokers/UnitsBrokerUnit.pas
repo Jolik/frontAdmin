@@ -63,7 +63,7 @@ constructor TUnitsReqList.Create;
 begin
   inherited Create;
   Method := mGET;
-  if Assigned(Body) then
+  if Body <> nil then
     Body.PageSize := 100;
   SetEndpoint('units/list');
 end;
