@@ -27,8 +27,6 @@ uses
   DirSettingsUnit in '..\..\services\datacomm\entities\DirSettingsUnit.pas',
   S3SettingsUnit in '..\..\services\datacomm\entities\S3SettingsUnit.pas',
   ScheduleSettingsUnit in '..\..\services\datacomm\entities\ScheduleSettingsUnit.pas',
-  LinksHttpRequests in '..\..\services\datacomm\brokers\LinksHttpRequests.pas',
-  LinksRestBrokerUnit in '..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas',
   KeyValUnit in '..\..\common\KeyValUnit.pas',
   FuncUnit in '..\..\common\FuncUnit.pas',
   StringListUnit in '..\..\common\StringListUnit.pas',
@@ -88,7 +86,13 @@ uses
   SourceUnit in '..\..\services\dataserver\entities\SourceUnit.pas',
   ContextUnit in '..\..\services\dataserver\entities\ContextUnit.pas',
   DataseriesRestBrokerUnit in '..\..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas',
-  LinksProfilesTestsUnit in 'LinksProfilesTestsUnit.pas';
+  LinksProfilesTestsUnit in 'LinksProfilesTestsUnit.pas',
+  ProfileUnit in '..\..\services\datacomm\entities\ProfileUnit.pas',
+  ProfileRuleUnit in '..\..\services\datacomm\entities\ProfileRuleUnit.pas',
+  LinksHttpRequests in '..\..\services\datacomm\brokers\LinksHttpRequests.pas',
+  LinksRestBrokerUnit in '..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas',
+  ProfileHttpRequests in '..\..\services\datacomm\brokers\ProfileHttpRequests.pas',
+  ProfilesRestBrokerUnit in '..\..\services\datacomm\brokers\ProfilesRestBrokerUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -170,7 +174,7 @@ begin
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
     ExecuteLinksProfilesTests;
-    ExecuteSourcesTests;
+//    ExecuteSourcesTests;
     Readln;
   except
     on E: Exception do

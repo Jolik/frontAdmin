@@ -9,6 +9,7 @@ implementation
 uses
   System.SysUtils,
   AppConfigUnit,
+  EntityUnit,
   LinkUnit,
   LinksRestBrokerUnit,
   LinksHttpRequests,
@@ -25,8 +26,8 @@ var
   LinksResp: TLinkListResponse;
   ProfilesReq: TProfileReqList;
   ProfilesResp: TProfileListResponse;
-  Link: TLink;
-  Profile: TProfile;
+  Link: TFieldSet;
+  Profile: TFieldSet;
   Rule: TProfileRule;
   BasePath: string;
   FtaText: string;
@@ -46,29 +47,29 @@ begin
       for Link in LinksResp.LinkList do
       begin
         Writeln(Format('Link %s: type=%s, dir=%s, status=%s, comsts=%s',
-          [Link.Lid, Link.TypeStr, Link.Dir, Link.Status, Link.Comsts]));
+          [TLink(Link).Lid, TLink(Link).TypeStr, TLink(Link).Dir, TLink(Link).Status, TLink(Link).Comsts]));
 
         ProfilesReq := ProfilesBroker.CreateReqList as TProfileReqList;
-        ProfilesReq.Lid := Link.Lid;
+        ProfilesReq.Lid := TLink(Link).Lid;
         ProfilesResp := ProfilesBroker.List(ProfilesReq);
         try
           Writeln(Format('  Profiles returned: %d', [ProfilesResp.ProfileList.Count]));
 
           for Profile in ProfilesResp.ProfileList do
           begin
-            Rule := Profile.ProfileBody.Rule;
-            FtaText := string.Join(', ', Profile.ProfileBody.Play.FTA.ToArray);
+            Rule := TProfile(Profile).ProfileBody.Rule;
+            FtaText := string.Join(', ', TProfile(Profile).ProfileBody.Play.FTA.ToArray);
             if FtaText = '' then
               FtaText := '(no FTA values)';
 
             if Assigned(Rule) then
               Writeln(Format(
                 '  - %s: %s (handlers=%d, inc_filters=%d, exc_filters=%d, FTA=[%s])',
-                [Profile.Id, Profile.Description, Rule.Handlers.Count,
+                [TProfile(Profile).Id, TProfile(Profile).Description, Rule.Handlers.Count,
                 Rule.IncFilters.Count, Rule.ExcFilters.Count, FtaText]))
             else
               Writeln(Format('  - %s: %s (FTA=[%s])',
-                [Profile.Id, Profile.Description, FtaText]));
+                [TProfile(Profile).Id, TProfile(Profile).Description, FtaText]));
           end;
         finally
           ProfilesResp.Free;
