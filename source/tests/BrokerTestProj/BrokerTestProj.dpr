@@ -92,7 +92,10 @@ uses
   LinksHttpRequests in '..\..\services\datacomm\brokers\LinksHttpRequests.pas',
   LinksRestBrokerUnit in '..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas',
   ProfileHttpRequests in '..\..\services\datacomm\brokers\ProfileHttpRequests.pas',
-  ProfilesRestBrokerUnit in '..\..\services\datacomm\brokers\ProfilesRestBrokerUnit.pas';
+  ProfilesRestBrokerUnit in '..\..\services\datacomm\brokers\ProfilesRestBrokerUnit.pas',
+  UnitsBrokerUnit in '..\..\services\dataserver\brokers\UnitsBrokerUnit.pas',
+  UnitsTestsUnit in 'UnitsTestsUnit.pas',
+  UnitUnit in '..\..\services\dataserver\entities\UnitUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -174,6 +177,7 @@ begin
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
     ExecuteLinksProfilesTests;
+    ExecuteUnitsTests;
 //    ExecuteSourcesTests;
     Readln;
   except
