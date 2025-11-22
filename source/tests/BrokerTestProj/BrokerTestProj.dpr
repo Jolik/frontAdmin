@@ -87,7 +87,8 @@ uses
   SourcesRestBrokerUnit in '..\..\services\dataserver\brokers\SourcesRestBrokerUnit.pas',
   SourceUnit in '..\..\services\dataserver\entities\SourceUnit.pas',
   ContextUnit in '..\..\services\dataserver\entities\ContextUnit.pas',
-  DataseriesRestBrokerUnit in '..\..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas';
+  DataseriesRestBrokerUnit in '..\..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas',
+  LinksProfilesTestsUnit in 'LinksProfilesTestsUnit.pas';
 
 procedure TestAbonentListRequest;
 var
@@ -168,6 +169,7 @@ begin
 //    ExecuteOperatorLinksContentRequests;
 //    ExecuteReadContentStream;
 //    ExecuteSearchRequest;
+    ExecuteLinksProfilesTests;
     ExecuteSourcesTests;
     Readln;
   except
