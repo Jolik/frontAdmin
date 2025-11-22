@@ -70,8 +70,6 @@
         <DCCReference Include="..\..\services\datacomm\entities\DirSettingsUnit.pas"/>
         <DCCReference Include="..\..\services\datacomm\entities\S3SettingsUnit.pas"/>
         <DCCReference Include="..\..\services\datacomm\entities\ScheduleSettingsUnit.pas"/>
-        <DCCReference Include="..\..\services\datacomm\brokers\LinksHttpRequests.pas"/>
-        <DCCReference Include="..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas"/>
         <DCCReference Include="..\..\common\KeyValUnit.pas"/>
         <DCCReference Include="..\..\common\FuncUnit.pas"/>
         <DCCReference Include="..\..\common\StringListUnit.pas"/>
@@ -131,6 +129,13 @@
         <DCCReference Include="..\..\services\dataserver\entities\SourceUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\entities\ContextUnit.pas"/>
         <DCCReference Include="..\..\services\dataserver\brokers\DataseriesRestBrokerUnit.pas"/>
+        <DCCReference Include="LinksProfilesTestsUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\entities\ProfileUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\entities\ProfileRuleUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\brokers\LinksHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\datacomm\brokers\LinksRestBrokerUnit.pas"/>
+        <DCCReference Include="..\..\services\datacomm\brokers\ProfileHttpRequests.pas"/>
+        <DCCReference Include="..\..\services\datacomm\brokers\ProfilesRestBrokerUnit.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
